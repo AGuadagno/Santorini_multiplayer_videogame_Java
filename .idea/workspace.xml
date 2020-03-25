@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef234533-8674-44ad-89c3-2f02eafcf29e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP25/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/PSP25/App.java" afterDir="false" />
-    </list>
+    <list default="true" id="ef234533-8674-44ad-89c3-2f02eafcf29e" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,37 +67,58 @@
       <workItem from="1585141757723" duration="7714000" />
       <workItem from="1585150390111" duration="5480000" />
       <workItem from="1585156126346" duration="10678000" />
+      <workItem from="1585176913322" duration="271000" />
     </task>
+    <task id="LOCAL-00001" summary="- &quot;Space&quot;, &quot;Board&quot;, &quot;Worker&quot;, &quot;Player&quot; implemented&#10;- &quot;GodPower&quot; basic elements implemented (Partial verifyWin, no Subclasses)">
+      <created>1585177067840</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1585177067840</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="- &quot;Space&quot;, &quot;Board&quot;, &quot;Worker&quot;, &quot;Player&quot; implemented&#10;- &quot;GodPower&quot; basic elements implemented (Partial verifyWin, no Subclasses)" />
+    <option name="LAST_COMMIT_MESSAGE" value="- &quot;Space&quot;, &quot;Board&quot;, &quot;Worker&quot;, &quot;Player&quot; implemented&#10;- &quot;GodPower&quot; basic elements implemented (Partial verifyWin, no Subclasses)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1585168512717">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1585168512717" />
-    <state width="1493" height="319" key="GridCell.Tab.0.bottom" timestamp="1585175846600">
+    <state x="304" y="3" key="CommitChangelistDialog2" timestamp="1585177065261">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="319" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1585175846600" />
-    <state width="1493" height="319" key="GridCell.Tab.0.center" timestamp="1585175846594">
+    <state x="304" y="3" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1585177065261" />
+    <state width="1493" height="171" key="GridCell.Tab.0.bottom" timestamp="1585177144015">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="319" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1585175846594" />
-    <state width="1493" height="319" key="GridCell.Tab.0.left" timestamp="1585175846594">
+    <state width="1493" height="171" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1585177144015" />
+    <state width="1493" height="171" key="GridCell.Tab.0.center" timestamp="1585177144014">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="319" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1585175846594" />
-    <state width="1493" height="319" key="GridCell.Tab.0.right" timestamp="1585175846599">
+    <state width="1493" height="171" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1585177144014" />
+    <state width="1493" height="171" key="GridCell.Tab.0.left" timestamp="1585177144013">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="319" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1585175846599" />
+    <state width="1493" height="171" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1585177144013" />
+    <state width="1493" height="171" key="GridCell.Tab.0.right" timestamp="1585177144014">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="171" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1585177144014" />
     <state x="277" y="55" key="SettingsEditor" timestamp="1585151243585">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1585151243585" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1585177111081">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1585177111081" />
     <state x="499" y="178" key="extract.method.dialog" timestamp="1585156266972">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
