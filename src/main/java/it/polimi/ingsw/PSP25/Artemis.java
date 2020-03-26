@@ -1,4 +1,4 @@
 package it.polimi.ingsw.PSP25;
 
-public class Artemis {
+public class Artemis extends GodPower {
 }

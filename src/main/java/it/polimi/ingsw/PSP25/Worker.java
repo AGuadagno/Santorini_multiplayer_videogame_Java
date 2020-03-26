@@ -8,17 +8,17 @@ public class Worker {
     public Worker(Space space, Player player) {
         this.space = space;
         this.heightBeforeMove = 0;
-        this.player=player;
+        this.player = player;
     }
 
     public Space getSpace() {
         return space;
     }
 
-    public void moveTo(Space space){
-        this.space.setWorker(null);
-        this.heightBeforeMove=this.space.getTowerHeight();
-        this.space=space;
+    public void moveTo(Space space) {
+        this.space.removeWorker();
+        this.heightBeforeMove = this.space.getTowerHeight();
+        this.space = space;
         this.space.setWorker(this);
     }
 
