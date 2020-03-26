@@ -1,4 +1,4 @@
 package it.polimi.ingsw.PSP25;
 
-public class Atlas {
+public class Atlas extends GodPower {
 }

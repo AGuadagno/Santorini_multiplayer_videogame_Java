@@ -1,4 +1,4 @@
 package it.polimi.ingsw.PSP25;
 
-public class Athena {
+public class Athena extends GodPower {
 }
