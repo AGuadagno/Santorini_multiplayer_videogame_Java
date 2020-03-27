@@ -10,7 +10,7 @@ public class GodPower {
     public GodPower() {
     }
 
-    private List<Space> getValidMovementSpaces(Worker worker) {
+    protected List<Space> getValidMovementSpaces(Worker worker) {
         ArrayList<Space> validMovementSpaces = new ArrayList<Space>();
 
         for (Space space : worker.getSpace().getAdjacentSpaces()) {
@@ -35,11 +35,11 @@ public class GodPower {
         return validBuildSpaces;
     }
 
-    private void moveWorker(Worker worker, Space space) {
+    protected void moveWorker(Worker worker, Space space) {
         worker.moveTo(space);
     }
 
-    private void buildBlock(Space space) {
+    protected void buildBlock(Space space) {
         if (space.getTowerHeight() == 3) {
             space.addDome();
         } else {
@@ -47,7 +47,7 @@ public class GodPower {
         }
     }
 
-    private boolean verifyWin(Worker worker) {
+    protected boolean verifyWin(Worker worker) {
 
         //TEMP
         if (worker.getHeightBeforeMove() == 2 && worker.getSpace().getTowerHeight() == 3) {
