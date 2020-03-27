@@ -83,7 +83,11 @@ public class Space {
 
     @Override
     public String toString() {
-        return "Space " + (5*y + x);
+        return "Space " + getNumber();
+    }
+
+    public int getNumber() {
+        return 5 * y + x;
     }
 
     public void removeWorker() {
@@ -91,7 +95,7 @@ public class Space {
     }
 
     public boolean hasWorker() {
-        if(worker == null)
+        if (worker == null)
             return false;
         else
             return true;
