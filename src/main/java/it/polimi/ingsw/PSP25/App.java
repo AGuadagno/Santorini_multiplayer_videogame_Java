@@ -3,7 +3,7 @@ package it.polimi.ingsw.PSP25;
 import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("The game begins.");
         int x1;
@@ -71,5 +71,9 @@ public class App {
                 nowPlaying = p1;
             }
         }
+    }*/
+    public static void main(String[] args) {
+        GameLogic game = new GameLogic();
+        game.startGame();
     }
 }

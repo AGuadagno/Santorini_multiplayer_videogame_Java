@@ -38,6 +38,10 @@ public class Player {
     }
 
     public String getID() {
-        return name.substring(0,3);
+        try {
+            return name.substring(0, 3);
+        } catch (Exception e) {
+            return name + "00";
+        }
     }
 }

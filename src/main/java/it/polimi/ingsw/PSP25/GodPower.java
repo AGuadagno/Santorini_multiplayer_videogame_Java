@@ -3,6 +3,7 @@ package it.polimi.ingsw.PSP25;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class GodPower {
 
@@ -76,16 +77,25 @@ public class GodPower {
         // TEMP
         System.out.println(player.getName() + ": Choose a worker");
         Scanner scanner = new Scanner(System.in);
-        String workerchoice = scanner.next();
-        if (workerchoice.equals("1")) {
+        int workerchoice = scanner.nextInt();
+        while (workerchoice < 1 || workerchoice > 2) {
+            System.out.println("Worker number is not valid. Choose 1 or 2");
+            workerchoice = scanner.nextInt();
+        }
+        if (workerchoice == 1) {
             selectedWorker = player.getWorker1();
             System.out.println(validMovementSpacesW1.toString());
             System.out.println(player.getName() + ": Choose movement space");
-            int chosenmovementspace = scanner.nextInt();
-            int x = chosenmovementspace % 5;
-            int y = chosenmovementspace / 5;
-            for (Space space: validMovementSpacesW1) {
-                if(space.getX() == x && space.getY() == y)
+            int chosenMovementSpace = scanner.nextInt();
+            while (!(validMovementSpacesW1.stream().map(Space::getNumber).collect(Collectors.toList())).
+                    contains(chosenMovementSpace)) {
+                System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
+                chosenMovementSpace = scanner.nextInt();
+            }
+            int x = chosenMovementSpace % 5;
+            int y = chosenMovementSpace / 5;
+            for (Space space : validMovementSpacesW1) {
+                if (space.getX() == x && space.getY() == y)
                     selectedMovementSpace = space;
             }
         } else {
@@ -93,10 +103,15 @@ public class GodPower {
             System.out.println(validMovementSpacesW2.toString());
             System.out.println(player.getName() + ": Choose movement space");
             int chosenmovementspace = scanner.nextInt();
+            while (!(validMovementSpacesW2.stream().map(Space::getNumber).collect(Collectors.toList())).
+                    contains(chosenmovementspace)) {
+                System.out.println(chosenmovementspace + " is not in the valid movement spaces list");
+                chosenmovementspace = scanner.nextInt();
+            }
             int x = chosenmovementspace % 5;
             int y = chosenmovementspace / 5;
-            for (Space space: validMovementSpacesW2) {
-                if(space.getX() == x && space.getY() == y)
+            for (Space space : validMovementSpacesW2) {
+                if (space.getX() == x && space.getY() == y)
                     selectedMovementSpace = space;
             }
         }
@@ -113,11 +128,16 @@ public class GodPower {
         // TEMP
         System.out.println(validBuildSpaces.toString());
         System.out.println(player.getName() + ": Choose building space");
-        int chosenbuildingspace = scanner.nextInt();
-        int x = chosenbuildingspace % 5;
-        int y = chosenbuildingspace / 5;
-        for (Space space: validBuildSpaces) {
-            if(space.getX() == x && space.getY() == y)
+        int chosenBuildingSpace = scanner.nextInt();
+        while (!(validBuildSpaces.stream().map(Space::getNumber).collect(Collectors.toList())).
+                contains(chosenBuildingSpace)) {
+            System.out.println(chosenBuildingSpace + " is not in the valid movement spaces list");
+            chosenBuildingSpace = scanner.nextInt();
+        }
+        int x = chosenBuildingSpace % 5;
+        int y = chosenBuildingSpace / 5;
+        for (Space space : validBuildSpaces) {
+            if (space.getX() == x && space.getY() == y)
                 selectedBuildingSpace = space;
         }
         // END TEMP
@@ -129,6 +149,6 @@ public class GodPower {
 
     @Override
     public String toString() {
-        return this.getClass().getName();
+        return this.getClass().getSimpleName();
     }
 }
