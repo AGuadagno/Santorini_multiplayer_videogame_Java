@@ -2,12 +2,14 @@ package it.polimi.ingsw.PSP25;
 
 public class Player {
     private String name;
+    private String ID;
     private Worker worker1;
     private Worker worker2;
     private GodPower godPower;
 
-    public Player(String name) {
+    public Player(String name, String ID) {
         this.name = name;
+        this.ID = ID;
     }
 
     public void initializeWorkers(Space space1, Space space2) {
@@ -38,10 +40,6 @@ public class Player {
     }
 
     public String getID() {
-        try {
-            return name.substring(0, 3);
-        } catch (Exception e) {
-            return name + "00";
-        }
+        return ID;
     }
 }

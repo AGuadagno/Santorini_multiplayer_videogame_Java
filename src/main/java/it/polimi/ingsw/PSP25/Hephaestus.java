@@ -8,13 +8,13 @@ public class Hephaestus extends GodPower {
     protected void buildBlock(Space space) {
         super.buildBlock(space);
 
-        if (space.getTowerHeight() != 3) { // Non può costruire una cupola
-            // Scelta se vuole costruire un nuovo blocco
+        if (space.getTowerHeight() != 3) { // can't build a dome
+            // Choice to build another block
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Vuoi costruire un blocco aggiuntivo in " + space.toString() + " ?" + "yes / no");
+            System.out.println("Do you want ot build an additional block in " + space.toString() + " ?" + " y/n");
             String answer = scanner.next();
-            if (answer.equals("yes"))
-                super.buildBlock(space);
+            if (answer.equals("y"))
+                space.increaseTowerHeight();
         }
     }
 

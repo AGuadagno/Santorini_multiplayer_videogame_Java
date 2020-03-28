@@ -28,18 +28,20 @@ public class GameLogic {
 
         for (int i = 1; i <= numOfPlayers; i++) {
             String name;
-            do {
-                System.out.println("Player " + i + " enter your name: ");
+            System.out.println("Player " + i + " enter your name (2 Characters or more): ");
+            name = scanner.next();
+            while(name.length() < 2){
+                System.out.println("Player " + i + " your name it's too short. Enter another name (2 Characters or more): ");
                 name = scanner.next();
-            } while (name.length() < 1);
-            playerList.add(new Player(name));
+            }
+            playerList.add(new Player(name, name.substring(0, 2).toUpperCase()+i));
         }
         activeEffects = new ActiveEffects(playerList.size());
         nowPlaying = playerList.get(0);
 
         List<GodPower> allGodPowers = getGodPowerList();
 
-        System.out.print(playerList.get(0).getName() + " choose " + numOfPlayers + " god powers from the list: [");
+        System.out.print(playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")" + " choose " + numOfPlayers + " god powers from the list: [");
         System.out.print("1 - " + allGodPowers.get(0));
         for (int i = 1; i < allGodPowers.size(); i++) {
             System.out.print(", " + (i + 1) + " - " + allGodPowers.get(i));
@@ -50,10 +52,6 @@ public class GameLogic {
         for (int i = 1; i <= numOfPlayers; i++) {
             int index = scanner.nextInt();
             while (index <= 0 || index > allGodPowers.size() || selectedIndexes.contains(index - 1)) {
-                //DEBUG
-                System.out.println("index:" + index + " allgodpowers.zie:" + allGodPowers.size() +
-                        "contains?" + selectedIndexes.contains(index - 1));
-                //END DEBUG
                 System.out.println("God power index is not valid. Choose an index between 1 and " +
                         allGodPowers.size() + " and different from other chosen indexes");
                 index = scanner.nextInt();
@@ -64,7 +62,7 @@ public class GameLogic {
 
         for (int i = 0; i < numOfPlayers - 1; i++) {
             Player currPlayer = playerList.get(i + 1);
-            System.out.print(currPlayer.getName() + " choose your god power from the list: [");
+            System.out.print(currPlayer.getName() + "(" + currPlayer.getID() + ")" + " choose your god power from the list: [");
             System.out.print("1 - " + selectedGodPowers.get(0));
             for (int k = 1; k < selectedGodPowers.size(); k++) {
                 System.out.print(", " + (k + 1) + " - " + selectedGodPowers.get(k));
@@ -79,7 +77,7 @@ public class GameLogic {
             currPlayer.initializeGodPower(selectedGodPowers.get(selectedGodPowerIndex - 1));
             selectedGodPowers.remove(selectedGodPowerIndex - 1);
         }
-        System.out.println(playerList.get(0).getName() + " you got: " + selectedGodPowers);
+        System.out.println(playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")" + " you got: " + selectedGodPowers);
         playerList.get(0).initializeGodPower(selectedGodPowers.get(0));
     }
 
@@ -105,7 +103,7 @@ public class GameLogic {
 
         for (int i = 0; i < playerList.size(); i++) {
             Player currPlayer = playerList.get(i);
-            System.out.println(currPlayer.getName() + " it's your turn! Choose the position of your first worker");
+            System.out.println(currPlayer.getName() + "(" + currPlayer.getID() + ")" + " it's your turn! Choose the position of your first worker");
             pos1 = scanner.nextInt();
             x1 = pos1 % 5;
             y1 = pos1 / 5;
@@ -137,12 +135,30 @@ public class GameLogic {
 
     private boolean gameLoop() {
         boolean endGame = false;
+        TurnResult turnResult = nowPlaying.getGodPower().turnSequence(nowPlaying);
+        Player otherPlayer=playerList.get((playerList.indexOf(nowPlaying) + 1) % playerList.size());
 
-        endGame = nowPlaying.getGodPower().turnSequence(nowPlaying);
+        if(turnResult.equals(TurnResult.WIN)){
+            endGame = true;
+            manageVictory(nowPlaying);
+        }
+        else if(turnResult.equals(TurnResult.LOSE)){
+            if(playerList.size()==2){
+                manageVictory(otherPlayer);
+                endGame=true;
+            }
+            else{
+                manageLose(nowPlaying);
+                nowPlaying.getWorker1().getSpace().removeWorker();
+                nowPlaying.getWorker2().getSpace().removeWorker();
+                playerList.remove(nowPlaying);
+            }
+        }
+
         System.out.println();
         board.print();
         System.out.println();
-        nowPlaying = playerList.get((playerList.indexOf(nowPlaying) + 1) % playerList.size());
+        nowPlaying = otherPlayer;
         return endGame;
     }
 
@@ -153,10 +169,14 @@ public class GameLogic {
         while (!endGame) {
             endGame = gameLoop();
         }
-        manageVictory();
     }
 
-    private void manageVictory() {
+    private void manageVictory(Player player) {
+        System.out.println(player.getName() + " (" + player.getID() + ") won the Game! Congratulations!");
         System.out.println("Game ends.");
+    }
+
+    private void manageLose(Player player){
+        System.out.println(player.getName() + " (" + player.getID() + ") you Lost! You can't Move or Build.");
     }
 }
