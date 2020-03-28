@@ -15,6 +15,10 @@ public class Worker {
         return space;
     }
 
+    public void setSpace(Space space){
+        this.space=space;
+    }
+
     public void moveTo(Space space) {
         this.space.removeWorker();
         this.heightBeforeMove = this.space.getTowerHeight();

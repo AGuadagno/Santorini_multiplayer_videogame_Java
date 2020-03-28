@@ -12,7 +12,7 @@ public class Minotaur extends GodPower {
         for (Space space : worker.getSpace().getAdjacentSpaces()) {
 
             Space spaceSameDir = spaceSameDir(space, worker.getSpace());
-            if ((space.getWorker() == null || (spaceSameDir != null && spaceSameDir.getWorker() == null && !spaceSameDir.hasDome()))
+            if ((space.getWorker() == null || (space.getWorker().getPlayer()!=worker.getPlayer() && spaceSameDir != null && spaceSameDir.getWorker() == null && !spaceSameDir.hasDome()))
                     && space.getTowerHeight() - worker.getSpace().getTowerHeight() <= 1 && !space.hasDome()) {
                 validMovementSpaces.add(space);
             }
@@ -37,7 +37,7 @@ public class Minotaur extends GodPower {
         Space spaceSameDir = null;
         for (Space space : adiacentSpaces) {
             if (space.getX() == space1.getX() + dirX && space.getY() == space1.getY() + dirY) {
-                spaceSameDir = space2;
+                spaceSameDir = space;
                 break;
             }
         }

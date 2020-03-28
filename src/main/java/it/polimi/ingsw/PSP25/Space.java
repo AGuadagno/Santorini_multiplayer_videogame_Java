@@ -48,7 +48,8 @@ public class Space {
         return hasDoom;
     }
 
-    public void setWorker(Worker worker) {
+    public void setWorker(Worker worker) { ;
+        worker.setSpace(this);
         this.worker = worker;
     }
 
