@@ -6,8 +6,10 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class GodPower {
+    protected ActiveEffects activeEffects;
 
-    public GodPower() {
+    public GodPower(ActiveEffects activeEffects) {
+        this.activeEffects = activeEffects;
     }
 
     protected List<Space> getValidMovementSpaces(Worker worker) {
@@ -15,12 +17,16 @@ public class GodPower {
 
         for (Space space : worker.getSpace().getAdjacentSpaces()) {
 
-            if (space.getWorker() == null && space.getTowerHeight() - worker.getSpace().getTowerHeight() <= 1
-                    && !space.hasDome()) {
+            if (space.getWorker() == null && (space.getTowerHeight() - worker.getSpace().getTowerHeight() <= 1)
+                    && !space.hasDome() && activeEffects.canMove(worker, space)) {
                 validMovementSpaces.add(space);
             }
         }
         return validMovementSpaces;
+    }
+
+    public boolean canMove(Worker worker, Space space) {
+        return true;
     }
 
     public List<Space> getValidBuildSpaces(Worker worker) {
@@ -28,11 +34,20 @@ public class GodPower {
 
         for (Space space : worker.getSpace().getAdjacentSpaces()) {
 
-            if (space.getWorker() == null && !space.hasDome() && space.getTowerHeight() <= 3) {
+            if (space.getWorker() == null && !space.hasDome() && space.getTowerHeight() <= 3
+                    && activeEffects.canBuild(worker, space)) {
                 validBuildSpaces.add(space);
             }
         }
         return validBuildSpaces;
+    }
+
+    public boolean canBuild(Worker worker, Space space) {
+        return true;
+    }
+
+    public boolean canWin(Worker worker, Space space) {
+        return true;
     }
 
     protected void moveWorker(Worker worker, Space space) {
@@ -76,7 +91,7 @@ public class GodPower {
     }
 
     // Return true is someone wins
-    public TurnResult turnSequence(Player player) {
+    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) {
         List<Space> validMovementSpacesW1;
         List<Space> validMovementSpacesW2;
         List<Space> validBuildSpaces;
@@ -89,7 +104,11 @@ public class GodPower {
         validMovementSpacesW1 = getValidMovementSpaces(player.getWorker1());
         validMovementSpacesW2 = getValidMovementSpaces(player.getWorker2());
 
-        if(verifyLoseByMovement(validMovementSpacesW1, validMovementSpacesW2)){
+        //DEBUG
+        activeEffects.debugPrint();
+        //END DEBUG
+
+        if (verifyLoseByMovement(validMovementSpacesW1, validMovementSpacesW2)) {
             return TurnResult.LOSE;
         }
 
@@ -97,15 +116,13 @@ public class GodPower {
         // selectedWorker = ...
         // Player moves selected Worker in a valid space
         // TEMP
-        if(validMovementSpacesW1.size()==0){
+        if (validMovementSpacesW1.size() == 0) {
             System.out.println("Worker 1 can't move! Worker 2 is automatically selected");
-            workerchoice=2;
-        }
-        else if(validMovementSpacesW2.size()==0){
+            workerchoice = 2;
+        } else if (validMovementSpacesW2.size() == 0) {
             System.out.println("Worker 2 can't move! Worker 1 is automatically selected");
-            workerchoice=1;
-        }
-        else {
+            workerchoice = 1;
+        } else {
             System.out.println(player.getName() + "(" + player.getID() + ")" + ": Choose a worker");
             workerchoice = scanner.nextInt();
             while (workerchoice < 1 || workerchoice > 2) {
@@ -150,7 +167,7 @@ public class GodPower {
 
         moveWorker(selectedWorker, selectedMovementSpace);
 
-        if (verifyWin(selectedWorker) == true) {
+        if (activeEffects.canWin(selectedWorker, selectedMovementSpace) && verifyWin(selectedWorker) == true) {
             return TurnResult.WIN;
         }
 
@@ -177,8 +194,13 @@ public class GodPower {
         // END TEMP
         buildBlock(selectedBuildingSpace);
 
-        return TurnResult.CONTINUE;
+        addActiveEffects(activeEffects, player.getWorker1(), player.getWorker2(), selectedWorker);
 
+        return TurnResult.CONTINUE;
+    }
+
+    protected void addActiveEffects(ActiveEffects activeEffects, Worker worker1, Worker worker2, Worker selectedWorker) {
+        activeEffects.pushEffect(this);
     }
 
     @Override

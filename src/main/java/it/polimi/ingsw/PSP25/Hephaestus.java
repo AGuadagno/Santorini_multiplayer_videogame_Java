@@ -4,6 +4,10 @@ import java.util.Scanner;
 
 public class Hephaestus extends GodPower {
 
+    public Hephaestus(ActiveEffects activeEffects) {
+        super(activeEffects);
+    }
+
     @Override
     protected void buildBlock(Space space) {
         super.buildBlock(space);

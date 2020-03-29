@@ -37,9 +37,10 @@ public class GameLogic {
             playerList.add(new Player(name, name.substring(0, 2).toUpperCase()+i));
         }
         activeEffects = new ActiveEffects(playerList.size());
+        activeEffects.initializeEffects();
         nowPlaying = playerList.get(0);
 
-        List<GodPower> allGodPowers = getGodPowerList();
+        List<GodPower> allGodPowers = getGodPowerList(activeEffects);
 
         System.out.print(playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")" + " choose " + numOfPlayers + " god powers from the list: [");
         System.out.print("1 - " + allGodPowers.get(0));
@@ -81,17 +82,17 @@ public class GameLogic {
         playerList.get(0).initializeGodPower(selectedGodPowers.get(0));
     }
 
-    private List<GodPower> getGodPowerList() {
+    private List<GodPower> getGodPowerList(ActiveEffects activeEffects) {
         List<GodPower> godPowers = new ArrayList<GodPower>();
-        godPowers.add(new Apollo());
-        godPowers.add(new Artemis());
-        godPowers.add(new Athena());
-        godPowers.add(new Atlas());
-        godPowers.add(new Demeter());
-        godPowers.add(new Hephaestus());
-        godPowers.add(new Minotaur());
-        godPowers.add(new Pan());
-        godPowers.add(new Prometheus());
+        godPowers.add(new Apollo(activeEffects));
+        godPowers.add(new Artemis(activeEffects));
+        godPowers.add(new Athena(activeEffects));
+        godPowers.add(new Atlas(activeEffects));
+        godPowers.add(new Demeter(activeEffects));
+        godPowers.add(new Hephaestus(activeEffects));
+        godPowers.add(new Minotaur(activeEffects));
+        godPowers.add(new Pan(activeEffects));
+        godPowers.add(new Prometheus(activeEffects));
         return godPowers;
     }
 
@@ -135,17 +136,16 @@ public class GameLogic {
 
     private boolean gameLoop() {
         boolean endGame = false;
-        TurnResult turnResult = nowPlaying.getGodPower().turnSequence(nowPlaying);
-        Player otherPlayer=playerList.get((playerList.indexOf(nowPlaying) + 1) % playerList.size());
+        TurnResult turnResult = nowPlaying.getGodPower().turnSequence(nowPlaying, activeEffects);
+        Player otherPlayer = playerList.get((playerList.indexOf(nowPlaying) + 1) % playerList.size());
 
-        if(turnResult.equals(TurnResult.WIN)){
+        if (turnResult.equals(TurnResult.WIN)) {
             endGame = true;
             manageVictory(nowPlaying);
-        }
-        else if(turnResult.equals(TurnResult.LOSE)){
-            if(playerList.size()==2){
+        } else if (turnResult.equals(TurnResult.LOSE)) {
+            if (playerList.size() == 2) {
                 manageVictory(otherPlayer);
-                endGame=true;
+                endGame = true;
             }
             else{
                 manageLose(nowPlaying);
