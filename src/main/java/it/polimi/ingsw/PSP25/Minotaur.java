@@ -5,6 +5,10 @@ import java.util.List;
 
 public class Minotaur extends GodPower {
 
+    public Minotaur(ActiveEffects activeEffects) {
+        super(activeEffects);
+    }
+
     @Override
     protected List<Space> getValidMovementSpaces(Worker worker) {
         ArrayList<Space> validMovementSpaces = new ArrayList<Space>();
@@ -12,8 +16,10 @@ public class Minotaur extends GodPower {
         for (Space space : worker.getSpace().getAdjacentSpaces()) {
 
             Space spaceSameDir = spaceSameDir(space, worker.getSpace());
-            if ((space.getWorker() == null || (space.getWorker().getPlayer()!=worker.getPlayer() && spaceSameDir != null && spaceSameDir.getWorker() == null && !spaceSameDir.hasDome()))
-                    && space.getTowerHeight() - worker.getSpace().getTowerHeight() <= 1 && !space.hasDome()) {
+            if ((space.getWorker() == null || (space.getWorker().getPlayer() != worker.getPlayer()
+                    && spaceSameDir != null && spaceSameDir.getWorker() == null && !spaceSameDir.hasDome()))
+                    && space.getTowerHeight() - worker.getSpace().getTowerHeight() <= 1 && !space.hasDome()
+                    && activeEffects.canMove(worker, space)) {
                 validMovementSpaces.add(space);
             }
         }

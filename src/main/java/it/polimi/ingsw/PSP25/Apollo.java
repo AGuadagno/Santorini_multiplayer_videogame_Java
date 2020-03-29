@@ -5,11 +5,16 @@ import java.util.List;
 
 public class Apollo extends GodPower {
 
+    public Apollo(ActiveEffects activeEffects) {
+        super(activeEffects);
+    }
+
     @Override
     protected List<Space> getValidMovementSpaces(Worker worker) {
         ArrayList<Space> validMovementSpaces = new ArrayList<Space>();
         for (Space space : worker.getSpace().getAdjacentSpaces()) {
-            if (space.getTowerHeight() - worker.getSpace().getTowerHeight() <= 1 && !space.hasDome() && !space.equals(worker.getSpace())) {
+            if (space.getTowerHeight() - worker.getSpace().getTowerHeight() <= 1 && !space.hasDome()
+                    && !space.equals(worker.getSpace()) && activeEffects.canMove(worker, space)) {
                 validMovementSpaces.add(space);
             }
         }
