@@ -88,6 +88,7 @@ public class Artemis extends GodPower {
         // END TEMP
 
         moveWorker(selectedWorker, selectedMovementSpace);
+        return null;
     }
 }
 
