@@ -17,6 +17,7 @@ public class Artemis extends GodPower {
         List<Space> validMovementSpacesW1;
         List<Space> validMovementSpacesW2;
         List<Space> validBuildSpaces;
+        Space originalSpace;
         Worker selectedWorker;
         Scanner scanner = new Scanner(System.in);
         int workerchoice;
@@ -87,8 +88,75 @@ public class Artemis extends GodPower {
         }
         // END TEMP
 
+        originalSpace = selectedWorker.getSpace();
         moveWorker(selectedWorker, selectedMovementSpace);
-        return null;
+
+        if (activeEffects.canWin(selectedWorker, selectedMovementSpace) && verifyWin(selectedWorker) == true) {
+            return TurnResult.WIN;
+        }
+
+        List<Space> validSecondMovementSpaces = getValidMovementSpaces(selectedWorker);
+        validSecondMovementSpaces.remove(originalSpace);
+        String answer;
+        if(validSecondMovementSpaces.size()>0){
+            System.out.println("Do you want to move your Worker for the second time? y/n");
+            answer=scanner.next();
+            while(!answer.equals("y") && !answer.equals("n")){
+                System.out.println("Your choice is not valid! Choose again!");
+                answer=scanner.next();
+            }
+            if(answer.equals("y")) {
+                System.out.println(validSecondMovementSpaces.toString());
+                System.out.println(player.getName() + "(" + player.getID() + ")" + ": Choose movement space");
+                int chosenMovementSpace = scanner.nextInt();
+                while (!(validSecondMovementSpaces.stream().map(Space::getNumber).collect(Collectors.toList())).
+                        contains(chosenMovementSpace)) {
+                    System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
+                    chosenMovementSpace = scanner.nextInt();
+                }
+                int x = chosenMovementSpace % 5;
+                int y = chosenMovementSpace / 5;
+                for (Space space : validSecondMovementSpaces) {
+                    if (space.getX() == x && space.getY() == y)
+                        selectedMovementSpace = space;
+                }
+                moveWorker(selectedWorker, selectedMovementSpace);
+
+                if (activeEffects.canWin(selectedWorker, selectedMovementSpace) && verifyWin(selectedWorker) == true) {
+                    return TurnResult.WIN;
+                }
+            }
+        }
+
+
+
+        validBuildSpaces = getValidBuildSpaces(selectedWorker);
+        // Player builds in a valid space
+        // TEMP
+        if(verifyLoseByBuilding(validBuildSpaces)){
+            return TurnResult.LOSE;
+        }
+        System.out.println(validBuildSpaces.toString());
+        System.out.println(player.getName() + "(" + player.getID() + ")" + ": Choose building space");
+        int chosenBuildingSpace = scanner.nextInt();
+        while (!(validBuildSpaces.stream().map(Space::getNumber).collect(Collectors.toList())).
+                contains(chosenBuildingSpace)) {
+            System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
+            chosenBuildingSpace = scanner.nextInt();
+        }
+        int x = chosenBuildingSpace % 5;
+        int y = chosenBuildingSpace / 5;
+        for (Space space : validBuildSpaces) {
+            if (space.getX() == x && space.getY() == y)
+                selectedBuildingSpace = space;
+        }
+        // END TEMP
+        buildBlock(selectedBuildingSpace);
+
+        addActiveEffects(activeEffects, player.getWorker1(), player.getWorker2(), selectedWorker);
+
+        return TurnResult.CONTINUE;
+
     }
 }
 
