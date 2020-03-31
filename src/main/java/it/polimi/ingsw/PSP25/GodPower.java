@@ -64,16 +64,13 @@ public class GodPower {
     }
 
     protected boolean verifyWin(Worker worker) {
-
-        //TEMP
         if (worker.getHeightBeforeMove() == 2 && worker.getSpace().getTowerHeight() == 3) {
             return true;
         } else {
             return false;
         }
-        //END TEMP
-
     }
+
     protected boolean verifyLoseByMovement(List<Space> spacesW1, List<Space> spacesW2){
         if(spacesW1.size()==0 && spacesW2.size()==0) {
             return true;
