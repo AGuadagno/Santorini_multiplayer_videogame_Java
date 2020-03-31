@@ -28,7 +28,7 @@ public class Artemis extends GodPower {
         validMovementSpacesW2 = getValidMovementSpaces(player.getWorker2());
 
         //DEBUG
-        activeEffects.debugPrint();
+        //activeEffects.debugPrint();
         //END DEBUG
 
         if (verifyLoseByMovement(validMovementSpacesW1, validMovementSpacesW2)) {

@@ -8,8 +8,8 @@ public class Athena extends GodPower {
     @Override
     public boolean canMove(Worker worker, Space space) {
         //DEBUG
-        System.out.println("AthenaEffect.canMove() WorkerPos: " + worker.getSpace().getNumber() + " TargetSpace: " +
-                space.getNumber());
+        /*System.out.println("AthenaEffect.canMove() WorkerPos: " + worker.getSpace().getNumber() + " TargetSpace: " +
+                space.getNumber());*/
         //END DEBUG
         if (worker.getSpace().getTowerHeight() < space.getTowerHeight())
             return false;
