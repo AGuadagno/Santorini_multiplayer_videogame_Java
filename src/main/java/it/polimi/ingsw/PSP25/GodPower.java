@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class GodPower {
+
     protected ActiveEffects activeEffects;
 
     public GodPower(ActiveEffects activeEffects) {
@@ -16,12 +17,12 @@ public class GodPower {
         ArrayList<Space> validMovementSpaces = new ArrayList<Space>();
 
         for (Space space : worker.getSpace().getAdjacentSpaces()) {
-
             if (space.getWorker() == null && (space.getTowerHeight() - worker.getSpace().getTowerHeight() <= 1)
                     && !space.hasDome() && activeEffects.canMove(worker, space)) {
                 validMovementSpaces.add(space);
             }
         }
+
         return validMovementSpaces;
     }
 
@@ -90,31 +91,24 @@ public class GodPower {
         }
     }
 
-    // Return true is someone wins
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) {
         List<Space> validMovementSpacesW1;
         List<Space> validMovementSpacesW2;
         List<Space> validBuildSpaces;
-        Worker selectedWorker;
-        Scanner scanner = new Scanner(System.in);
         int workerchoice;
+        Worker selectedWorker;
         Space selectedMovementSpace = null;
         Space selectedBuildingSpace = null;
+        // Attributi temporanei
+        Scanner scanner = new Scanner(System.in);
 
         validMovementSpacesW1 = getValidMovementSpaces(player.getWorker1());
         validMovementSpacesW2 = getValidMovementSpaces(player.getWorker2());
-
-        //DEBUG
-        //activeEffects.debugPrint();
-        //END DEBUG
 
         if (verifyLoseByMovement(validMovementSpacesW1, validMovementSpacesW2)) {
             return TurnResult.LOSE;
         }
 
-        // Player selects a Worker
-        // selectedWorker = ...
-        // Player moves selected Worker in a valid space
         // TEMP
         if (validMovementSpacesW1.size() == 0) {
             System.out.println("Worker 1 can't move! Worker 2 is automatically selected");

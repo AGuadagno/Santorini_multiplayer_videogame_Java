@@ -11,10 +11,6 @@ public class Worker {
         this.player = player;
     }
 
-    public Space getSpace() {
-        return space;
-    }
-
     public void setSpace(Space space){
         this.space=space;
     }
@@ -26,12 +22,16 @@ public class Worker {
         this.space.setWorker(this);
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
     public void setHeightBeforeMove(int height) {
         this.heightBeforeMove = height;
+    }
+
+    public Space getSpace() {
+        return space;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public int getHeightBeforeMove() {
