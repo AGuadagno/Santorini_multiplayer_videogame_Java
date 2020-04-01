@@ -9,17 +9,17 @@ import java.util.List;
 public class Space {
     /**
      * Description of Attributes:
-     * x = column number of the space
-     * y = row number of the space
-     * towerHeight = high of the tower built on the Space
-     * hasDome = is true if the tower built on the Space has a dome
-     * worker = Worker positioned on the Space. null if the Space is not occupied by a Worker
-     * board = Board to which the Space belongs
+     * x: column number of the space
+     * y: row number of the space
+     * towerHeight: height of the tower built on the Space
+     * hasDome: is true if the tower built on the Space has a dome
+     * worker: Worker positioned on the Space. null if the Space is not occupied by a Worker
+     * board: Board to which the Space belongs
      */
     private final int x;
     private final int y;
     private int towerHeight;
-    private boolean hasDoom;
+    private boolean hasDome;
     private Worker worker;
     private static Board board;
 
@@ -30,7 +30,7 @@ public class Space {
      */
     public Space(int x, int y) {
         this.towerHeight = 0;
-        this.hasDoom = false;
+        this.hasDome = false;
         this.worker = null;
         this.x = x;
         this.y = y;
@@ -38,21 +38,22 @@ public class Space {
     }
 
     /**
-     * Increases towerHeight by 1
+     * Increases towerHeight by 1.
      */
     public void increaseTowerHeight() {
         this.towerHeight = this.towerHeight + 1;
     }
 
     /**
-     * Decreases towerHeight by 1
+     * Decreases towerHeight by 1.
      */
     public void decreaseTowerHeight() {
         this.towerHeight = this.towerHeight - 1;
     }
 
     /**
-     * Sets the new value of towerHeight
+     * Sets the new value of towerHeight.
+     *
      * @param towerHeight the new value of towerHeight
      */
     public void setTowerHeight(int towerHeight) {
@@ -67,29 +68,30 @@ public class Space {
     }
 
     /**
-     * Adds dome to the tower
+     * Adds dome to the tower.
      */
     public void addDome() {
-        this.hasDoom = true;
+        this.hasDome = true;
     }
 
     /**
-     * Removes dome to the tower
+     * Removes dome to the tower.
      */
     public void removeDome() {
-        this.hasDoom = false;
+        this.hasDome = false;
     }
 
     /**
-     * @return true only if the tower has the dome
+     * @return true only if the tower has a dome
      */
     public boolean hasDome() {
-        return hasDoom;
+        return hasDome;
     }
 
     /**
-     * Modifies the Attribute "worker" in Space.
-     * Used to link a Space to a Worker
+     * Modifies the Attribute "worker" in Space,
+     * used to link a Space to a Worker.
+     *
      * @param worker Worker positioned on the Space
      */
     public void setWorker(Worker worker) { ;
@@ -127,7 +129,7 @@ public class Space {
     }
 
     /**
-     * @return the 8 spaces directly connected to the Space, the 8 spaces surrounding our
+     * @return the 8 spaces directly connected to the Space, the 8 spaces surrounding it
      */
     public List<Space> getAdjacentSpaces() {
         ArrayList<Space> adjacentSpaces = new ArrayList<Space>();
@@ -151,16 +153,16 @@ public class Space {
     }
 
     /**
-     * @return the space number.
-     * The Space at the top left of the board is Space number 8,
-     * the Space at the bottom right of the board is Space number 24
+     * @return the space number
+     * The Space at the top left of the board is Space number 0,
+     * the Space at the bottom right of the board is Space number 24.
      */
     public int getNumber() {
         return 5 * y + x;
     }
 
     /**
-     * Remove the Worker who is positioned on the Space settings the attribute "worker" to null
+     * Removes the Worker which is positioned on the Space setting the attribute "worker" to null
      */
     public void removeWorker() {
         worker = null;

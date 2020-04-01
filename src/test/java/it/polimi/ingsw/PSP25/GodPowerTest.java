@@ -379,8 +379,5 @@ public class GodPowerTest {
         String expectedString2 = "GodPower";
         assertEquals(GP2.toString(), expectedString2);
     }
-
-
-
 }
 

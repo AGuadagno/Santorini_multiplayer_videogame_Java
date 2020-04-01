@@ -8,16 +8,17 @@ import java.util.stream.Collectors;
 /**
  * God Power class. This class represents the class "Strategy" in a Strategy Pattern in which specific Gods (Athena, Apollo, Artemis etc)
  * are the Concrete Strategies and Player is the Context.
- * Using methods in GodPower (or Overridden methods in extension of God Power) Workers can move, build ecc.
+ * Workers can move, build, check the victory by using the methods in GodPower
+ * (or Overridden methods in the extensions of God Power)
  */
 public class GodPower {
 
     /**
      * Description of Attributes:
-     * activeEffects = this array can contain GodPower Objects or objects belonging to GodPower sub-classes.
-     * acgiveEffects it's use to memorize Godpower effects that influence opponent players action during their turn.
+     * activeEffects: this array can contain GodPower Objects or objects belonging to GodPower sub-classes.
+     * activeEffects it's use to memorize GodPower effects that influence the opponent players' actions during their turn.
      * For Example, if one of the workers of the player who has Athena as God Power moves up, we put an Object "Athena"
-     * in activeEffects to prevent the move up of Workers controlled by opponent players during their turn.
+     * in activeEffects to prevent Workers controlled by opponent players from moving up during their turn.
      */
     protected ActiveEffects activeEffects;
 
@@ -31,8 +32,10 @@ public class GodPower {
     }
 
     /**
-     * @param worker Worker we want to know Spaces in which he can move
-     * @return List of possible Spaces where the Worker passed as argument can move
+     * It's overridden in subclasses to specify special movement behaviours
+     *
+     * @param worker the Worker we want to know Spaces to which he can move
+     * @return List of possible Spaces where the Worker passed as argument can move to
      */
     protected List<Space> getValidMovementSpaces(Worker worker) {
         ArrayList<Space> validMovementSpaces = new ArrayList<Space>();
@@ -48,16 +51,18 @@ public class GodPower {
     }
 
     /**
-     * canMove it's overridden in subclasses of GodPower to specify gods effect that are active during opponents turn
-     * @param worker worker we want to know if he can move in Space
-     * @param space Space where we want to know if the Worker can move
-     * @return true if the movement is valid.
+     * canMove it's overridden in subclasses of GodPower to specify gods effects that are active during opponents' turns
+     *
+     * @param worker the opponent's Worker that we want to know if he can move to Space
+     * @param space  Space where we want to know if the worker can move
+     * @return true if the movement is valid according to the GodPower's effect
      */
     public boolean canMove(Worker worker, Space space) {
         return true;
     }
 
     /**
+     * It's overridden in subclasses to specify special building behaviours
      * @param worker we want to know Spaces in which he can build
      * @return List of possible Spaces where the Worker passed as argument can build
      */
@@ -95,7 +100,7 @@ public class GodPower {
     }
 
     /**
-     * Moves Worker in Space
+     * Moves worker to space without restrictions
      * @param worker Worker we want to move
      * @param space Space where we want to move the Worker
      */
@@ -104,7 +109,7 @@ public class GodPower {
     }
 
     /**
-     * Build a Block in Space increasing towerHeight or building a dome
+     * Builds a Block in Space without restrictions increasing towerHeight or building a dome if the space has towerHeight = 3
      * @param space Space where we want to build a Block
      */
     protected void buildBlock(Space space) {
@@ -116,6 +121,7 @@ public class GodPower {
     }
 
     /**
+     * Verifies if the movement already done by the worker has caused the player to win
      * @param worker Worker whose movement can make his player win
      * @return true if the Player who controls worker wins
      */
@@ -130,7 +136,7 @@ public class GodPower {
     /**
      * @param spacesW1 List of possible spaces where worker 1 can move
      * @param spacesW2 List of possible spaces where worker 2 can move
-     * @return true if both worker 1 and worker 2 can't move and the player who controls the 2 workers has lost
+     * @return true if both worker 1 and worker 2 can't move and the player who controls the two workers has lost
      */
 
     protected boolean verifyLoseByMovement(List<Space> spacesW1, List<Space> spacesW2){
@@ -164,8 +170,10 @@ public class GodPower {
      * specific godPower overrides this method to change the sequence of actions in a turn
      * (for example, in order to move twice or build twice, to build before the first move etc.)
      * @param player playing the round
-     * @param activeEffects array containing opponent god power effects that influence opponents turn
-     * @return
+     * @param activeEffects array containing opponent god power effects that may influence this turn
+     * @return TurnResult.LOSE if the player has lost during this turn
+     *          TurnResult.WIN if the player has won during this turn
+     *          TurnResult.CONTINUE if the player hasn't lost or won during this turn
      */
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) {
         List<Space> validMovementSpacesW1;
@@ -274,8 +282,8 @@ public class GodPower {
     }
 
     /**
-     * @return a String containing the GodPower name
-     * (for example toString can return "Athena", "Artemis", "Apollo" etc.)
+     * @return String containing the GodPower name
+     * (for example toString can return "Athena", "Artemis", "Apollo" etc. in subclasses)
      */
     @Override
     public String toString() {

@@ -7,12 +7,13 @@ public class Player {
 
     /**
      * Description of Attributes:
-     * name = contains the name of the Player
-     * ID = contains the ID of the player. The ID is automatically generated using the name of the player and the player number
-     * workers1 = contains the first worker controlled by the Player
-     * worker2 = contains the second worker controlled by the Player
-     * godPower = contains the GodPower of the Player
-     * playerNumber = contains the number of the Player. Different players have different player numbers
+     * name: contains the name of the Player
+     * ID: contains the ID of the player. The ID is automatically generated
+     * using the name of the player and the player number
+     * worker1: contains the first worker controlled by the Player
+     * worker2: contains the second worker controlled by the Player
+     * godPower: contains the GodPower of the Player
+     * playerNumber: contains the number of the Player. Different players have different player numbers
      */
 
     private String name;
@@ -23,9 +24,10 @@ public class Player {
     private int playerNumber;
 
     /**
-     * Player Constructor
-     * @param name contains the name of the Player. The name is chosen by the user
-     * @param playerNumber contains the number of the Player. The number of the player is given by the program
+     * Player constructor
+     *
+     * @param name         contains the name of the Player. The name is chosen by the user
+     * @param playerNumber contains the number of the Player. The number of the player is assigned by the caller
      */
     public Player(String name, int playerNumber) {
         this.name = name;
@@ -48,7 +50,7 @@ public class Player {
     }
 
     /**
-     * Sets the initial position of the 2 workers of the Player.
+     * Sets the initial position of the two workers of the Player.
      * @param space1 Space where the first Worker of the Player will be positioned
      * @param space2 Space where the second Worker of the Player will be positioned
      */

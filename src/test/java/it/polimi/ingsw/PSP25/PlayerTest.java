@@ -26,7 +26,7 @@ public class PlayerTest {
 
     @Test
     public void getID_correctOutput(){
-        assertEquals(player.getID(), "De1");
+        assertEquals(player.getID(), "DE1");
     }
 
     @Test

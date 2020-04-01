@@ -3,7 +3,7 @@ package it.polimi.ingsw.PSP25;
 import java.lang.*;
 
 /**
- * Class Board. Board is the playground and it's made of 25 spaces organized in a 5x5 matrix
+ * Class Board. Board is the playground and it's made of 25 spaces organized in a 5x5 matrix.
  */
 public class Board {
     private Space[][] spaceMatrix = new Space[5][5];
@@ -29,8 +29,9 @@ public class Board {
     }
 
     /**
-     * Prints the Board. In each space this method specifies the number of the Space, the tower height (eventually with the dome)
-     * and, if the Space is occupied by a Worker, the ID of the player who controls the Worker and the worker number (worker 1 or worker 2)
+     * Prints the Board. In each space this method specifies the number of the Space,
+     * the tower height (eventually with the dome) and, if the Space is occupied by a Worker,
+     * the ID of the player who controls the Worker and the worker number (worker 1 or worker 2).
      */
     public void print() {
         for (int i = 0; i < 5; i++) {
@@ -45,7 +46,8 @@ public class Board {
                 int cellNum = (5 * i) + j;
 
                 rowLines[1].append("|" + cellNum + (cellNum < 10 ? "        " : "       "));
-                rowLines[2].append("|   H:" + spaceMatrix[i][j].getTowerHeight() + (spaceMatrix[i][j].hasDome() ? " D " : "   "));
+                rowLines[2].append("|   H:" + spaceMatrix[i][j].getTowerHeight() +
+                        (spaceMatrix[i][j].hasDome() ? " D " : "   "));
                 rowLines[3].append("|   ");
                 rowLines[4].append("|   ");
                 if (spaceMatrix[i][j].hasWorker()) {

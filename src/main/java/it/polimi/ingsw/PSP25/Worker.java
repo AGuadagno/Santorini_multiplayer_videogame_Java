@@ -1,24 +1,25 @@
 package it.polimi.ingsw.PSP25;
 
 /**
- * Worker Class. Each Player controls 2 Workers.
+ * Worker Class. Each Player controls two Workers.
  */
 public class Worker {
 
     /**
      * Description of Attributes:
-     * space = contains the Space where the Worker is positioned in the Board
-     * heightBeforeMove = contains the height of the tower of the Space where the Worker was previously positioned
+     * space: contains the Space where the Worker is positioned in the Board
+     * heightBeforeMove: contains the height of the tower of the Space where the Worker was previously positioned,
      * heightBeforeMove is used to verify win conditions
-     * player = contains the Player who controls the Worker
+     * player: contains the Player who controls the Worker
      */
     private Space space;
     private int heightBeforeMove;
     private Player player;
 
     /**
-     * Worker Class Constructor
-     * @param space Space where the Worker will be positioned at the beginning of the game
+     * Worker class constructor
+     *
+     * @param space  Space where the Worker will be positioned at the beginning of the game
      * @param player Player who controls the Worker
      */
     public Worker(Space space, Player player) {
@@ -28,17 +29,17 @@ public class Worker {
     }
 
     /**
-     * Modifies the Attribute "space" in Worker.
-     * Used to link a Worker to a Space
-     * @param space Space where the Workers will be positioned
+     * Modifies the Attribute "space" in Worker,
+     * used to link a Worker to a Space
+     * @param space Space where the Worker will be positioned
      */
     public void setSpace(Space space){
         this.space=space;
     }
 
     /**
-     * Moves the Worker in a given Space
-     * Updates heightBeforeMove and Worker reference in Space
+     * Moves the Worker in a given Space, removing the Worker from its original Space,
+     * updates heightBeforeMove and Worker reference in the new given Space.
      * @param space Space where the Worker will be positioned
      */
     public void moveTo(Space space) {
