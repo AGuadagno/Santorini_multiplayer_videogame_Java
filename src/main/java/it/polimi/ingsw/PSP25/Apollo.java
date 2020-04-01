@@ -28,8 +28,9 @@ public class Apollo extends GodPower {
     protected List<Space> getValidMovementSpaces(Worker worker) {
         ArrayList<Space> validMovementSpaces = new ArrayList<Space>();
         for (Space space : worker.getSpace().getAdjacentSpaces()) {
-            if (space.getTowerHeight() - worker.getSpace().getTowerHeight() <= 1 && !space.hasDome()
-                    && !space.equals(worker.getSpace()) && activeEffects.canMove(worker, space)) {
+            if ((!space.hasWorker() || !space.getWorker().getPlayer().equals(worker.getPlayer())) &&
+                    space.getTowerHeight() - worker.getSpace().getTowerHeight() <= 1 && !space.hasDome()
+                     && activeEffects.canMove(worker, space)) {
                 validMovementSpaces.add(space);
             }
         }
