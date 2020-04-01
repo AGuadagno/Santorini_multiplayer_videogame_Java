@@ -34,7 +34,7 @@ public class GameLogic {
                 System.out.println("Player " + i + " your name it's too short. Enter another name (2 Characters or more): ");
                 name = scanner.next();
             }
-            playerList.add(new Player(name, name.substring(0, 2).toUpperCase()+i));
+            playerList.add(new Player(name, i));
         }
         activeEffects = new ActiveEffects(playerList.size());
         activeEffects.initializeEffects();

@@ -2,9 +2,15 @@ package it.polimi.ingsw.PSP25;
 
 import java.lang.*;
 
+/**
+ * Class Board. Board is the playground and it's made of 25 spaces organized in a 5x5 matrix
+ */
 public class Board {
     private Space[][] spaceMatrix = new Space[5][5];
 
+    /**
+     * Board Constructor.
+     */
     public Board() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -13,10 +19,19 @@ public class Board {
         }
     }
 
+    /**
+     * @param x Space column number
+     * @param y Space row number
+     * @return the Space in column x and row y
+     */
     public Space getSpace(int x, int y) {
         return spaceMatrix[y][x];
     }
 
+    /**
+     * Prints the Board. In each space this method specifies the number of the Space, the tower height (eventually with the dome)
+     * and, if the Space is occupied by a Worker, the ID of the player who controls the Worker and the worker number (worker 1 or worker 2)
+     */
     public void print() {
         for (int i = 0; i < 5; i++) {
             StringBuilder[] rowLines = new StringBuilder[5];

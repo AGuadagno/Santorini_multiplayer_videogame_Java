@@ -15,7 +15,7 @@ public class WorkerTest {
     public void setUp() throws Exception {
         space = new Space(0, 0);
         space2 = new Space(1, 1);
-        player = new Player("Jerry", "Je1");
+        player = new Player("Jerry", 1);
         worker = new Worker(space, player);
     }
 

@@ -57,7 +57,7 @@ public class SpaceTest {
 
     @Test
     public void setWorker_getWorker_Test(){
-        Worker w = new Worker(space, new Player("Nome", "No1"));
+        Worker w = new Worker(space, new Player("Nome", 1));
         space.setWorker(w);
         assertEquals(space.getWorker(), w);
     }
@@ -119,15 +119,13 @@ public class SpaceTest {
         l3.add((b.getSpace(3,3)));
         assertTrue(space3.getAdjacentSpaces().containsAll(l3) && l3.size() == 8);
 
-
-
     }
 
 
 
     @Test
     public void hasWorker_Test2(){
-        Worker w = new Worker(space, new Player("Nome", "No1"));
+        Worker w = new Worker(space, new Player("Nome", 1));
         space.setWorker(w);
         assertTrue(space.hasWorker());
     }
