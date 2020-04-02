@@ -22,7 +22,7 @@ public class Apollo extends GodPower {
      * "Your Worker may move into an opponent Worker’s space by forcing their Worker to the space  yours just vacated."
      * Adjacent spaces occupied by opponent workers are considered valid movement spaces.
      * @param worker Worker we want to know Spaces in which he can move
-     * @return
+     * @return List of possible Spaces where the Worker passed as argument can move to
      */
     @Override
     protected List<Space> getValidMovementSpaces(Worker worker) {

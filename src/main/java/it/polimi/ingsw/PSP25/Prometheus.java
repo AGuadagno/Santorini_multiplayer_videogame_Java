@@ -5,11 +5,30 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * Prometheus class
+ */
 public class Prometheus extends GodPower {
+
+    /**
+     * Prometheus constructor
+     * @param activeEffects list of opponent GodPower effect active in our turn that could limit movement,
+     *                      building action or winning conditions of our player
+     */
     public Prometheus(ActiveEffects activeEffects) {
         super(activeEffects);
     }
 
+    /**
+     * Override of "turnSequence" according to Prometheus effect:
+     * "If your Worker does not move up, it may build both before and after moving"
+     * the turn sequence is modified and the player is asked if he wants to build before move.
+     * @param player playing the round
+     * @param activeEffects array containing opponent god power effects that may influence this turn
+     * @return TurnResult.LOSE if the player has lost during this turn
+     *         TurnResult.WIN if the player has won during this turn
+     *         TurnResult.CONTINUE if the player hasn't lost or won during this turn
+     */
     @Override
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) {
         List<Space> validMovementSpacesW1;

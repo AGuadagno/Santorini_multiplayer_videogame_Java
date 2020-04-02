@@ -5,13 +5,31 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * Artemis Class.
+ */
 public class Artemis extends GodPower {
+
+    /**
+     * Artemis constructor
+     * @param activeEffects list of opponent GodPower effect active in our turn that could limit movement,
+     *                      building action or winning conditions of our player
+     */
     public Artemis(ActiveEffects activeEffects) {
         super(activeEffects);
     }
 
-    // OVERVIEW: I tuoi lavoratori possono muoversi una volta in più, ma non tornare nello spazio iniziale
-
+    /**
+     * Override of "turnSequence" according to Artemis effect:
+     * "Your Worker may move one additional time, but not back to its initial space."
+     * We ask to the player if he wants to move a second time. If the answer is yes, we call "getValidMovementSpaces"
+     * for a second time. The original space where the worker was positioned is not included in the second valid spaces list.
+     * @param player playing the round
+     * @param activeEffects array containing opponent god power effects that may influence this turn
+     * @return TurnResult.LOSE if the player has lost during this turn
+     *         TurnResult.WIN if the player has won during this turn
+     *         TurnResult.CONTINUE if the player hasn't lost or won during this turn
+     */
     @Override
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) {
         List<Space> validMovementSpacesW1;

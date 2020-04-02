@@ -102,7 +102,7 @@ public class GodPower {
     /**
      * Moves worker to space without restrictions
      * @param worker Worker we want to move
-     * @param space Space where we want to move the Worker
+     * @param space Space where the player wants to move the Worker
      */
     protected void moveWorker(Worker worker, Space space) {
         worker.moveTo(space);
@@ -110,7 +110,7 @@ public class GodPower {
 
     /**
      * Builds a Block in Space without restrictions increasing towerHeight or building a dome if the space has towerHeight = 3
-     * @param space Space where we want to build a Block
+     * @param space Space where we the player wants to build a Block
      */
     protected void buildBlock(Space space) {
         if (space.getTowerHeight() == 3) {
@@ -172,8 +172,8 @@ public class GodPower {
      * @param player playing the round
      * @param activeEffects array containing opponent god power effects that may influence this turn
      * @return TurnResult.LOSE if the player has lost during this turn
-     *          TurnResult.WIN if the player has won during this turn
-     *          TurnResult.CONTINUE if the player hasn't lost or won during this turn
+     *         TurnResult.WIN if the player has won during this turn
+     *         TurnResult.CONTINUE if the player hasn't lost or won during this turn
      */
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) {
         List<Space> validMovementSpacesW1;
