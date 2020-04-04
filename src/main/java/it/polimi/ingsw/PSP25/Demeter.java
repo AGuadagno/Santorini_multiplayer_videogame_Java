@@ -5,13 +5,14 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /**
- * Demeter Class.
+ * Demeter class
  */
 public class Demeter extends GodPower {
 
     /**
      * Demeter constructor
-     * @param activeEffects list of opponent GodPower effect active in our turn that could limit movement,
+     *
+     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
      *                      building action or winning conditions of our player
      */
     public Demeter(ActiveEffects activeEffects) {
@@ -19,11 +20,11 @@ public class Demeter extends GodPower {
     }
 
     /**
-     * Override of "turnSequence" according to Demeter effect:
-     * "Your Worker may build one additional time, but not on the same space"
-     * We ask to the player if he wants to build for a second time. If the answer is yes,
-     * we call methods for construction for a second time.
-     * @param player playing the round
+     * Override of "turnSequence" according to Demeter's effect:
+     * "Your Worker may build one additional time, but not on the same space".
+     * We ask to the player if he wants to build for a second time.
+     * If the answer is yes, we call methods for construction a second time.
+     * @param player playing the turn
      * @param activeEffects array containing opponent god power effects that may influence this turn
      * @return TurnResult.LOSE if the player has lost during this turn
      *         TurnResult.WIN if the player has won during this turn

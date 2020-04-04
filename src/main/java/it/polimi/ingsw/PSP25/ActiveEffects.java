@@ -5,14 +5,14 @@ import java.util.List;
 
 /**
  * ActiveEffects Class.
- * ActiveEffects manages "effectList", an array containing players GodPower which effect influences opponents turn.
+ * ActiveEffects manages "effectList", an array containing players GodPower which effect influences opponent turns.
  * For Example, if one of the workers of the player who has Athena as God Power moves up, we put an Object "Athena"
  * in effectList to prevent the move up of Workers controlled by opponent players during their turn.
  * effectList size is (numOfPlayers-1) so that GodPower which effect influences opponents turn are active only during
  * opponent turn and only for 1 turn for each opponent player.
  * effectList is used as a stack. During each players turn, an effect is added in position 0 and the effect in position
- * (numOfPlayers-1) is removed. If the player GodPower does not influence opponent turn, a generic object belonging to the class
- * GodPower is added to effectList.
+ * (numOfPlayers-1) is removed. If the player GodPower does not influence opponent turn,
+ * a generic object belonging to the class GodPower is added to effectList.
  */
 public class ActiveEffects {
     private List<GodPower> effectsList;
@@ -29,7 +29,7 @@ public class ActiveEffects {
     }
 
     /**
-     * Initialize effectsList adding generic GodPower Objects which do not influence players' turns.
+     * Initialize effectsList adding generic GodPower Objects which do not influence player turns.
      * GodPower objects are added to avoid null pointer exceptions.
      */
     public void initializeEffects() {

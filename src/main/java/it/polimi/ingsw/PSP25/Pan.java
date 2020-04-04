@@ -1,13 +1,14 @@
 package it.polimi.ingsw.PSP25;
 
 /**
- * Pan Class
+ * Pan class
  */
 public class Pan extends GodPower {
 
     /**
      * Pan constructor
-     * @param activeEffects list of opponent GodPower effect active in our turn that could limit movement,
+     *
+     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
      *                      building action or winning conditions of our player
      */
     public Pan(ActiveEffects activeEffects) {
@@ -15,10 +16,10 @@ public class Pan extends GodPower {
     }
 
     /**
-     * Override of "verifyWin" according to Pan effect:
+     * Override of "verifyWin" according to Pan's effect:
      * "You also win if your Worker moves down two or more levels"
-     * Controls if the moved worker moves down two or more levels.
-     * super.verifyWin(worker) it's used because also normal winning conditions are valid.
+     * Controls if the moved worker moves down two or more levels,
+     * super.verifyWin(worker) it's used because normal winning conditions are also valid.
      * @param worker Worker whose movement can make his player win
      * @return true if the winning condition is verified
      */

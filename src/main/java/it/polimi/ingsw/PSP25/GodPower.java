@@ -51,7 +51,7 @@ public class GodPower {
     }
 
     /**
-     * canMove it's overridden in subclasses of GodPower to specify gods effects that are active during opponents' turns
+     * canMove is overridden in subclasses of GodPower to specify god effects that are active during opponents' turns
      *
      * @param worker the opponent's Worker that we want to know if he can move to Space
      * @param space  Space where we want to know if the worker can move
@@ -101,8 +101,9 @@ public class GodPower {
 
     /**
      * Moves worker to space without restrictions
-     * @param worker Worker we want to move
-     * @param space Space where the player wants to move the Worker
+     *
+     * @param worker Worker that the player wants to move
+     * @param space  Space where the player wants to move the Worker
      */
     protected void moveWorker(Worker worker, Space space) {
         worker.moveTo(space);

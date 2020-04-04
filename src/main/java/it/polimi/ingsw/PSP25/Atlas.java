@@ -3,13 +3,14 @@ package it.polimi.ingsw.PSP25;
 import java.util.Scanner;
 
 /**
- * Atlas Class.
+ * Atlas class
  */
 public class Atlas extends GodPower {
 
     /**
      * Atlas constructor
-     * @param activeEffects list of opponent GodPower effect active in our turn that could limit movement,
+     *
+     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
      *                      building action or winning conditions of our player
      */
     public Atlas(ActiveEffects activeEffects) {
@@ -17,10 +18,10 @@ public class Atlas extends GodPower {
     }
 
     /**
-     * Override of "buildBlock" according to Atlas effect:
+     * Override of "buildBlock" according to Atlas' effect:
      * "Your Worker may build a dome at any level."
-     * We ask to the player if he want to build a block or a dome. If he choose 'b',
-     * we build a block, if the choose 'd' we build a dome
+     * We ask to the player if he want to build a block or a dome. If he chooses 'b',
+     * we build a block, if the chooses 'd', we build a dome
      * @param space Space where the player wants to build a Block or a Dome
      */
     @Override

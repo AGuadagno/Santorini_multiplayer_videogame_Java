@@ -3,13 +3,14 @@ package it.polimi.ingsw.PSP25;
 import java.util.Scanner;
 
 /**
- * Hephaestus Class.
+ * Hephaestus class
  */
 public class Hephaestus extends GodPower {
 
     /**
      * Hephaestus constructor
-     * @param activeEffects list of opponent GodPower effect active in our turn that could limit movement,
+     *
+     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
      *                      building action or winning conditions of our player
      */
     public Hephaestus(ActiveEffects activeEffects) {
@@ -17,10 +18,10 @@ public class Hephaestus extends GodPower {
     }
 
     /**
-     * Override of "buildBlock" according to Hephaestus effect:
-     * "Your Worker may build one additional block (not dome) on top of your first block"
-     * If the answer is 'yes', the methods that increases the tower height is called twice.
-     * @param space Space where we the player wants to build a Block
+     * Override of "buildBlock" according to Hephaestus' effect:
+     * "Your Worker may build one additional block (not dome) on top of your first block".
+     * If the answer is 'yes', the methods that increase the tower height are called twice.
+     * @param space Space where the player wants to build a Block
      */
     @Override
     protected void buildBlock(Space space) {
@@ -35,5 +36,4 @@ public class Hephaestus extends GodPower {
                 space.increaseTowerHeight();
         }
     }
-
 }

@@ -6,26 +6,28 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /**
- * Artemis Class.
+ * Artemis class
  */
 public class Artemis extends GodPower {
 
     /**
      * Artemis constructor
-     * @param activeEffects list of opponent GodPower effect active in our turn that could limit movement,
-     *                      building action or winning conditions of our player
+     *
+     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
+     *                      building actions or winning conditions of our player
      */
     public Artemis(ActiveEffects activeEffects) {
         super(activeEffects);
     }
 
     /**
-     * Override of "turnSequence" according to Artemis effect:
-     * "Your Worker may move one additional time, but not back to its initial space."
-     * We ask to the player if he wants to move a second time. If the answer is yes, we call "getValidMovementSpaces"
-     * for a second time. The original space where the worker was positioned is not included in the second valid spaces list.
-     * @param player playing the round
-     * @param activeEffects array containing opponent god power effects that may influence this turn
+     * Override of "turnSequence" according to Artemis' effect:
+     * "Your Worker may move one additional time, but not back to its initial space.".
+     * We ask to the player if he wants to move a second time,
+     * if the answer is yes, we call "getValidMovementSpaces" for a second time.
+     * The original space where the worker was positioned is not included in the second valid spaces list.
+     * @param player playing the turn
+     * @param activeEffects array containing opponents' god powers' effects that may influence this turn
      * @return TurnResult.LOSE if the player has lost during this turn
      *         TurnResult.WIN if the player has won during this turn
      *         TurnResult.CONTINUE if the player hasn't lost or won during this turn
@@ -174,8 +176,5 @@ public class Artemis extends GodPower {
         addActiveEffects(activeEffects, player.getWorker1(), player.getWorker2(), selectedWorker);
 
         return TurnResult.CONTINUE;
-
     }
 }
-
-
