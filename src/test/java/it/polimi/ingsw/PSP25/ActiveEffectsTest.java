@@ -21,7 +21,6 @@ public class ActiveEffectsTest {
         b.getSpace(0,0).setBoard(b);
         p = new Player("Nome", 1);
         w = new Worker(b.getSpace(1,1), p);
-
     }
 
     @After
