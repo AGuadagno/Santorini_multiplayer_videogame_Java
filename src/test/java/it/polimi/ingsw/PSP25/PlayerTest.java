@@ -1,8 +1,13 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.net.Socket;
+
 import static org.junit.Assert.*;
 
 public class PlayerTest {
@@ -11,7 +16,7 @@ public class PlayerTest {
 
     @Before
     public void setup(){
-        player = new Player("Demo", 1);
+        player = new Player("Demo", 1, new ClientHandler(new Socket(), new Lobby()));
     }
 
     @After

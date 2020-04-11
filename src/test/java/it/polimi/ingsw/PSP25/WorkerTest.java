@@ -1,7 +1,11 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.net.Socket;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +19,7 @@ public class WorkerTest {
     public void setUp() throws Exception {
         space = new Space(0, 0);
         space2 = new Space(1, 1);
-        player = new Player("Jerry", 1);
+        player = new Player("Jerry", 1, new ClientHandler(new Socket(), new Lobby()));
         worker = new Worker(space, player);
     }
 

@@ -1,9 +1,12 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +34,9 @@ public class GodPowerTest {
         b = new Board();
         demoSpace = b.getSpace(3, 3);
         demoSpace.setBoard(b);
-        demoPlayer = new Player("Name", 1);
+        demoPlayer = new Player("Name", 1, new ClientHandler(new Socket(), new Lobby()));
         demoWorker = new Worker(demoSpace, demoPlayer);
-        demoPlayer2 = new Player("Name", 2);
+        demoPlayer2 = new Player("Name", 2, new ClientHandler(new Socket(), new Lobby()));
         demoSpace.setWorker(demoWorker);
     }
 

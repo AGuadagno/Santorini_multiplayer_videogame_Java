@@ -1,48 +1,51 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static it.polimi.ingsw.PSP25.Server.Utilities.deepCopyGodPowerNames;
 
 public class GameLogic {
     private ActiveEffects activeEffects;
     private Board board;
     private List<Player> playerList;
     private Player nowPlaying;
+    private List<ClientHandler> clientHandlerList;
 
-    public GameLogic() {
+    public GameLogic(List<ClientHandler> clientHandlerList) {
         board = new Board();
         board.getSpace(0, 0).setBoard(board);
         playerList = new ArrayList<Player>();
+        this.clientHandlerList = clientHandlerList;
     }
 
     private void playerInitialization() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("The game begins.");
-        int numOfPlayers;
+        int numOfPlayers = clientHandlerList.size();
 
-        do {
-            System.out.println("Choose the number of players (2 or 3): ");
-            numOfPlayers = scanner.nextInt();
-        } while (numOfPlayers < 2 || numOfPlayers > 3);
+        //DEBUG
+        System.out.println("GameLogic: numOfPlayers = " + numOfPlayers);
 
         for (int i = 1; i <= numOfPlayers; i++) {
-            String name;
-            System.out.println("Player " + i + " enter your name (2 Characters or more): ");
-            name = scanner.next();
-            while(name.length() < 2){
-                System.out.println("Player " + i + " your name it's too short. Enter another name (2 Characters or more): ");
-                name = scanner.next();
-            }
-            playerList.add(new Player(name, i));
+            String name = clientHandlerList.get(i - 1).askName(i);
+
+            //DEBUG
+            System.out.println("GameLogic: player " + i + " name = " + name);
+
+            playerList.add(new Player(name, i, clientHandlerList.get(i - 1)));
         }
+
         activeEffects = new ActiveEffects(playerList.size());
         activeEffects.initializeEffects();
         nowPlaying = playerList.get(0);
 
         List<GodPower> allGodPowers = getGodPowerList(activeEffects);
 
-        System.out.print(playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")" + " choose " + numOfPlayers + " god powers from the list: [");
+        /*System.out.print(playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")" + " choose " + numOfPlayers + " god powers from the list: [");
         System.out.print("1 - " + allGodPowers.get(0));
         for (int i = 1; i < allGodPowers.size(); i++) {
             System.out.print(", " + (i + 1) + " - " + allGodPowers.get(i));
@@ -59,7 +62,19 @@ public class GameLogic {
             }
             selectedGodPowers.add(allGodPowers.get(index - 1));
             selectedIndexes.add(index - 1);
+        }*/
+
+        String playerName = playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")";
+        List<Integer> selectedIndexes = playerList.get(0).getClientHandler().
+                askAllGodPowers(playerName, numOfPlayers, deepCopyGodPowerNames(allGodPowers));
+        List<GodPower> selectedGodPowers = new ArrayList<>();
+        for (Integer i : selectedIndexes) {
+            selectedGodPowers.add(allGodPowers.get(i));
+
+            //DEBUG
+            System.out.println("GameLogic: selectedGodPowers " + i + " name = " + allGodPowers.get(i).toString());
         }
+
 
         for (int i = 0; i < numOfPlayers - 1; i++) {
             Player currPlayer = playerList.get(i + 1);

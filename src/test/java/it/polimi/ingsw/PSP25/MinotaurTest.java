@@ -1,9 +1,12 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +24,7 @@ public class MinotaurTest {
     public void setup(){
         activeEffects = new ActiveEffects(2);
         activeEffects.initializeEffects();
-        player1 = new Player("Name1", 1);
+        player1 = new Player("Name1", 1, new ClientHandler(new Socket(), new Lobby()));
         gp = new Minotaur(activeEffects);
         board = new Board();
     }
@@ -41,8 +44,8 @@ public class MinotaurTest {
         workerP1 = new Worker(space1, player1);
         space1.setWorker(workerP1);
 
-        Player player2 = new Player("Name2", 2);
-        Space space2 = board.getSpace(1,1);
+        Player player2 = new Player("Name2", 2, new ClientHandler(new Socket(), new Lobby()));
+        Space space2 = board.getSpace(1, 1);
         space2.setBoard(board);
         Worker workerP2 = new Worker(space2,player2);
         space2.setWorker(workerP2);
@@ -63,8 +66,8 @@ public class MinotaurTest {
         workerP1 = new Worker(space1, player1);
         space1.setWorker(workerP1);
 
-        Player player2 = new Player("Name2", 2);
-        Space space2 = board.getSpace(1,1);
+        Player player2 = new Player("Name2", 2, new ClientHandler(new Socket(), new Lobby()));
+        Space space2 = board.getSpace(1, 1);
         space2.setBoard(board);
         Worker workerP2 = new Worker(space2,player1);
         space2.setWorker(workerP2);
@@ -84,8 +87,8 @@ public class MinotaurTest {
         workerP1 = new Worker(space1, player1);
         space1.setWorker(workerP1);
 
-        Player player2 = new Player("Name2", 2);
-        Space space2 = board.getSpace(1,1);
+        Player player2 = new Player("Name2", 2, new ClientHandler(new Socket(), new Lobby()));
+        Space space2 = board.getSpace(1, 1);
         space2.setBoard(board);
         Worker workerP2 = new Worker(space2,player2);
         space2.setWorker(workerP2);

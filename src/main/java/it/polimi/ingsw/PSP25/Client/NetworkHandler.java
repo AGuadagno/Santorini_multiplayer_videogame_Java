@@ -24,13 +24,13 @@ public class NetworkHandler implements Runnable{
     Scanner scanner = new Scanner(System.in);
     private List<ServerObserver> observers = new ArrayList<>();
 
-    public NetworkHandler(Socket server)
-    {
+    private boolean isWaiting = false;
+
+    public NetworkHandler(Socket server) {
         this.server = server;
     }
 
-    public void addObserver(ServerObserver observer)
-    {
+    public void addObserver(ServerObserver observer) {
         synchronized (observers) {
             observers.add(observer);
         }
@@ -49,8 +49,10 @@ public class NetworkHandler implements Runnable{
         try {
             outputStream = new ObjectOutputStream(server.getOutputStream());
             inputStream = new ObjectInputStream(server.getInputStream());
+
             //DEBUG
             System.out.println("Sto per chiamare handleServerConnection! :D");
+
             handleServerConnection();
         } catch (IOException e) {
             System.out.println("server has died");
@@ -64,8 +66,20 @@ public class NetworkHandler implements Runnable{
     }
 
 
-    public synchronized void receiveCommand()
-    {
+    public synchronized void receiveCommand() {
+        while (isWaiting == false) {
+            try {
+                //DEBUG
+                System.out.println("IsWaiting = false, receiveCommand va in wait");
+
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        //DEBUG
+        System.out.println(" receiveCommand setta nextCommand = RECEIVE");
+
         nextCommand = Commands.RECEIVE;
         notifyAll();
     }
@@ -76,24 +90,36 @@ public class NetworkHandler implements Runnable{
         notifyAll();
     }
 
-    private void handleServerConnection() throws IOException, ClassNotFoundException
-    {
+    private synchronized void handleServerConnection() throws IOException, ClassNotFoundException {
         /* wait for commands */
         while (true) {
             //DEBUG
             System.out.println("Sono dentro handleServerConnection, ma prima della wait! :D");
+
             nextCommand = null;
 
-            while(nextCommand==null){
-                System.out.println("DEMO");
+            try {
+                isWaiting = true;
+                notifyAll();
+                //DEBUG
+                System.out.println("IsWaiting = true, notifyAll");
+
+                wait();
+
+                //DEBUG
+                System.out.println("IsWaiting = false");
+
+                isWaiting = false;
+
+            } catch (InterruptedException e) {
             }
+
 
             //DEBUG
             System.out.println("Sono dentro handleServerConnection, dopo la wait! :D");
 
             if (nextCommand == null)
                 continue;
-
 
             switch (nextCommand) {
                 case RECEIVE:
@@ -107,16 +133,21 @@ public class NetworkHandler implements Runnable{
 
     private synchronized void receive() throws IOException, ClassNotFoundException {
         Message receivedMessage;
+
         //DEBUG
         System.out.println("Sono dentro la receive per ricevere il messaggio! :D");
-        receivedMessage = (Message)inputStream.readObject();
-        for (ServerObserver observer: observers) {
+
+        receivedMessage = (Message) inputStream.readObject();
+
+        //DEBUG
+        System.out.println("Ho ricevuto il messaggio, notifico l'observer");
+
+        for (ServerObserver observer : observers) {
             observer.didReceiveServerMessage(receivedMessage);
         }
     }
 
-    public synchronized void scanAndSubmit() throws IOException {
-        String response = scanner.nextLine();
+    public synchronized void submit(Object response) throws IOException {
         outputStream.writeObject(response);
     }
 }

@@ -1,8 +1,12 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.net.Socket;
 
 import static org.junit.Assert.*;
 
@@ -18,9 +22,9 @@ public class ActiveEffectsTest {
         activeEffects = new ActiveEffects(2);
         activeEffects.initializeEffects();
         b = new Board();
-        b.getSpace(0,0).setBoard(b);
-        p = new Player("Nome", 1);
-        w = new Worker(b.getSpace(1,1), p);
+        b.getSpace(0, 0).setBoard(b);
+        p = new Player("Nome", 1, new ClientHandler(new Socket(), new Lobby()));
+        w = new Worker(b.getSpace(1, 1), p);
     }
 
     @After

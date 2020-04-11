@@ -1,8 +1,12 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.net.Socket;
 
 import static org.junit.Assert.*;
 
@@ -19,8 +23,8 @@ public class PanTest {
         b = new Board();
         s = b.getSpace(1,0);
         s.setTowerHeight(3);
-        p = new Player("Name1", 1);
-        w = new Worker(s,p);
+        p = new Player("Name1", 1, new ClientHandler(new Socket(), new Lobby()));
+        w = new Worker(s, p);
         a = new ActiveEffects(2);
         gp = new Pan(a);
     }

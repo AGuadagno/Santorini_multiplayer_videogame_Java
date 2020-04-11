@@ -1,8 +1,12 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.net.Socket;
 
 import static org.junit.Assert.*;
 
@@ -17,8 +21,8 @@ public class AthenaTest {
     @Before
     public void setup(){
         board = new Board();
-        space = board.getSpace(2,2);
-        player = new Player("Name", 1);
+        space = board.getSpace(2, 2);
+        player = new Player("Name", 1, new ClientHandler(new Socket(), new Lobby()));
         worker = new Worker(space, player);
         space.setWorker(worker);
         activeEffects = new ActiveEffects(2);

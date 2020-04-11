@@ -1,9 +1,12 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +16,7 @@ public class ApolloTest {
     Board b = null;
     Worker w = null;
     Space s = null;
-    Player p1 = new Player("P1", 1);
+    Player p1 = new Player("P1", 1, new ClientHandler(new Socket(), new Lobby()));
     Apollo gp = null;
     ActiveEffects a = null;
 
@@ -43,8 +46,8 @@ public class ApolloTest {
 
     @Test
     public void getValidMovementSpaces_TestOpponentWorker() {
-        Player p2 = new Player("P2", 2);
-        Worker w2 = new Worker(b.getSpace(0,1), p2);
+        Player p2 = new Player("P2", 2, new ClientHandler(new Socket(), new Lobby()));
+        Worker w2 = new Worker(b.getSpace(0, 1), p2);
         b.getSpace(0,1).setWorker(w2);
 
         List<Space> spaces = new ArrayList<>();
@@ -72,8 +75,8 @@ public class ApolloTest {
 
     @Test
     public void moveWorker_TestWithExchangeOfPosition() {
-        Player p2 = new Player("P2", 2);
-        Worker w2 = new Worker(b.getSpace(0,1), p2);
+        Player p2 = new Player("P2", 2, new ClientHandler(new Socket(), new Lobby()));
+        Worker w2 = new Worker(b.getSpace(0, 1), p2);
         b.getSpace(0,1).setWorker(w2);
 
         gp.moveWorker(w, b.getSpace(0,1));

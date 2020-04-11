@@ -1,8 +1,11 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +60,7 @@ public class SpaceTest {
 
     @Test
     public void setWorker_getWorker_Test(){
-        Worker w = new Worker(space, new Player("Nome", 1));
+        Worker w = new Worker(space, new Player("Nome", 1, new ClientHandler(new Socket(), new Lobby())));
         space.setWorker(w);
         assertEquals(space.getWorker(), w);
     }
@@ -125,7 +128,7 @@ public class SpaceTest {
 
     @Test
     public void hasWorker_Test2(){
-        Worker w = new Worker(space, new Player("Nome", 1));
+        Worker w = new Worker(space, new Player("Nome", 1, new ClientHandler(new Socket(), new Lobby())));
         space.setWorker(w);
         assertTrue(space.hasWorker());
     }

@@ -40,12 +40,12 @@ public class Client implements Runnable, ServerObserver {
             synchronized (this) {
 
                 //DEBUG
-                System.out.println("Sono dentro al ciclo while! :D");
-                try {
-                    wait(1000);
+                System.out.println("Client: Sono dentro al ciclo while! :D");
+                /*try {
+                    wait(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }*/
                 //END DEBUG
 
                 networkHandler.receiveCommand();
@@ -55,8 +55,15 @@ public class Client implements Runnable, ServerObserver {
                     e.printStackTrace();
                 }
 
+                //DEBUG
+                System.out.println("Client: sono stato risvegliato da didReceiveMessage, receivedMessage = " + receivedMessage);
+
                 if (receivedMessage != null) {
-                    receivedMessage.process();
+                    try {
+                        receivedMessage.process(networkHandler);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } while (receivedMessage != null);

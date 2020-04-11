@@ -1,9 +1,12 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
+
 /**
  * Player class. 2 or 3 Players per game.
  */
 public class Player {
+
 
     /**
      * Description of Attributes:
@@ -14,6 +17,7 @@ public class Player {
      * worker2: contains the second worker controlled by the Player
      * godPower: contains the GodPower of the Player
      * playerNumber: contains the number of the Player. Different players have different player numbers
+     * clientHandler: contains the clientHandler associated with the player's client
      */
 
     private String name;
@@ -22,17 +26,20 @@ public class Player {
     private Worker worker2;
     private GodPower godPower;
     private int playerNumber;
+    private ClientHandler clientHandler;
 
     /**
      * Player constructor
      *
-     * @param name         contains the name of the Player. The name is chosen by the user
-     * @param playerNumber contains the number of the Player. The number of the player is assigned by the caller
+     * @param name          contains the name of the Player. The name is chosen by the user
+     * @param playerNumber  contains the number of the Player. The number of the player is assigned by the caller
+     * @param clientHandler contains the clientHandler associated with the player's client
      */
-    public Player(String name, int playerNumber) {
+    public Player(String name, int playerNumber, ClientHandler clientHandler) {
         this.name = name;
-        this.playerNumber=playerNumber;
-        this.ID = name.substring(0, 2).toUpperCase()+playerNumber;
+        this.playerNumber = playerNumber;
+        this.ID = name.substring(0, 2).toUpperCase() + playerNumber;
+        this.clientHandler = clientHandler;
     }
 
     /**
@@ -88,5 +95,12 @@ public class Player {
      */
     public GodPower getGodPower() {
         return this.godPower;
+    }
+
+    /**
+     * @return the ClientHandler of the Player
+     */
+    public ClientHandler getClientHandler() {
+        return clientHandler;
     }
 }
