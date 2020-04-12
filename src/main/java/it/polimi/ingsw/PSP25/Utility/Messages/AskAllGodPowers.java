@@ -1,7 +1,6 @@
-package it.polimi.ingsw.PSP25.Server.Messages;
+package it.polimi.ingsw.PSP25.Utility.Messages;
 
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
-import it.polimi.ingsw.PSP25.GodPower;
 
 import java.io.IOException;
 import java.util.ArrayList;

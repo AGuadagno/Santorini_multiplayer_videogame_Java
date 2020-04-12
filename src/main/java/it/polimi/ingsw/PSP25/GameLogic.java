@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static it.polimi.ingsw.PSP25.Server.Utilities.deepCopyGodPowerNames;
+import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyBoard;
+import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyGodPowerNames;
 
 public class GameLogic {
     private ActiveEffects activeEffects;
@@ -45,24 +46,6 @@ public class GameLogic {
 
         List<GodPower> allGodPowers = getGodPowerList(activeEffects);
 
-        /*System.out.print(playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")" + " choose " + numOfPlayers + " god powers from the list: [");
-        System.out.print("1 - " + allGodPowers.get(0));
-        for (int i = 1; i < allGodPowers.size(); i++) {
-            System.out.print(", " + (i + 1) + " - " + allGodPowers.get(i));
-        }
-        System.out.println("]");
-        List<GodPower> selectedGodPowers = new ArrayList<GodPower>();
-        List<Integer> selectedIndexes = new ArrayList<>(numOfPlayers);
-        for (int i = 1; i <= numOfPlayers; i++) {
-            int index = scanner.nextInt();
-            while (index <= 0 || index > allGodPowers.size() || selectedIndexes.contains(index - 1)) {
-                System.out.println("God power index is not valid. Choose an index between 1 and " +
-                        allGodPowers.size() + " and different from other chosen indexes");
-                index = scanner.nextInt();
-            }
-            selectedGodPowers.add(allGodPowers.get(index - 1));
-            selectedIndexes.add(index - 1);
-        }*/
 
         String playerName = playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")";
         List<Integer> selectedIndexes = playerList.get(0).getClientHandler().
@@ -78,7 +61,12 @@ public class GameLogic {
 
         for (int i = 0; i < numOfPlayers - 1; i++) {
             Player currPlayer = playerList.get(i + 1);
-            System.out.print(currPlayer.getName() + "(" + currPlayer.getID() + ")" + " choose your god power from the list: [");
+
+            playerName = currPlayer.getName() + "(" + playerList.get(0).getID() + ")";
+            int selectedGodPowerIndex = currPlayer.getClientHandler().
+                    askGodPower(playerName, deepCopyGodPowerNames(selectedGodPowers));
+
+            /*System.out.print(currPlayer.getName() + "(" + currPlayer.getID() + ")" + " choose your god power from the list: [");
             System.out.print("1 - " + selectedGodPowers.get(0));
             for (int k = 1; k < selectedGodPowers.size(); k++) {
                 System.out.print(", " + (k + 1) + " - " + selectedGodPowers.get(k));
@@ -89,12 +77,17 @@ public class GameLogic {
                 System.out.println("God power index is not valid. Choose an index between 1 and " +
                         selectedGodPowers.size());
                 selectedGodPowerIndex = scanner.nextInt();
-            }
+            }*/
             currPlayer.initializeGodPower(selectedGodPowers.get(selectedGodPowerIndex - 1));
             selectedGodPowers.remove(selectedGodPowerIndex - 1);
         }
-        System.out.println(playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")" + " you got: " + selectedGodPowers);
+
+        playerName = playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")";
+        playerList.get(0).getClientHandler().tellAssignedGodPower(playerName, deepCopyGodPowerNames(selectedGodPowers));
+
+        //System.out.println(playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")" + " you got: " + selectedGodPowers);
         playerList.get(0).initializeGodPower(selectedGodPowers.get(0));
+        System.out.println(" DEBUG :D");
     }
 
     private List<GodPower> getGodPowerList(ActiveEffects activeEffects) {
@@ -115,11 +108,19 @@ public class GameLogic {
         Scanner scanner = new Scanner(System.in);
         int x1, y1, x2, y2, pos1, pos2;
 
-        board.print();
+        for (Player p : playerList) {
+            p.getClientHandler().sendBoard(deepCopyBoard(board));
+        }
+
+        //board.print();
 
         for (int i = 0; i < playerList.size(); i++) {
             Player currPlayer = playerList.get(i);
-            System.out.println(currPlayer.getName() + "(" + currPlayer.getID() + ")" + " it's your turn! Choose the position of your first worker");
+
+            String playerName = currPlayer.getName() + "(" + currPlayer.getID() + ")";
+            pos1 = currPlayer.getClientHandler()
+                    .askWorkerPosition(playerName, 1, -1, deepCopyBoard(board));
+            /*System.out.println(currPlayer.getName() + "(" + currPlayer.getID() + ")" + " it's your turn! Choose the position of your first worker");
             pos1 = scanner.nextInt();
             x1 = pos1 % 5;
             y1 = pos1 / 5;
@@ -129,9 +130,11 @@ public class GameLogic {
                 pos1 = scanner.nextInt();
                 x1 = pos1 % 5;
                 y1 = pos1 / 5;
-            }
+            }*/
 
-            System.out.println("And now choose the position of your second worker");
+            pos2 = currPlayer.getClientHandler()
+                    .askWorkerPosition(playerName, 2, pos1, deepCopyBoard(board));
+            /*System.out.println("And now choose the position of your second worker");
             pos2 = scanner.nextInt();
             x2 = pos2 % 5;
             y2 = pos2 / 5;
@@ -141,11 +144,15 @@ public class GameLogic {
                 pos2 = scanner.nextInt();
                 x2 = pos2 % 5;
                 y2 = pos2 / 5;
+            }*/
+
+            currPlayer.initializeWorkers(board.getSpace(pos1 % 5, pos1 / 5),
+                    board.getSpace(pos2 % 5, pos2 / 5));
+
+            for (Player p : playerList) {
+                p.getClientHandler().sendBoard(deepCopyBoard(board));
             }
 
-            currPlayer.initializeWorkers(board.getSpace(x1, y1), board.getSpace(x2, y2));
-            System.out.println();
-            board.print();
         }
     }
 

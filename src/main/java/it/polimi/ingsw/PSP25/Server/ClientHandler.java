@@ -1,9 +1,7 @@
 package it.polimi.ingsw.PSP25.Server;
 
-import it.polimi.ingsw.PSP25.GodPower;
-import it.polimi.ingsw.PSP25.Server.Messages.AskAllGodPowers;
-import it.polimi.ingsw.PSP25.Server.Messages.AskName;
-import it.polimi.ingsw.PSP25.Server.Messages.AskNumberOfPlayers;
+import it.polimi.ingsw.PSP25.Utility.Messages.*;
+import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -103,4 +101,59 @@ public class ClientHandler implements Runnable {
         }
         return selectedIndexes;
     }
+
+    public int askGodPower(String playerName, List<String> godPowerNames) {
+        try {
+            outputStream.writeObject(new AskGodPower(playerName, godPowerNames));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int index = -1;
+        try {
+            index = (int) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return index;
+    }
+
+    public void tellAssignedGodPower(String playerName, List<String> godPowerName) {
+        try {
+            outputStream.writeObject(new TellAssignedGodPower(playerName, godPowerName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendBoard(SpaceCopy[][] boardCopy) {
+        try {
+            outputStream.writeObject(new SendBoard(boardCopy));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] boardCopy) {
+        try {
+            outputStream.writeObject(new AskWorkerPosition(playerName, workerNumber, previousPos, boardCopy));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int pos = -1;
+        try {
+            pos = (int) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return pos;
+    }
+
 }

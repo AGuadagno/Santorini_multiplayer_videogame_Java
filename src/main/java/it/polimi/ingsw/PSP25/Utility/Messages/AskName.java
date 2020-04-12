@@ -1,4 +1,4 @@
-package it.polimi.ingsw.PSP25.Server.Messages;
+package it.polimi.ingsw.PSP25.Utility.Messages;
 
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 import java.io.IOException;
