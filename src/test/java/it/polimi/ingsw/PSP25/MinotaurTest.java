@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.GodPower;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
@@ -25,7 +26,7 @@ public class MinotaurTest {
         activeEffects = new ActiveEffects(2);
         activeEffects.initializeEffects();
         player1 = new Player("Name1", 1, new ClientHandler(new Socket(), new Lobby()));
-        gp = new Minotaur(activeEffects);
+        gp = new Minotaur(activeEffects, null);
         board = new Board();
     }
 

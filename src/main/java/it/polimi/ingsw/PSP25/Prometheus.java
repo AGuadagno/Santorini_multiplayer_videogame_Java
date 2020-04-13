@@ -1,5 +1,8 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
+import it.polimi.ingsw.PSP25.Model.GodPower;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,8 +19,8 @@ public class Prometheus extends GodPower {
      * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
      *                      building action or winning conditions of our player
      */
-    public Prometheus(ActiveEffects activeEffects) {
-        super(activeEffects);
+    public Prometheus(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
+        super(activeEffects, broadcastInterface);
     }
 
     /**

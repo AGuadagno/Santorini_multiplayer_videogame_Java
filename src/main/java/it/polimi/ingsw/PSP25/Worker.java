@@ -60,21 +60,21 @@ public class Worker {
     /**
      * @return the Space where the Worker is positioned
      */
-    public Space getSpace() {
+public Space getSpace() {
         return space;
-    }
+        }
 
-    /**
-     * @return the Player who controls the Worker
-     */
-    public Player getPlayer() {
+/**
+ * @return the Player who controls the Worker
+ */
+public Player getPlayer() {
         return player;
-    }
+        }
 
-    /**
-     * @return the value of "heightBeforeMove"
-     */
-    public int getHeightBeforeMove() {
+/**
+ * @return the value of "heightBeforeMove"
+ */
+public int getHeightBeforeMove() {
         return heightBeforeMove;
-    }
-}
+        }
+        }

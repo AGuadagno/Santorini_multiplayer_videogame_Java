@@ -41,7 +41,12 @@ public class SpaceCopy implements Serializable {
     }
 
     public boolean hasWorker() {
-        return this.playerID != null;
+        if(this.playerID!=null){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public String getID() {
@@ -52,5 +57,11 @@ public class SpaceCopy implements Serializable {
         return this.workerNumber;
     }
 
+    public int getNumber() {
+        return 5 * y + x;
+    }
 
+    public String toString() {
+        return "Space " + getNumber();
+    }
 }

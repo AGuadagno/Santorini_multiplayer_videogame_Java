@@ -1,7 +1,7 @@
 package it.polimi.ingsw.PSP25.Utility;
 
 import it.polimi.ingsw.PSP25.Board;
-import it.polimi.ingsw.PSP25.GodPower;
+import it.polimi.ingsw.PSP25.Model.GodPower;
 import it.polimi.ingsw.PSP25.Space;
 
 import java.util.ArrayList;
@@ -21,10 +21,20 @@ public class Utilities {
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                boardCopy[i][j] = new SpaceCopy(board.getSpace(j, i));
+                boardCopy[i][j] = new SpaceCopy(board.getSpace(i, j));
             }
         }
 
         return boardCopy;
     }
+
+    public static List<SpaceCopy> deepCopySpaceList(List<Space> spaceList) {
+
+        List<SpaceCopy> copied = new ArrayList<>();
+        for (Space s : spaceList) {
+            copied.add(new SpaceCopy(s));
+        }
+        return copied;
+    }
 }
+

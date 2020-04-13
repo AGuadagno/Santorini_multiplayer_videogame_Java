@@ -39,24 +39,12 @@ public class Client implements Runnable, ServerObserver {
         do {
             synchronized (this) {
 
-                //DEBUG
-                System.out.println("Client: Sono dentro al ciclo while! :D");
-                /*try {
-                    wait(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
-                //END DEBUG
-
                 networkHandler.receiveCommand();
                 try {
                     wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                //DEBUG
-                System.out.println("Client: sono stato risvegliato da didReceiveMessage, receivedMessage = " + receivedMessage);
 
                 if (receivedMessage != null) {
                     try {
@@ -67,8 +55,6 @@ public class Client implements Runnable, ServerObserver {
                 }
             }
         } while (receivedMessage != null);
-        //DEBUG
-        System.out.println("Sono fuori dal ciclo while :(");
     }
 
     public static void main(String[] args) {
@@ -79,8 +65,6 @@ public class Client implements Runnable, ServerObserver {
     @Override
     public synchronized void didReceiveServerMessage(Message message) {
         this.receivedMessage = message;
-        //DEBUG
-        System.out.println("Ho ricevuto il messaggio in client! :D");
         notifyAll();
     }
 }

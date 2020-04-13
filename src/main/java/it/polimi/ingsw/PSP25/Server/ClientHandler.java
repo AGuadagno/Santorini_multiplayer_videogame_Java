@@ -38,36 +38,19 @@ public class ClientHandler implements Runnable {
 
         System.out.println("Connected to " + client.getInetAddress());
 
-        //DEBUG
-        System.out.println("ClientHandler: lobby.isFirstClient = " + lobby.isFirstClient(this));
-
         if (lobby.isFirstClient(this)) {
             outputStream.writeObject(new AskNumberOfPlayers());
-
-            //DEBUG
-            System.out.println("ClientHandler: writeObject eseguito");
-
             numOfParticipants = (int) inputStream.readObject();
-
-            //DEBUG
-            System.out.println("ClientHandler: numOfParticipants ricevuto = " + numOfParticipants);
-
             lobby.startGame(numOfParticipants);
         }
     }
 
     public String askName(int playerNumber) {
-        //DEBUG
-        System.out.println("ClientHandler askName(" + playerNumber + ") invia messaggio");
-
         try {
             outputStream.writeObject(new AskName(playerNumber));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //DEBUG
-        System.out.println("ClientHandler askName(" + playerNumber + ") messaggio inviato");
 
         String name = null;
         try {
@@ -77,9 +60,6 @@ public class ClientHandler implements Runnable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        //DEBUG
-        System.out.println("ClientHandler askName(" + playerNumber + ") messaggio ricevuto: " + name);
 
         return name;
     }
@@ -156,4 +136,43 @@ public class ClientHandler implements Runnable {
         return pos;
     }
 
+    public int[] askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2){
+        try {
+            outputStream.writeObject(new AskWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int[] workerAndSpace = new int[2];
+        try {
+            workerAndSpace = (int[]) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return workerAndSpace;
+    }
+
+    public int askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces){
+        try {
+            outputStream.writeObject(new AskBuildingSpace(playerName, validBuildingSpaces));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int selectedBuildingSpace = -1;
+
+        try {
+            selectedBuildingSpace = (int) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return selectedBuildingSpace;
+
+    }
 }

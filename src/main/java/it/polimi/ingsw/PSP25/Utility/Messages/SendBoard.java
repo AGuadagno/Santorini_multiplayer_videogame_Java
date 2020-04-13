@@ -14,7 +14,7 @@ public class SendBoard extends Message {
     }
 
     public void process(NetworkHandler nh) throws IOException {
-        for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
             StringBuilder[] rowLines = new StringBuilder[5];
             for (int k = 0; k < 5; k++) {
                 rowLines[k] = new StringBuilder("");
@@ -22,8 +22,8 @@ public class SendBoard extends Message {
             }
             rowLines[0].append("+"); //last '+'
 
-            for (int j = 0; j < 5; j++) {
-                int cellNum = (5 * i) + j;
+            for (int i = 0; i < 5; i++) {
+                int cellNum = (5 * j) + i;
 
                 rowLines[1].append("|" + cellNum + (cellNum < 10 ? "        " : "       "));
                 rowLines[2].append("|   H:" + board[i][j].getTowerHeight() +

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.GodPower;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
@@ -49,7 +50,7 @@ public class PlayerTest {
     @Test
     public void initializeGodPower_getGodPower_Test(){
         ActiveEffects activeEffects = new ActiveEffects(2);
-        GodPower godPower = new GodPower(activeEffects);
+        GodPower godPower = new GodPower(activeEffects, null);
         player.initializeGodPower(godPower);
         assertEquals(player.getGodPower(), godPower);
     }
@@ -59,7 +60,7 @@ public class PlayerTest {
     @Test
     public void initializeGodPower_getGodPower_Test2(){
         ActiveEffects activeEffects = new ActiveEffects(2);
-        GodPower godPower = new Athena(activeEffects);
+        GodPower godPower = new Athena(activeEffects, null);
         player.initializeGodPower(godPower);
         assertEquals(player.getGodPower(), godPower);
     }

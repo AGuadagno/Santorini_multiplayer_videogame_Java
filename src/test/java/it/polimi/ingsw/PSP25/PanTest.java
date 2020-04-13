@@ -26,7 +26,7 @@ public class PanTest {
         p = new Player("Name1", 1, new ClientHandler(new Socket(), new Lobby()));
         w = new Worker(s, p);
         a = new ActiveEffects(2);
-        gp = new Pan(a);
+        gp = new Pan(a, null);
     }
 
     @After

@@ -28,7 +28,7 @@ public class ApolloTest {
         s.setBoard(b);
         a = new ActiveEffects(2);
         a.initializeEffects();
-        gp = new Apollo(a);
+        gp = new Apollo(a, null);
         p1.initializeGodPower(gp);
         w = new Worker(s, p1);
         w.moveTo(s);

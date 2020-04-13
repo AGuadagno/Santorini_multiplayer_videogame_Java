@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.GodPower;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
@@ -40,11 +41,11 @@ public class ActiveEffectsTest {
         activeEffects.initializeEffects();
         Space highSpace = b.getSpace(2,2);
         highSpace.setTowerHeight(1);
-        activeEffects.pushEffect(new Athena(activeEffects));
+        activeEffects.pushEffect(new Athena(activeEffects, null));
         assertTrue(!activeEffects.canMove(w, highSpace));
 
-        activeEffects.pushEffect(new GodPower(activeEffects));
-        activeEffects.pushEffect(new GodPower(activeEffects));
+        activeEffects.pushEffect(new GodPower(activeEffects, null));
+        activeEffects.pushEffect(new GodPower(activeEffects, null));
         assertTrue(activeEffects.canMove(w, highSpace));
     }
 

@@ -50,9 +50,6 @@ public class NetworkHandler implements Runnable{
             outputStream = new ObjectOutputStream(server.getOutputStream());
             inputStream = new ObjectInputStream(server.getInputStream());
 
-            //DEBUG
-            System.out.println("Sto per chiamare handleServerConnection! :D");
-
             handleServerConnection();
         } catch (IOException e) {
             System.out.println("server has died");
@@ -69,17 +66,11 @@ public class NetworkHandler implements Runnable{
     public synchronized void receiveCommand() {
         while (isWaiting == false) {
             try {
-                //DEBUG
-                System.out.println("IsWaiting = false, receiveCommand va in wait");
-
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        //DEBUG
-        System.out.println(" receiveCommand setta nextCommand = RECEIVE");
-
         nextCommand = Commands.RECEIVE;
         notifyAll();
     }
@@ -93,30 +84,17 @@ public class NetworkHandler implements Runnable{
     private synchronized void handleServerConnection() throws IOException, ClassNotFoundException {
         /* wait for commands */
         while (true) {
-            //DEBUG
-            System.out.println("Sono dentro handleServerConnection, ma prima della wait! :D");
 
             nextCommand = null;
 
             try {
                 isWaiting = true;
                 notifyAll();
-                //DEBUG
-                System.out.println("IsWaiting = true, notifyAll");
-
                 wait();
-
-                //DEBUG
-                System.out.println("IsWaiting = false");
-
                 isWaiting = false;
 
             } catch (InterruptedException e) {
             }
-
-
-            //DEBUG
-            System.out.println("Sono dentro handleServerConnection, dopo la wait! :D");
 
             if (nextCommand == null)
                 continue;
@@ -133,15 +111,7 @@ public class NetworkHandler implements Runnable{
 
     private synchronized void receive() throws IOException, ClassNotFoundException {
         Message receivedMessage;
-
-        //DEBUG
-        System.out.println("Sono dentro la receive per ricevere il messaggio! :D");
-
         receivedMessage = (Message) inputStream.readObject();
-
-        //DEBUG
-        System.out.println("Ho ricevuto il messaggio, notifico l'observer");
-
         for (ServerObserver observer : observers) {
             observer.didReceiveServerMessage(receivedMessage);
         }

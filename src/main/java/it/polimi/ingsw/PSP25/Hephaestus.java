@@ -1,5 +1,8 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
+import it.polimi.ingsw.PSP25.Model.GodPower;
+
 import java.util.Scanner;
 
 /**
@@ -13,8 +16,8 @@ public class Hephaestus extends GodPower {
      * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
      *                      building action or winning conditions of our player
      */
-    public Hephaestus(ActiveEffects activeEffects) {
-        super(activeEffects);
+    public Hephaestus(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
+        super(activeEffects, broadcastInterface);
     }
 
     /**

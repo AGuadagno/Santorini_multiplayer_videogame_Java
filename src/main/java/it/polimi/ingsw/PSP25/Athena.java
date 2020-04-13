@@ -1,5 +1,8 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
+import it.polimi.ingsw.PSP25.Model.GodPower;
+
 /**
  * Athena class
  */
@@ -11,8 +14,8 @@ public class Athena extends GodPower {
      * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
      *                      building action or winning conditions of our player
      */
-    public Athena(ActiveEffects activeEffects) {
-        super(activeEffects);
+    public Athena(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
+        super(activeEffects, broadcastInterface);
     }
 
     /**
@@ -52,6 +55,6 @@ public class Athena extends GodPower {
         if (selectedWorker.getHeightBeforeMove() < selectedWorker.getSpace().getTowerHeight())
             activeEffects.pushEffect(this);
         else
-            activeEffects.pushEffect(new GodPower(activeEffects));
+            activeEffects.pushEffect(new GodPower(activeEffects, null));
     }
 }

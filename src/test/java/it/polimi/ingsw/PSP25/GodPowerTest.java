@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.GodPower;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
@@ -27,8 +28,8 @@ public class GodPowerTest {
 
     @Before
     public void setup() {
-        godPower = new GodPower(activeEffects);
-        godPower2 = new GodPower(activeEffects2);
+        godPower = new GodPower(activeEffects,null);
+        godPower2 = new GodPower(activeEffects2, null);
         activeEffects.initializeEffects();
         activeEffects2.initializeEffects();
         b = new Board();
@@ -374,11 +375,11 @@ public class GodPowerTest {
 
     @Test
     public void toString_test() {
-        GodPower GP = new Athena(activeEffects);
+        GodPower GP = new Athena(activeEffects, null);
         String expectedString = "Athena";
         assertEquals(GP.toString(), expectedString);
 
-        GodPower GP2 = new GodPower(activeEffects);
+        GodPower GP2 = new GodPower(activeEffects, null);
         String expectedString2 = "GodPower";
         assertEquals(GP2.toString(), expectedString2);
     }

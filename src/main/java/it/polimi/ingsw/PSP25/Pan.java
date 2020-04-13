@@ -1,5 +1,8 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
+import it.polimi.ingsw.PSP25.Model.GodPower;
+
 /**
  * Pan class
  */
@@ -11,8 +14,8 @@ public class Pan extends GodPower {
      * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
      *                      building action or winning conditions of our player
      */
-    public Pan(ActiveEffects activeEffects) {
-        super(activeEffects);
+    public Pan(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
+        super(activeEffects, broadcastInterface);
     }
 
     /**

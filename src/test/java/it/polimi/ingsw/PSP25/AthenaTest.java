@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.GodPower;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
@@ -27,7 +28,7 @@ public class AthenaTest {
         space.setWorker(worker);
         activeEffects = new ActiveEffects(2);
         activeEffects.initializeEffects();
-        gp = new Athena(activeEffects);
+        gp = new Athena(activeEffects, null);
     }
 
     @After
@@ -45,7 +46,7 @@ public class AthenaTest {
         board.getSpace(1,2).setTowerHeight(1);
         board.getSpace(3,2).setTowerHeight(1);
 
-        activeEffects.pushEffect(new Athena(activeEffects));
+        activeEffects.pushEffect(new Athena(activeEffects, null));
 
         assertTrue(!gp.canMove(worker, board.getSpace(1,2)));
         assertTrue(gp.canMove(worker, board.getSpace(1,3)));

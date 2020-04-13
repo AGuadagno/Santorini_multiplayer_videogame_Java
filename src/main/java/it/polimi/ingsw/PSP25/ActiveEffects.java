@@ -1,5 +1,7 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.GodPower;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class ActiveEffects {
      */
     public void initializeEffects() {
         for (int i = 0; i < numOfEffects; i++) {
-            effectsList.add(new GodPower(this));
+            effectsList.add(new GodPower(this, null));
         }
     }
 
