@@ -1,7 +1,10 @@
-package it.polimi.ingsw.PSP25;
+package it.polimi.ingsw.PSP25.Model.GodPowers;
 
+import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
-import it.polimi.ingsw.PSP25.Model.GodPower;
+import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
+import it.polimi.ingsw.PSP25.Space;
+import it.polimi.ingsw.PSP25.Worker;
 
 import java.util.ArrayList;
 import java.util.List;

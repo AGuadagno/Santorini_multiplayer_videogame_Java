@@ -1,7 +1,7 @@
 package it.polimi.ingsw.PSP25.Utility;
 
 import it.polimi.ingsw.PSP25.Board;
-import it.polimi.ingsw.PSP25.Model.GodPower;
+import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
 import it.polimi.ingsw.PSP25.Space;
 
 import java.util.ArrayList;

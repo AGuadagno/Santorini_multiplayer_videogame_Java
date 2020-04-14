@@ -1,6 +1,6 @@
-package it.polimi.ingsw.PSP25;
+/*package it.polimi.ingsw.PSP25;
 
-import it.polimi.ingsw.PSP25.Model.GodPower;
+import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
@@ -104,4 +104,4 @@ public class MinotaurTest {
 
 
 
-}
+}*/

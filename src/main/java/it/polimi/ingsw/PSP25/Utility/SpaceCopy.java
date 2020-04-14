@@ -41,12 +41,19 @@ public class SpaceCopy implements Serializable {
     }
 
     public boolean hasWorker() {
-        if(this.playerID!=null){
+        if (this.playerID != null) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
     }
 
     public String getID() {

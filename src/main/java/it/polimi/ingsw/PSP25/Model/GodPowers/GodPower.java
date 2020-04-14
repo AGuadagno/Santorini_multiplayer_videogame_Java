@@ -1,5 +1,7 @@
-package it.polimi.ingsw.PSP25.Model;
+package it.polimi.ingsw.PSP25.Model.GodPowers;
+
 import it.polimi.ingsw.PSP25.*;
+import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ public class GodPower{
     protected ActiveEffects activeEffects;
     protected BroadcastInterface broadcastInterface;
     // Rendiamo selectedWorker un attributo generale così da poterlo utilizzare per definire l'array "validBuildingSpaces"
-    Worker selectedWorker = null;
+    protected Worker selectedWorker = null;
 
     public GodPower(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         this.activeEffects=activeEffects;
@@ -127,7 +129,7 @@ public class GodPower{
         return TurnResult.CONTINUE;
     }
 
-    private boolean askToMoveWorker(Player player, List<Space> validMovementSpacesW1, List<Space> validMovementSpacesW2){
+    protected boolean askToMoveWorker(Player player, List<Space> validMovementSpacesW1, List<Space> validMovementSpacesW2) {
 
         Space selectedMovementSpace = null;
 
@@ -137,7 +139,7 @@ public class GodPower{
 
         int x = workerAndSpace[1] % 5;
         int y = workerAndSpace[1] / 5;
-        for (Space space : ((workerAndSpace[0]==1)?validMovementSpacesW1:validMovementSpacesW2)) {
+        for (Space space : ((workerAndSpace[0] == 1) ? validMovementSpacesW1 : validMovementSpacesW2)) {
             if (space.getX() == x && space.getY() == y)
                 selectedMovementSpace = space;
         }
@@ -160,7 +162,7 @@ public class GodPower{
         }
     }
 
-    public void askToBuild(Player player, List<Space> validBuildingSpaces){
+    public Space askToBuild(Player player, List<Space> validBuildingSpaces) {
 
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
@@ -177,6 +179,7 @@ public class GodPower{
         buildBlock(selectedBuildingSpace);
         broadcastInterface.broadcastBoard();
 
+        return selectedBuildingSpace;
     }
 
     protected void addActiveEffects(ActiveEffects activeEffects, Worker worker1, Worker worker2, Worker selectedWorker) {

@@ -175,4 +175,65 @@ public class ClientHandler implements Runnable {
         return selectedBuildingSpace;
 
     }
+
+    public int askArtemisSecondMove(String playerName, List<SpaceCopy> deepCopySpaceList) {
+        try {
+            outputStream.writeObject(new AskArtemisSecondMove(playerName, deepCopySpaceList));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int selectedMovementSpace = -2;
+
+        try {
+            selectedMovementSpace = (int) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return selectedMovementSpace;
+    }
+
+    public int[] askAtlasBuild(String playerName, List<SpaceCopy> deepCopySpaceList) {
+        try {
+            outputStream.writeObject(new AskAtlasBuild(playerName, deepCopySpaceList));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int[] selectedSpaceAndBuildDome = null;
+
+        try {
+            selectedSpaceAndBuildDome = (int[]) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return selectedSpaceAndBuildDome;
+    }
+
+    public int askDemeterSecondBuilding(String playerName, List<SpaceCopy> deepCopySpaceList) {
+        try {
+            outputStream.writeObject(new AskDemeterSecondBuilding(playerName, deepCopySpaceList));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int selectedBuildingSpace = -2;
+
+        try {
+            selectedBuildingSpace = (int) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return selectedBuildingSpace;
+
+    }
 }

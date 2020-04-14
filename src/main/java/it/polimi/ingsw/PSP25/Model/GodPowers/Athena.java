@@ -1,7 +1,9 @@
-package it.polimi.ingsw.PSP25;
+package it.polimi.ingsw.PSP25.Model.GodPowers;
 
+import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
-import it.polimi.ingsw.PSP25.Model.GodPower;
+import it.polimi.ingsw.PSP25.Space;
+import it.polimi.ingsw.PSP25.Worker;
 
 /**
  * Athena class
@@ -28,10 +30,6 @@ public class Athena extends GodPower {
      */
     @Override
     public boolean canMove(Worker worker, Space space) {
-        //DEBUG
-        /*System.out.println("AthenaEffect.canMove() WorkerPos: " + worker.getSpace().getNumber() + " TargetSpace: " +
-                space.getNumber());*/
-        //END DEBUG
         if (worker.getSpace().getTowerHeight() < space.getTowerHeight())
             return false;
         else

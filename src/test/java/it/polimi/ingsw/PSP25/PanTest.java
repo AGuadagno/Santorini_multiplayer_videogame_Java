@@ -1,5 +1,7 @@
-package it.polimi.ingsw.PSP25;
+/*package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.ActiveEffects;
+import it.polimi.ingsw.PSP25.Model.GodPowers.Pan;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
@@ -68,4 +70,4 @@ public class PanTest {
         assertTrue(gp.verifyWin(w));
 
     }
-}
+}*/
