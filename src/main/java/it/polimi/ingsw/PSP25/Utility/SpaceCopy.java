@@ -71,4 +71,5 @@ public class SpaceCopy implements Serializable {
     public String toString() {
         return "Space " + getNumber();
     }
+
 }

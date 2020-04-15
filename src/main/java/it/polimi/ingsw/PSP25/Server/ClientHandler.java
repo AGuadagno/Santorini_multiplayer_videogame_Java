@@ -236,4 +236,65 @@ public class ClientHandler implements Runnable {
         return selectedBuildingSpace;
 
     }
+
+    public int[] askHephaestusBuild(String playerName, List<SpaceCopy> deepCopySpaceList) {
+        try {
+            outputStream.writeObject(new AskHephaestusBuild(playerName, deepCopySpaceList));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int[] spaceAndDoubleBuilding = new int[2];
+
+        try {
+            spaceAndDoubleBuilding = (int[]) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return spaceAndDoubleBuilding;
+    }
+
+    public int[] askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w2CanMove, boolean w1CanBuild, boolean w2CanBuild) {
+        try {
+            outputStream.writeObject(new AskBuildBeforeMovePrometheus(playerName, w1CanMove, w2CanMove, w1CanBuild, w2CanBuild));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int[] workerAndBuildBeforeMove = new int[2];
+
+        try {
+            workerAndBuildBeforeMove = (int[]) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return workerAndBuildBeforeMove;
+
+    }
+
+    public int askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) {
+        try {
+            outputStream.writeObject(new AskWorkerMovementPrometheus(playerName, validMovementSpaces));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int selectedSpace = -1;
+
+        try {
+            selectedSpace = (int) inputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return selectedSpace;
+    }
 }

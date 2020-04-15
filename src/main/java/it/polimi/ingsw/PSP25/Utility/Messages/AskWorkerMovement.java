@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
-import it.polimi.ingsw.PSP25.Space;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 
 import java.io.IOException;
@@ -14,7 +13,7 @@ public class AskWorkerMovement extends Message{
     List<SpaceCopy> validMovementSpacesW1;
     List<SpaceCopy> validMovementSpacesW2;
     String playerName;
-    int workerchoice;
+    int workerChoice;
 
     public AskWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2) {
         this.validMovementSpacesW1 = validMovementSpacesW1;
@@ -29,26 +28,26 @@ public class AskWorkerMovement extends Message{
         // SELECTION OF WORKER
         if (validMovementSpacesW1.size() == 0) {
             System.out.println("Worker 1 can't move! Worker 2 is automatically selected");
-            workerchoice = 2;
+            workerChoice = 2;
         } else if (validMovementSpacesW2.size() == 0) {
             System.out.println("Worker 2 can't move! Worker 1 is automatically selected");
-            workerchoice = 1;
+            workerChoice = 1;
         } else {
             System.out.println(playerName + ": Choose a worker");
-            workerchoice = scanner.nextInt();
-            while (workerchoice < 1 || workerchoice > 2) {
+            workerChoice = scanner.nextInt();
+            while (workerChoice < 1 || workerChoice > 2) {
                 System.out.println("Worker number is not valid. Choose 1 or 2");
-                workerchoice = scanner.nextInt();
+                workerChoice = scanner.nextInt();
             }
         }
 
         //SELECTION OF MOVEMENT SPACE
-        int chosenMovementSpace = workerMovementSelection(workerchoice == 1 ?
+        int chosenMovementSpace = workerMovementSelection(workerChoice == 1 ?
                 validMovementSpacesW1 : validMovementSpacesW2);
 
         int[] workerAndSpace = new int[2];
 
-        workerAndSpace[0] = workerchoice;
+        workerAndSpace[0] = workerChoice;
         workerAndSpace[1] = chosenMovementSpace;
 
         nh.submit(workerAndSpace);
