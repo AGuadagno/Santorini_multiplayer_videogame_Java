@@ -6,7 +6,9 @@ import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class ClientHandler implements Runnable {
     private int numOfParticipants;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
+    private boolean endGame = false;
 
     public ClientHandler(Socket client, Lobby lobby) {
         this.client = client;
@@ -27,76 +30,61 @@ public class ClientHandler implements Runnable {
     public void run() {
         try {
             handleClientConnection();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("client " + client.getInetAddress() + " connection dropped");
+        }catch(IOException e){
+            lobby.stopGame(this, client.getInetAddress());
+            endGame = true;
+            return;
         }
     }
 
-    private void handleClientConnection() throws IOException, ClassNotFoundException {
+    private void handleClientConnection() throws IOException {
         outputStream = new ObjectOutputStream(client.getOutputStream());
         inputStream = new ObjectInputStream(client.getInputStream());
+        client.setSoTimeout(20000);
+
+        startPingSender();
 
         System.out.println("Connected to " + client.getInetAddress());
 
         if (lobby.isFirstClient(this)) {
-            outputStream.writeObject(new AskNumberOfPlayers());
-            numOfParticipants = (int) inputStream.readObject();
+            synchronized (outputStream) {
+                outputStream.writeObject(new AskNumberOfPlayers());
+            }
+            numOfParticipants = (int) receiveMessage();
             lobby.startGame(numOfParticipants);
         }
     }
 
-    public String askName(int playerNumber) {
+    public String askName(int playerNumber) throws IOException {
         try {
             outputStream.writeObject(new AskName(playerNumber));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String name = null;
-        try {
-            name = (String) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        String name = (String) receiveMessage();
         return name;
     }
 
-    public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
+    public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) throws IOException {
         try {
             outputStream.writeObject(new AskAllGodPowers(playerName, numOfPlayers, godPowerNames));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        List<Integer> selectedIndexes = new ArrayList<>();
-        try {
-            selectedIndexes = (List<Integer>) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        List<Integer> selectedIndexes = (List<Integer>) receiveMessage();
         return selectedIndexes;
     }
 
-    public int askGodPower(String playerName, List<String> godPowerNames) {
+    public int askGodPower(String playerName, List<String> godPowerNames) throws IOException {
         try {
             outputStream.writeObject(new AskGodPower(playerName, godPowerNames));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        int index = -1;
-        try {
-            index = (int) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        int index = (int) receiveMessage();
 
         return index;
     }
@@ -117,184 +105,157 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    public int askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] boardCopy) {
+    public int askWorkerPosition(String playerName, int workerNumber, int previousPos,
+                                 SpaceCopy[][] boardCopy) throws IOException {
         try {
             outputStream.writeObject(new AskWorkerPosition(playerName, workerNumber, previousPos, boardCopy));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        int pos = -1;
-        try {
-            pos = (int) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        int pos = (int) receiveMessage();
         return pos;
     }
 
-    public int[] askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2){
+    public int[] askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1,
+                                   List<SpaceCopy> validMovementSpacesW2) throws IOException {
         try {
             outputStream.writeObject(new AskWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        int[] workerAndSpace = new int[2];
-        try {
-            workerAndSpace = (int[]) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        int[] workerAndSpace = (int[]) receiveMessage();
         return workerAndSpace;
     }
 
-    public int askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces){
+    public int askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces) throws IOException {
         try {
             outputStream.writeObject(new AskBuildingSpace(playerName, validBuildingSpaces));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        int selectedBuildingSpace = -1;
-
-        try {
-            selectedBuildingSpace = (int) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        int selectedBuildingSpace = (int) receiveMessage();
         return selectedBuildingSpace;
-
     }
 
-    public int askArtemisSecondMove(String playerName, List<SpaceCopy> deepCopySpaceList) {
+    public int askArtemisSecondMove(String playerName, List<SpaceCopy> deepCopySpaceList) throws IOException {
         try {
             outputStream.writeObject(new AskArtemisSecondMove(playerName, deepCopySpaceList));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        int selectedMovementSpace = -2;
-
-        try {
-            selectedMovementSpace = (int) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        int selectedMovementSpace =  (int) receiveMessage();
         return selectedMovementSpace;
     }
 
-    public int[] askAtlasBuild(String playerName, List<SpaceCopy> deepCopySpaceList) {
+    public int[] askAtlasBuild(String playerName, List<SpaceCopy> deepCopySpaceList) throws IOException {
         try {
             outputStream.writeObject(new AskAtlasBuild(playerName, deepCopySpaceList));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        int[] selectedSpaceAndBuildDome = null;
-
-        try {
-            selectedSpaceAndBuildDome = (int[]) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        int[] selectedSpaceAndBuildDome = (int[]) receiveMessage();
         return selectedSpaceAndBuildDome;
     }
 
-    public int askDemeterSecondBuilding(String playerName, List<SpaceCopy> deepCopySpaceList) {
+    public int askDemeterSecondBuilding(String playerName, List<SpaceCopy> deepCopySpaceList) throws IOException {
         try {
             outputStream.writeObject(new AskDemeterSecondBuilding(playerName, deepCopySpaceList));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        int selectedBuildingSpace = -2;
-
-        try {
-            selectedBuildingSpace = (int) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        int selectedBuildingSpace = (int) receiveMessage();
         return selectedBuildingSpace;
-
     }
 
-    public int[] askHephaestusBuild(String playerName, List<SpaceCopy> deepCopySpaceList) {
+    public int[] askHephaestusBuild(String playerName, List<SpaceCopy> deepCopySpaceList) throws IOException {
         try {
             outputStream.writeObject(new AskHephaestusBuild(playerName, deepCopySpaceList));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        int[] spaceAndDoubleBuilding = new int[2];
-
-        try {
-            spaceAndDoubleBuilding = (int[]) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        int[] spaceAndDoubleBuilding = (int[]) receiveMessage();
         return spaceAndDoubleBuilding;
     }
 
-    public int[] askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w2CanMove, boolean w1CanBuild, boolean w2CanBuild) {
+    public int[] askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w2CanMove,
+                                              boolean w1CanBuild, boolean w2CanBuild) throws IOException {
         try {
             outputStream.writeObject(new AskBuildBeforeMovePrometheus(playerName, w1CanMove, w2CanMove, w1CanBuild, w2CanBuild));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        int[] workerAndBuildBeforeMove = new int[2];
-
-        try {
-            workerAndBuildBeforeMove = (int[]) inputStream.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        int[] workerAndBuildBeforeMove = (int[]) receiveMessage();
         return workerAndBuildBeforeMove;
-
     }
 
-    public int askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) {
+    public int askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) throws IOException {
         try {
             outputStream.writeObject(new AskWorkerMovementPrometheus(playerName, validMovementSpaces));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        int selectedSpace = -1;
+        int selectedSpace = (int) receiveMessage();
+        return selectedSpace;
+    }
+
+    private Object receiveMessage() throws IOException {
+        Object message = null;
 
         try {
-            selectedSpace = (int) inputStream.readObject();
+            do {
+                message = inputStream.readObject();
+            } while (message instanceof PingMessage);
+        }catch (SocketTimeoutException e){
+            throw new SocketTimeoutException();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        return selectedSpace;
+        return message;
+    }
+
+    public void sendStop(InetAddress disconnectedAddress) {
+        try {
+            outputStream.writeObject(new SendStop(disconnectedAddress));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void startPingSender(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(!endGame){
+                    try {
+                        synchronized (outputStream) {
+                            outputStream.writeObject(new PingMessage());
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    public void stopGame(){
+        endGame = true;
     }
 }

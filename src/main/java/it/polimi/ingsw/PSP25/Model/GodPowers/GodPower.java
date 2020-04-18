@@ -4,6 +4,8 @@ import it.polimi.ingsw.PSP25.*;
 import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +99,7 @@ public class GodPower{
     // -----------------------------------------------------------------------------------------------------------------
     // TURN SEQUENCE E METODI AUSILIARI
 
-    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) {
+    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws SocketTimeoutException, IOException {
 
         List<Space> validMovementSpacesW1;
         List<Space> validMovementSpacesW2;
@@ -129,7 +131,8 @@ public class GodPower{
         return TurnResult.CONTINUE;
     }
 
-    protected boolean askToMoveWorker(Player player, List<Space> validMovementSpacesW1, List<Space> validMovementSpacesW2) {
+    protected boolean askToMoveWorker(Player player, List<Space> validMovementSpacesW1,
+                                      List<Space> validMovementSpacesW2) throws IOException {
 
         Space selectedMovementSpace = null;
 
@@ -162,7 +165,7 @@ public class GodPower{
         }
     }
 
-    public Space askToBuild(Player player, List<Space> validBuildingSpaces) {
+    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws SocketTimeoutException, IOException {
 
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";

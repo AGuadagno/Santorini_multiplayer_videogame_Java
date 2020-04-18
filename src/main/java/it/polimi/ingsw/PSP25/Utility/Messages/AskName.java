@@ -16,6 +16,7 @@ public class AskName extends Message {
     public void process(NetworkHandler nh) throws IOException {
         System.out.println(question);
         Scanner scanner = new Scanner(System.in);
+
         String name = scanner.next();
         while (name.length() < 2) {
             System.out.println("Player " + playerNumber +

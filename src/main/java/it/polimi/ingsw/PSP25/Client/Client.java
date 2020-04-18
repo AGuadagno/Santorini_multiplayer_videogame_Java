@@ -67,4 +67,5 @@ public class Client implements Runnable, ServerObserver {
         this.receivedMessage = message;
         notifyAll();
     }
+
 }

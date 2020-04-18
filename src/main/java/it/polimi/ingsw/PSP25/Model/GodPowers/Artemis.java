@@ -6,6 +6,8 @@ import it.polimi.ingsw.PSP25.Player;
 import it.polimi.ingsw.PSP25.Space;
 import it.polimi.ingsw.PSP25.TurnResult;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.List;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
@@ -39,7 +41,7 @@ public class Artemis extends GodPower {
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn
      */
     @Override
-    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) {
+    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws IOException {
         List<Space> validMovementSpacesW1;
         List<Space> validMovementSpacesW2;
         List<Space> validBuildSpaces;
@@ -86,7 +88,7 @@ public class Artemis extends GodPower {
         return TurnResult.CONTINUE;
     }
 
-    private boolean askSecondMovement(Player player, List<Space> validSecondMovementSpaces) {
+    private boolean askSecondMovement(Player player, List<Space> validSecondMovementSpaces) throws IOException{
         Space selectedMovementSpace = null;
 
         if (validSecondMovementSpaces.size() > 0) {

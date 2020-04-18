@@ -6,6 +6,8 @@ import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
 import it.polimi.ingsw.PSP25.Player;
 import it.polimi.ingsw.PSP25.Space;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,7 +50,7 @@ public class Atlas extends GodPower {
     }
 
     @Override
-    public Space askToBuild(Player player, List<Space> validBuildingSpaces) {
+    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws IOException {
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
 

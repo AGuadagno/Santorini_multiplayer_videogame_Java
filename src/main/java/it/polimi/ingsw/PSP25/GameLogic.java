@@ -5,6 +5,8 @@ import it.polimi.ingsw.PSP25.Model.GodPowers.*;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +27,13 @@ public class GameLogic implements BroadcastInterface {
         this.clientHandlerList = clientHandlerList;
     }
 
-    private void playerInitialization() {
+    private void playerInitialization() throws IOException {
         System.out.println("The game begins.");
         int numOfPlayers = clientHandlerList.size();
 
         for (int i = 1; i <= numOfPlayers; i++) {
+            System.out.println("Prima di askNAme");
             String name = clientHandlerList.get(i - 1).askName(i);
-
             playerList.add(new Player(name, i, clientHandlerList.get(i - 1)));
         }
 
@@ -82,7 +84,7 @@ public class GameLogic implements BroadcastInterface {
         return godPowers;
     }
 
-    private void boardSetup() {
+    private void boardSetup() throws IOException {
         int pos1, pos2;
 
         broadcastBoard();
@@ -104,7 +106,7 @@ public class GameLogic implements BroadcastInterface {
         }
     }
 
-    private boolean gameLoop() {
+    private boolean gameLoop() throws IOException {
         boolean endGame = false;
         TurnResult turnResult = nowPlaying.getGodPower().turnSequence(nowPlaying, activeEffects);
         Player otherPlayer = playerList.get((playerList.indexOf(nowPlaying) + 1) % playerList.size());
@@ -129,7 +131,7 @@ public class GameLogic implements BroadcastInterface {
         return endGame;
     }
 
-    public void startGame() {
+    public void startGame() throws IOException {
         playerInitialization();
         boardSetup();
         boolean endGame = false;

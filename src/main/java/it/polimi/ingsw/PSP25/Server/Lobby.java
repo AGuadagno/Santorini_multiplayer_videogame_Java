@@ -2,9 +2,11 @@ package it.polimi.ingsw.PSP25.Server;
 
 import it.polimi.ingsw.PSP25.GameLogic;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 // Contains the list of connections of users who want to join the game
 
@@ -31,7 +33,7 @@ public class Lobby {
         }
     }
 
-    public synchronized void startGame(int numOfPlayers) {
+    public synchronized void startGame(int numOfPlayers) throws IOException {
         while (clientList.size() < numOfPlayers) {
 
             //DEBUG
@@ -43,9 +45,20 @@ public class Lobby {
                 e.printStackTrace();
             }
         }
+
         gameLogic = new GameLogic(clientList.subList(0, numOfPlayers));
         gameLogic.startGame();
     }
+
+    public void stopGame(ClientHandler timeOutClient, InetAddress disconnectedAddress){
+        for(ClientHandler clientHandler: clientList){
+            if(clientHandler != timeOutClient){
+                clientHandler.sendStop(disconnectedAddress);
+            }
+            clientHandler.stopGame();
+        }
+    }
+
 }
 
 
