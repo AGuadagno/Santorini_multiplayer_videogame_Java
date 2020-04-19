@@ -2,16 +2,12 @@ package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
-import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
-import it.polimi.ingsw.PSP25.Player;
-import it.polimi.ingsw.PSP25.Space;
-import it.polimi.ingsw.PSP25.TurnResult;
+import it.polimi.ingsw.PSP25.Model.Player;
+import it.polimi.ingsw.PSP25.Model.Space;
+import it.polimi.ingsw.PSP25.Model.TurnResult;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 

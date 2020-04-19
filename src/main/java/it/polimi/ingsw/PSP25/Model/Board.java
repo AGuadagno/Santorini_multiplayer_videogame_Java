@@ -1,4 +1,4 @@
-package it.polimi.ingsw.PSP25;
+package it.polimi.ingsw.PSP25.Model;
 
 import java.lang.*;
 

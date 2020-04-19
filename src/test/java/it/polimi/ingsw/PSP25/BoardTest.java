@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.Board;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

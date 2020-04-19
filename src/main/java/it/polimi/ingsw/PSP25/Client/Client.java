@@ -20,7 +20,7 @@ public class Client implements Runnable, ServerObserver {
         System.out.println("IP address of server?");
         String ip = scanner.nextLine();
 
-        /* open a connection to the server */
+        // Open a connection to the server //
         Socket server;
         try {
             server = new Socket(ip, Server.SOCKET_PORT);
@@ -36,6 +36,7 @@ public class Client implements Runnable, ServerObserver {
         Thread networkHandlerThread = new Thread(networkHandler);
         networkHandlerThread.start();
 
+        // RECEIVING OF MESSAGES FROM SERVER
         do {
             synchronized (this) {
 

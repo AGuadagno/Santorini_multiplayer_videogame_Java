@@ -2,8 +2,8 @@ package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
-import it.polimi.ingsw.PSP25.Space;
-import it.polimi.ingsw.PSP25.Worker;
+import it.polimi.ingsw.PSP25.Model.Space;
+import it.polimi.ingsw.PSP25.Model.Worker;
 
 /**
  * Athena class
@@ -23,10 +23,11 @@ public class Athena extends GodPower {
     /**
      * Override of "canMove" according to Athena's effect:
      * "If one of your Workers moved up on your last turn, opponent workers cannot move up this turn"
+     *
      * @param worker the opponent's Worker whose we want to know if he can move to Space
      * @param space  Space where we want to know if the worker can move
      * @return true if the opponent worker is not moving up (i.e. if the movement is considered valid)
-     *         false if the opponent worker is moving up (i.e. if the movement is not considered valid)
+     * false if the opponent worker is moving up (i.e. if the movement is not considered valid)
      */
     @Override
     public boolean canMove(Worker worker, Space space) {
@@ -42,10 +43,11 @@ public class Athena extends GodPower {
      * If one of the workers controlled by the player who has "Athena" god power moves up, we put "Athena effect"
      * in the list of effects valid during opponents' turns.
      * Athena's effect prevents the moving up of opponent workers.
-     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
-     *                      building action or winning conditions of our player
-     * @param worker1 controlled by the player who has "Athena" god power
-     * @param worker2 controlled by the player who has "Athena" god power
+     *
+     * @param activeEffects  list of opponent GodPower effects active in our turn that could limit movement,
+     *                       building action or winning conditions of our player
+     * @param worker1        controlled by the player who has "Athena" god power
+     * @param worker2        controlled by the player who has "Athena" god power
      * @param selectedWorker controlled by the player who has "Athena" god power
      */
     @Override

@@ -9,7 +9,6 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientHandler implements Runnable {
@@ -225,6 +224,16 @@ public class ClientHandler implements Runnable {
         return message;
     }
 
+    private void sendMessage(Message message) {
+        try {
+            synchronized (outputStream) {
+                outputStream.writeObject(message);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void sendStop(InetAddress disconnectedAddress) {
         try {
             outputStream.writeObject(new SendStop(disconnectedAddress));
@@ -233,7 +242,7 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    public void startPingSender(){
+    public void startPingSender() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -255,7 +264,27 @@ public class ClientHandler implements Runnable {
         }).start();
     }
 
-    public void stopGame(){
+    public void stopGame() {
         endGame = true;
+        try {
+            client.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public void manageVictory(String playerName) {
+
+        sendMessage(new AnnounceVictory(playerName));
+
+    }
+
+    public void manageLose(String playerName) {
+
+        sendMessage(new AnnounceLose(playerName));
+
+    }
+
+
 }
+

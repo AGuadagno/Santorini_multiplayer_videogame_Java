@@ -1,4 +1,7 @@
-package it.polimi.ingsw.PSP25;
+package it.polimi.ingsw.PSP25.Model;
+
+import it.polimi.ingsw.PSP25.Model.Player;
+import it.polimi.ingsw.PSP25.Model.Space;
 
 /**
  * Worker Class. Each Player controls two Workers.

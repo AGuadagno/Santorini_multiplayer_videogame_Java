@@ -10,9 +10,8 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class NetworkHandler implements Runnable{
+public class NetworkHandler implements Runnable {
 
     private enum Commands {
         RECEIVE,
@@ -36,13 +35,11 @@ public class NetworkHandler implements Runnable{
         }
     }
 
-    public void removeObserver(ServerObserver observer)
-    {
+    public void removeObserver(ServerObserver observer) {
         synchronized (observers) {
             observers.remove(observer);
         }
     }
-
 
     @Override
     public void run() {
@@ -54,16 +51,16 @@ public class NetworkHandler implements Runnable{
             handleServerConnection();
         } catch (IOException e) {
             stop();
-            System.out.println("server has died");
+            System.out.println("Connection with Server interrupted");
         } catch (ClassCastException | ClassNotFoundException e) {
-            System.out.println("protocol violation");
+            System.out.println("Protocol violation");
         }
-
         try {
             server.close();
-        } catch (IOException e) { }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 
     public synchronized void receiveCommand() {
         while (isWaiting == false) {
@@ -77,8 +74,7 @@ public class NetworkHandler implements Runnable{
         notifyAll();
     }
 
-    public synchronized void stop()
-    {
+    public synchronized void stop() {
         nextCommand = Commands.STOP;
         for (ServerObserver observer : observers) {
             observer.didReceiveServerMessage(null);
@@ -87,9 +83,8 @@ public class NetworkHandler implements Runnable{
     }
 
     private synchronized void handleServerConnection() throws IOException, ClassNotFoundException {
-        /* wait for commands */
+        /* wait for commands from the client*/
         while (true) {
-
             nextCommand = null;
 
             try {
@@ -97,8 +92,8 @@ public class NetworkHandler implements Runnable{
                 notifyAll();
                 wait();
                 isWaiting = false;
-
             } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
             if (nextCommand == null)
@@ -109,7 +104,6 @@ public class NetworkHandler implements Runnable{
                     receive();
                     break;
                 case STOP:
-
                     return;
             }
         }
@@ -119,25 +113,25 @@ public class NetworkHandler implements Runnable{
         Message receivedMessage = null;
         try {
             receivedMessage = (Message) inputStream.readObject();
-        }catch (SocketTimeoutException e){
+        } catch (SocketTimeoutException e) {
             System.out.println("Network handler: socket timeout excpetion");
             throw new SocketTimeoutException();
         }
+
         for (ServerObserver observer : observers) {
             observer.didReceiveServerMessage(receivedMessage);
         }
-
     }
 
     public synchronized void submit(Object response) throws IOException {
         outputStream.writeObject(response);
     }
 
-    public void startPingSender(){
+    public void startPingSender() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true){
+                while (true) {
                     try {
                         outputStream.writeObject(new PingMessage());
                     } catch (IOException e) {
@@ -148,7 +142,7 @@ public class NetworkHandler implements Runnable{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-               }
+                }
             }
         }).start();
     }

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
-import it.polimi.ingsw.PSP25.Space;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 import java.io.IOException;
 import java.util.List;

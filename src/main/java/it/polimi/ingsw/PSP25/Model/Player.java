@@ -1,4 +1,4 @@
-package it.polimi.ingsw.PSP25;
+package it.polimi.ingsw.PSP25.Model;
 
 import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;

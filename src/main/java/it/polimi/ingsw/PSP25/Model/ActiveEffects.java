@@ -1,8 +1,6 @@
 package it.polimi.ingsw.PSP25.Model;
 
 import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
-import it.polimi.ingsw.PSP25.Space;
-import it.polimi.ingsw.PSP25.Worker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,5 +99,10 @@ public class ActiveEffects {
      */
     public void debugPrint() {
         System.out.println(effectsList);
+    }
+
+    public void adaptEffectsAfterPlayerLose() {
+        effectsList.remove(effectsList.size() - 1);
+        numOfEffects--;
     }
 }

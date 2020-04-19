@@ -2,7 +2,7 @@ package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
-import it.polimi.ingsw.PSP25.Worker;
+import it.polimi.ingsw.PSP25.Model.Worker;
 
 /**
  * Pan class
@@ -24,6 +24,7 @@ public class Pan extends GodPower {
      * "You also win if your Worker moves down two or more levels"
      * Controls if the moved worker moves down two or more levels,
      * super.verifyWin(worker) it's used because normal winning conditions are also valid.
+     *
      * @param worker Worker whose movement can make his player win
      * @return true if the winning condition is verified
      */

@@ -2,12 +2,11 @@ package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
-import it.polimi.ingsw.PSP25.Player;
-import it.polimi.ingsw.PSP25.Space;
-import it.polimi.ingsw.PSP25.TurnResult;
+import it.polimi.ingsw.PSP25.Model.Player;
+import it.polimi.ingsw.PSP25.Model.Space;
+import it.polimi.ingsw.PSP25.Model.TurnResult;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.List;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
@@ -56,7 +55,6 @@ public class Artemis extends GodPower {
             return TurnResult.LOSE;
         }
 
-
         if (askToMoveWorker(player, validMovementSpacesW1, validMovementSpacesW2) == true) {
             return TurnResult.WIN;
         }
@@ -69,26 +67,25 @@ public class Artemis extends GodPower {
         List<Space> validSecondMovementSpaces = getValidMovementSpaces(selectedWorker);
         validSecondMovementSpaces.remove(originalSpace);
 
-
         if (askSecondMovement(player, validSecondMovementSpaces) == true) {
             return TurnResult.WIN;
         }
 
         validBuildSpaces = getValidBuildSpaces(selectedWorker);
 
-        // VERIFICA SE PUO' COSTRUIRE (LOSEBYBUILDING)
+        // Verify lose by building
         if (verifyLoseByBuilding(validBuildSpaces)) {
             return TurnResult.LOSE;
         }
 
-        // CHIEDI DOVE VUOLE COSTRUIRE
+        // Player is asked if he wants to build twice
         askToBuild(player, validBuildSpaces);
 
         addActiveEffects(activeEffects, player.getWorker1(), player.getWorker2(), selectedWorker);
         return TurnResult.CONTINUE;
     }
 
-    private boolean askSecondMovement(Player player, List<Space> validSecondMovementSpaces) throws IOException{
+    private boolean askSecondMovement(Player player, List<Space> validSecondMovementSpaces) throws IOException {
         Space selectedMovementSpace = null;
 
         if (validSecondMovementSpaces.size() > 0) {
@@ -109,13 +106,13 @@ public class Artemis extends GodPower {
             moveWorker(selectedWorker, selectedMovementSpace);
 
             broadcastInterface.broadcastBoard();
+
             if (activeEffects.canWin(selectedWorker, selectedMovementSpace) && verifyWin(selectedWorker) == true) {
                 return true;
             } else {
                 return false;
             }
         }
-
         return false;
     }
 }

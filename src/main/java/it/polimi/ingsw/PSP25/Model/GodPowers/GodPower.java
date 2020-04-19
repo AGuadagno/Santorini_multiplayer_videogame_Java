@@ -1,8 +1,6 @@
 package it.polimi.ingsw.PSP25.Model.GodPowers;
 
-import it.polimi.ingsw.PSP25.*;
-import it.polimi.ingsw.PSP25.Model.ActiveEffects;
-import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
+import it.polimi.ingsw.PSP25.Model.*;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -11,16 +9,15 @@ import java.util.List;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 
-public class GodPower{
+public class GodPower {
 
     protected ActiveEffects activeEffects;
     protected BroadcastInterface broadcastInterface;
-    // Rendiamo selectedWorker un attributo generale così da poterlo utilizzare per definire l'array "validBuildingSpaces"
     protected Worker selectedWorker = null;
 
     public GodPower(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
-        this.activeEffects=activeEffects;
-        this.broadcastInterface=broadcastInterface;
+        this.activeEffects = activeEffects;
+        this.broadcastInterface = broadcastInterface;
     }
 
     protected List<Space> getValidMovementSpaces(Worker worker) {
@@ -37,7 +34,6 @@ public class GodPower{
     public boolean canMove(Worker worker, Space space) {
         return true;
     }
-
 
     public List<Space> getValidBuildSpaces(Worker worker) {
         ArrayList<Space> validBuildSpaces = new ArrayList<Space>();
@@ -79,25 +75,20 @@ public class GodPower{
         }
     }
 
-    protected boolean verifyLoseByMovement(List<Space> spacesW1, List<Space> spacesW2){
-        if(spacesW1.size()==0 && spacesW2.size()==0) {
+    protected boolean verifyLoseByMovement(List<Space> spacesW1, List<Space> spacesW2) {
+        if (spacesW1.size() == 0 && spacesW2.size() == 0) {
             return true;
-        }
-        else
+        } else
             return false;
     }
 
-    protected boolean verifyLoseByBuilding(List<Space> buildingSpaces){
-        if(buildingSpaces.size()==0){
+    protected boolean verifyLoseByBuilding(List<Space> buildingSpaces) {
+        if (buildingSpaces.size() == 0) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // TURN SEQUENCE E METODI AUSILIARI
 
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws SocketTimeoutException, IOException {
 
@@ -113,14 +104,14 @@ public class GodPower{
         }
 
         // SE PUO' MUOVERSI, CHIEDI DOVE VUOLE MUOVERSI E VERIFICA VITTORIA PER MOVIMENTO
-        if(askToMoveWorker(player, validMovementSpacesW1, validMovementSpacesW2) == true){
+        if (askToMoveWorker(player, validMovementSpacesW1, validMovementSpacesW2) == true) {
             return TurnResult.WIN;
         }
 
         validBuildSpaces = getValidBuildSpaces(selectedWorker);
 
         // VERIFICA SE PUO' COSTRUIRE (LOSEBYBUILDING)
-        if(verifyLoseByBuilding(validBuildSpaces)){
+        if (verifyLoseByBuilding(validBuildSpaces)) {
             return TurnResult.LOSE;
         }
 
@@ -147,10 +138,9 @@ public class GodPower{
                 selectedMovementSpace = space;
         }
 
-        if(workerAndSpace[0]==1){
+        if (workerAndSpace[0] == 1) {
             selectedWorker = player.getWorker1();
-        }
-        else{
+        } else {
             selectedWorker = player.getWorker2();
         }
 
@@ -159,8 +149,7 @@ public class GodPower{
 
         if (activeEffects.canWin(selectedWorker, selectedMovementSpace) && verifyWin(selectedWorker) == true) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }

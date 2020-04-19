@@ -2,18 +2,14 @@ package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
-import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
-import it.polimi.ingsw.PSP25.Player;
-import it.polimi.ingsw.PSP25.Space;
-import it.polimi.ingsw.PSP25.TurnResult;
-import it.polimi.ingsw.PSP25.Worker;
+import it.polimi.ingsw.PSP25.Model.Player;
+import it.polimi.ingsw.PSP25.Model.Space;
+import it.polimi.ingsw.PSP25.Model.TurnResult;
+import it.polimi.ingsw.PSP25.Model.Worker;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 
@@ -36,11 +32,12 @@ public class Prometheus extends GodPower {
      * Override of "turnSequence" according to Prometheus' effect:
      * "If your Worker does not move up, it may build both before and after moving",
      * the turn sequence is modified and the player is asked if he wants to build before moving.
-     * @param player playing the round
+     *
+     * @param player        playing the round
      * @param activeEffects array containing opponent god power effects that may influence this turn
      * @return TurnResult.LOSE if the player has lost during this turn
-     *         TurnResult.WIN if the player has won during this turn
-     *         TurnResult.CONTINUE if the player hasn't lost or won during this turn
+     * TurnResult.WIN if the player has won during this turn
+     * TurnResult.CONTINUE if the player hasn't lost or won during this turn
      */
     @Override
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws IOException {
@@ -104,9 +101,9 @@ public class Prometheus extends GodPower {
     }
 
     private List<Space> getValidMovementSpaces(Worker worker, boolean cantMoveUp) {
-        if(!cantMoveUp)
-            return super.getValidBuildSpaces(worker);
-        else{
+        if (!cantMoveUp)
+            return super.getValidMovementSpaces(worker);
+        else {
             ArrayList<Space> validMovementSpaces = new ArrayList<Space>();
 
             for (Space space : worker.getSpace().getAdjacentSpaces()) {

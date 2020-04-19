@@ -1,17 +1,15 @@
-package it.polimi.ingsw.PSP25;
+package it.polimi.ingsw.PSP25.Model;
 
-import it.polimi.ingsw.PSP25.Model.ActiveEffects;
+import it.polimi.ingsw.PSP25.Model.*;
 import it.polimi.ingsw.PSP25.Model.GodPowers.*;
-import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
-
-import java.io.IOException;
-import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyBoard;
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyGodPowerNames;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameLogic implements BroadcastInterface {
     private ActiveEffects activeEffects;
@@ -32,7 +30,6 @@ public class GameLogic implements BroadcastInterface {
         int numOfPlayers = clientHandlerList.size();
 
         for (int i = 1; i <= numOfPlayers; i++) {
-            System.out.println("Prima di askNAme");
             String name = clientHandlerList.get(i - 1).askName(i);
             playerList.add(new Player(name, i, clientHandlerList.get(i - 1)));
         }
@@ -43,7 +40,6 @@ public class GameLogic implements BroadcastInterface {
 
         List<GodPower> allGodPowers = getGodPowerList(activeEffects);
 
-
         String playerName = playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")";
         List<Integer> selectedIndexes = playerList.get(0).getClientHandler().
                 askAllGodPowers(playerName, numOfPlayers, deepCopyGodPowerNames(allGodPowers));
@@ -51,7 +47,6 @@ public class GameLogic implements BroadcastInterface {
         for (Integer i : selectedIndexes) {
             selectedGodPowers.add(allGodPowers.get(i));
         }
-
 
         for (int i = 0; i < numOfPlayers - 1; i++) {
             Player currPlayer = playerList.get(i + 1);
@@ -121,9 +116,6 @@ public class GameLogic implements BroadcastInterface {
             }
             else{
                 manageLose(nowPlaying);
-                nowPlaying.getWorker1().getSpace().removeWorker();
-                nowPlaying.getWorker2().getSpace().removeWorker();
-                playerList.remove(nowPlaying);
             }
         }
 
@@ -141,12 +133,26 @@ public class GameLogic implements BroadcastInterface {
     }
 
     private void manageVictory(Player player) {
-        System.out.println(player.getName() + " (" + player.getID() + ") won the Game! Congratulations!");
-        System.out.println("Game ends.");
+        String playerName = player.getName() + "(" + player.getID() + ")";
+        for (Player p : playerList) {
+            p.getClientHandler().manageVictory(playerName);
+        }
     }
 
-    private void manageLose(Player player){
-        System.out.println(player.getName() + " (" + player.getID() + ") you Lost! You can't Move or Build.");
+    private void manageLose(Player player) {
+        String playerName = player.getName() + "(" + player.getID() + ")";
+
+        for (Player p : playerList) {
+            p.getClientHandler().manageLose(playerName);
+        }
+        nowPlaying.getWorker1().getSpace().removeWorker();
+        nowPlaying.getWorker2().getSpace().removeWorker();
+
+        nowPlaying.getClientHandler().stopGame();
+        activeEffects.adaptEffectsAfterPlayerLose();
+
+        playerList.remove(nowPlaying);
+        broadcastBoard();
     }
 
     @Override

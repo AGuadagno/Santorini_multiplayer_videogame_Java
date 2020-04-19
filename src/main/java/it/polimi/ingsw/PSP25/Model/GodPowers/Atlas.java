@@ -2,14 +2,11 @@ package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
-import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
-import it.polimi.ingsw.PSP25.Player;
-import it.polimi.ingsw.PSP25.Space;
+import it.polimi.ingsw.PSP25.Model.Player;
+import it.polimi.ingsw.PSP25.Model.Space;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.List;
-import java.util.Scanner;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 
@@ -57,7 +54,6 @@ public class Atlas extends GodPower {
         int[] selectedSpaceAndBuildDome = player.getClientHandler().askAtlasBuild(playerName,
                 deepCopySpaceList(validBuildingSpaces));
 
-
         int x = selectedSpaceAndBuildDome[0] % 5;
         int y = selectedSpaceAndBuildDome[0] / 5;
         for (Space space : validBuildingSpaces) {
@@ -70,6 +66,4 @@ public class Atlas extends GodPower {
 
         return selectedBuildingSpace;
     }
-
-
 }

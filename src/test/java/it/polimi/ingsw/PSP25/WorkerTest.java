@@ -1,5 +1,8 @@
 package it.polimi.ingsw.PSP25;
 
+import it.polimi.ingsw.PSP25.Model.Player;
+import it.polimi.ingsw.PSP25.Model.Space;
+import it.polimi.ingsw.PSP25.Model.Worker;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.Before;
