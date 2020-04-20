@@ -16,8 +16,9 @@ public class Apollo extends GodPower {
     /**
      * Apollo constructor
      *
-     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
-     *                      building action or winning conditions of our player
+     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
+     *                           building action or winning conditions of workers
+     * @param broadcastInterface used to send the modified board to all the players
      */
     public Apollo(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -25,10 +26,10 @@ public class Apollo extends GodPower {
 
     /**
      * Override of "getValidMovementSpaces" according to Apollo's effect:
-     * "Your Worker may move into an opponent Worker’s space by forcing their Worker to the space  yours just vacated.",
+     * "Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated",
      * adjacent spaces occupied by opponent workers are considered valid movement spaces.
      *
-     * @param worker Worker we want to know Spaces where he can move
+     * @param worker Worker that the player wants to know Spaces valid for the movement
      * @return List of possible Spaces where the Worker passed as argument can move to
      */
     @Override
@@ -51,7 +52,7 @@ public class Apollo extends GodPower {
      * the two worker positions are switched.
      *
      * @param myWorker    Worker moved by the player who has Apollo as GodPower
-     * @param targetSpace Space where the player wants to move his worker
+     * @param targetSpace Space where the player who has Apollo as GodPower wants to move his worker
      */
     @Override
     protected void moveWorker(Worker myWorker, Space targetSpace) {

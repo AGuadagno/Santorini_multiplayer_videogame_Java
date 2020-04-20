@@ -21,8 +21,9 @@ public class Prometheus extends GodPower {
     /**
      * Prometheus constructor
      *
-     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
-     *                      building action or winning conditions of our player
+     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
+     *                           building action or winning conditions of workers
+     * @param broadcastInterface used to send the modified board to all the players
      */
     public Prometheus(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -49,16 +50,9 @@ public class Prometheus extends GodPower {
         List<Space> validBuildSpaces;
         List<Space> validMoveSpaces;
 
-        /* Worker selectedWorker;
-        int workerchoice;
-        Space selectedMovementSpace = null;
-        Space selectedBuildingSpace = null;
-        boolean cantMoveUp = false; */
-
         validMovementSpacesW1 = getValidMovementSpaces(player.getWorker1());
         validMovementSpacesW2 = getValidMovementSpaces(player.getWorker2());
 
-        // VERIFICA SE SI PUO' MUOVERE (LOSEBYMOVEMENT)
         if (verifyLoseByMovement(validMovementSpacesW1, validMovementSpacesW2)) {
             return TurnResult.LOSE;
         }
@@ -66,11 +60,11 @@ public class Prometheus extends GodPower {
         validBuildingSpacesW1 = getValidBuildSpaces(player.getWorker1());
         validBuildingSpacesW2 = getValidBuildSpaces(player.getWorker2());
 
+        // We ask to the player if he wants to build before move
         boolean buildBeforeMove = askWorkerAndBuildBeforeMove(player, validMovementSpacesW1, validMovementSpacesW2,
                 validBuildingSpacesW1, validBuildingSpacesW2);
 
         if (buildBeforeMove) {
-            // TRUE
             if (selectedWorker.equals(player.getWorker1())) {
                 askToBuild(player, validBuildingSpacesW1);
             } else {
@@ -100,6 +94,16 @@ public class Prometheus extends GodPower {
         return TurnResult.CONTINUE;
     }
 
+    /**
+     * Return the list of valid movement spaces considering that, if the player decided to build before moving,
+     * the selected worker can't move in a space which high is greater then the worker's actual space high.
+     *
+     * @param worker     selected by the player
+     * @param cantMoveUp is true if the player decided to build before moving.
+     *                   is false if the player decided to not build before moving.
+     * @return
+     */
+
     private List<Space> getValidMovementSpaces(Worker worker, boolean cantMoveUp) {
         if (!cantMoveUp)
             return super.getValidMovementSpaces(worker);
@@ -117,11 +121,22 @@ public class Prometheus extends GodPower {
         }
     }
 
+    /**
+     * The player is asked to select a worker and to decide if he wants to build before move.
+     *
+     * @param player                who is playing the turn
+     * @param validMovementSpacesW1 list of valid spaces where worker 1 can move
+     * @param validMovementSpacesW2 list of valid spaces where worker 2 can move
+     * @param validBuildingSpacesW1 list of valid spaces where worker 1 can build
+     * @param validBuildingSpacesW2 list of valid spaces where worker 2 can build
+     * @return true if the player wants to build before moving, false otherwise
+     * @throws IOException
+     */
     private boolean askWorkerAndBuildBeforeMove(Player player, List<Space> validMovementSpacesW1, List<Space> validMovementSpacesW2,
                                                 List<Space> validBuildingSpacesW1, List<Space> validBuildingSpacesW2) throws IOException {
 
         String playerName = player.getName() + "(" + player.getID() + ")";
-        // Ritorna in pos 0 il worker, in pos 1 ritorna 0 se non vuole costruire prima di muvoere, 1 altrimenti
+        // Return the selected worker, return, in pos 1, 0 if the player don't want to build before move, 1 otherwise
         int[] workerAndBuildBeforeMove = player.getClientHandler().askBuildBeforeMovePrometheus(playerName,
                 (validMovementSpacesW1.size() > 0), (validMovementSpacesW2.size() > 0),
                 (validBuildingSpacesW1.size() > 0), (validBuildingSpacesW2.size() > 0));
@@ -140,6 +155,15 @@ public class Prometheus extends GodPower {
 
     }
 
+    /**
+     * Ask to the player the space where he wants to move the selected worker.
+     * (Does not ask to selected a worker. The selection of the worker has already been done).
+     *
+     * @param player              who is playing the turn
+     * @param validMovementSpaces List of valid spaces where the selected worker can move
+     * @return
+     * @throws IOException
+     */
     private boolean askToMoveWorkerPrometheus(Player player, List<Space> validMovementSpaces) throws IOException {
 
         Space selectedMovementSpace = null;

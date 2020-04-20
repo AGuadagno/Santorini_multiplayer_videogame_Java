@@ -5,6 +5,11 @@ import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * TellAssignedGodPower Message Class.
+ * This Message is sent to the player who created the game to tell him what is his GodPower, the last one left
+ * in the list of selected GodPower.
+ */
 public class TellAssignedGodPower extends Message {
     private String playerName;
     private List<String> godPowerName;

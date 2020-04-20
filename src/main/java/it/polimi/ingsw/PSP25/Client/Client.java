@@ -20,7 +20,6 @@ public class Client implements Runnable, ServerObserver {
         System.out.println("IP address of server?");
         String ip = scanner.nextLine();
 
-        // Open a connection to the server //
         Socket server;
         try {
             server = new Socket(ip, Server.SOCKET_PORT);

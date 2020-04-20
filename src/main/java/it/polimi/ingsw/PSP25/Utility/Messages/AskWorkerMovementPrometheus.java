@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * Ask WorkerMovementPrometheus Message Class.
+ * This message is sent to the player who controls Prometheus to ask him to select a valid movement
+ * space where the selected worker (selected previously) will be moved to.
+ */
 public class AskWorkerMovementPrometheus extends Message {
 
     List<SpaceCopy> validMovementSpaces;
@@ -19,7 +24,6 @@ public class AskWorkerMovementPrometheus extends Message {
     }
 
     public void process(NetworkHandler nh) throws IOException {
-        //SELECTION OF MOVEMENT SPACE
         int chosenMovementSpace = workerMovementSelection(validMovementSpaces);
         nh.submit(chosenMovementSpace);
     }

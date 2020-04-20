@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * AskAtlasBuild Message Class.
+ * This Message is sent to the player who controls Atlas to ask him if he wants to build a block or a Dome.
+ */
 public class AskAtlasBuild extends Message {
     private String playerName;
     private List<SpaceCopy> validBuildingSpaces;

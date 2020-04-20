@@ -92,8 +92,6 @@ public class ActiveEffects {
         return true;
     }
 
-    // DEBUG
-
     /**
      * Prints the effectsList.
      */

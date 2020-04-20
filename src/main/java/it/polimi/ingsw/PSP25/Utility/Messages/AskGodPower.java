@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * AskGodPower Message class.
+ * This message is sent to all the players (except for the creator of the game) to ask them to chose a
+ * GodPower from the List of the God Power chosen by the creator of the game.
+ */
 public class AskGodPower extends Message {
     private String playerName;
     private List<String> godPowerNames;

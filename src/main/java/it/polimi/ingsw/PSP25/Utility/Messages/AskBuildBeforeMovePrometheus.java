@@ -1,12 +1,15 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
-import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
+/**
+ * AskBuildBeforeMovePrometheus Message Class.
+ * This Message is sent to the player who controls Prometheus to ask him if he wants to build before move.
+ * If the answer is yes, the player is asked to chose a worker and a valid space where the selected worker can build.
+ */
 public class AskBuildBeforeMovePrometheus extends Message {
 
     boolean w1CanMove;

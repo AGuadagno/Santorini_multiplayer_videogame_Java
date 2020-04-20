@@ -5,6 +5,11 @@ import it.polimi.ingsw.PSP25.Model.Worker;
 
 import java.io.Serializable;
 
+/**
+ * SpaceCopy Class.
+ * This class is used to create a copy of the Board. A copy of the board is sent to the clients when
+ * they need to be informed about other players actions. (It's more safe to not share the original board but a copy of it)
+ */
 public class SpaceCopy implements Serializable {
     private final int x;
     private final int y;

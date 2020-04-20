@@ -6,6 +6,10 @@ import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 
 import java.io.IOException;
 
+/**
+ * SendBoard Message.
+ * This message is sent to the players in order to show them a copy of the board.
+ */
 public class SendBoard extends Message {
     SpaceCopy[][] board;
 

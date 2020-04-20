@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * AskBuildingSpace Message Class.
+ * This message is sent during the turn sequence to the current player to ask him to chose a valid building space
+ * where the selected worker has to build a block (or a dome).
+ */
 public class AskBuildingSpace extends Message {
 
     List<SpaceCopy> validBuildingSpaces;
@@ -17,9 +22,9 @@ public class AskBuildingSpace extends Message {
     }
 
     public void process(NetworkHandler nh) throws IOException{
-    // SELECTION OF BUILDING SPACE
-    int chosenBuildingSpace = buildingSpaceSelection(validBuildingSpaces);
-    nh.submit(chosenBuildingSpace);
+        // SELECTION OF BUILDING SPACE
+        int chosenBuildingSpace = buildingSpaceSelection(validBuildingSpaces);
+        nh.submit(chosenBuildingSpace);
     }
 
     private int buildingSpaceSelection(List<SpaceCopy> validBuildingSpaces){

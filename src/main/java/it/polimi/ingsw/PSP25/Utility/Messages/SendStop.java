@@ -5,6 +5,10 @@ import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 import java.io.IOException;
 import java.net.InetAddress;
 
+/**
+ * SendStop Message Class.
+ * This message is sent to notify the disconnection of one of the players.
+ */
 public class SendStop extends Message {
     private InetAddress disconnectedAddress;
 

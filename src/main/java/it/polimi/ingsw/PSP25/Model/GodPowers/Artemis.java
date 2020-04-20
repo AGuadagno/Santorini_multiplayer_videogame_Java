@@ -19,8 +19,9 @@ public class Artemis extends GodPower {
     /**
      * Artemis constructor
      *
-     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
-     *                      building actions or winning conditions of our player
+     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
+     *                           building action or winning conditions of workers
+     * @param broadcastInterface used to send the modified board to all the players
      */
     public Artemis(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -29,15 +30,14 @@ public class Artemis extends GodPower {
     /**
      * Override of "turnSequence" according to Artemis' effect:
      * "Your Worker may move one additional time, but not back to its initial space.".
-     * We ask to the player if he wants to move a second time,
-     * if the answer is yes, we call "getValidMovementSpaces" for a second time.
-     * The original space where the worker was positioned is not included in the second valid spaces list.
+     * The player is asked if the wants to move twice.
      *
      * @param player        playing the turn
      * @param activeEffects array containing opponents' god powers' effects that may influence this turn
      * @return TurnResult.LOSE if the player has lost during this turn
      * TurnResult.WIN if the player has won during this turn
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn
+     * @throws IOException
      */
     @Override
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws IOException {
@@ -67,29 +67,38 @@ public class Artemis extends GodPower {
         List<Space> validSecondMovementSpaces = getValidMovementSpaces(selectedWorker);
         validSecondMovementSpaces.remove(originalSpace);
 
+        // Second Movement
         if (askSecondMovement(player, validSecondMovementSpaces) == true) {
             return TurnResult.WIN;
         }
 
         validBuildSpaces = getValidBuildSpaces(selectedWorker);
 
-        // Verify lose by building
         if (verifyLoseByBuilding(validBuildSpaces)) {
             return TurnResult.LOSE;
         }
 
-        // Player is asked if he wants to build twice
         askToBuild(player, validBuildSpaces);
 
         addActiveEffects(activeEffects, player.getWorker1(), player.getWorker2(), selectedWorker);
         return TurnResult.CONTINUE;
     }
 
+    /**
+     * According to Artemis effect, we ask to the player if he wants to move his selected worker for a second time.
+     * If the answer is yes, the player can chose the movement space and the selected worker is moved for the second time.
+     *
+     * @param player                    playing the turn
+     * @param validSecondMovementSpaces List of valid movement spaces for the second movement of the selected worker
+     * @return true if the player has win, false if the player hasn't win
+     * @throws IOException
+     */
     private boolean askSecondMovement(Player player, List<Space> validSecondMovementSpaces) throws IOException {
         Space selectedMovementSpace = null;
 
         if (validSecondMovementSpaces.size() > 0) {
             String playerName = player.getName() + "(" + player.getID() + ")";
+            // We ask to the player if the wants to move the selected worker for a second time
             int chosenMovementSpace = player.getClientHandler().askArtemisSecondMove(playerName,
                     deepCopySpaceList(validSecondMovementSpaces));
 

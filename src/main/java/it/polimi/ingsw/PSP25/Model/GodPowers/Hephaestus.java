@@ -18,13 +18,22 @@ public class Hephaestus extends GodPower {
     /**
      * Hephaestus constructor
      *
-     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
-     *                      building action or winning conditions of our player
+     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
+     *                           building action or winning conditions of workers
+     * @param broadcastInterface used to send the modified board to all the players
      */
     public Hephaestus(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
     }
 
+    /**
+     * According to Hephaestus effect, we ask to the player if he wants to build 2 blocks in the selected building space.
+     *
+     * @param player              playing the turn
+     * @param validBuildingSpaces List of valid building spaces
+     * @return
+     * @throws IOException
+     */
     @Override
     public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws IOException {
         Space selectedBuildingSpace = null;

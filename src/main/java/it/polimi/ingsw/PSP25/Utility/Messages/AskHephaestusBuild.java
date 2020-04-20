@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * AskHephaestusBuild Message Class.
+ * This Message is sent to the player who controls Hephaestus to ask him if he wants to build 2 block in the
+ * selected building space.
+ */
 public class AskHephaestusBuild extends Message {
 
     List<SpaceCopy> validBuildingSpaces;

@@ -12,8 +12,9 @@ public class Pan extends GodPower {
     /**
      * Pan constructor
      *
-     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
-     *                      building action or winning conditions of our player
+     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
+     *                           building action or winning conditions of workers
+     * @param broadcastInterface used to send the modified board to all the players
      */
     public Pan(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);

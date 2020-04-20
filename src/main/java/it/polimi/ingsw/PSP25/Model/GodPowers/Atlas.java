@@ -18,8 +18,9 @@ public class Atlas extends GodPower {
     /**
      * Atlas constructor
      *
-     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
-     *                      building action or winning conditions of our player
+     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
+     *                           building action or winning conditions of workers
+     * @param broadcastInterface used to send the modified board to all the players
      */
     public Atlas(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -28,10 +29,10 @@ public class Atlas extends GodPower {
     /**
      * Override of "buildBlock" according to Atlas' effect:
      * "Your Worker may build a dome at any level."
-     * We ask to the player if he want to build a block or a dome. If he chooses 'b',
-     * we build a block, if the chooses 'd', we build a dome
      *
-     * @param space Space where the player wants to build a Block or a Dome
+     * @param space     Space where the player wants to build a Block or a Dome
+     * @param buildDome if equals to 1, the player has chosen to build a Dome,
+     *                  if equals to 0, the player has chosen to build a Block
      */
 
     private void buildBlock(Space space, int buildDome) {
@@ -46,6 +47,16 @@ public class Atlas extends GodPower {
         }
     }
 
+
+    /**
+     * Sends a message to the player who has Atlas as GodPower in order to ask him where he wants to build
+     * and if he wants to build a block or a dome.
+     *
+     * @param player              who has Atlas as GodPower
+     * @param validBuildingSpaces List of Spaces where the selected worker can build
+     * @return the selected building space
+     * @throws IOException
+     */
     @Override
     public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws IOException {
         Space selectedBuildingSpace = null;

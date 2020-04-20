@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * AskWorkerMovement Message Class.
+ * This message is sent during the turn sequence to the current player to ask him to chose a Worker and a valid movement
+ * space where the selected worker will be moved to.
+ */
 public class AskWorkerMovement extends Message{
 
     List<SpaceCopy> validMovementSpacesW1;

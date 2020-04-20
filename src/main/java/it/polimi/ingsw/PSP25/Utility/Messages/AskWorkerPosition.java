@@ -6,6 +6,10 @@ import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * AskWorkerPosition Message Class.
+ * This message is sent to all the players at the beginning of the game to ask them to position their workers in the board.
+ */
 public class AskWorkerPosition extends Message {
     private String playerName;
     private int workerNumber;

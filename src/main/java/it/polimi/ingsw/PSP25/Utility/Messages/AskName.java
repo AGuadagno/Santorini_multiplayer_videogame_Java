@@ -4,6 +4,10 @@ import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * AskName Message Class.
+ * This message is sent to all players to ask their name.
+ */
 public class AskName extends Message {
     private int playerNumber;
     private String question;

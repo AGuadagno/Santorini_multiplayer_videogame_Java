@@ -1,6 +1,5 @@
 package it.polimi.ingsw.PSP25.Model;
 
-import it.polimi.ingsw.PSP25.Model.*;
 import it.polimi.ingsw.PSP25.Model.GodPowers.*;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 
@@ -11,6 +10,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Game Logic class.
+ * This class contains the status and supervise the entire game
+ */
 public class GameLogic implements BroadcastInterface {
     private ActiveEffects activeEffects;
     private Board board;
@@ -18,6 +21,11 @@ public class GameLogic implements BroadcastInterface {
     private Player nowPlaying;
     private List<ClientHandler> clientHandlerList;
 
+    /**
+     * Game Logic constructor.
+     *
+     * @param clientHandlerList List of players' client handler.
+     */
     public GameLogic(List<ClientHandler> clientHandlerList) {
         board = new Board();
         board.getSpace(0, 0).setBoard(board);
@@ -25,10 +33,20 @@ public class GameLogic implements BroadcastInterface {
         this.clientHandlerList = clientHandlerList;
     }
 
+    /**
+     * This method manage the beginning of the game.
+     * This is the list of actions performed by this method:
+     * 1) the request of the names of the players
+     * 2) the request to the player who create the game of the God Powers selected for the game
+     * 3) the request to chose a God Power from the selected God Powers list to all the players
+     *
+     * @throws IOException
+     */
     private void playerInitialization() throws IOException {
         System.out.println("The game begins.");
         int numOfPlayers = clientHandlerList.size();
 
+        // 1) the request of the names of the players
         for (int i = 1; i <= numOfPlayers; i++) {
             String name = clientHandlerList.get(i - 1).askName(i);
             playerList.add(new Player(name, i, clientHandlerList.get(i - 1)));
@@ -40,6 +58,7 @@ public class GameLogic implements BroadcastInterface {
 
         List<GodPower> allGodPowers = getGodPowerList(activeEffects);
 
+        // 2) the request to the player who create the game of the God Powers selected for the game
         String playerName = playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")";
         List<Integer> selectedIndexes = playerList.get(0).getClientHandler().
                 askAllGodPowers(playerName, numOfPlayers, deepCopyGodPowerNames(allGodPowers));
@@ -48,6 +67,7 @@ public class GameLogic implements BroadcastInterface {
             selectedGodPowers.add(allGodPowers.get(i));
         }
 
+        // 3) the request to chose a God Power from the selected God Powers list to all the players
         for (int i = 0; i < numOfPlayers - 1; i++) {
             Player currPlayer = playerList.get(i + 1);
 
@@ -65,6 +85,11 @@ public class GameLogic implements BroadcastInterface {
         playerList.get(0).initializeGodPower(selectedGodPowers.get(0));
     }
 
+    /**
+     * @param activeEffects list where the of opponent GodPower effects active in the current turn that could limit movement,
+     *                      building action or winning conditions of workers will be included
+     * @return The list of all the God Power that can be chosen for the game
+     */
     private List<GodPower> getGodPowerList(ActiveEffects activeEffects) {
         List<GodPower> godPowers = new ArrayList<GodPower>();
         godPowers.add(new Apollo(activeEffects, this));
@@ -79,6 +104,11 @@ public class GameLogic implements BroadcastInterface {
         return godPowers;
     }
 
+    /**
+     * Asks to all players to position their workers at the beginning of the game
+     *
+     * @throws IOException
+     */
     private void boardSetup() throws IOException {
         int pos1, pos2;
 
@@ -101,6 +131,12 @@ public class GameLogic implements BroadcastInterface {
         }
     }
 
+    /**
+     * Manages the succession of turns
+     *
+     * @return true if one of the players won the game.
+     * @throws IOException
+     */
     private boolean gameLoop() throws IOException {
         boolean endGame = false;
         TurnResult turnResult = nowPlaying.getGodPower().turnSequence(nowPlaying, activeEffects);
@@ -113,8 +149,7 @@ public class GameLogic implements BroadcastInterface {
             if (playerList.size() == 2) {
                 manageVictory(otherPlayer);
                 endGame = true;
-            }
-            else{
+            } else {
                 manageLose(nowPlaying);
             }
         }
@@ -123,6 +158,11 @@ public class GameLogic implements BroadcastInterface {
         return endGame;
     }
 
+    /**
+     * Begins the game.
+     *
+     * @throws IOException
+     */
     public void startGame() throws IOException {
         playerInitialization();
         boardSetup();
@@ -132,6 +172,11 @@ public class GameLogic implements BroadcastInterface {
         }
     }
 
+    /**
+     * Manages the victory of the game by a player
+     *
+     * @param player who won the game.
+     */
     private void manageVictory(Player player) {
         String playerName = player.getName() + "(" + player.getID() + ")";
         for (Player p : playerList) {
@@ -139,6 +184,11 @@ public class GameLogic implements BroadcastInterface {
         }
     }
 
+    /**
+     * Manages the lose of a player
+     *
+     * @param player who has lost.
+     */
     private void manageLose(Player player) {
         String playerName = player.getName() + "(" + player.getID() + ")";
 
@@ -155,6 +205,9 @@ public class GameLogic implements BroadcastInterface {
         broadcastBoard();
     }
 
+    /**
+     * Sends the board to all the players
+     */
     @Override
     public void broadcastBoard() {
         for (Player p : playerList) {

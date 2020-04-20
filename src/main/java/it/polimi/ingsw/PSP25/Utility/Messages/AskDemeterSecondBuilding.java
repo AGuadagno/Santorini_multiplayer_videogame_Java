@@ -8,6 +8,12 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * AskDemeterSecondBuilding Message Class.
+ * This message is sent to the player who controls Demeter to ask him if he wants to build a second time in a different space.
+ * If the answer is yes, the player is asked to chose a second valid building space (different from the previous building space)
+ * where the selected worker has to build.
+ */
 public class AskDemeterSecondBuilding extends Message {
     List<SpaceCopy> validBuildingSpaces;
     String playerName;
@@ -18,7 +24,6 @@ public class AskDemeterSecondBuilding extends Message {
     }
 
     public void process(NetworkHandler nh) throws IOException {
-        // SELECTION OF BUILDING SPACE
         int chosenBuildingSpace = buildingSpaceSelection(validBuildingSpaces);
         nh.submit(chosenBuildingSpace);
     }
@@ -33,6 +38,7 @@ public class AskDemeterSecondBuilding extends Message {
         if (answer.equals("y")) {
             System.out.println(validBuildingSpaces.toString());
             System.out.println(playerName + ": Choose building space");
+            // Selection of the second building space
             chosenBuildingSpace = scanner.nextInt();
             while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                     contains(chosenBuildingSpace)) {

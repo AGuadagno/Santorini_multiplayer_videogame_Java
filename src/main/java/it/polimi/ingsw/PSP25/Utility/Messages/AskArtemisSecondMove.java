@@ -8,6 +8,12 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * AskArtemisSecondMove Message Class.
+ * This message is sent to the player who controls Artemis to ask him if he wants to move for a second time.
+ * If the player wants to move for a second time, he's asked to chose a valid movement space,
+ * then the worker is moved to that space.
+ */
 public class AskArtemisSecondMove extends Message {
     List<SpaceCopy> validSecondMovementSpaces;
     String playerName;

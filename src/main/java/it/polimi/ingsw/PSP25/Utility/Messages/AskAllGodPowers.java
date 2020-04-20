@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * AskAllGodPowers Message Class.
+ * This message is sent to the player who creates the game.
+ * He's asked to chose the list of God Power that will be used by the players during the game.
+ */
 public class AskAllGodPowers extends Message {
     private String playerName;
     private int numOfPlayers;

@@ -83,7 +83,7 @@ public class NetworkHandler implements Runnable {
     }
 
     private synchronized void handleServerConnection() throws IOException, ClassNotFoundException {
-        /* wait for commands from the client*/
+        // WAIT FOR COMMANDS FROM THE CLIENT
         while (true) {
             nextCommand = null;
 
@@ -114,7 +114,7 @@ public class NetworkHandler implements Runnable {
         try {
             receivedMessage = (Message) inputStream.readObject();
         } catch (SocketTimeoutException e) {
-            System.out.println("Network handler: socket timeout excpetion");
+            System.out.println("Network handler: socket timeout exception.");
             throw new SocketTimeoutException();
         }
 

@@ -19,8 +19,9 @@ public class Demeter extends GodPower {
     /**
      * Demeter constructor
      *
-     * @param activeEffects list of opponent GodPower effects active in our turn that could limit movement,
-     *                      building action or winning conditions of our player
+     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
+     *                           building action or winning conditions of workers
+     * @param broadcastInterface used to send the modified board to all the players
      */
     public Demeter(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -29,8 +30,7 @@ public class Demeter extends GodPower {
     /**
      * Override of "turnSequence" according to Demeter's effect:
      * "Your Worker may build one additional time, but not on the same space".
-     * We ask to the player if he wants to build for a second time.
-     * If the answer is yes, we call methods for construction a second time.
+     * The player is asked if the wants to build twice.
      *
      * @param player        playing the turn
      * @param activeEffects array containing opponent god power effects that may influence this turn
@@ -53,7 +53,6 @@ public class Demeter extends GodPower {
             return TurnResult.LOSE;
         }
 
-        // SE PUO' MUOVERSI, CHIEDI DOVE VUOLE MUOVERSI E VERIFICA VITTORIA PER MOVIMENTO
         if (askToMoveWorker(player, validMovementSpacesW1, validMovementSpacesW2) == true) {
             return TurnResult.WIN;
         }
@@ -63,10 +62,10 @@ public class Demeter extends GodPower {
             return TurnResult.LOSE;
         }
 
-        // CHIEDI DOVE VUOLE COSTRUIRE
         selectedBuildingSpace = askToBuild(player, validBuildSpaces);
         validBuildSpaces.remove(selectedBuildingSpace);
 
+        // The player is asked if he wants to build twice
         askSecondBuilding(player, validBuildSpaces);
 
         addActiveEffects(activeEffects, player.getWorker1(), player.getWorker2(), selectedWorker);
@@ -74,6 +73,15 @@ public class Demeter extends GodPower {
         return TurnResult.CONTINUE;
     }
 
+    /**
+     * According to Demeter effect, we ask to the player if he wants to build for a second time.
+     * If the answer is yes, the player can chose the second building space.
+     * The second building space can not be the same space chosen for the first building action.
+     *
+     * @param player              playing the turn
+     * @param validBuildingSpaces List of valid building spaces for the second building of the selected worker
+     * @throws IOException
+     */
     private void askSecondBuilding(Player player, List<Space> validBuildingSpaces) throws IOException {
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
@@ -81,6 +89,7 @@ public class Demeter extends GodPower {
         int selectedSpace = player.getClientHandler().askDemeterSecondBuilding(playerName, deepCopySpaceList(validBuildingSpaces));
 
         if (selectedSpace == -1)
+            // The player has chosen to not build twice
             return;
 
         int x = selectedSpace % 5;

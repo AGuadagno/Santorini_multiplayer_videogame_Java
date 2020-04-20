@@ -5,6 +5,11 @@ import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * AskNumberOfPlayers Message Class.
+ * This Message is sent to the player who crates the game to ask him the number of players he wants for the game.
+ */
+
 public class AskNumberOfPlayers extends Message {
 
     private String question = "Select the number of players: ";
