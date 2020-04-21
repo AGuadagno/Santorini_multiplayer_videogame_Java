@@ -1,5 +1,7 @@
 package it.polimi.ingsw.PSP25.Model;
 
+import it.polimi.ingsw.PSP25.Server.DisconnectionException;
+
 public interface BroadcastInterface {
-    public void broadcastBoard();
+    void broadcastBoard() throws DisconnectionException;
 }

@@ -1,3 +1,4 @@
+/*
 package it.polimi.ingsw.PSP25;
 
 import it.polimi.ingsw.PSP25.Model.*;
@@ -25,7 +26,7 @@ public class AthenaTest {
     public void setup(){
         board = new Board();
         space = board.getSpace(2, 2);
-        player = new Player("Name", 1, new ClientHandler(new Socket(), new Lobby()));
+        player = new Player("Name", 1, new ClientHandler(new Socket(), clientCounter, new Lobby()));
         worker = new Worker(space, player);
         space.setWorker(worker);
         activeEffects = new ActiveEffects(2);
@@ -66,4 +67,4 @@ public class AthenaTest {
         //gp.addActiveEffects(activeEffects, null, null, worker);
 
     }
-}
+}*/

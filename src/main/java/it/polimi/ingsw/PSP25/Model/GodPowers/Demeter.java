@@ -5,8 +5,8 @@ import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 import it.polimi.ingsw.PSP25.Model.Player;
 import it.polimi.ingsw.PSP25.Model.Space;
 import it.polimi.ingsw.PSP25.Model.TurnResult;
+import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 
-import java.io.IOException;
 import java.util.List;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
@@ -39,7 +39,7 @@ public class Demeter extends GodPower {
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn
      */
     @Override
-    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws IOException {
+    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {
         List<Space> validMovementSpacesW1;
         List<Space> validMovementSpacesW2;
         List<Space> validBuildSpaces;
@@ -80,9 +80,9 @@ public class Demeter extends GodPower {
      *
      * @param player              playing the turn
      * @param validBuildingSpaces List of valid building spaces for the second building of the selected worker
-     * @throws IOException
+     * @throws DisconnectionException
      */
-    private void askSecondBuilding(Player player, List<Space> validBuildingSpaces) throws IOException {
+    private void askSecondBuilding(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
 

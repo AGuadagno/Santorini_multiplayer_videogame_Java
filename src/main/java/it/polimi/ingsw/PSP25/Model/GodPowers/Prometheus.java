@@ -6,8 +6,8 @@ import it.polimi.ingsw.PSP25.Model.Player;
 import it.polimi.ingsw.PSP25.Model.Space;
 import it.polimi.ingsw.PSP25.Model.TurnResult;
 import it.polimi.ingsw.PSP25.Model.Worker;
+import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class Prometheus extends GodPower {
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn
      */
     @Override
-    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws IOException {
+    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {
 
         List<Space> validMovementSpacesW1;
         List<Space> validMovementSpacesW2;
@@ -130,10 +130,10 @@ public class Prometheus extends GodPower {
      * @param validBuildingSpacesW1 list of valid spaces where worker 1 can build
      * @param validBuildingSpacesW2 list of valid spaces where worker 2 can build
      * @return true if the player wants to build before moving, false otherwise
-     * @throws IOException
+     * @throws DisconnectionException
      */
     private boolean askWorkerAndBuildBeforeMove(Player player, List<Space> validMovementSpacesW1, List<Space> validMovementSpacesW2,
-                                                List<Space> validBuildingSpacesW1, List<Space> validBuildingSpacesW2) throws IOException {
+                                                List<Space> validBuildingSpacesW1, List<Space> validBuildingSpacesW2) throws DisconnectionException {
 
         String playerName = player.getName() + "(" + player.getID() + ")";
         // Return the selected worker, return, in pos 1, 0 if the player don't want to build before move, 1 otherwise
@@ -162,9 +162,9 @@ public class Prometheus extends GodPower {
      * @param player              who is playing the turn
      * @param validMovementSpaces List of valid spaces where the selected worker can move
      * @return
-     * @throws IOException
+     * @throws DisconnectionException
      */
-    private boolean askToMoveWorkerPrometheus(Player player, List<Space> validMovementSpaces) throws IOException {
+    private boolean askToMoveWorkerPrometheus(Player player, List<Space> validMovementSpaces) throws DisconnectionException {
 
         Space selectedMovementSpace = null;
 

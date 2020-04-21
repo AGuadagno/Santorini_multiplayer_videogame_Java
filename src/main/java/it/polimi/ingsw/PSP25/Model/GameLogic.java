@@ -2,11 +2,11 @@ package it.polimi.ingsw.PSP25.Model;
 
 import it.polimi.ingsw.PSP25.Model.GodPowers.*;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyBoard;
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyGodPowerNames;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class GameLogic implements BroadcastInterface {
     public GameLogic(List<ClientHandler> clientHandlerList) {
         board = new Board();
         board.getSpace(0, 0).setBoard(board);
-        playerList = new ArrayList<Player>();
+        playerList = new ArrayList<>();
         this.clientHandlerList = clientHandlerList;
     }
 
@@ -40,9 +40,9 @@ public class GameLogic implements BroadcastInterface {
      * 2) the request to the player who create the game of the God Powers selected for the game
      * 3) the request to chose a God Power from the selected God Powers list to all the players
      *
-     * @throws IOException
+     * @throws DisconnectionException
      */
-    private void playerInitialization() throws IOException {
+    private void playerInitialization() throws DisconnectionException {
         System.out.println("The game begins.");
         int numOfPlayers = clientHandlerList.size();
 
@@ -107,9 +107,9 @@ public class GameLogic implements BroadcastInterface {
     /**
      * Asks to all players to position their workers at the beginning of the game
      *
-     * @throws IOException
+     * @throws DisconnectionException
      */
-    private void boardSetup() throws IOException {
+    private void boardSetup() throws DisconnectionException {
         int pos1, pos2;
 
         broadcastBoard();
@@ -135,9 +135,9 @@ public class GameLogic implements BroadcastInterface {
      * Manages the succession of turns
      *
      * @return true if one of the players won the game.
-     * @throws IOException
+     * @throws DisconnectionException
      */
-    private boolean gameLoop() throws IOException {
+    private boolean gameLoop() throws DisconnectionException {
         boolean endGame = false;
         TurnResult turnResult = nowPlaying.getGodPower().turnSequence(nowPlaying, activeEffects);
         Player otherPlayer = playerList.get((playerList.indexOf(nowPlaying) + 1) % playerList.size());
@@ -161,9 +161,9 @@ public class GameLogic implements BroadcastInterface {
     /**
      * Begins the game.
      *
-     * @throws IOException
+     * @throws DisconnectionException
      */
-    public void startGame() throws IOException {
+    public void startGame() throws DisconnectionException {
         playerInitialization();
         boardSetup();
         boolean endGame = false;
@@ -177,7 +177,7 @@ public class GameLogic implements BroadcastInterface {
      *
      * @param player who won the game.
      */
-    private void manageVictory(Player player) {
+    private void manageVictory(Player player) throws DisconnectionException {
         String playerName = player.getName() + "(" + player.getID() + ")";
         for (Player p : playerList) {
             p.getClientHandler().manageVictory(playerName);
@@ -189,7 +189,7 @@ public class GameLogic implements BroadcastInterface {
      *
      * @param player who has lost.
      */
-    private void manageLose(Player player) {
+    private void manageLose(Player player) throws DisconnectionException {
         String playerName = player.getName() + "(" + player.getID() + ")";
 
         for (Player p : playerList) {
@@ -209,7 +209,7 @@ public class GameLogic implements BroadcastInterface {
      * Sends the board to all the players
      */
     @Override
-    public void broadcastBoard() {
+    public void broadcastBoard() throws DisconnectionException {
         for (Player p : playerList) {
             p.getClientHandler().sendBoard(deepCopyBoard(board));
         }

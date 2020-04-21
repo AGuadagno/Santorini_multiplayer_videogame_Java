@@ -27,11 +27,13 @@ public class Server
         //DEBUG
         System.out.println("Server OK!");
 
+        int clientCounter = 0;
         while (true) {
             try {
                 /* accepts connections; for every connection we accept, create a new Thread executing a ClientHandler */
                 Socket client = socket.accept();
-                ClientHandler clientHandler = new ClientHandler(client, lobby);
+                ClientHandler clientHandler = new ClientHandler(client, clientCounter, lobby);
+                clientCounter++;
                 // The new Client Handler is added to the lobby waiting for joining the game
                 lobby.addClient(clientHandler);
                 Thread thread = new Thread(clientHandler, "server_" + client.getInetAddress());

@@ -5,8 +5,8 @@ import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 import it.polimi.ingsw.PSP25.Model.Player;
 import it.polimi.ingsw.PSP25.Model.Space;
 import it.polimi.ingsw.PSP25.Model.TurnResult;
+import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 
-import java.io.IOException;
 import java.util.List;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
@@ -37,10 +37,10 @@ public class Artemis extends GodPower {
      * @return TurnResult.LOSE if the player has lost during this turn
      * TurnResult.WIN if the player has won during this turn
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn
-     * @throws IOException
+     * @throws DisconnectionException
      */
     @Override
-    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws IOException {
+    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {
         List<Space> validMovementSpacesW1;
         List<Space> validMovementSpacesW2;
         List<Space> validBuildSpaces;
@@ -91,9 +91,9 @@ public class Artemis extends GodPower {
      * @param player                    playing the turn
      * @param validSecondMovementSpaces List of valid movement spaces for the second movement of the selected worker
      * @return true if the player has win, false if the player hasn't win
-     * @throws IOException
+     * @throws DisconnectionException
      */
-    private boolean askSecondMovement(Player player, List<Space> validSecondMovementSpaces) throws IOException {
+    private boolean askSecondMovement(Player player, List<Space> validSecondMovementSpaces) throws DisconnectionException {
         Space selectedMovementSpace = null;
 
         if (validSecondMovementSpaces.size() > 0) {

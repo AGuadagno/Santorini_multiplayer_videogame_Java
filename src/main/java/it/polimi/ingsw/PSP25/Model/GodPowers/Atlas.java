@@ -4,8 +4,8 @@ import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 import it.polimi.ingsw.PSP25.Model.Player;
 import it.polimi.ingsw.PSP25.Model.Space;
+import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 
-import java.io.IOException;
 import java.util.List;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
@@ -55,10 +55,10 @@ public class Atlas extends GodPower {
      * @param player              who has Atlas as GodPower
      * @param validBuildingSpaces List of Spaces where the selected worker can build
      * @return the selected building space
-     * @throws IOException
+     * @throws DisconnectionException
      */
     @Override
-    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws IOException {
+    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
 

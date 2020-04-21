@@ -1,3 +1,4 @@
+/*
 package it.polimi.ingsw.PSP25;
 
 import it.polimi.ingsw.PSP25.Model.Player;
@@ -22,7 +23,7 @@ public class WorkerTest {
     public void setUp() throws Exception {
         space = new Space(0, 0);
         space2 = new Space(1, 1);
-        player = new Player("Jerry", 1, new ClientHandler(new Socket(), new Lobby()));
+        player = new Player("Jerry", 1, new ClientHandler(new Socket(), clientCounter, new Lobby()));
         worker = new Worker(space, player);
     }
 
@@ -62,4 +63,4 @@ public class WorkerTest {
         worker.setHeightBeforeMove(h2);
         assertEquals(worker.getHeightBeforeMove(), h2);
     }
-}
+}*/

@@ -4,8 +4,8 @@ import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 import it.polimi.ingsw.PSP25.Model.Player;
 import it.polimi.ingsw.PSP25.Model.Space;
+import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 
-import java.io.IOException;
 import java.util.List;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
@@ -32,10 +32,10 @@ public class Hephaestus extends GodPower {
      * @param player              playing the turn
      * @param validBuildingSpaces List of valid building spaces
      * @return
-     * @throws IOException
+     * @throws DisconnectionException
      */
     @Override
-    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws IOException {
+    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
 

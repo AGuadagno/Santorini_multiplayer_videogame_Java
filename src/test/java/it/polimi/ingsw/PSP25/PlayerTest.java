@@ -1,3 +1,4 @@
+/*
 package it.polimi.ingsw.PSP25;
 
 import it.polimi.ingsw.PSP25.Model.ActiveEffects;
@@ -21,7 +22,7 @@ public class PlayerTest {
 
     @Before
     public void setup(){
-        player = new Player("Demo", 1, new ClientHandler(new Socket(), new Lobby()));
+        player = new Player("Demo", 1, new ClientHandler(new Socket(), clientCounter, new Lobby()));
     }
 
     @After
@@ -69,3 +70,4 @@ public class PlayerTest {
         assertEquals(player.getGodPower(), godPower);
     }
 }
+*/

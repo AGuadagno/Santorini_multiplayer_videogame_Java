@@ -2,7 +2,6 @@ package it.polimi.ingsw.PSP25.Server;
 
 import it.polimi.ingsw.PSP25.Model.GameLogic;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class Lobby {
         }
     }
 
-    public synchronized void startGame(int numOfPlayers) throws IOException {
+    public synchronized void startGame(int numOfPlayers) throws DisconnectionException {
         while (clientList.size() < numOfPlayers) {
 
             //DEBUG
@@ -49,9 +48,12 @@ public class Lobby {
         gameLogic.startGame();
     }
 
-    public void stopGame(ClientHandler timeOutClient, InetAddress disconnectedAddress){
-        for(ClientHandler clientHandler: clientList){
-            if(clientHandler != timeOutClient){
+    public void stopGame(ClientHandler timeOutClient, InetAddress disconnectedAddress) throws DisconnectionException {
+        int disconnectedClientIndex = timeOutClient.getClientNumber();
+
+        System.out.println("Client " + disconnectedClientIndex + " with address " + disconnectedAddress + " disconnected.");
+        for (ClientHandler clientHandler : clientList) {
+            if (clientHandler != timeOutClient) {
                 clientHandler.sendStop(disconnectedAddress);
             }
             clientHandler.stopGame();

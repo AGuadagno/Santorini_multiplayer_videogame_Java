@@ -1,3 +1,4 @@
+/*
 package it.polimi.ingsw.PSP25;
 
 import it.polimi.ingsw.PSP25.Model.Board;
@@ -35,3 +36,4 @@ public class BoardTest {
     public void print() {
     }
 }
+*/

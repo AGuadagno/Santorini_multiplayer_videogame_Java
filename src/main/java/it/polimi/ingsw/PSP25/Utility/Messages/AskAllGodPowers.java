@@ -43,6 +43,14 @@ public class AskAllGodPowers extends Message {
             selectedIndexes.add(index - 1);
         }
 
+        String printedChoice = "You have chosen: ";
+        for (int i = 0; i < selectedIndexes.size(); i++) {
+            printedChoice += godPowerNames.get(selectedIndexes.get(i));
+            if (i < selectedIndexes.size() - 1)
+                printedChoice += ", ";
+        }
+        System.out.println(printedChoice);
+
         nh.submit(selectedIndexes);
     }
 }

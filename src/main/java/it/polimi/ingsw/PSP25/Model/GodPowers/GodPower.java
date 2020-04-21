@@ -1,9 +1,8 @@
 package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.*;
+import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 
-import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,7 +181,7 @@ public class GodPower {
      * TurnResult.WIN if the player has won during this turn
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn
      */
-    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws SocketTimeoutException, IOException {
+    public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {
 
         List<Space> validMovementSpacesW1;
         List<Space> validMovementSpacesW2;
@@ -223,10 +222,10 @@ public class GodPower {
      * @param validMovementSpacesW1 List of valid spaces where worker 1 can move
      * @param validMovementSpacesW2 List of valid spaces where worker 2 can move
      * @return true if the player has won the game
-     * @throws IOException
+     * @throws DisconnectionException
      */
     protected boolean askToMoveWorker(Player player, List<Space> validMovementSpacesW1,
-                                      List<Space> validMovementSpacesW2) throws IOException {
+                                      List<Space> validMovementSpacesW2) throws DisconnectionException {
 
         Space selectedMovementSpace = null;
 
@@ -263,10 +262,9 @@ public class GodPower {
      * @param player              who is playing the turn
      * @param validBuildingSpaces List of valid spaces where the selected worker can build
      * @return the spaces selected for the building action
-     * @throws SocketTimeoutException
-     * @throws IOException
+     * @throws DisconnectionException
      */
-    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws SocketTimeoutException, IOException {
+    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
 
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
