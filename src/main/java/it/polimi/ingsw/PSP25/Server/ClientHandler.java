@@ -60,6 +60,7 @@ public class ClientHandler implements Runnable {
 
         System.out.println("Connected to " + client.getInetAddress());
 
+
         if (lobby.isFirstClient(this)) {
             /*synchronized (outputStream) {
                 outputStream.writeObject(new AskNumberOfPlayers());
@@ -347,4 +348,7 @@ public class ClientHandler implements Runnable {
         sendMessage(new AnnounceLose(playerName));
     }
 
+    public void sendOpponentsGodPowers(List<String> playerNames, List<String> godPowerNames) throws DisconnectionException {
+        sendMessage(new SendOpponentsGodPower(playerNames, godPowerNames));
+    }
 }

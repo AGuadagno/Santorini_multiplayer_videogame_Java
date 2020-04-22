@@ -12,6 +12,7 @@ public class Lobby {
 
     private List<ClientHandler> clientList;
     private GameLogic gameLogic = null;
+    private int numOfParticipants;
 
     public Lobby(){
         clientList = new ArrayList<>();
@@ -31,20 +32,27 @@ public class Lobby {
         }
     }
 
-    public synchronized void startGame(int numOfPlayers) throws DisconnectionException {
+    public void startGame(int numOfPlayers) throws DisconnectionException {
+        this.numOfParticipants = numOfPlayers;
         while (clientList.size() < numOfPlayers) {
 
             //DEBUG
             System.out.println("Non ci sono abbastanza giocatori");
 
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            synchronized (this) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        gameLogic = new GameLogic(clientList.subList(0, numOfPlayers));
+        List<ClientHandler> l = new ArrayList<>();
+        for (int i = 0; i < numOfPlayers; i++)
+            l.add(clientList.get(i));
+
+        gameLogic = new GameLogic(l);
         gameLogic.startGame();
     }
 
@@ -52,13 +60,14 @@ public class Lobby {
         int disconnectedClientIndex = timeOutClient.getClientNumber();
 
         System.out.println("Client " + disconnectedClientIndex + " with address " + disconnectedAddress + " disconnected.");
-        for (ClientHandler clientHandler : clientList) {
-            if (clientHandler != timeOutClient) {
-                clientHandler.sendStop(disconnectedAddress);
+        for (int i = 0; i < numOfParticipants; i++) {
+            if (clientList.get(i) != timeOutClient) {
+                clientList.get(i).sendStop(disconnectedAddress);
             }
-            clientHandler.stopGame();
+            clientList.get(i).stopGame();
         }
     }
+
 
 }
 

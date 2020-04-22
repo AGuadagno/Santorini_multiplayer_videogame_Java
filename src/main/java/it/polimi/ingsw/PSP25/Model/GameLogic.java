@@ -9,6 +9,7 @@ import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyGodPowerNames;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Game Logic class.
@@ -165,6 +166,7 @@ public class GameLogic implements BroadcastInterface {
      */
     public void startGame() throws DisconnectionException {
         playerInitialization();
+        broadcastGodPowers();
         boardSetup();
         boolean endGame = false;
         while (!endGame) {
@@ -181,7 +183,10 @@ public class GameLogic implements BroadcastInterface {
         String playerName = player.getName() + "(" + player.getID() + ")";
         for (Player p : playerList) {
             p.getClientHandler().manageVictory(playerName);
+            p.getClientHandler().stopGame();
         }
+
+
     }
 
     /**
@@ -212,6 +217,15 @@ public class GameLogic implements BroadcastInterface {
     public void broadcastBoard() throws DisconnectionException {
         for (Player p : playerList) {
             p.getClientHandler().sendBoard(deepCopyBoard(board));
+        }
+    }
+
+    public void broadcastGodPowers() throws DisconnectionException {
+        List<String> playerNames = playerList.stream().map(p -> p.getName() + "(" + p.getID() + ")").collect(Collectors.toList());
+        List<String> godPowerNames = playerList.stream().map(p -> p.getGodPower().toString()).collect(Collectors.toList());
+
+        for (Player p : playerList) {
+            p.getClientHandler().sendOpponentsGodPowers(playerNames, godPowerNames);
         }
     }
 }
