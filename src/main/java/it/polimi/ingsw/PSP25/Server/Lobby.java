@@ -14,18 +14,22 @@ public class Lobby {
     private GameLogic gameLogic = null;
     private int numOfParticipants;
 
-    public Lobby(){
+    public Lobby() {
         clientList = new ArrayList<>();
     }
 
-    public synchronized void addClient(ClientHandler c){
+    public synchronized void addClient(ClientHandler c) {
         clientList.add(c);
         notifyAll();
     }
 
+    public synchronized void removeClient(ClientHandler c) {
+        clientList.remove(c);
+    }
+
     // Used to identify the client who created the game in order to ask him the number of players
-    public boolean isFirstClient(ClientHandler c) {
-        if (c == clientList.get(0)) {
+    public synchronized boolean isFirstClient(ClientHandler c) {
+        if (clientList.size() > 0 && c == clientList.get(0)) {
             return true;
         } else {
             return false;
@@ -48,14 +52,41 @@ public class Lobby {
             }
         }
 
+        //DEBUG
+        System.out.println("Arrivo a riga 56");
+
         List<ClientHandler> l = new ArrayList<>();
         for (int i = 0; i < numOfPlayers; i++)
             l.add(clientList.get(i));
 
         gameLogic = new GameLogic(l);
+
+        //NEW
+        for (int i = 0; i < numOfPlayers; i++)
+            clientList.get(i).setGameLogic(gameLogic);
+
+        // NEW - Eliminazione dalla lobby dei giocatori che sono entrati in una partita
+        synchronized (this) {
+            for (int i = 0; i < numOfPlayers; i++) {
+                clientList.remove(0);
+                // NEW DEBUG
+                System.out.println("Il giocatore " + i + " è rimosso dalla lobby");
+            }
+        }
+
+        synchronized (clientList) {
+            if (clientList.size() > 0) {
+                synchronized (clientList.get(0)) {
+                    clientList.get(0).notify();
+                }
+            }
+        }
+
         gameLogic.startGame();
     }
 
+    //OLD
+    /*
     public void stopGame(ClientHandler timeOutClient, InetAddress disconnectedAddress) throws DisconnectionException {
         int disconnectedClientIndex = timeOutClient.getClientNumber();
 
@@ -67,7 +98,7 @@ public class Lobby {
             clientList.get(i).stopGame();
         }
     }
-
+    */
 
 }
 

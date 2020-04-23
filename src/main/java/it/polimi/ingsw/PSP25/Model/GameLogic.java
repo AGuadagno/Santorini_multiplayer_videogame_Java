@@ -7,6 +7,7 @@ import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyBoard;
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyGodPowerNames;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -227,6 +228,21 @@ public class GameLogic implements BroadcastInterface {
         for (Player p : playerList) {
             p.getClientHandler().sendOpponentsGodPowers(playerNames, godPowerNames);
         }
+    }
+
+    // NEW
+    public void stopGame(ClientHandler timeOutClient, InetAddress disconnectedAddress) throws DisconnectionException {
+        int disconnectedClientIndex = timeOutClient.getClientNumber();
+
+        System.out.println("Client " + disconnectedClientIndex + " with address " + disconnectedAddress + " disconnected.");
+        for (int i = 0; i < clientHandlerList.size(); i++) {
+            if (clientHandlerList.get(i) != timeOutClient) {
+                clientHandlerList.get(i).sendStop(disconnectedAddress);
+            }
+            clientHandlerList.get(i).stopGame();
+        }
+
+
     }
 }
 

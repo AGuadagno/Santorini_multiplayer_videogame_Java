@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Server;
 
+import it.polimi.ingsw.PSP25.Model.GameLogic;
 import it.polimi.ingsw.PSP25.Utility.Messages.*;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 
@@ -8,7 +9,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.List;
 
@@ -21,11 +21,15 @@ public class ClientHandler implements Runnable {
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private boolean endGame = false;
+    // NEW
+    private GameLogic game;
 
     public ClientHandler(Socket client, int clientNumber, Lobby lobby) {
         this.client = client;
         this.clientNumber = clientNumber;
         this.lobby = lobby;
+        // NEW
+        game = null;
     }
 
     @Override
@@ -35,12 +39,15 @@ public class ClientHandler implements Runnable {
         } catch (DisconnectionException e) {
             try {
                 System.out.println("Client " + e.getClientHandler().getClientNumber() + " DisconnectionException: stopping game");
-                //e.printStackTrace();
-                lobby.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress());
+                // NEW
+                if (game != null) {
+                    game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress());
+                }
+                lobby.removeClient(this);
             } catch (DisconnectionException stopException) {
                 //System.out.println("Can't send stopMessage to client: client already disconnected");
                 System.out.println("Lobby.stopGame() DisconnectionException");
-                stopException.printStackTrace();
+                //stopException.printStackTrace();
             } finally {
                 endGame = true;
             }
@@ -60,15 +67,22 @@ public class ClientHandler implements Runnable {
 
         System.out.println("Connected to " + client.getInetAddress());
 
+        //NEW
+        while (game == null && !lobby.isFirstClient(this)) {
+            try {
+                synchronized (this) {
+                    wait();
+                }
+            } catch (InterruptedException e) {
+            }
+        }
 
         if (lobby.isFirstClient(this)) {
-            /*synchronized (outputStream) {
-                outputStream.writeObject(new AskNumberOfPlayers());
-            }*/
             sendMessage(new AskNumberOfPlayers());
             numOfParticipants = (int) receiveMessage();
             lobby.startGame(numOfParticipants);
         }
+
     }
 
     public int getClientNumber() {
@@ -77,6 +91,13 @@ public class ClientHandler implements Runnable {
 
     public InetAddress getClientAddress() {
         return client.getInetAddress();
+    }
+
+    public void setGameLogic(GameLogic g) {
+        this.game = g;
+        synchronized (this) {
+            notifyAll();
+        }
     }
 
     public String askName(int playerNumber) throws DisconnectionException {
@@ -283,6 +304,7 @@ public class ClientHandler implements Runnable {
                 outputStream.writeObject(message);
             } catch (IOException e) {
                 //DEBUG
+                e.printStackTrace();
                 System.out.println("IOException dall'outputStream di clientHandler " + this.clientNumber + " lancio una DisconnectionException");
                 throw new DisconnectionException(this);
             }
@@ -317,6 +339,7 @@ public class ClientHandler implements Runnable {
                         sendMessage(new PingMessage());
                     } catch (DisconnectionException e) {
                         System.out.println("DisconnectionException: fermo il pingSender del server");
+                        lobby.removeClient(ClientHandler.this);
                         return;
                     }
 
@@ -332,6 +355,7 @@ public class ClientHandler implements Runnable {
 
     public void stopGame() {
         endGame = true;
+        lobby.removeClient(this);
         try {
             client.close();
         } catch (IOException e) {
