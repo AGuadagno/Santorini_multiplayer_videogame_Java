@@ -50,11 +50,22 @@ public class Client implements Runnable, ServerObserver {
                     try {
                         receivedMessage.process(networkHandler);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.out.println("Disconnected from server");
+                        //e.printStackTrace();
                     }
                 }
             }
         } while (receivedMessage != null);
+
+        System.out.println("\nDo you want to play again? (y = yes, n = no)");
+        String answer = scanner.next();
+        while (!(answer.equals("y") || answer.equals("n"))) {
+            System.out.println("Your Choice is not valid. insert 'y' to play again, 'n' to close");
+            answer = scanner.next();
+        }
+
+        if (answer.equals("y"))
+            run();
     }
 
     public static void main(String[] args) {

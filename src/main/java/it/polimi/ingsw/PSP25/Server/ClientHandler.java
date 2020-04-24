@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Server;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Model.GameLogic;
 import it.polimi.ingsw.PSP25.Utility.Messages.*;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
@@ -21,6 +22,7 @@ public class ClientHandler implements Runnable {
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private boolean endGame = false;
+    private boolean isConnected = true;
     // NEW
     private GameLogic game;
 
@@ -45,10 +47,9 @@ public class ClientHandler implements Runnable {
                 }
                 lobby.removeClient(this);
             } catch (DisconnectionException stopException) {
-                //System.out.println("Can't send stopMessage to client: client already disconnected");
                 System.out.println("Lobby.stopGame() DisconnectionException");
-                //stopException.printStackTrace();
             } finally {
+                // Used to stop pingSender
                 endGame = true;
             }
         }
@@ -80,8 +81,10 @@ public class ClientHandler implements Runnable {
         if (lobby.isFirstClient(this)) {
             sendMessage(new AskNumberOfPlayers());
             numOfParticipants = (int) receiveMessage();
-            lobby.startGame(numOfParticipants);
+            lobby.startGame(numOfParticipants, this);
         }
+
+        System.out.println("Client Handler " + clientNumber + " terminato");
 
     }
 
@@ -304,7 +307,7 @@ public class ClientHandler implements Runnable {
                 outputStream.writeObject(message);
             } catch (IOException e) {
                 //DEBUG
-                e.printStackTrace();
+                //e.printStackTrace();
                 System.out.println("IOException dall'outputStream di clientHandler " + this.clientNumber + " lancio una DisconnectionException");
                 throw new DisconnectionException(this);
             }
@@ -327,18 +330,18 @@ public class ClientHandler implements Runnable {
             @Override
             public void run() {
                 while(!endGame) {
-                    /*try {
-                        synchronized (outputStream) {
-                            outputStream.writeObject(new PingMessage());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
-
                     try {
                         sendMessage(new PingMessage());
                     } catch (DisconnectionException e) {
+                        ClientHandler.this.isConnected = false;
                         System.out.println("DisconnectionException: fermo il pingSender del server");
+                        if (game != null) {
+                            try {
+                                game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress());
+                            } catch (DisconnectionException ex) {
+                                System.out.println("PingSender: Lobby.stopGame() DisconnectionException");
+                            }
+                        }
                         lobby.removeClient(ClientHandler.this);
                         return;
                     }
@@ -355,12 +358,10 @@ public class ClientHandler implements Runnable {
 
     public void stopGame() {
         endGame = true;
-        lobby.removeClient(this);
         try {
             client.close();
         } catch (IOException e) {
             System.out.println("stopGame(): Socket client.close() IOException, socket già chiuso");
-            //e.printStackTrace();
         }
     }
 
@@ -374,5 +375,9 @@ public class ClientHandler implements Runnable {
 
     public void sendOpponentsGodPowers(List<String> playerNames, List<String> godPowerNames) throws DisconnectionException {
         sendMessage(new SendOpponentsGodPower(playerNames, godPowerNames));
+    }
+
+    public boolean isConnected() {
+        return isConnected;
     }
 }

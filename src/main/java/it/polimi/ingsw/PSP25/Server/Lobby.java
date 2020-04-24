@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Server;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Model.GameLogic;
 
 import java.net.InetAddress;
@@ -25,6 +26,13 @@ public class Lobby {
 
     public synchronized void removeClient(ClientHandler c) {
         clientList.remove(c);
+        synchronized (clientList) {
+            if (clientList.size() > 0) {
+                synchronized (clientList.get(0)) {
+                    clientList.get(0).notify();
+                }
+            }
+        }
     }
 
     // Used to identify the client who created the game in order to ask him the number of players
@@ -36,7 +44,7 @@ public class Lobby {
         }
     }
 
-    public void startGame(int numOfPlayers) throws DisconnectionException {
+    public void startGame(int numOfPlayers, ClientHandler ch) throws DisconnectionException {
         this.numOfParticipants = numOfPlayers;
         while (clientList.size() < numOfPlayers) {
 
@@ -55,34 +63,36 @@ public class Lobby {
         //DEBUG
         System.out.println("Arrivo a riga 56");
 
-        List<ClientHandler> l = new ArrayList<>();
-        for (int i = 0; i < numOfPlayers; i++)
-            l.add(clientList.get(i));
+        if (ch.isConnected()) {
+            List<ClientHandler> l = new ArrayList<>();
+            for (int i = 0; i < numOfPlayers; i++)
+                l.add(clientList.get(i));
 
-        gameLogic = new GameLogic(l);
+            gameLogic = new GameLogic(l);
 
-        //NEW
-        for (int i = 0; i < numOfPlayers; i++)
-            clientList.get(i).setGameLogic(gameLogic);
+            //NEW
+            for (int i = 0; i < numOfPlayers; i++)
+                clientList.get(i).setGameLogic(gameLogic);
 
-        // NEW - Eliminazione dalla lobby dei giocatori che sono entrati in una partita
-        synchronized (this) {
-            for (int i = 0; i < numOfPlayers; i++) {
-                clientList.remove(0);
-                // NEW DEBUG
-                System.out.println("Il giocatore " + i + " è rimosso dalla lobby");
-            }
-        }
-
-        synchronized (clientList) {
-            if (clientList.size() > 0) {
-                synchronized (clientList.get(0)) {
-                    clientList.get(0).notify();
+            // NEW - Eliminazione dalla lobby dei giocatori che sono entrati in una partita
+            synchronized (this) {
+                for (int i = 0; i < numOfPlayers; i++) {
+                    clientList.remove(0);
+                    // NEW DEBUG
+                    System.out.println("Il giocatore " + i + " è rimosso dalla lobby");
                 }
             }
-        }
 
-        gameLogic.startGame();
+            synchronized (clientList) {
+                if (clientList.size() > 0) {
+                    synchronized (clientList.get(0)) {
+                        clientList.get(0).notify();
+                    }
+                }
+            }
+
+            gameLogic.startGame();
+        }
     }
 
     //OLD
