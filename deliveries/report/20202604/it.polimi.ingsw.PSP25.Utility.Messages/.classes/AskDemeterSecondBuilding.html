@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: AskDemeterSecondBuilding</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Utility.Messages</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: AskDemeterSecondBuilding (it.polimi.ingsw.PSP25.Utility.Messages)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">AskDemeterSecondBuilding</td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 3)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 20)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Utility.Messages;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Client.NetworkHandler;
+        <i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+        <i>5</i>&nbsp;
+        <i>6</i>&nbsp;import java.io.IOException;
+        <i>7</i>&nbsp;import java.util.List;
+        <i>8</i>&nbsp;import java.util.Scanner;
+        <i>9</i>&nbsp;import java.util.stream.Collectors;
+        <i>10</i>&nbsp;
+        <i>11</i>&nbsp;/**
+        <i>12</i>&nbsp; * AskDemeterSecondBuilding Message Class.
+        <i>13</i>&nbsp; * This message is sent to the player who controls Demeter to ask him if he wants to build a
+        second time in a different space.
+        <i>14</i>&nbsp; * If the answer is yes, the player is asked to chose a second valid building space (different
+        from the previous building space)
+        <i>15</i>&nbsp; * where the selected worker has to build.
+        <i>16</i>&nbsp; */
+        <i>17</i>&nbsp;public class AskDemeterSecondBuilding extends Message {
+        <i>18</i>&nbsp; List&lt;SpaceCopy&gt; validBuildingSpaces;
+        <i>19</i>&nbsp; String playerName;
+        <i>20</i>&nbsp;
+        <b class="nc"><i>21</i>&nbsp; public AskDemeterSecondBuilding(String playerName, List&lt;SpaceCopy&gt;
+            validBuildingSpaces) {</b>
+        <b class="nc"><i>22</i>&nbsp; this.playerName = playerName;</b>
+        <b class="nc"><i>23</i>&nbsp; this.validBuildingSpaces = validBuildingSpaces;</b>
+        <b class="nc"><i>24</i>&nbsp; }</b>
+        <i>25</i>&nbsp;
+        <i>26</i>&nbsp; public void process(NetworkHandler nh) throws IOException {
+        <b class="nc"><i>27</i>&nbsp; int chosenBuildingSpace = buildingSpaceSelection(validBuildingSpaces);</b>
+        <b class="nc"><i>28</i>&nbsp; nh.submit(chosenBuildingSpace);</b>
+        <b class="nc"><i>29</i>&nbsp; }</b>
+        <i>30</i>&nbsp;
+        <i>31</i>&nbsp; private int buildingSpaceSelection(List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <i>32</i>&nbsp;
+        <b class="nc"><i>33</i>&nbsp; int chosenBuildingSpace = -1;</b>
+        <b class="nc"><i>34</i>&nbsp; Scanner scanner = new Scanner(System.in);</b>
+        <i>35</i>&nbsp;
+        <b class="nc"><i>36</i>&nbsp; System.out.println(&quot;Do you want to build an additional block? y/n&quot;);</b>
+        <b class="nc"><i>37</i>&nbsp; String answer = scanner.next();</b>
+        <b class="nc"><i>38</i>&nbsp; if (answer.equals(&quot;y&quot;)) {</b>
+        <b class="nc"><i>39</i>&nbsp; System.out.println(validBuildingSpaces.toString());</b>
+        <b class="nc"><i>40</i>&nbsp; System.out.println(playerName + &quot;: Choose building space&quot;);</b>
+        <i>41</i>&nbsp; // Selection of the second building space
+        <b class="nc"><i>42</i>&nbsp; chosenBuildingSpace = scanner.nextInt();</b>
+        <b class="nc"><i>43</i>&nbsp; while
+            (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).</b>
+        <b class="nc"><i>44</i>&nbsp; contains(chosenBuildingSpace)) {</b>
+        <b class="nc"><i>45</i>&nbsp; System.out.println(chosenBuildingSpace + &quot; is not in the valid building
+            spaces list&quot;);</b>
+        <b class="nc"><i>46</i>&nbsp; chosenBuildingSpace = scanner.nextInt();</b>
+        <i>47</i>&nbsp; }
+        <i>48</i>&nbsp; }
+        <i>49</i>&nbsp;
+        <b class="nc"><i>50</i>&nbsp; return chosenBuildingSpace;</b>
+        <i>51</i>&nbsp; }
+        <i>52</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-04-26 23:51</div>
+</div>
+</body>
+</html>

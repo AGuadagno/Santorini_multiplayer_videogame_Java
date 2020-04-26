@@ -92,13 +92,6 @@ public class ActiveEffects {
         return true;
     }
 
-    /**
-     * Prints the effectsList.
-     */
-    public void debugPrint() {
-        System.out.println(effectsList);
-    }
-
     public void adaptEffectsAfterPlayerLose() {
         effectsList.remove(effectsList.size() - 1);
         numOfEffects--;

@@ -1,0 +1,485 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: ClientHandler</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Server</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: ClientHandler (it.polimi.ingsw.PSP25.Server)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">ClientHandler</td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (1/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    3,3%
+  </span>
+                <span class="absValue">
+    (1/ 30)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    6,3%
+  </span>
+                <span class="absValue">
+    (8/ 126)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Server;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Client.Client;
+        <i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Model.GameLogic;
+        <i>5</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.Messages.*;
+        <i>6</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+        <i>7</i>&nbsp;
+        <i>8</i>&nbsp;import java.io.IOException;
+        <i>9</i>&nbsp;import java.io.ObjectInputStream;
+        <i>10</i>&nbsp;import java.io.ObjectOutputStream;
+        <i>11</i>&nbsp;import java.net.InetAddress;
+        <i>12</i>&nbsp;import java.net.Socket;
+        <i>13</i>&nbsp;import java.net.SocketTimeoutException;
+        <i>14</i>&nbsp;import java.util.List;
+        <i>15</i>&nbsp;
+        <b class="nc"><i>16</i>&nbsp;public class ClientHandler implements Runnable {</b>
+        <i>17</i>&nbsp;
+        <i>18</i>&nbsp; private final Socket client;
+        <i>19</i>&nbsp; private final int clientNumber;
+        <i>20</i>&nbsp; private Lobby lobby;
+        <i>21</i>&nbsp; private int numOfParticipants;
+        <i>22</i>&nbsp; private ObjectOutputStream outputStream;
+        <i>23</i>&nbsp; private ObjectInputStream inputStream;
+        <b class="fc"><i>24</i>&nbsp; private boolean endGame = false;</b>
+        <b class="fc"><i>25</i>&nbsp; private boolean isConnected = true;</b>
+        <i>26</i>&nbsp; // NEW
+        <i>27</i>&nbsp; private GameLogic game;
+        <i>28</i>&nbsp;
+        <b class="fc"><i>29</i>&nbsp; public ClientHandler(Socket client, int clientNumber, Lobby lobby) {</b>
+        <b class="fc"><i>30</i>&nbsp; this.client = client;</b>
+        <b class="fc"><i>31</i>&nbsp; this.clientNumber = clientNumber;</b>
+        <b class="fc"><i>32</i>&nbsp; this.lobby = lobby;</b>
+        <i>33</i>&nbsp; // NEW
+        <b class="fc"><i>34</i>&nbsp; game = null;</b>
+        <b class="fc"><i>35</i>&nbsp; }</b>
+        <i>36</i>&nbsp;
+        <i>37</i>&nbsp; @Override
+        <i>38</i>&nbsp; public void run() {
+        <i>39</i>&nbsp; try {
+        <b class="nc"><i>40</i>&nbsp; handleClientConnection();</b>
+        <b class="nc"><i>41</i>&nbsp; } catch (DisconnectionException e) {</b>
+        <i>42</i>&nbsp; try {
+        <b class="nc"><i>43</i>&nbsp; System.out.println(&quot;Client &quot; + e.getClientHandler().getClientNumber() +
+            &quot; DisconnectionException: stopping game&quot;);</b>
+        <i>44</i>&nbsp; // NEW
+        <b class="nc"><i>45</i>&nbsp; if (game != null) {</b>
+        <b class="nc"><i>46</i>&nbsp; game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress());</b>
+        <i>47</i>&nbsp; }
+        <b class="nc"><i>48</i>&nbsp; lobby.removeClient(this);</b>
+        <b class="nc"><i>49</i>&nbsp; } catch (DisconnectionException stopException) {</b>
+        <b class="nc"><i>50</i>&nbsp; System.out.println(&quot;Lobby.stopGame() DisconnectionException&quot;);</b>
+        <i>51</i>&nbsp; } finally {
+        <i>52</i>&nbsp; // Used to stop pingSender
+        <b class="nc"><i>53</i>&nbsp; endGame = true;</b>
+        <b class="nc"><i>54</i>&nbsp; }</b>
+        <b class="nc"><i>55</i>&nbsp; }</b>
+        <b class="nc"><i>56</i>&nbsp; }</b>
+        <i>57</i>&nbsp;
+        <i>58</i>&nbsp; private void handleClientConnection() throws DisconnectionException {
+        <i>59</i>&nbsp; try {
+        <b class="nc"><i>60</i>&nbsp; outputStream = new ObjectOutputStream(client.getOutputStream());</b>
+        <b class="nc"><i>61</i>&nbsp; inputStream = new ObjectInputStream(client.getInputStream());</b>
+        <b class="nc"><i>62</i>&nbsp; client.setSoTimeout(20000);</b>
+        <b class="nc"><i>63</i>&nbsp; } catch (IOException e) {</b>
+        <b class="nc"><i>64</i>&nbsp; throw new DisconnectionException(this);</b>
+        <b class="nc"><i>65</i>&nbsp; }</b>
+        <i>66</i>&nbsp;
+        <b class="nc"><i>67</i>&nbsp; startPingSender();</b>
+        <i>68</i>&nbsp;
+        <b class="nc"><i>69</i>&nbsp; System.out.println(&quot;Connected to &quot; + client.getInetAddress());</b>
+        <i>70</i>&nbsp;
+        <i>71</i>&nbsp; //NEW
+        <b class="nc"><i>72</i>&nbsp; while (game == null &amp;&amp; !lobby.isFirstClient(this)) {</b>
+        <i>73</i>&nbsp; try {
+        <b class="nc"><i>74</i>&nbsp; synchronized (this) {</b>
+        <b class="nc"><i>75</i>&nbsp; wait();</b>
+        <b class="nc"><i>76</i>&nbsp; }</b>
+        <b class="nc"><i>77</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>78</i>&nbsp; }</b>
+        <i>79</i>&nbsp; }
+        <i>80</i>&nbsp;
+        <b class="nc"><i>81</i>&nbsp; if (lobby.isFirstClient(this)) {</b>
+        <b class="nc"><i>82</i>&nbsp; sendMessage(new AskNumberOfPlayers());</b>
+        <b class="nc"><i>83</i>&nbsp; numOfParticipants = (int) receiveMessage();</b>
+        <b class="nc"><i>84</i>&nbsp; lobby.startGame(numOfParticipants, this);</b>
+        <i>85</i>&nbsp; }
+        <i>86</i>&nbsp;
+        <b class="nc"><i>87</i>&nbsp; System.out.println(&quot;Client Handler &quot; + clientNumber + &quot; terminato&quot;);</b>
+        <i>88</i>&nbsp;
+        <b class="nc"><i>89</i>&nbsp; }</b>
+        <i>90</i>&nbsp;
+        <i>91</i>&nbsp; public int getClientNumber() {
+        <b class="nc"><i>92</i>&nbsp; return clientNumber;</b>
+        <i>93</i>&nbsp; }
+        <i>94</i>&nbsp;
+        <i>95</i>&nbsp; public InetAddress getClientAddress() {
+        <b class="nc"><i>96</i>&nbsp; return client.getInetAddress();</b>
+        <i>97</i>&nbsp; }
+        <i>98</i>&nbsp;
+        <i>99</i>&nbsp; public void setGameLogic(GameLogic g) {
+        <b class="nc"><i>100</i>&nbsp; this.game = g;</b>
+        <b class="nc"><i>101</i>&nbsp; synchronized (this) {</b>
+        <b class="nc"><i>102</i>&nbsp; notifyAll();</b>
+        <b class="nc"><i>103</i>&nbsp; }</b>
+        <b class="nc"><i>104</i>&nbsp; }</b>
+        <i>105</i>&nbsp;
+        <i>106</i>&nbsp; public String askName(int playerNumber) throws DisconnectionException {
+        <i>107</i>&nbsp; /*try {
+        <i>108</i>&nbsp; outputStream.writeObject(new AskName(playerNumber));
+        <i>109</i>&nbsp; } catch (IOException e) {
+        <i>110</i>&nbsp; e.printStackTrace();
+        <i>111</i>&nbsp; }*/
+        <i>112</i>&nbsp;
+        <b class="nc"><i>113</i>&nbsp; sendMessage(new AskName(playerNumber));</b>
+        <i>114</i>&nbsp;
+        <b class="nc"><i>115</i>&nbsp; String name = (String) receiveMessage();</b>
+        <b class="nc"><i>116</i>&nbsp; return name;</b>
+        <i>117</i>&nbsp; }
+        <i>118</i>&nbsp;
+        <i>119</i>&nbsp; public List&lt;Integer&gt; askAllGodPowers(String playerName, int numOfPlayers, List&lt;String&gt;
+        godPowerNames) throws DisconnectionException {
+        <i>120</i>&nbsp; /*try {
+        <i>121</i>&nbsp; outputStream.writeObject(new AskAllGodPowers(playerName, numOfPlayers, godPowerNames));
+        <i>122</i>&nbsp; } catch (IOException e) {
+        <i>123</i>&nbsp; e.printStackTrace();
+        <i>124</i>&nbsp; }*/
+        <i>125</i>&nbsp;
+        <b class="nc"><i>126</i>&nbsp; sendMessage(new AskAllGodPowers(playerName, numOfPlayers, godPowerNames));</b>
+        <i>127</i>&nbsp;
+        <b class="nc"><i>128</i>&nbsp; List&lt;Integer&gt; selectedIndexes = (List&lt;Integer&gt;) receiveMessage();</b>
+        <b class="nc"><i>129</i>&nbsp; return selectedIndexes;</b>
+        <i>130</i>&nbsp; }
+        <i>131</i>&nbsp;
+        <i>132</i>&nbsp; public int askGodPower(String playerName, List&lt;String&gt; godPowerNames) throws
+        DisconnectionException {
+        <i>133</i>&nbsp; /*try {
+        <i>134</i>&nbsp; outputStream.writeObject(new AskGodPower(playerName, godPowerNames));
+        <i>135</i>&nbsp; } catch (IOException e) {
+        <i>136</i>&nbsp; e.printStackTrace();
+        <i>137</i>&nbsp; }*/
+        <i>138</i>&nbsp;
+        <b class="nc"><i>139</i>&nbsp; sendMessage(new AskGodPower(playerName, godPowerNames));</b>
+        <i>140</i>&nbsp;
+        <b class="nc"><i>141</i>&nbsp; int index = (int) receiveMessage();</b>
+        <i>142</i>&nbsp;
+        <b class="nc"><i>143</i>&nbsp; return index;</b>
+        <i>144</i>&nbsp; }
+        <i>145</i>&nbsp;
+        <i>146</i>&nbsp; public void tellAssignedGodPower(String playerName, List&lt;String&gt; godPowerName) throws
+        DisconnectionException {
+        <i>147</i>&nbsp; /*try {
+        <i>148</i>&nbsp; outputStream.writeObject(new TellAssignedGodPower(playerName, godPowerName));
+        <i>149</i>&nbsp; } catch (IOException e) {
+        <i>150</i>&nbsp; e.printStackTrace();
+        <i>151</i>&nbsp; }*/
+        <i>152</i>&nbsp;
+        <b class="nc"><i>153</i>&nbsp; sendMessage(new TellAssignedGodPower(playerName, godPowerName));</b>
+        <b class="nc"><i>154</i>&nbsp; }</b>
+        <i>155</i>&nbsp;
+        <i>156</i>&nbsp; public void sendBoard(SpaceCopy[][] boardCopy) throws DisconnectionException {
+        <i>157</i>&nbsp; /*try {
+        <i>158</i>&nbsp; outputStream.writeObject(new SendBoard(boardCopy));
+        <i>159</i>&nbsp; } catch (IOException e) {
+        <i>160</i>&nbsp; e.printStackTrace();
+        <i>161</i>&nbsp; }*/
+        <i>162</i>&nbsp;
+        <b class="nc"><i>163</i>&nbsp; sendMessage(new SendBoard(boardCopy));</b>
+        <b class="nc"><i>164</i>&nbsp; }</b>
+        <i>165</i>&nbsp;
+        <i>166</i>&nbsp; public int askWorkerPosition(String playerName, int workerNumber, int previousPos,
+        <i>167</i>&nbsp; SpaceCopy[][] boardCopy) throws DisconnectionException {
+        <i>168</i>&nbsp; /*try {
+        <i>169</i>&nbsp; outputStream.writeObject(new AskWorkerPosition(playerName, workerNumber, previousPos,
+        boardCopy));
+        <i>170</i>&nbsp; } catch (IOException e) {
+        <i>171</i>&nbsp; e.printStackTrace();
+        <i>172</i>&nbsp; }*/
+        <i>173</i>&nbsp;
+        <b class="nc"><i>174</i>&nbsp; sendMessage(new AskWorkerPosition(playerName, workerNumber, previousPos,
+            boardCopy));</b>
+        <i>175</i>&nbsp;
+        <b class="nc"><i>176</i>&nbsp; int pos = (int) receiveMessage();</b>
+        <b class="nc"><i>177</i>&nbsp; return pos;</b>
+        <i>178</i>&nbsp; }
+        <i>179</i>&nbsp;
+        <i>180</i>&nbsp; public int[] askWorkerMovement(String playerName, List&lt;SpaceCopy&gt; validMovementSpacesW1,
+        <i>181</i>&nbsp; List&lt;SpaceCopy&gt; validMovementSpacesW2) throws DisconnectionException {
+        <i>182</i>&nbsp; /*try {
+        <i>183</i>&nbsp; outputStream.writeObject(new AskWorkerMovement(playerName, validMovementSpacesW1,
+        validMovementSpacesW2));
+        <i>184</i>&nbsp; } catch (IOException e) {
+        <i>185</i>&nbsp; e.printStackTrace();
+        <i>186</i>&nbsp; }*/
+        <i>187</i>&nbsp;
+        <b class="nc"><i>188</i>&nbsp; sendMessage(new AskWorkerMovement(playerName, validMovementSpacesW1,
+            validMovementSpacesW2));</b>
+        <i>189</i>&nbsp;
+        <b class="nc"><i>190</i>&nbsp; int[] workerAndSpace = (int[]) receiveMessage();</b>
+        <b class="nc"><i>191</i>&nbsp; return workerAndSpace;</b>
+        <i>192</i>&nbsp; }
+        <i>193</i>&nbsp;
+        <i>194</i>&nbsp; public int askBuildingSpace(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces)
+        throws DisconnectionException {
+        <i>195</i>&nbsp; /*try {
+        <i>196</i>&nbsp; outputStream.writeObject(new AskBuildingSpace(playerName, validBuildingSpaces));
+        <i>197</i>&nbsp; } catch (IOException e) {
+        <i>198</i>&nbsp; e.printStackTrace();
+        <i>199</i>&nbsp; }*/
+        <i>200</i>&nbsp;
+        <b class="nc"><i>201</i>&nbsp; sendMessage(new AskBuildingSpace(playerName, validBuildingSpaces));</b>
+        <i>202</i>&nbsp;
+        <b class="nc"><i>203</i>&nbsp; int selectedBuildingSpace = (int) receiveMessage();</b>
+        <b class="nc"><i>204</i>&nbsp; return selectedBuildingSpace;</b>
+        <i>205</i>&nbsp; }
+        <i>206</i>&nbsp;
+        <i>207</i>&nbsp; public int askArtemisSecondMove(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList)
+        throws DisconnectionException {
+        <i>208</i>&nbsp; /*try {
+        <i>209</i>&nbsp; outputStream.writeObject(new AskArtemisSecondMove(playerName, deepCopySpaceList));
+        <i>210</i>&nbsp; } catch (IOException e) {
+        <i>211</i>&nbsp; e.printStackTrace();
+        <i>212</i>&nbsp; }*/
+        <i>213</i>&nbsp;
+        <b class="nc"><i>214</i>&nbsp; sendMessage(new AskArtemisSecondMove(playerName, deepCopySpaceList));</b>
+        <i>215</i>&nbsp;
+        <b class="nc"><i>216</i>&nbsp; int selectedMovementSpace = (int) receiveMessage();</b>
+        <b class="nc"><i>217</i>&nbsp; return selectedMovementSpace;</b>
+        <i>218</i>&nbsp; }
+        <i>219</i>&nbsp;
+        <i>220</i>&nbsp; public int[] askAtlasBuild(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws
+        DisconnectionException {
+        <i>221</i>&nbsp; /*try {
+        <i>222</i>&nbsp; outputStream.writeObject(new AskAtlasBuild(playerName, deepCopySpaceList));
+        <i>223</i>&nbsp; } catch (IOException e) {
+        <i>224</i>&nbsp; e.printStackTrace();
+        <i>225</i>&nbsp; }*/
+        <i>226</i>&nbsp;
+        <b class="nc"><i>227</i>&nbsp; sendMessage(new AskAtlasBuild(playerName, deepCopySpaceList));</b>
+        <i>228</i>&nbsp;
+        <b class="nc"><i>229</i>&nbsp; int[] selectedSpaceAndBuildDome = (int[]) receiveMessage();</b>
+        <b class="nc"><i>230</i>&nbsp; return selectedSpaceAndBuildDome;</b>
+        <i>231</i>&nbsp; }
+        <i>232</i>&nbsp;
+        <i>233</i>&nbsp; public int askDemeterSecondBuilding(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList)
+        throws DisconnectionException {
+        <i>234</i>&nbsp; /*try {
+        <i>235</i>&nbsp; outputStream.writeObject(new AskDemeterSecondBuilding(playerName, deepCopySpaceList));
+        <i>236</i>&nbsp; } catch (IOException e) {
+        <i>237</i>&nbsp; e.printStackTrace();
+        <i>238</i>&nbsp; }*/
+        <i>239</i>&nbsp;
+        <b class="nc"><i>240</i>&nbsp; sendMessage(new AskDemeterSecondBuilding(playerName, deepCopySpaceList));</b>
+        <i>241</i>&nbsp;
+        <b class="nc"><i>242</i>&nbsp; int selectedBuildingSpace = (int) receiveMessage();</b>
+        <b class="nc"><i>243</i>&nbsp; return selectedBuildingSpace;</b>
+        <i>244</i>&nbsp; }
+        <i>245</i>&nbsp;
+        <i>246</i>&nbsp; public int[] askHephaestusBuild(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList)
+        throws DisconnectionException {
+        <i>247</i>&nbsp; /*try {
+        <i>248</i>&nbsp; outputStream.writeObject(new AskHephaestusBuild(playerName, deepCopySpaceList));
+        <i>249</i>&nbsp; } catch (IOException e) {
+        <i>250</i>&nbsp; e.printStackTrace();
+        <i>251</i>&nbsp; }*/
+        <i>252</i>&nbsp;
+        <b class="nc"><i>253</i>&nbsp; sendMessage(new AskHephaestusBuild(playerName, deepCopySpaceList));</b>
+        <i>254</i>&nbsp;
+        <b class="nc"><i>255</i>&nbsp; int[] spaceAndDoubleBuilding = (int[]) receiveMessage();</b>
+        <b class="nc"><i>256</i>&nbsp; return spaceAndDoubleBuilding;</b>
+        <i>257</i>&nbsp; }
+        <i>258</i>&nbsp;
+        <i>259</i>&nbsp; public int[] askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean
+        w2CanMove,
+        <i>260</i>&nbsp; boolean w1CanBuild, boolean w2CanBuild) throws DisconnectionException {
+        <i>261</i>&nbsp; /* try {
+        <i>262</i>&nbsp; outputStream.writeObject(new AskBuildBeforeMovePrometheus(playerName, w1CanMove, w2CanMove,
+        w1CanBuild, w2CanBuild));
+        <i>263</i>&nbsp; } catch (IOException e) {
+        <i>264</i>&nbsp; e.printStackTrace();
+        <i>265</i>&nbsp; }*/
+        <i>266</i>&nbsp;
+        <b class="nc"><i>267</i>&nbsp; sendMessage(new AskBuildBeforeMovePrometheus(playerName, w1CanMove, w2CanMove,
+            w1CanBuild, w2CanBuild));</b>
+        <i>268</i>&nbsp;
+        <b class="nc"><i>269</i>&nbsp; int[] workerAndBuildBeforeMove = (int[]) receiveMessage();</b>
+        <b class="nc"><i>270</i>&nbsp; return workerAndBuildBeforeMove;</b>
+        <i>271</i>&nbsp; }
+        <i>272</i>&nbsp;
+        <i>273</i>&nbsp; public int askWorkerMovementPrometheus(String playerName, List&lt;SpaceCopy&gt;
+        validMovementSpaces) throws DisconnectionException {
+        <i>274</i>&nbsp; /*try {
+        <i>275</i>&nbsp; outputStream.writeObject(new AskWorkerMovementPrometheus(playerName, validMovementSpaces));
+        <i>276</i>&nbsp; } catch (IOException e) {
+        <i>277</i>&nbsp; e.printStackTrace();
+        <i>278</i>&nbsp; }*/
+        <i>279</i>&nbsp;
+        <b class="nc"><i>280</i>&nbsp; sendMessage(new AskWorkerMovementPrometheus(playerName,
+            validMovementSpaces));</b>
+        <i>281</i>&nbsp;
+        <b class="nc"><i>282</i>&nbsp; int selectedSpace = (int) receiveMessage();</b>
+        <b class="nc"><i>283</i>&nbsp; return selectedSpace;</b>
+        <i>284</i>&nbsp; }
+        <i>285</i>&nbsp;
+        <i>286</i>&nbsp; private Object receiveMessage() throws DisconnectionException {
+        <b class="nc"><i>287</i>&nbsp; Object message = null;</b>
+        <i>288</i>&nbsp;
+        <i>289</i>&nbsp; try {
+        <i>290</i>&nbsp; do {
+        <b class="nc"><i>291</i>&nbsp; message = inputStream.readObject();</b>
+        <b class="nc"><i>292</i>&nbsp; } while (message instanceof PingMessage);</b>
+        <b class="nc"><i>293</i>&nbsp; } catch (SocketTimeoutException e) {</b>
+        <b class="nc"><i>294</i>&nbsp; throw new DisconnectionException(this);</b>
+        <b class="nc"><i>295</i>&nbsp; } catch (IOException e) {</b>
+        <b class="nc"><i>296</i>&nbsp; throw new DisconnectionException(this);</b>
+        <b class="nc"><i>297</i>&nbsp; } catch (ClassNotFoundException e) {</b>
+        <b class="nc"><i>298</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>299</i>&nbsp; }</b>
+        <i>300</i>&nbsp;
+        <b class="nc"><i>301</i>&nbsp; return message;</b>
+        <i>302</i>&nbsp; }
+        <i>303</i>&nbsp;
+        <i>304</i>&nbsp; private void sendMessage(Message message) throws DisconnectionException {
+        <b class="nc"><i>305</i>&nbsp; synchronized (outputStream) {</b>
+        <i>306</i>&nbsp; try {
+        <b class="nc"><i>307</i>&nbsp; outputStream.writeObject(message);</b>
+        <b class="nc"><i>308</i>&nbsp; } catch (IOException e) {</b>
+        <i>309</i>&nbsp; //DEBUG
+        <i>310</i>&nbsp; //e.printStackTrace();
+        <b class="nc"><i>311</i>&nbsp; System.out.println(&quot;IOException dall&#39;outputStream di clientHandler
+            &quot; + this.clientNumber + &quot; lancio una DisconnectionException&quot;);</b>
+        <b class="nc"><i>312</i>&nbsp; throw new DisconnectionException(this);</b>
+        <b class="nc"><i>313</i>&nbsp; }</b>
+        <b class="nc"><i>314</i>&nbsp; }</b>
+        <b class="nc"><i>315</i>&nbsp; }</b>
+        <i>316</i>&nbsp;
+        <i>317</i>&nbsp; public void sendStop(InetAddress disconnectedAddress) throws DisconnectionException {
+        <i>318</i>&nbsp; /*try {
+        <i>319</i>&nbsp; outputStream.writeObject(new SendStop(disconnectedAddress));
+        <i>320</i>&nbsp; } catch (IOException e) {
+        <i>321</i>&nbsp; e.printStackTrace();
+        <i>322</i>&nbsp; }*/
+        <i>323</i>&nbsp;
+        <b class="nc"><i>324</i>&nbsp; System.out.println(&quot;Sending stop message to client &quot; +
+            this.clientNumber + &quot; with address &quot; + client.getInetAddress());</b>
+        <b class="nc"><i>325</i>&nbsp; sendMessage(new SendStop(disconnectedAddress));</b>
+        <b class="nc"><i>326</i>&nbsp; }</b>
+        <i>327</i>&nbsp;
+        <i>328</i>&nbsp; public void startPingSender() {
+        <b class="nc"><i>329</i>&nbsp; new Thread(new Runnable() {</b>
+        <i>330</i>&nbsp; @Override
+        <i>331</i>&nbsp; public void run() {
+        <i>332</i>&nbsp; while(!endGame) {
+        <i>333</i>&nbsp; try {
+        <i>334</i>&nbsp; sendMessage(new PingMessage());
+        <i>335</i>&nbsp; } catch (DisconnectionException e) {
+        <i>336</i>&nbsp; ClientHandler.this.isConnected = false;
+        <i>337</i>&nbsp; System.out.println(&quot;DisconnectionException: fermo il pingSender del server&quot;);
+        <i>338</i>&nbsp; if (game != null) {
+        <i>339</i>&nbsp; try {
+        <i>340</i>&nbsp; game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress());
+        <i>341</i>&nbsp; } catch (DisconnectionException ex) {
+        <i>342</i>&nbsp; System.out.println(&quot;PingSender: Lobby.stopGame() DisconnectionException&quot;);
+        <i>343</i>&nbsp; }
+        <i>344</i>&nbsp; }
+        <i>345</i>&nbsp; lobby.removeClient(ClientHandler.this);
+        <i>346</i>&nbsp; return;
+        <i>347</i>&nbsp; }
+        <i>348</i>&nbsp;
+        <i>349</i>&nbsp; try {
+        <i>350</i>&nbsp; Thread.sleep(10000);
+        <i>351</i>&nbsp; } catch (InterruptedException e) {
+        <i>352</i>&nbsp; e.printStackTrace();
+        <i>353</i>&nbsp; }
+        <i>354</i>&nbsp; }
+        <i>355</i>&nbsp; }
+        <b class="nc"><i>356</i>&nbsp; }).start();</b>
+        <b class="nc"><i>357</i>&nbsp; }</b>
+        <i>358</i>&nbsp;
+        <i>359</i>&nbsp; public void stopGame() {
+        <b class="nc"><i>360</i>&nbsp; endGame = true;</b>
+        <i>361</i>&nbsp; try {
+        <b class="nc"><i>362</i>&nbsp; client.close();</b>
+        <b class="nc"><i>363</i>&nbsp; } catch (IOException e) {</b>
+        <b class="nc"><i>364</i>&nbsp; System.out.println(&quot;stopGame(): Socket client.close() IOException, socket
+            gi� chiuso&quot;);</b>
+        <b class="nc"><i>365</i>&nbsp; }</b>
+        <b class="nc"><i>366</i>&nbsp; }</b>
+        <i>367</i>&nbsp;
+        <i>368</i>&nbsp; public void manageVictory(String playerName) throws DisconnectionException {
+        <b class="nc"><i>369</i>&nbsp; sendMessage(new AnnounceVictory(playerName));</b>
+        <b class="nc"><i>370</i>&nbsp; }</b>
+        <i>371</i>&nbsp;
+        <i>372</i>&nbsp; public void manageLose(String playerName) throws DisconnectionException {
+        <b class="nc"><i>373</i>&nbsp; sendMessage(new AnnounceLose(playerName));</b>
+        <b class="nc"><i>374</i>&nbsp; }</b>
+        <i>375</i>&nbsp;
+        <i>376</i>&nbsp; public void sendOpponentsGodPowers(List&lt;String&gt; playerNames, List&lt;String&gt;
+        godPowerNames) throws DisconnectionException {
+        <b class="nc"><i>377</i>&nbsp; sendMessage(new SendOpponentsGodPower(playerNames, godPowerNames));</b>
+        <b class="nc"><i>378</i>&nbsp; }</b>
+        <i>379</i>&nbsp;
+        <i>380</i>&nbsp; public boolean isConnected() {
+        <b class="nc"><i>381</i>&nbsp; return isConnected;</b>
+        <i>382</i>&nbsp; }
+        <i>383</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-04-26 23:51</div>
+</div>
+</body>
+</html>
