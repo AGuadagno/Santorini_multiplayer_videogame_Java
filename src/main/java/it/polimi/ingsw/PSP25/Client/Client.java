@@ -1,5 +1,7 @@
 package it.polimi.ingsw.PSP25.Client;
 
+import it.polimi.ingsw.PSP25.Client.GUI.GUI;
+import it.polimi.ingsw.PSP25.Client.GUI.GUImain;
 import it.polimi.ingsw.PSP25.Utility.Messages.Message;
 import it.polimi.ingsw.PSP25.Server.Server;
 
@@ -10,6 +12,11 @@ import java.util.Scanner;
 public class Client implements Runnable, ServerObserver {
 
     private Message receivedMessage = null;
+    private View view;
+
+    public Client(View view) {
+        this.view = view;
+    }
 
     @Override
     public void run() {
@@ -17,8 +24,9 @@ public class Client implements Runnable, ServerObserver {
         Scanner scanner = new Scanner(System.in);
 
         // CONNECTION TO SERVER
-        System.out.println("IP address of server?");
-        String ip = scanner.nextLine();
+        /*System.out.println("IP address of server?");
+        String ip = scanner.nextLine();*/
+        String ip = view.askIPAddress();
 
         Socket server;
         try {
@@ -69,8 +77,25 @@ public class Client implements Runnable, ServerObserver {
     }
 
     public static void main(String[] args) {
-        Client client = new Client();
+        View view;
+
+        if (args[0].equals("CLI")) {
+            view = new CLI();
+        } else {
+            view = new GUI();
+            //GUI
+
+            //GUImain GUImain = new GUImain(args);
+            GUImain GUImain = new GUImain();
+            Thread GUIThread = new Thread(GUImain);
+            GUIThread.start();
+
+            //END GUI
+        }
+
+        Client client = new Client(view);
         client.run();
+
     }
 
     @Override

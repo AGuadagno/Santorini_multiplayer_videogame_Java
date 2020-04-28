@@ -13,6 +13,7 @@ import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
  * (Athena, Apollo, Artemis etc) are the Concrete Strategies and Player is the Context.
  * Workers can move, build, check the victory by using the methods in GodPower
  * (or Overridden methods in the extensions of God Power)
+ *
  */
 public class GodPower {
 

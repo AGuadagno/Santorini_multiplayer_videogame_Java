@@ -22,6 +22,7 @@ public class Demeter extends GodPower {
      * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
      *                           building action or winning conditions of workers
      * @param broadcastInterface used to send the modified board to all the players
+     *
      */
     public Demeter(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
