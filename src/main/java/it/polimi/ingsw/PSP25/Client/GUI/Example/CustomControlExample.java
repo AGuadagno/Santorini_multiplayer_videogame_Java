@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package it.polimi.ingsw.PSP25.Client.GUI;
+package it.polimi.ingsw.PSP25.Client.GUI.Example;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

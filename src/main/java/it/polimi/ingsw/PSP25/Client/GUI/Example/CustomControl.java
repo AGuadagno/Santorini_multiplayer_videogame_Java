@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package it.polimi.ingsw.PSP25.Client.GUI;
+package it.polimi.ingsw.PSP25.Client.GUI.Example;
 
 import java.io.IOException;
 
@@ -48,7 +48,7 @@ public class CustomControl extends VBox {
     private TextField textField;
 
     public CustomControl() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/custom_control.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Example/custom_control.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

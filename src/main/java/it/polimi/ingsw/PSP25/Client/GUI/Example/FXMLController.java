@@ -1,4 +1,4 @@
-package it.polimi.ingsw.PSP25.Client.GUI;
+package it.polimi.ingsw.PSP25.Client.GUI.Example;
 
 import java.net.URL;
 import java.util.ResourceBundle;

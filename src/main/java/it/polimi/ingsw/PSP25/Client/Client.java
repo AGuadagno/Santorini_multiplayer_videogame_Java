@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP25.Client;
 
 import it.polimi.ingsw.PSP25.Client.GUI.GUI;
-import it.polimi.ingsw.PSP25.Client.GUI.GUImain;
 import it.polimi.ingsw.PSP25.Utility.Messages.Message;
 import it.polimi.ingsw.PSP25.Server.Server;
 
@@ -9,25 +8,32 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client implements Runnable, ServerObserver {
+public class Client implements Runnable, ServerObserver, ViewObserver {
 
     private Message receivedMessage = null;
-    private View view;
+    private ViewObservable view;
+    private Scanner scanner;
 
-    public Client(View view) {
+    public Client(ViewObservable view) {
+
         this.view = view;
+
     }
 
     @Override
     public void run() {
+        scanner = new Scanner(System.in);
+        view.askIPAddress();
+    }
 
-        Scanner scanner = new Scanner(System.in);
+    @Override
+    public synchronized void didReceiveServerMessage(Message message) {
+        this.receivedMessage = message;
+        notifyAll();
+    }
 
-        // CONNECTION TO SERVER
-        /*System.out.println("IP address of server?");
-        String ip = scanner.nextLine();*/
-        String ip = view.askIPAddress();
-
+    @Override
+    public void updateIPAddress(String ip) {
         Socket server;
         try {
             server = new Socket(ip, Server.SOCKET_PORT);
@@ -75,33 +81,4 @@ public class Client implements Runnable, ServerObserver {
         if (answer.equals("y"))
             run();
     }
-
-    public static void main(String[] args) {
-        View view;
-
-        if (args[0].equals("CLI")) {
-            view = new CLI();
-        } else {
-            view = new GUI();
-            //GUI
-
-            //GUImain GUImain = new GUImain(args);
-            GUImain GUImain = new GUImain();
-            Thread GUIThread = new Thread(GUImain);
-            GUIThread.start();
-
-            //END GUI
-        }
-
-        Client client = new Client(view);
-        client.run();
-
-    }
-
-    @Override
-    public synchronized void didReceiveServerMessage(Message message) {
-        this.receivedMessage = message;
-        notifyAll();
-    }
-
 }

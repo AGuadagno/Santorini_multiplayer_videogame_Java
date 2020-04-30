@@ -1,4 +1,4 @@
-package it.polimi.ingsw.PSP25.Client.GUI;
+package it.polimi.ingsw.PSP25.Client.GUI.Example;
 
 import javafx.application.Application;
 
@@ -14,7 +14,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Example/Scene.fxml"));
 
         Scene scene = new Scene(root);
         //scene.getStylesheets().add("/styles/Styles.css");
