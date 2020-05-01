@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 
@@ -22,7 +23,7 @@ public class AskAtlasBuild extends Message {
     }
 
     @Override
-    public void process(NetworkHandler nh) throws IOException {
+    public void process(NetworkHandler nh, Client client) throws IOException {
         int selectedSpace = buildingSpaceSelection(validBuildingSpaces);
         SpaceCopy chosenBuildingSpace = null;
         String answer = null;

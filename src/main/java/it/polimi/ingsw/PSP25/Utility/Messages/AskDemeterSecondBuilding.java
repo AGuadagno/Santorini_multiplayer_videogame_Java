@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 
@@ -23,7 +24,7 @@ public class AskDemeterSecondBuilding extends Message {
         this.validBuildingSpaces = validBuildingSpaces;
     }
 
-    public void process(NetworkHandler nh) throws IOException {
+    public void process(NetworkHandler nh, Client client) throws IOException {
         int chosenBuildingSpace = buildingSpaceSelection(validBuildingSpaces);
         nh.submit(chosenBuildingSpace);
     }

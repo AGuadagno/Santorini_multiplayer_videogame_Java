@@ -84,7 +84,7 @@ public class ClientHandler implements Runnable {
             lobby.startGame(numOfParticipants, this);
         }
 
-        System.out.println("Client Handler " + clientNumber + " terminato");
+        //System.out.println("Client Handler " + clientNumber + " terminato");
 
     }
 

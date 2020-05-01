@@ -1,9 +1,5 @@
 package it.polimi.ingsw.PSP25.Client;
 
-import it.polimi.ingsw.PSP25.Server.Server;
-
-import java.io.IOException;
-import java.net.Socket;
 import java.util.Scanner;
 
 public class CLI implements ViewObservable {
@@ -19,7 +15,23 @@ public class CLI implements ViewObservable {
     }
 
     @Override
+    public void setConnectionMessage(String s) {
+        System.out.println(s);
+    }
+
+    @Override
+    public void askNumOfPlayers(String question) {
+        int numOfPlayers;
+        do {
+            System.out.println(question);
+            numOfPlayers = scanner.nextInt();
+        } while (numOfPlayers < 2 || numOfPlayers > 3);
+        client.updateNumOfPlayers(numOfPlayers);
+    }
+
+    @Override
     public void subscribe(ViewObserver client) {
         this.client = client;
     }
+
 }

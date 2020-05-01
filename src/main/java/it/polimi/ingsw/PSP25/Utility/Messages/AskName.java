@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 import java.io.IOException;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class AskName extends Message {
         question = "Player " + playerNumber + " enter your name (2 Characters or more): ";
     }
 
-    public void process(NetworkHandler nh) throws IOException {
+    public void process(NetworkHandler nh, Client client) throws IOException {
         System.out.println(question);
         Scanner scanner = new Scanner(System.in);
 

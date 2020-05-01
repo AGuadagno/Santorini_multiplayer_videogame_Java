@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.io.IOException;
 public class PingMessage extends Message {
 
     @Override
-    public void process(NetworkHandler nh) throws IOException {
+    public void process(NetworkHandler nh, Client client) throws IOException {
         //System.out.println("ping ricevuto");
     }
 }

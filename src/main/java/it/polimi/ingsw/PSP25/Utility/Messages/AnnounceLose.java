@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 
 /**
@@ -18,7 +19,7 @@ public class AnnounceLose extends Message {
      *
      * @param nh network handler of the client who is the recipient of the message.
      */
-    public void process(NetworkHandler nh) {
+    public void process(NetworkHandler nh, Client client) {
         System.out.println(playerName + " lost the Game! Can't move or build!");
     }
 

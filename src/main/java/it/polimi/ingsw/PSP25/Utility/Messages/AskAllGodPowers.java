@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class AskAllGodPowers extends Message {
         this.godPowerNames = godPowerNames;
     }
 
-    public void process(NetworkHandler nh) throws IOException {
+    public void process(NetworkHandler nh, Client client) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print(playerName + " choose " + numOfPlayers + " god powers from the list: [");

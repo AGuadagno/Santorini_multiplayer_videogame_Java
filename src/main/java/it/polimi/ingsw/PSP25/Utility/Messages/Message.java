@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public abstract class Message implements Serializable {
      * @param nh network handler of the client who is the recipient of the message.
      * @throws IOException
      */
-    public void process(NetworkHandler nh) throws IOException {
+    public void process(NetworkHandler nh, Client client) throws IOException {
     }
 
 }

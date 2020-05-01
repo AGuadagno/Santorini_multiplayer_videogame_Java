@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Utility.Messages;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class TellAssignedGodPower extends Message {
         this.godPowerName = godPowerName;
     }
 
-    public void process(NetworkHandler nh) throws IOException {
+    public void process(NetworkHandler nh, Client client) throws IOException {
         System.out.println(playerName + " you got: " + godPowerName);
     }
 
