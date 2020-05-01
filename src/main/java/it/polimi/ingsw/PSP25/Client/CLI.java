@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Client;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class CLI implements ViewObservable {
@@ -27,6 +28,22 @@ public class CLI implements ViewObservable {
             numOfPlayers = scanner.nextInt();
         } while (numOfPlayers < 2 || numOfPlayers > 3);
         client.updateNumOfPlayers(numOfPlayers);
+    }
+
+    @Override
+    public void askName(String question) {
+        System.out.println(question);
+        String name = scanner.next();
+        while (name.length() < 2) {
+            System.out.println("Your name it's too short. Enter another name (2 Characters or more): ");
+            name = scanner.next();
+        }
+        client.updateName(name);
+    }
+
+    @Override
+    public void askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
+
     }
 
     @Override

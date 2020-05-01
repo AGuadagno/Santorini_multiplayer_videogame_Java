@@ -18,10 +18,12 @@
         <Label fx:id="ConnectionMessage" alignment="CENTER" layoutX="133.0" layoutY="118.0" prefHeight="26.0"
                prefWidth="334.0"/>
         <Label fx:id="SelectNumOfPlayers" alignment="CENTER" layoutX="133.0" layoutY="187.0" prefHeight="26.0"
-               prefWidth="334.0"/>
+               prefWidth="334.0" text="Select the number of players" visible="false"/>
         <Button fx:id="Button2Players" layoutX="133.0" layoutY="301.0" mnemonicParsing="false"
                 onAction="#handleButton2Players" prefHeight="26.0" prefWidth="94.0" text="2 players" visible="false"/>
         <Button fx:id="Button3Players" layoutX="373.0" layoutY="301.0" mnemonicParsing="false"
                 onAction="#handleButton3Players" prefHeight="26.0" prefWidth="94.0" text="3 Players" visible="false"/>
+        <Label fx:id="waitingLabel" alignment="CENTER_RIGHT" layoutX="252.0" layoutY="360.0" prefHeight="26.0"
+               prefWidth="334.0" text="Waiting for other players.."/>
     </children>
 </AnchorPane>

@@ -27,7 +27,7 @@ public class AskNumberOfPlayers extends Message {
     }*/
 
     public void process(NetworkHandler nh, Client client) throws IOException {
-        int numOfPlayers = client.selectNumOfPlayers(question);
+        int numOfPlayers = client.askNumOfPlayers(question);
         nh.submit(numOfPlayers);
     }
 

@@ -66,15 +66,9 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         stage.show();
     }
 
-    @Override
-    public void updateIPAddress(String ip) {
-        client.updateIPAddress(ip);
-    }
-
-    @Override
-    public void setConnectionMessage(String s) {
+    private Scene loadScene(String scenePath) {
         Parent root = null;
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/Scene2.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(scenePath));
         try {
             root = loader.load();
         } catch (IOException e) {
@@ -82,11 +76,19 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         }
         controller = loader.getController();
         controller.subscribe(this);
-
         Scene scene = new Scene(root);
+        return scene;
+    }
 
-        //ArrayList<Window> open = (ArrayList<Window>) Stage.getWindows().stream().filter(Window::isShowing).collect(Collectors.toList());
-        //Stage stage = (Stage) open.get(0);
+    @Override
+    public void updateIPAddress(String ip) {
+        client.updateIPAddress(ip);
+    }
+
+    @Override
+    public void setConnectionMessage(String s) {
+        Scene scene = loadScene("fxml/Scene2.fxml");
+
         Platform.runLater(() -> {
             stage.setScene(scene);
             stage.show();
@@ -101,5 +103,31 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     public void updateNumOfPlayers(int numOfPlayers) {
         client.updateNumOfPlayers(numOfPlayers);
+    }
+
+    @Override
+    public void askName(String question) {
+        Scene scene = loadScene("fxml/Scene3.fxml");
+
+        Platform.runLater(() -> {
+            stage.setScene(scene);
+            stage.show();
+            ((Scene3Controller) controller).setQuestion(question);
+        });
+    }
+
+    public void updateName(String name) {
+        client.updateName(name);
+    }
+
+    @Override
+    public void askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
+        Scene scene = loadScene("fxml/Scene4.fxml");
+
+        Platform.runLater(() -> {
+            stage.setScene(scene);
+            stage.show();
+            ((Scene4Controller) controller).setQuestion(playerName, numOfPlayers, godPowerNames);
+        });
     }
 }

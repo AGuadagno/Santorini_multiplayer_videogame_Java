@@ -25,7 +25,7 @@ public class AskAllGodPowers extends Message {
     }
 
     public void process(NetworkHandler nh, Client client) throws IOException {
-        Scanner scanner = new Scanner(System.in);
+        /*Scanner scanner = new Scanner(System.in);
 
         System.out.print(playerName + " choose " + numOfPlayers + " god powers from the list: [");
         System.out.print("1 - " + godPowerNames.get(0));
@@ -50,8 +50,9 @@ public class AskAllGodPowers extends Message {
             if (i < selectedIndexes.size() - 1)
                 printedChoice += ", ";
         }
-        System.out.println(printedChoice);
+        System.out.println(printedChoice);*/
 
+        List<Integer> selectedIndexes = client.askAllGodPowers(playerName, numOfPlayers, godPowerNames);
         nh.submit(selectedIndexes);
     }
 }

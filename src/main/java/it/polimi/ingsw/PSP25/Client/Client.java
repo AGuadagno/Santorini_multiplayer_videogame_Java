@@ -5,6 +5,7 @@ import it.polimi.ingsw.PSP25.Server.Server;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 import java.util.Scanner;
 
 public class Client implements Runnable, ServerObserver, ViewObserver {
@@ -15,6 +16,8 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private final Object Lock = "";
     private String ip = "";
     private Integer numOfPlayers = 0;
+    private String name = "";
+    private List<Integer> selectedIndexes = null;
 
     public Client(ViewObservable view) {
         this.view = view;
@@ -100,7 +103,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         }
     }
 
-    public int selectNumOfPlayers(String question) {
+    public int askNumOfPlayers(String question) {
         view.askNumOfPlayers(question);
         while (numOfPlayers == 0) {
             try {
@@ -122,5 +125,43 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                 Lock.notifyAll();
             }
         }
+    }
+
+    public String askName(String question) {
+        view.askName(question);
+        while (name.equals("")) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return name;
+    }
+
+    @Override
+    public void updateName(String name) {
+        if (this.name.equals("")) {
+            this.name = name;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
+    public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
+        view.askAllGodPowers(playerName, numOfPlayers, godPowerNames);
+        while (selectedIndexes == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return selectedIndexes;
     }
 }
