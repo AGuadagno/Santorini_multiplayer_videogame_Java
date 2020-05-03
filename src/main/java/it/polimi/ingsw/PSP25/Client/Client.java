@@ -151,6 +151,16 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         }
     }
 
+    @Override
+    public void updateAllGodPower(List<Integer> selectedIndexes) {
+        if (this.selectedIndexes == null) {
+            this.selectedIndexes = selectedIndexes;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
     public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
         view.askAllGodPowers(playerName, numOfPlayers, godPowerNames);
         while (selectedIndexes == null) {

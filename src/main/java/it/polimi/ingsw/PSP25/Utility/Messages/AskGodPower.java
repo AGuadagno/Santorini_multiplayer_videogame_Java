@@ -31,7 +31,7 @@ public class AskGodPower extends Message {
         }
         System.out.println("]");
 
-        // TO DO: verificare eccezione nel caso in cui inserisca una stringa
+        // TODO: verificare eccezione nel caso in cui inserisca una stringa
         int selectedIndex = scanner.nextInt();
         while (selectedIndex - 1 >= godPowerNames.size() || selectedIndex - 1 < 0) {
             System.out.println("God power index is not valid. Choose an index between 1 and " +

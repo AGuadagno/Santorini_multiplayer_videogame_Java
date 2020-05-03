@@ -10,12 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GUI extends Application implements ViewObservable, ViewObserver {
     private ViewObserver client;
@@ -120,6 +117,10 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         client.updateName(name);
     }
 
+    public void updateAllGodPower(List<Integer> selectedIndexes) {
+        client.updateAllGodPower(selectedIndexes);
+    }
+
     @Override
     public void askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
         Scene scene = loadScene("fxml/Scene4.fxml");
@@ -127,6 +128,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         Platform.runLater(() -> {
             stage.setScene(scene);
             stage.show();
+            //Tornare a Scene4Controller
             ((Scene4Controller) controller).setQuestion(playerName, numOfPlayers, godPowerNames);
         });
     }

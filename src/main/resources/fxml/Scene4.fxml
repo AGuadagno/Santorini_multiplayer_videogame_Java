@@ -2,10 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+
+<!-- tutti i bottoni tranne uno hanno lo stesso stile, conviene fare uno style.css -->
 
 <AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP25.Client.GUI.Scene4Controller">
@@ -101,41 +104,115 @@
                 <Image url="@../img/Godcards/apollo.png"/>
             </image>
         </ImageView>
-        <Button fx:id="buttonApollo" layoutX="118.0" layoutY="130.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonArtemis" layoutX="318.0" layoutY="130.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonAthena" layoutX="518.0" layoutY="130.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonAtlas" layoutX="718.0" layoutY="130.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonDemeter" layoutX="918.0" layoutY="130.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonHephaestus" layoutX="118.0" layoutY="362.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonMinotaur" layoutX="318.0" layoutY="362.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonPan" layoutX="518.0" layoutY="362.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonPrometheus" layoutX="718.0" layoutY="362.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonGodPower10" layoutX="918.0" layoutY="362.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonGodPower11" layoutX="218.0" layoutY="594.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonGodPower12" layoutX="418.0" layoutY="594.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonGodPower13" layoutX="618.0" layoutY="594.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button fx:id="buttonGodPower14" layoutX="818.0" layoutY="594.0" mnemonicParsing="false" opacity="0.0"
-                prefHeight="220.0" prefWidth="163.0" text="Button"/>
-        <Button layoutX="1073.0" layoutY="742.0" mnemonicParsing="false" onAction="#confirmButton" prefHeight="80.0"
-                prefWidth="122.0" text="Confirm"/>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="47.0" prefHeight="43.0" prefWidth="1200.0"
-               text="Select god powers" textAlignment="CENTER">
+
+        <Button fx:id="0" layoutX="118.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip
+                        text="Your Worker may move into an opponent Worker’s space by forcing their worker to the space yours just vacated. "/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="1" layoutX="318.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip text="Your Worker may move one additional time, but not back to its initial space."/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="2" layoutX="518.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip
+                        text="If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn"/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="3" layoutX="718.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip text="Your Worker may build a dome at any level. "/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="4" layoutX="918.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip text="Your Worker may build one additional time, but not on the same space"/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="5" layoutX="118.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="218.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip text="Your Worker may build one additional block (not dome) on top of your first block."/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="6" layoutX="318.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip text="Your Worker may move into an opponent Worker’s space,
+            if their Worker can be forced one space straight backwards to an unoccupied space at any level. "/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="7" layoutX="518.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip text="You also win if your Worker moves down two or more levels"/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="8" layoutX="718.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip text="If your Worker does not move up, it may build both before and after moving"/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="9" layoutX="918.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"/>
+        <Button fx:id="10" layoutX="218.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"/>
+        <Button fx:id="11" layoutX="418.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"/>
+        <Button fx:id="12" layoutX="618.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"/>
+        <Button fx:id="13" layoutX="818.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
+                opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"/>
+        <Button fx:id="confirmButton" layoutX="1031.0" layoutY="657.0" mnemonicParsing="false"
+                onAction="#handleConfirmButton" prefHeight="103.0" prefWidth="122.0" text="Confirm" visible="false"/>
+
+        <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="47.0" prefHeight="43.0"
+               prefWidth="1200.0" text="Select god powers" textAlignment="CENTER">
             <font>
                 <Font name="Castellar" size="28.0"/>
             </font>
         </Label>
+
     </children>
 </AnchorPane>
