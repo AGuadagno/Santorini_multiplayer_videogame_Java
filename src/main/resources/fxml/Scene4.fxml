@@ -2,26 +2,140 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+<AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP25.Client.GUI.Scene4Controller">
     <children>
-        <ImageView fitHeight="73.0" fitWidth="221.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <image>
-                <Image url="@../img/santorini-logo.png"/>
-            </image>
-        </ImageView>
-        <Label fx:id="questionLabel" alignment="CENTER" layoutX="133.0" layoutY="147.0" prefHeight="26.0"
-               prefWidth="334.0"/>
-        <TextField fx:id="nameTextField" layoutX="215.0" layoutY="200.0"/>
-        <Label fx:id="errorLabel" alignment="CENTER" layoutX="45.0" layoutY="250.0" prefHeight="26.0"
-               prefWidth="513.0"/>
         <Label fx:id="waitingLabel" alignment="CENTER_RIGHT" layoutX="252.0" layoutY="360.0" prefHeight="26.0"
                prefWidth="334.0" text="Waiting for other players.." visible="false"/>
+        <ImageView fitHeight="900.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/SelectGodPower2.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="118.0" layoutY="362.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/hephaestus.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="318.0" layoutY="362.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/minotaur.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="518.0" layoutY="362.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/pan.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="718.0" layoutY="362.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/prometheus.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="918.0" layoutY="362.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="118.0" layoutY="130.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="318.0" layoutY="130.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/artemis.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="518.0" layoutY="130.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/athena.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="718.0" layoutY="130.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/atlas.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="918.0" layoutY="130.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/demeter.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="218.0" layoutY="592.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="418.0" layoutY="594.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="618.0" layoutY="594.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="818.0" layoutY="592.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <Button fx:id="buttonApollo" layoutX="118.0" layoutY="130.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonArtemis" layoutX="318.0" layoutY="130.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonAthena" layoutX="518.0" layoutY="130.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonAtlas" layoutX="718.0" layoutY="130.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonDemeter" layoutX="918.0" layoutY="130.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonHephaestus" layoutX="118.0" layoutY="362.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonMinotaur" layoutX="318.0" layoutY="362.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonPan" layoutX="518.0" layoutY="362.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonPrometheus" layoutX="718.0" layoutY="362.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonGodPower10" layoutX="918.0" layoutY="362.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonGodPower11" layoutX="218.0" layoutY="594.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonGodPower12" layoutX="418.0" layoutY="594.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonGodPower13" layoutX="618.0" layoutY="594.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button fx:id="buttonGodPower14" layoutX="818.0" layoutY="594.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="220.0" prefWidth="163.0" text="Button"/>
+        <Button layoutX="1073.0" layoutY="742.0" mnemonicParsing="false" onAction="#confirmButton" prefHeight="80.0"
+                prefWidth="122.0" text="Confirm"/>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="47.0" prefHeight="43.0" prefWidth="1200.0"
+               text="Select god powers" textAlignment="CENTER">
+            <font>
+                <Font name="Castellar" size="28.0"/>
+            </font>
+        </Label>
     </children>
 </AnchorPane>

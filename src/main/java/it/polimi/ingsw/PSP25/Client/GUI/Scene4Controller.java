@@ -1,6 +1,7 @@
 package it.polimi.ingsw.PSP25.Client.GUI;
 
 import it.polimi.ingsw.PSP25.Client.ViewObserver;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -20,5 +21,12 @@ public class Scene4Controller implements GUIObservable {
     @Override
     public void subscribe(ViewObserver o) {
         this.gui = (GUI) gui;
+    }
+
+    public void provaBottone(ActionEvent actionEvent) {
+        System.out.println("Prova");
+    }
+
+    public void confirmButton(ActionEvent actionEvent) {
     }
 }
