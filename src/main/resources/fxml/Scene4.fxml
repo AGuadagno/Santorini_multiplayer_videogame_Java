@@ -13,8 +13,6 @@
 <AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP25.Client.GUI.Scene4Controller">
     <children>
-        <Label fx:id="waitingLabel" alignment="CENTER_RIGHT" layoutX="252.0" layoutY="360.0" prefHeight="26.0"
-               prefWidth="334.0" text="Waiting for other players.." visible="false"/>
         <ImageView fitHeight="900.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../img/SelectGodPower2.png"/>
@@ -165,8 +163,8 @@
                 opacity="0.0" prefHeight="220.0" prefWidth="163.0"
                 style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
             <tooltip>
-                <Tooltip text="Your Worker may move into an opponent Worker’s space,
-            if their Worker can be forced one space straight backwards to an unoccupied space at any level. "/>
+                <Tooltip
+                        text="Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level. "/>
             </tooltip>
         </Button>
 
@@ -209,6 +207,8 @@
 
         <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="47.0" prefHeight="43.0"
                prefWidth="1200.0" text="Select god powers" textAlignment="CENTER">
+            style="-fx-font-family: Castellar"
+            stylesheets="@../font/CastellarFont.css" text="Select god powers" textAlignment="CENTER">
             <font>
                 <Font name="Castellar" size="28.0"/>
             </font>

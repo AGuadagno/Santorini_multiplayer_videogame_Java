@@ -10,4 +10,6 @@ public interface ViewObserver {
     void updateName(String name);
 
     void updateAllGodPower(List<Integer> selectedIndexes);
+
+    void updateGodPower(int selectedIndex);
 }

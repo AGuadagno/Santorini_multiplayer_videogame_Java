@@ -1,6 +1,5 @@
 package it.polimi.ingsw.PSP25.Server;
 
-import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Model.GameLogic;
 import it.polimi.ingsw.PSP25.Utility.Messages.*;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
@@ -373,8 +372,8 @@ public class ClientHandler implements Runnable {
         sendMessage(new AnnounceLose(playerName));
     }
 
-    public void sendOpponentsGodPowers(List<String> playerNames, List<String> godPowerNames) throws DisconnectionException {
-        sendMessage(new SendOpponentsGodPower(playerNames, godPowerNames));
+    public void sendPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) throws DisconnectionException {
+        sendMessage(new SendPlayersGodPowers(playerNames, godPowerNames));
     }
 
     public boolean isConnected() {

@@ -117,10 +117,6 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         client.updateName(name);
     }
 
-    public void updateAllGodPower(List<Integer> selectedIndexes) {
-        client.updateAllGodPower(selectedIndexes);
-    }
-
     @Override
     public void askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
         Scene scene = loadScene("fxml/Scene4.fxml");
@@ -128,8 +124,39 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         Platform.runLater(() -> {
             stage.setScene(scene);
             stage.show();
-            //Tornare a Scene4Controller
-            ((Scene4Controller) controller).setQuestion(playerName, numOfPlayers, godPowerNames);
+            ((Scene4Controller) controller).setQuestion(playerName, numOfPlayers);
         });
     }
+
+    public void updateAllGodPower(List<Integer> selectedIndexes) {
+        client.updateAllGodPower(selectedIndexes);
+    }
+
+    @Override
+    public void askGodPower(String playerName, List<String> godPowerNames) {
+        Scene scene = loadScene("fxml/Scene5.fxml");
+
+        Platform.runLater(() -> {
+            stage.setScene(scene);
+            stage.show();
+            ((Scene5Controller) controller).setQuestion(playerName, godPowerNames);
+        });
+    }
+
+
+    public void updateGodPower(int selectedIndex) {
+        client.updateGodPower(selectedIndex);
+    }
+
+    @Override
+    public void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) {
+        Scene scene = loadScene("fxml/Scene6.fxml");
+
+        Platform.runLater(() -> {
+            stage.setScene(scene);
+            stage.show();
+            ((Scene6Controller) controller).showPlayersGodPowers(playerNames, godPowerNames);
+        });
+    }
+
 }

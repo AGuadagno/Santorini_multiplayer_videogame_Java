@@ -14,4 +14,8 @@ public interface ViewObservable {
     void askName(String question);
 
     void askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames);
+
+    void askGodPower(String playerName, List<String> godPowerNames);
+
+    void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames);
 }

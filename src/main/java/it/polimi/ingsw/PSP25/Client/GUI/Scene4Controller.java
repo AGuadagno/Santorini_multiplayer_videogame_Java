@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +27,15 @@ public class Scene4Controller implements GUIObservable {
         this.gui = (GUI) gui;
     }
 
-    public void setQuestion(String playerName, int numOfPlayers, List<String> godPowerNames) {
+    public void setQuestion(String playerName, int numOfPlayers) {
         questionLabel.setText(playerName + " choose " + numOfPlayers + " god powers from the list: ");
         selectedIndexes = new ArrayList<>(numOfPlayers);
         this.numOfPlayers = numOfPlayers;
     }
 
     public void handleConfirmButton(ActionEvent actionEvent) {
-        confirmButton.setVisible(false);
+        confirmButton.setDisable(true);
+        questionLabel.setText("Waiting for other players..");
         gui.updateAllGodPower(selectedIndexes);
     }
 

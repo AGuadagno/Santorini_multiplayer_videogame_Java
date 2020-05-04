@@ -25,33 +25,6 @@ public class AskAllGodPowers extends Message {
     }
 
     public void process(NetworkHandler nh, Client client) throws IOException {
-        /*Scanner scanner = new Scanner(System.in);
-
-        System.out.print(playerName + " choose " + numOfPlayers + " god powers from the list: [");
-        System.out.print("1 - " + godPowerNames.get(0));
-        for (int i = 1; i < godPowerNames.size(); i++) {
-            System.out.print(", " + (i + 1) + " - " + godPowerNames.get(i));
-        }
-        System.out.println("]");
-        List<Integer> selectedIndexes = new ArrayList<>(numOfPlayers);
-        for (int i = 1; i <= numOfPlayers; i++) {
-            int index = scanner.nextInt();
-            while (index <= 0 || index > godPowerNames.size() || selectedIndexes.contains(index - 1)) {
-                System.out.println("God power index is not valid. Choose an index between 1 and " +
-                        godPowerNames.size() + " and different from other chosen indexes");
-                index = scanner.nextInt();
-            }
-            selectedIndexes.add(index - 1);
-        }
-
-        String printedChoice = "You have chosen: ";
-        for (int i = 0; i < selectedIndexes.size(); i++) {
-            printedChoice += godPowerNames.get(selectedIndexes.get(i));
-            if (i < selectedIndexes.size() - 1)
-                printedChoice += ", ";
-        }
-        System.out.println(printedChoice);*/
-
         List<Integer> selectedIndexes = client.askAllGodPowers(playerName, numOfPlayers, godPowerNames);
         nh.submit(selectedIndexes);
     }

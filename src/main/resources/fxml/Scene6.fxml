@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!-- tutti i bottoni tranne uno hanno lo stesso stile, conviene fare uno style.css -->
+
+<AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP25.Client.GUI.Scene6Controller">
+    <children>
+        <ImageView fx:id="godPower2_2Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="501.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="godPower1_2Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="50.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="godPower3_3Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="596.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="godPower2_3Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="296.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="godPower1_3Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="-4.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <image>
+                <Image url="@../img/Godcards/apollo.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="background" fitHeight="900.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/3PlayerV3.png"/>
+            </image>
+        </ImageView>
+        <Label fx:id="playerName1_2Players" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="324.0"
+               prefHeight="26.0" prefWidth="160.0" text="PlayerName1 (PL1)" textAlignment="CENTER" textFill="WHITE"
+               visible="false">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </Label>
+        <Label fx:id="playerName2_2Players" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="775.0"
+               prefHeight="26.0" prefWidth="160.0" text="PlayerName1 (PL1)" textAlignment="CENTER" textFill="WHITE"
+               visible="false">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </Label>
+        <Label fx:id="playerName1_3Players" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="270.0"
+               prefHeight="26.0" prefWidth="160.0" text="PlayerName1 (PL1)" textAlignment="CENTER" textFill="WHITE"
+               visible="false">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </Label>
+        <Label fx:id="playerName2_3Players" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="570.0"
+               prefHeight="26.0" prefWidth="160.0" text="PlayerName2 (PL2)" textAlignment="CENTER" textFill="WHITE"
+               visible="false">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </Label>
+        <Label fx:id="playerName3_3Players" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="870.0"
+               prefHeight="26.0" prefWidth="160.0" text="PlayerName3 (PL3)" textAlignment="CENTER" textFill="WHITE"
+               visible="false">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </Label>
+
+    </children>
+</AnchorPane>

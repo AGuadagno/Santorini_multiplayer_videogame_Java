@@ -74,6 +74,36 @@ public class CLI implements ViewObservable {
     }
 
     @Override
+    public void askGodPower(String playerName, List<String> godPowerNames) {
+        System.out.print(playerName + " choose your god power from the list: [");
+        System.out.print("1 - " + godPowerNames.get(0));
+        for (int i = 1; i < godPowerNames.size(); i++) {
+            System.out.print(", " + (i + 1) + " - " + godPowerNames.get(i));
+        }
+        System.out.println("]");
+
+        // TODO: verificare eccezione nel caso in cui inserisca una stringa
+        int selectedIndex = scanner.nextInt();
+        while (selectedIndex - 1 >= godPowerNames.size() || selectedIndex - 1 < 0) {
+            System.out.println("God power index is not valid. Choose an index between 1 and " +
+                    godPowerNames.size());
+            selectedIndex = scanner.nextInt();
+        }
+
+        client.updateGodPower(selectedIndex);
+    }
+
+    @Override
+    public void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) {
+        String s = "";
+        for (int i = 0; i < playerNames.size(); i++) {
+            s = s + playerNames.get(i) + " has " + godPowerNames.get(i) + "\n";
+        }
+
+        System.out.println(s);
+    }
+
+    @Override
     public void subscribe(ViewObserver client) {
         this.client = client;
     }

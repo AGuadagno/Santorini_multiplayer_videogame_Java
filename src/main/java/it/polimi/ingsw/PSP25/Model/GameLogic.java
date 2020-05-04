@@ -226,7 +226,7 @@ public class GameLogic implements BroadcastInterface {
         List<String> godPowerNames = playerList.stream().map(p -> p.getGodPower().toString()).collect(Collectors.toList());
 
         for (Player p : playerList) {
-            p.getClientHandler().sendOpponentsGodPowers(playerNames, godPowerNames);
+            p.getClientHandler().sendPlayersGodPowers(playerNames, godPowerNames);
         }
     }
 

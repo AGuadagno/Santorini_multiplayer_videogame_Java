@@ -17,7 +17,8 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private String ip = "";
     private Integer numOfPlayers = 0;
     private String name = "";
-    private List<Integer> selectedIndexes = null;
+    private List<Integer> allGodPowerIndexes = null;
+    private Integer godPowerIndex = null;
 
     public Client(ViewObservable view) {
         this.view = view;
@@ -151,19 +152,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         }
     }
 
-    @Override
-    public void updateAllGodPower(List<Integer> selectedIndexes) {
-        if (this.selectedIndexes == null) {
-            this.selectedIndexes = selectedIndexes;
-            synchronized (Lock) {
-                Lock.notifyAll();
-            }
-        }
-    }
-
     public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
         view.askAllGodPowers(playerName, numOfPlayers, godPowerNames);
-        while (selectedIndexes == null) {
+        while (allGodPowerIndexes == null) {
             try {
                 synchronized (Lock) {
                     Lock.wait();
@@ -172,6 +163,44 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                 e.printStackTrace();
             }
         }
-        return selectedIndexes;
+        return allGodPowerIndexes;
+    }
+
+    @Override
+    public void updateAllGodPower(List<Integer> selectedIndexes) {
+        if (this.allGodPowerIndexes == null) {
+            this.allGodPowerIndexes = selectedIndexes;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
+    public int askGodPower(String playerName, List<String> godPowerNames) {
+        view.askGodPower(playerName, godPowerNames);
+        while (godPowerIndex == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return godPowerIndex;
+    }
+
+    @Override
+    public void updateGodPower(int selectedIndex) {
+        if (this.godPowerIndex == null) {
+            this.godPowerIndex = selectedIndex;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
+    public void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) {
+        view.showPlayersGodPowers(playerNames, godPowerNames);
     }
 }

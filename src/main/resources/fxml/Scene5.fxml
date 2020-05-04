@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!-- tutti i bottoni tranne uno hanno lo stesso stile, conviene fare uno style.css -->
+
+<AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP25.Client.GUI.Scene5Controller">
+    <children>
+        <ImageView fitHeight="900.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/SelectGodPower2.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="image1_3godPowers" fitHeight="220.0" fitWidth="163.0" layoutX="318.0" layoutY="362.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="image2_3godPowers" fitHeight="220.0" fitWidth="163.0" layoutX="518.0" layoutY="362.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="image3_3godPowers" fitHeight="220.0" fitWidth="163.0" layoutX="718.0" layoutY="362.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="image1_2godPowers" fitHeight="220.0" fitWidth="163.0" layoutX="418.0" layoutY="361.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="image2_2godPowers" fitHeight="220.0" fitWidth="163.0" layoutX="618.0" layoutY="361.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+
+
+        <Button fx:id="button1_3godPowers" layoutX="318.0" layoutY="361.0" mnemonicParsing="false"
+                onAction="#handleButton1" opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"
+                visible="false">
+            <tooltip>
+                <Tooltip
+                        text="Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level. "/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="button2_3godPowers" layoutX="518.0" layoutY="361.0" mnemonicParsing="false"
+                onAction="#handleButton2" opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"
+                visible="false">
+            <tooltip>
+                <Tooltip text="You also win if your Worker moves down two or more levels"/>
+            </tooltip>
+        </Button>
+
+
+        <Button fx:id="button3_3godPowers" layoutX="718.0" layoutY="361.0" mnemonicParsing="false"
+                onAction="#handleButton3" opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"
+                visible="false">
+            <tooltip>
+                <Tooltip text="If your Worker does not move up, it may build both before and after moving"/>
+            </tooltip>
+        </Button>
+        <Button fx:id="button1_2godPowers" layoutX="418.0" layoutY="361.0" mnemonicParsing="false"
+                onAction="#handleButton1" opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"
+                visible="false"/>
+        <Button fx:id="button2_2godPowers" layoutX="618.0" layoutY="361.0" mnemonicParsing="false"
+                onAction="#handleButton2" opacity="0.0" prefHeight="220.0" prefWidth="163.0"
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"
+                visible="false"/>
+        <Button fx:id="confirmButton" layoutX="1030.0" layoutY="420.0" mnemonicParsing="false"
+                onAction="#handleConfirmButton" prefHeight="103.0" prefWidth="122.0" text="Confirm" visible="false"/>
+
+        <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="47.0" prefHeight="43.0"
+               prefWidth="1200.0"
+               style="-fx-font-family: Castellar"
+               stylesheets="@../font/CastellarFont.css" text="Select god powers" textAlignment="CENTER">
+            <font>
+                <Font name="Castellar" size="28.0"/>
+            </font>
+        </Label>
+
+    </children>
+</AnchorPane>
