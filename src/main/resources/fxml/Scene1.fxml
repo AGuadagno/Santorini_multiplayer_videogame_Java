@@ -16,14 +16,14 @@
                 <Image url="@../img/SchermataLogin.png"/>
             </image>
         </ImageView>
-        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="500.0" layoutY="598.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fx:id="connectImage" fitHeight="150.0" fitWidth="200.0" layoutX="500.0" layoutY="598.0"
+                   pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../img/ConnectButton.png"/>
+                <Image url="@../img/ButtonConnectUnpressed.png"/>
             </image>
         </ImageView>
-        <Button layoutX="502.0" layoutY="599.0" mnemonicParsing="false" onAction="#handleButtonAction" opacity="0.0"
-                prefHeight="47.0" prefWidth="197.0" text="Connect"/>
+        <Button layoutX="506.0" layoutY="602.0" mnemonicParsing="false" onAction="#handleButtonAction" opacity="0.0"
+                prefHeight="42.0" prefWidth="189.0" text="Connect"/>
         <TextField fx:id="textField" layoutX="454.0" layoutY="486.0" prefHeight="44.0" prefWidth="294.0">
             <font>
                 <Font size="21.0"/>

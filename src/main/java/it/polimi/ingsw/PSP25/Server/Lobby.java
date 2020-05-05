@@ -1,9 +1,7 @@
 package it.polimi.ingsw.PSP25.Server;
 
-import it.polimi.ingsw.PSP25.Client.Client;
-import it.polimi.ingsw.PSP25.Model.GameLogic;
+import it.polimi.ingsw.PSP25.Server.Model.GameLogic;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 

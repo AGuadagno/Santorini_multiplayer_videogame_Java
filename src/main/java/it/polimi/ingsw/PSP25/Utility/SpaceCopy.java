@@ -1,7 +1,7 @@
 package it.polimi.ingsw.PSP25.Utility;
 
-import it.polimi.ingsw.PSP25.Model.Space;
-import it.polimi.ingsw.PSP25.Model.Worker;
+import it.polimi.ingsw.PSP25.Server.Model.Space;
+import it.polimi.ingsw.PSP25.Server.Model.Worker;
 
 import java.io.Serializable;
 
