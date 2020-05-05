@@ -41,6 +41,8 @@ public class Scene5Controller implements GUIObservable {
     private Button button1_2godPowers;
     @FXML
     private Button button2_2godPowers;
+    @FXML
+    private ImageView confirmImage;
 
     @Override
     public void subscribe(ViewObserver gui) {
@@ -71,6 +73,8 @@ public class Scene5Controller implements GUIObservable {
 
     public void handleConfirmButton(ActionEvent actionEvent) {
         confirmButton.setDisable(true);
+        confirmImage.setImage(new Image("/img/CutConfirmPressed.png"));
+        confirmImage.setOpacity(0.8);
         questionLabel.setText("Waiting for other players..");
         gui.updateGodPower(selectedIndex);
     }
@@ -81,12 +85,14 @@ public class Scene5Controller implements GUIObservable {
             selectedIndex = buttonNum;
             pressedButton.setOpacity(1);
             confirmButton.setVisible(true);
+            confirmImage.setVisible(true);
         } else {
             selectedIndex = buttonNum;
             pressedButton.setOpacity(1);
             previousButton.setOpacity(0);
             if (previousButton == pressedButton) {
                 confirmButton.setVisible(false);
+                confirmImage.setVisible(false);
                 selectedIndex = null;
             }
         }

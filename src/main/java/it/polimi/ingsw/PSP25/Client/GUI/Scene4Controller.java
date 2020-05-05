@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class Scene4Controller implements GUIObservable {
     private Label questionLabel;
     @FXML
     private Button confirmButton;
+    @FXML
+    private ImageView confirmImage;
 
     @Override
     public void subscribe(ViewObserver gui) {
@@ -35,6 +38,8 @@ public class Scene4Controller implements GUIObservable {
 
     public void handleConfirmButton(ActionEvent actionEvent) {
         confirmButton.setDisable(true);
+        confirmImage.setImage(new Image("/img/CutConfirmPressed.png"));
+        confirmImage.setOpacity(0.8);
         questionLabel.setText("Waiting for other players..");
         gui.updateAllGodPower(selectedIndexes);
     }
@@ -46,11 +51,14 @@ public class Scene4Controller implements GUIObservable {
         if (!selectedIndexes.contains(buttonNumber) && selectedIndexes.size() < numOfPlayers) {
             selectedIndexes.add(buttonNumber);
             pressedButton.setOpacity(1);
-            if (selectedIndexes.size() == numOfPlayers)
+            if (selectedIndexes.size() == numOfPlayers) {
                 confirmButton.setVisible(true);
+                confirmImage.setVisible(true);
+            }
         } else {
             if (selectedIndexes.remove(Integer.valueOf(buttonNumber))) {
                 confirmButton.setVisible(false);
+                confirmImage.setVisible(false);
                 pressedButton.setOpacity(0);
             }
         }

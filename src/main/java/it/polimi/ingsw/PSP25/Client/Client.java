@@ -44,11 +44,11 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         try {
             server = new Socket(ip, Server.SOCKET_PORT);
         } catch (IOException e) {
-            view.setConnectionMessage("server unreachable");
+            view.setConnectionMessage("Server unreachable");
             //System.out.println("server unreachable");
             return;
         }
-        view.setConnectionMessage("Connected");
+        view.setConnectionMessage("Connected to the server");
         //System.out.println("Connected");
 
         // CREATION OF NETWORK HANDLER

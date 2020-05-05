@@ -67,17 +67,21 @@
                 onAction="#handleButton2" opacity="0.0" prefHeight="220.0" prefWidth="163.0"
                 style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"
                 visible="false"/>
-        <Button fx:id="confirmButton" layoutX="1030.0" layoutY="420.0" mnemonicParsing="false"
-                onAction="#handleConfirmButton" prefHeight="103.0" prefWidth="122.0" text="Confirm" visible="false"/>
 
         <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="47.0" prefHeight="43.0"
-               prefWidth="1200.0"
-               style="-fx-font-family: Castellar"
-               stylesheets="@../font/CastellarFont.css" text="Select god powers" textAlignment="CENTER">
+               prefWidth="1200.0" textAlignment="CENTER">
             <font>
-                <Font name="Castellar" size="28.0"/>
+                <Font size="28.0"/>
             </font>
         </Label>
+        <ImageView fx:id="confirmImage" fitHeight="150.0" fitWidth="200.0" layoutX="1000.0" layoutY="443.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/CutConfirmUnpressed.png"/>
+            </image>
+        </ImageView>
+        <Button fx:id="confirmButton" layoutX="1005.0" layoutY="447.0" mnemonicParsing="false"
+                onAction="#handleConfirmButton" opacity="0.0" prefHeight="48.0" prefWidth="195.0" text="Confirm"/>
 
     </children>
 </AnchorPane>

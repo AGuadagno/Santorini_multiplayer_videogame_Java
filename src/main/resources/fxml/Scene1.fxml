@@ -6,32 +6,34 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+<AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP25.Client.GUI.Scene1Controller">
     <children>
-        <Button layoutX="252.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="26.0"
-                prefWidth="94.0" text="Connect"/>
-        <TextField fx:id="textField" layoutX="172.0" layoutY="252.0" prefHeight="26.0" prefWidth="255.0"/>
-        <Label alignment="CENTER" layoutX="133.0" layoutY="210.0" prefHeight="18.0" prefWidth="334.0"
-               text="Insert Server IP Address to join the game."/>
-        <ImageView fitHeight="120.0" fitWidth="264.0" layoutX="167.0" layoutY="88.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="900.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../img/santorini-logo.png"/>
+                <Image url="@../img/SchermataLogin.png"/>
             </image>
         </ImageView>
-        <ImageView fitHeight="127.0" fitWidth="120.0" layoutX="57.0" layoutY="73.0" pickOnBounds="true"
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="500.0" layoutY="598.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
-                <Image url="@../img/podium-characters-Maenad.png"/>
+                <Image url="@../img/ConnectButton.png"/>
             </image>
         </ImageView>
-        <ImageView fitHeight="127.0" fitWidth="94.0" layoutX="431.0" layoutY="73.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <image>
-                <Image url="@../img/podium-characters-Ares.png"/>
-            </image>
-        </ImageView>
+        <Button layoutX="502.0" layoutY="599.0" mnemonicParsing="false" onAction="#handleButtonAction" opacity="0.0"
+                prefHeight="47.0" prefWidth="197.0" text="Connect"/>
+        <TextField fx:id="textField" layoutX="454.0" layoutY="486.0" prefHeight="44.0" prefWidth="294.0">
+            <font>
+                <Font size="21.0"/>
+            </font>
+        </TextField>
+        <Label alignment="CENTER" layoutX="206.0" layoutY="338.0" prefHeight="126.0" prefWidth="788.0"
+               text="Insert Server IP Address to join the game" textFill="WHITE">
+            <font>
+                <Font size="29.0"/>
+            </font>
+        </Label>
     </children>
 </AnchorPane>
