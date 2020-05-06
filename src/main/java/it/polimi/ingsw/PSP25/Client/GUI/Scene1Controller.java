@@ -4,8 +4,6 @@ import it.polimi.ingsw.PSP25.Client.ViewObserver;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class Scene1Controller implements GUIObservable {
 
@@ -13,8 +11,6 @@ public class Scene1Controller implements GUIObservable {
 
     @FXML
     private TextField textField;
-    @FXML
-    private ImageView connectImage;
 
     @Override
     public void subscribe(ViewObserver gui) {
@@ -23,7 +19,9 @@ public class Scene1Controller implements GUIObservable {
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        connectImage.setImage(new Image("/img/ButtonConnectPressed.png"));
+        //DEBUG
+        System.out.println("You clicked me!");
+
         gui.updateIPAddress(textField.getText());
     }
 }

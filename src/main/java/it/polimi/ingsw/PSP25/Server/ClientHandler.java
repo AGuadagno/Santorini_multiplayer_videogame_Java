@@ -1,6 +1,6 @@
 package it.polimi.ingsw.PSP25.Server;
 
-import it.polimi.ingsw.PSP25.Server.Model.GameLogic;
+import it.polimi.ingsw.PSP25.Model.GameLogic;
 import it.polimi.ingsw.PSP25.Utility.Messages.*;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 
@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.List;
 
-public class ClientHandler implements Runnable, ModelObserver, VirtualViewObservable {
+public class ClientHandler implements Runnable {
 
     private final Socket client;
     private final int clientNumber;
@@ -22,20 +22,15 @@ public class ClientHandler implements Runnable, ModelObserver, VirtualViewObserv
     private ObjectInputStream inputStream;
     private boolean endGame = false;
     private boolean isConnected = true;
+    // NEW
     private GameLogic game;
-
-    private VirtualViewObserver controller;
 
     public ClientHandler(Socket client, int clientNumber, Lobby lobby) {
         this.client = client;
         this.clientNumber = clientNumber;
         this.lobby = lobby;
+        // NEW
         game = null;
-    }
-
-    @Override
-    public void subscribe(VirtualViewObserver controller) {
-        this.controller = controller;
     }
 
     @Override
@@ -120,12 +115,15 @@ public class ClientHandler implements Runnable, ModelObserver, VirtualViewObserv
         return name;
     }
 
-    public void askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) throws DisconnectionException {
-        sendMessage(new AskAllGodPowers(playerName, numOfPlayers, godPowerNames));
-    }
+    public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) throws DisconnectionException {
+        /*try {
+            outputStream.writeObject(new AskAllGodPowers(playerName, numOfPlayers, godPowerNames));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
-    @Override
-    public List<Integer> updateAllGodPowers() throws DisconnectionException {
+        sendMessage(new AskAllGodPowers(playerName, numOfPlayers, godPowerNames));
+
         List<Integer> selectedIndexes = (List<Integer>) receiveMessage();
         return selectedIndexes;
     }
@@ -178,9 +176,8 @@ public class ClientHandler implements Runnable, ModelObserver, VirtualViewObserv
         return pos;
     }
 
-    @Override
-    public void askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1,
-                                  List<SpaceCopy> validMovementSpacesW2) throws DisconnectionException {
+    public int[] askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1,
+                                   List<SpaceCopy> validMovementSpacesW2) throws DisconnectionException {
         /*try {
             outputStream.writeObject(new AskWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2));
         } catch (IOException e) {
@@ -189,10 +186,6 @@ public class ClientHandler implements Runnable, ModelObserver, VirtualViewObserv
 
         sendMessage(new AskWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2));
 
-    }
-
-    @Override
-    public int[] updateAskWorkerMovement() throws DisconnectionException {
         int[] workerAndSpace = (int[]) receiveMessage();
         return workerAndSpace;
     }
