@@ -12,14 +12,18 @@ import java.io.IOException;
  * This message is sent to the players in order to show them a copy of the board.
  */
 public class SendBoard extends Message {
-    SpaceCopy[][] board;
+    private SpaceCopy[][] board;
 
     public SendBoard(SpaceCopy[][] board) {
         this.board = board;
     }
 
     public void process(NetworkHandler nh, Client client) throws IOException {
-        for (int j = 0; j < 5; j++) {
+
+        client.showBoard(board);
+
+    // USED IN CLI
+    /*    for (int j = 0; j < 5; j++) {
             StringBuilder[] rowLines = new StringBuilder[5];
             for (int k = 0; k < 5; k++) {
                 rowLines[k] = new StringBuilder("");
@@ -68,6 +72,8 @@ public class SendBoard extends Message {
         }
         System.out.print("+"); //last '+'
         System.out.println();
+     */
+
     }
 }
 

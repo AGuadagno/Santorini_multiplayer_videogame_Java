@@ -4,6 +4,7 @@ import it.polimi.ingsw.PSP25.Client.CLI;
 import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.ViewObservable;
 import it.polimi.ingsw.PSP25.Client.ViewObserver;
+import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -157,6 +158,11 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
             stage.show();
             ((Scene6Controller) controller).showPlayersGodPowers(playerNames, godPowerNames);
         });
+    }
+
+    @Override
+    public void showBoard(SpaceCopy[][] board) {
+        ((Scene6Controller) controller).showBoard(board);
     }
 
 }

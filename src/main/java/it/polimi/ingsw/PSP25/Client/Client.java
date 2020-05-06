@@ -2,6 +2,7 @@ package it.polimi.ingsw.PSP25.Client;
 
 import it.polimi.ingsw.PSP25.Utility.Messages.Message;
 import it.polimi.ingsw.PSP25.Server.Server;
+import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -202,5 +203,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) {
         view.showPlayersGodPowers(playerNames, godPowerNames);
+    }
+
+    public void showBoard(SpaceCopy[][] board) {
+        view.showBoard(board);
     }
 }

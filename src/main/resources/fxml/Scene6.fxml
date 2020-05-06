@@ -82,5 +82,505 @@
             </font>
         </Label>
 
+        <!-- 1x1 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="125.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="149.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="144.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 1x2 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="125.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="149.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="144.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 1x3 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="125.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="149.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="144.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 1x4 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="125.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="149.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="144.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 1x5 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="125.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="149.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="144.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 2x1 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="242.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="266.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="261.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 2x2 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="242.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="266.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="261.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 2x3 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="242.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="266.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="261.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 2x4 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="242.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="266.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="261.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 2x5 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="242.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="266.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="261.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 3x1 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="359.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="383.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="378.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 3x2 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="359.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="383.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="378.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 3x3 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="359.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="383.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="378.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 3x4 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="359.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="383.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="378.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 3x5 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="359.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="383.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="378.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 4x1 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="476.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="500.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="495.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 4x2 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="476.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="500.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="495.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 4x3 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="476.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="500.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="495.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 4x4 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="476.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="500.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="495.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 4x5 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="476.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="500.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="495.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 5x1 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="593.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="617.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="612.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 5x2 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="593.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="617.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="612.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 5x3 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="593.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="617.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="612.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 5x4 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="593.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="617.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="612.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
+        <!-- 5x5 -->
+        <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="593.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/TowerLevel3.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="617.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/P1W1.png"/>
+            </image>
+        </ImageView>
+        <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="612.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/Board/Dome.png"/>
+            </image>
+        </ImageView>
+
     </children>
 </AnchorPane>

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.PSP25.Client;
 
+import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+
 import java.util.List;
 
 public interface ViewObservable {
@@ -18,4 +20,6 @@ public interface ViewObservable {
     void askGodPower(String playerName, List<String> godPowerNames);
 
     void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames);
+
+    void showBoard(SpaceCopy[][] board);
 }

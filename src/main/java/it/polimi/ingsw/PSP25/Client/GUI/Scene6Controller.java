@@ -1,6 +1,7 @@
 package it.polimi.ingsw.PSP25.Client.GUI;
 
 import it.polimi.ingsw.PSP25.Client.ViewObserver;
+import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,6 +17,12 @@ public class Scene6Controller implements GUIObservable {
     private Integer selectedIndex = null;
     private List<String> godPowerNames;
     private Button previousButton;
+    @FXML
+    private ImageView towerLevels[][];
+    @FXML
+    private ImageView domes[][];
+    @FXML
+    private ImageView workers[][];
 
     @FXML
     private ImageView background;
@@ -80,39 +87,18 @@ public class Scene6Controller implements GUIObservable {
         }
     }
 
-    /*public void handleConfirmButton(ActionEvent actionEvent) {
-        confirmButton.setDisable(true);
-        questionLabel.setText("Waiting for other players..");
-        gui.updateGodPower(selectedIndex);
-    }*/
 
-    /*private void handleButton(ActionEvent actionEvent, int buttonNum){
-        Button pressedButton = (Button) actionEvent.getSource();
-        if(selectedIndex == null) {
-            selectedIndex = buttonNum;
-            pressedButton.setOpacity(1);
-            confirmButton.setVisible(true);
-        } else {
-            selectedIndex = buttonNum;
-            pressedButton.setOpacity(1);
-            previousButton.setOpacity(0);
-            if(previousButton == pressedButton){
-                confirmButton.setVisible(false);
-                selectedIndex = null;
+    public void showBoard(SpaceCopy[][] board) {
+        for(int i=0; i<5; i++){
+            for(int j=0; j<5; j++){
+                towerLevels[i][j].setImage(new Image("/img/Board/" + "TowerLevel" + board[i][j].getTowerHeight() + ".png"));
+                if(board[i][j].hasDome()){
+                    domes[i][j].setVisible(true);
+                }
+                if(board[i][j].hasWorker()) {
+                    workers[i][j].setImage(new Image("/img/Board/" + "P" + board[i][j].getID().substring(2,3) + "W" + board[i][j].getWorkerNumber()));
+                }
             }
         }
-        previousButton = pressedButton;
-    }*/
-
-    /*public void handleButton1(ActionEvent actionEvent) {
-        handleButton(actionEvent, 1);
     }
-
-    public void handleButton2(ActionEvent actionEvent) {
-       handleButton(actionEvent, 2);
-    }
-
-    public void handleButton3(ActionEvent actionEvent) {
-        handleButton(actionEvent, 3);
-    }*/
 }
