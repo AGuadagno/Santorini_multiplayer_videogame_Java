@@ -17,4 +17,6 @@ public interface ViewObserver {
     void updateWorkerPosition(int pos);
 
     void updateWorkerMovement(int[] workerAndSpace);
+
+    void updateBuildingSpace(int chosenBuildingSpace);
 }

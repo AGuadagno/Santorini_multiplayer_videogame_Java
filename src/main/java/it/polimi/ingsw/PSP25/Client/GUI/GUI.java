@@ -185,10 +185,21 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         });
     }
 
-
     @Override
     public void updateWorkerMovement(int[] workerAndSpace) {
         client.updateWorkerMovement(workerAndSpace);
+    }
+
+    @Override
+    public void askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        Platform.runLater(() -> {
+            ((Scene6Controller) controller).askBuildingSpace(playerName, validBuildingSpaces);
+        });
+    }
+
+    @Override
+    public void updateBuildingSpace(int chosenBuildingSpace) {
+        client.updateBuildingSpace(chosenBuildingSpace);
     }
 
 }

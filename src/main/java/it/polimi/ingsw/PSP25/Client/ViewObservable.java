@@ -26,4 +26,6 @@ public interface ViewObservable {
     void askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] board);
 
     void askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2);
+
+    void askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces);
 }

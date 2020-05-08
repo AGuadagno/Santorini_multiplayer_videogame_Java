@@ -22,6 +22,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private Integer godPowerIndex = null;
     private Integer workerPosition = null;
     private int[] workerAndSpace = null;
+    private  Integer chosenBuildingSpace = null;
 
     public Client(ViewObservable view) {
         this.view = view;
@@ -269,4 +270,31 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     }
 
 
+    public int askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        view.askBuildingSpace(playerName, validBuildingSpaces);
+        while (chosenBuildingSpace == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int chosenBuildingSpace = this.chosenBuildingSpace;
+        this.chosenBuildingSpace = null;
+        return chosenBuildingSpace;
+    }
+
+
+    @Override
+    public void updateBuildingSpace(int chosenBuildingSpace) {
+        if(this.chosenBuildingSpace==null){
+            this.chosenBuildingSpace=chosenBuildingSpace;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
 }

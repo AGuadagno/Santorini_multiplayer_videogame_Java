@@ -211,6 +211,7 @@ public class CLI implements ViewObservable {
         client.updateWorkerMovement(workerAndSpace);
     }
 
+
     private int workerMovementSelection(String playerName, List<SpaceCopy> validMovementSpacesW) {
 
         System.out.println(validMovementSpacesW.toString());
@@ -223,6 +224,20 @@ public class CLI implements ViewObservable {
         }
 
         return chosenMovementSpace;
+    }
+
+    @Override
+    public void askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        System.out.println(validBuildingSpaces.toString());
+        System.out.println(playerName + ": Choose building space");
+        int chosenBuildingSpace = scanner.nextInt();
+        while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
+                contains(chosenBuildingSpace)) {
+            System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
+            chosenBuildingSpace = scanner.nextInt();
+        }
+
+        client.updateBuildingSpace(chosenBuildingSpace);
     }
 
     @Override

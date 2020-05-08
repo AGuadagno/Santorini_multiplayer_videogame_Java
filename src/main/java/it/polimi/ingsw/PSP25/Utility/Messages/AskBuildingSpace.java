@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
  */
 public class AskBuildingSpace extends Message {
 
-    List<SpaceCopy> validBuildingSpaces;
-    String playerName;
+    private List<SpaceCopy> validBuildingSpaces;
+    private String playerName;
 
     public AskBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces){
         this.playerName = playerName;
@@ -23,7 +23,7 @@ public class AskBuildingSpace extends Message {
     }
 
     public void process(NetworkHandler nh, Client client) throws IOException {
-        // SELECTION OF BUILDING SPACE
+        /* SELECTION OF BUILDING SPACE
         int chosenBuildingSpace = buildingSpaceSelection(validBuildingSpaces);
         nh.submit(chosenBuildingSpace);
     }
@@ -42,5 +42,9 @@ public class AskBuildingSpace extends Message {
         }
 
         return chosenBuildingSpace;
+        */
+
+        int chosenBuildingSpace = client.askBuildingSpace(playerName, validBuildingSpaces);
+        nh.submit(chosenBuildingSpace);
     }
 }
