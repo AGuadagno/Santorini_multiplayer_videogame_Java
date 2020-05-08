@@ -29,7 +29,7 @@ public class AskWorkerMovement extends Message{
 
     public void process(NetworkHandler nh, Client client) throws IOException {
 
-        Scanner scanner = new Scanner(System.in);
+        /*Scanner scanner = new Scanner(System.in);
 
         // SELECTION OF WORKER
         if (validMovementSpacesW1.size() == 0) {
@@ -55,6 +55,9 @@ public class AskWorkerMovement extends Message{
 
         workerAndSpace[0] = workerChoice;
         workerAndSpace[1] = chosenMovementSpace;
+        */
+
+        int[] workerAndSpace = client.askWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2);
 
         nh.submit(workerAndSpace);
     }

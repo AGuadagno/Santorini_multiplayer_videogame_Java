@@ -20,6 +20,8 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private String name = "";
     private List<Integer> allGodPowerIndexes = null;
     private Integer godPowerIndex = null;
+    private Integer workerPosition = null;
+    private int[] workerAndSpace = null;
 
     public Client(ViewObservable view) {
         this.view = view;
@@ -191,6 +193,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         return godPowerIndex;
     }
 
+
     @Override
     public void updateGodPower(int selectedIndex) {
         if (this.godPowerIndex == null) {
@@ -201,6 +204,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         }
     }
 
+
     public void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) {
         view.showPlayersGodPowers(playerNames, godPowerNames);
     }
@@ -208,4 +212,61 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     public void showBoard(SpaceCopy[][] board) {
         view.showBoard(board);
     }
+
+    public int askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] board) {
+        view.askWorkerPosition(playerName, workerNumber, previousPos, board);
+        while (workerPosition == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int workerPosition = this.workerPosition;
+        this.workerPosition = null;
+        return workerPosition;
+    }
+
+    @Override
+    public void updateWorkerPosition(int pos) {
+        if (this.workerPosition == null) {
+            this.workerPosition = pos;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
+
+    public int[] askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2) {
+        view.askWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2);
+        while (workerAndSpace == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int[] workerAndSpace = this.workerAndSpace;
+        this.workerAndSpace = null;
+        return workerAndSpace;
+    }
+
+    @Override
+    public void updateWorkerMovement(int[] workerAndSpace) {
+        if (this.workerAndSpace == null) {
+            this.workerAndSpace = workerAndSpace;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
+
 }

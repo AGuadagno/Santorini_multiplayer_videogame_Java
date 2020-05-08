@@ -25,7 +25,7 @@ public class AskWorkerPosition extends Message {
     }
 
     public void process(NetworkHandler nh, Client client) throws IOException {
-        Scanner scanner = new Scanner(System.in);
+        /*Scanner scanner = new Scanner(System.in);
 
         System.out.println(playerName + " it's your turn! Choose the position of your "
                 + ((this.workerNumber == 1) ? "first" : "second") + " worker");
@@ -39,7 +39,9 @@ public class AskWorkerPosition extends Message {
             pos = scanner.nextInt();
             x = pos % 5;
             y = pos / 5;
-        }
+        }*/
+
+        int pos = client.askWorkerPosition(playerName, workerNumber, previousPos, board);
 
         nh.submit(pos);
     }

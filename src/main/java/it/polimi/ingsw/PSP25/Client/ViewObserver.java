@@ -3,6 +3,7 @@ package it.polimi.ingsw.PSP25.Client;
 import java.util.List;
 
 public interface ViewObserver {
+
     void updateIPAddress(String ip);
 
     void updateNumOfPlayers(int numOfPlayers);
@@ -12,4 +13,8 @@ public interface ViewObserver {
     void updateAllGodPower(List<Integer> selectedIndexes);
 
     void updateGodPower(int selectedIndex);
+
+    void updateWorkerPosition(int pos);
+
+    void updateWorkerMovement(int[] workerAndSpace);
 }

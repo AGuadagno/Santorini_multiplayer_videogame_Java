@@ -22,4 +22,8 @@ public interface ViewObservable {
     void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames);
 
     void showBoard(SpaceCopy[][] board);
+
+    void askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] board);
+
+    void askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2);
 }

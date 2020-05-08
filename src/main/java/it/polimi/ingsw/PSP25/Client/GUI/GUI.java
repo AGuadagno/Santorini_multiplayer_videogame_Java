@@ -149,6 +149,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         client.updateGodPower(selectedIndex);
     }
 
+
     @Override
     public void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) {
         Scene scene = loadScene("fxml/Scene6.fxml");
@@ -163,6 +164,31 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void showBoard(SpaceCopy[][] board) {
         ((Scene6Controller) controller).showBoard(board);
+    }
+
+    @Override
+    public void askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] board) {
+        Platform.runLater(() -> {
+            ((Scene6Controller) controller).askWorkerPosition(playerName, workerNumber, previousPos, board);
+        });
+    }
+
+    @Override
+    public void updateWorkerPosition(int pos) {
+        client.updateWorkerPosition(pos);
+    }
+
+    @Override
+    public void askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2) {
+        Platform.runLater(() -> {
+            ((Scene6Controller) controller).askWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2);
+        });
+    }
+
+
+    @Override
+    public void updateWorkerMovement(int[] workerAndSpace) {
+        client.updateWorkerMovement(workerAndSpace);
     }
 
 }
