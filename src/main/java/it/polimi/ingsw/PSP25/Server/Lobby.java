@@ -44,7 +44,7 @@ public class Lobby {
         }
     }
 
-    public void startGame(int numOfPlayers, ClientHandler ch) throws DisconnectionException {
+    public void startGame(int numOfPlayers, ClientHandler creator) throws DisconnectionException {
         this.numOfParticipants = numOfPlayers;
         while (clientList.size() < numOfPlayers) {
 
@@ -63,10 +63,10 @@ public class Lobby {
         //DEBUG
         System.out.println("Arrivo a riga 56");
 
-        if (ch.isConnected()) {
-            List<ClientHandler> l = new ArrayList<>();
+        if (creator.isConnected()) {
+            List<VirtualView> l = new ArrayList<>();
             for (int i = 0; i < numOfPlayers; i++)
-                l.add(clientList.get(i));
+                l.add((VirtualView) clientList.get(i));
 
             gameLogic = new GameLogic(l);
 

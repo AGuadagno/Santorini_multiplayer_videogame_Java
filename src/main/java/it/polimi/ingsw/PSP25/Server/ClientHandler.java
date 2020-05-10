@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.List;
 
-public class ClientHandler implements Runnable {
+public class ClientHandler implements Runnable, VirtualView {
 
     private final Socket client;
     private final int clientNumber;
@@ -67,7 +67,7 @@ public class ClientHandler implements Runnable {
 
         System.out.println("Connected to " + client.getInetAddress());
 
-        //NEW
+
         while (game == null && !lobby.isFirstClient(this)) {
             try {
                 synchronized (this) {

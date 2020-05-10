@@ -2,6 +2,7 @@ package it.polimi.ingsw.PSP25.Model;
 
 import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
+import it.polimi.ingsw.PSP25.Server.VirtualView;
 
 /**
  * Player class. 2 or 3 Players per game.
@@ -27,7 +28,7 @@ public class Player {
     private Worker worker2;
     private GodPower godPower;
     private int playerNumber;
-    private ClientHandler clientHandler;
+    private VirtualView clientHandler;
 
     /**
      * Player constructor
@@ -36,7 +37,7 @@ public class Player {
      * @param playerNumber  contains the number of the Player. The number of the player is assigned by the caller
      * @param clientHandler contains the clientHandler associated with the player's client
      */
-    public Player(String name, int playerNumber, ClientHandler clientHandler) {
+    public Player(String name, int playerNumber, VirtualView clientHandler) {
         this.name = name;
         this.playerNumber = playerNumber;
         this.ID = name.substring(0, 2).toUpperCase() + playerNumber;
@@ -101,7 +102,7 @@ public class Player {
     /**
      * @return the ClientHandler of the Player
      */
-    public ClientHandler getClientHandler() {
+    public VirtualView getClientHandler() {
         return clientHandler;
     }
 }
