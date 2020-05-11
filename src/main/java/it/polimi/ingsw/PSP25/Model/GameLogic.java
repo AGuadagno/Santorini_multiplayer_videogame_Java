@@ -3,6 +3,7 @@ package it.polimi.ingsw.PSP25.Model;
 import it.polimi.ingsw.PSP25.Model.GodPowers.*;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.DisconnectionException;
+import it.polimi.ingsw.PSP25.Server.VirtualView;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyBoard;
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyGodPowerNames;
@@ -21,14 +22,14 @@ public class GameLogic implements BroadcastInterface {
     private Board board;
     private List<Player> playerList;
     private Player nowPlaying;
-    private List<ClientHandler> clientHandlerList;
+    private List<VirtualView> clientHandlerList;
 
     /**
      * Game Logic constructor.
      *
      * @param clientHandlerList List of players' client handler.
      */
-    public GameLogic(List<ClientHandler> clientHandlerList) {
+    public GameLogic(List<VirtualView> clientHandlerList) {
         board = new Board();
         board.getSpace(0, 0).setBoard(board);
         playerList = new ArrayList<>();
@@ -230,7 +231,8 @@ public class GameLogic implements BroadcastInterface {
         }
     }
 
-    public void stopGame(ClientHandler timeOutClient, InetAddress disconnectedAddress) throws DisconnectionException {
+    // NEW
+    public void stopGame(VirtualView timeOutClient, InetAddress disconnectedAddress) throws DisconnectionException {
         int disconnectedClientIndex = timeOutClient.getClientNumber();
 
         System.out.println("Client " + disconnectedClientIndex + " with address " + disconnectedAddress + " disconnected.");

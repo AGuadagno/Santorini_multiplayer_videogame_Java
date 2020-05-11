@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.List;
 
-public class ClientHandler implements Runnable {
+public class ClientHandler implements Runnable, VirtualView {
 
     private final Socket client;
     private final int clientNumber;
