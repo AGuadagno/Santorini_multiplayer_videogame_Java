@@ -35,8 +35,6 @@ public class Server
                 ClientHandler clientHandler = new ClientHandler(client, clientCounter, lobby);
                 Thread thread = new Thread(clientHandler, "server_" + client.getInetAddress());
                 clientCounter++;
-                // The new Client Handler is added to the lobby waiting for joining the game
-                lobby.addClient(clientHandler);
                 thread.start();
 
             } catch (IOException e) {

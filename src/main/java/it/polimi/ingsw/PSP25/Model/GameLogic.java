@@ -230,7 +230,6 @@ public class GameLogic implements BroadcastInterface {
         }
     }
 
-    // NEW
     public void stopGame(ClientHandler timeOutClient, InetAddress disconnectedAddress) throws DisconnectionException {
         int disconnectedClientIndex = timeOutClient.getClientNumber();
 
@@ -241,8 +240,6 @@ public class GameLogic implements BroadcastInterface {
             }
             clientHandlerList.get(i).stopGame();
         }
-
-
     }
 }
 
