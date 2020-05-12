@@ -6,144 +6,188 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.text.Font?>
 
 <!-- tutti i bottoni tranne uno hanno lo stesso stile, conviene fare uno style.css -->
 
-<AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP25.Client.GUI.Scene6Controller">
+<AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP25.Client.GUI.Scene6Controller">
     <children>
-        <ImageView fx:id="godPower2_2Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="501.0" pickOnBounds="true" preserveRatio="true" visible="false">
+        <ImageView fx:id="godPower2_2Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="501.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
-                <Image url="@../img/Godcards/apollo.png" />
+                <Image url="@../img/Godcards/apollo.png"/>
             </image>
         </ImageView>
-        <ImageView fx:id="godPower1_2Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" visible="false">
+        <ImageView fx:id="godPower1_2Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="50.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
-                <Image url="@../img/Godcards/apollo.png" />
+                <Image url="@../img/Godcards/apollo.png"/>
             </image>
         </ImageView>
-        <ImageView fx:id="godPower3_3Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="596.0" pickOnBounds="true" preserveRatio="true" visible="false">
+        <ImageView fx:id="godPower3_3Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="596.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
-                <Image url="@../img/Godcards/apollo.png" />
+                <Image url="@../img/Godcards/apollo.png"/>
             </image>
         </ImageView>
-        <ImageView fx:id="godPower2_3Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="296.0" pickOnBounds="true" preserveRatio="true" visible="false">
+        <ImageView fx:id="godPower2_3Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="296.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
-                <Image url="@../img/Godcards/apollo.png" />
+                <Image url="@../img/Godcards/apollo.png"/>
             </image>
         </ImageView>
-        <ImageView fx:id="godPower1_3Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" visible="false">
+        <ImageView fx:id="godPower1_3Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="-4.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
-                <Image url="@../img/Godcards/apollo.png" />
+                <Image url="@../img/Godcards/apollo.png"/>
             </image>
         </ImageView>
         <ImageView fx:id="background" fitHeight="900.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../img/3PlayerV3.png" />
+                <Image url="@../img/3PlayerV3.png"/>
             </image>
         </ImageView>
-        <Label fx:id="playerName1_2Players" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="324.0" prefHeight="26.0" prefWidth="160.0" text="PlayerName1 (PL1)" textAlignment="CENTER" textFill="WHITE" visible="false">
+        <Label fx:id="playerName1_2Players" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="324.0"
+               prefHeight="26.0" prefWidth="160.0" text="PlayerName1 (PL1)" textAlignment="CENTER" textFill="WHITE"
+               visible="false">
             <font>
-                <Font name="System Bold" size="13.0" />
+                <Font name="System Bold" size="13.0"/>
             </font>
         </Label>
-        <Label fx:id="playerName2_2Players" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="775.0" prefHeight="26.0" prefWidth="160.0" text="PlayerName1 (PL1)" textAlignment="CENTER" textFill="WHITE" visible="false">
+        <Label fx:id="playerName2_2Players" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="775.0"
+               prefHeight="26.0" prefWidth="160.0" text="PlayerName1 (PL1)" textAlignment="CENTER" textFill="WHITE"
+               visible="false">
             <font>
-                <Font name="System Bold" size="13.0" />
+                <Font name="System Bold" size="13.0"/>
             </font>
         </Label>
-        <Label fx:id="playerName1_3Players" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="270.0" prefHeight="26.0" prefWidth="160.0" text="PlayerName1 (PL1)" textAlignment="CENTER" textFill="WHITE" visible="false">
+        <Label fx:id="playerName1_3Players" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="270.0"
+               prefHeight="26.0" prefWidth="160.0" text="PlayerName1 (PL1)" textAlignment="CENTER" textFill="WHITE"
+               visible="false">
             <font>
-                <Font name="System Bold" size="13.0" />
+                <Font name="System Bold" size="13.0"/>
             </font>
         </Label>
-        <Label fx:id="playerName2_3Players" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="570.0" prefHeight="26.0" prefWidth="160.0" text="PlayerName2 (PL2)" textAlignment="CENTER" textFill="WHITE" visible="false">
+        <Label fx:id="playerName2_3Players" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="570.0"
+               prefHeight="26.0" prefWidth="160.0" text="PlayerName2 (PL2)" textAlignment="CENTER" textFill="WHITE"
+               visible="false">
             <font>
-                <Font name="System Bold" size="13.0" />
+                <Font name="System Bold" size="13.0"/>
             </font>
         </Label>
-        <Label fx:id="playerName3_3Players" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="870.0" prefHeight="26.0" prefWidth="160.0" text="PlayerName3 (PL3)" textAlignment="CENTER" textFill="WHITE" visible="false">
+        <Label fx:id="playerName3_3Players" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="870.0"
+               prefHeight="26.0" prefWidth="160.0" text="PlayerName3 (PL3)" textAlignment="CENTER" textFill="WHITE"
+               visible="false">
             <font>
-                <Font name="System Bold" size="13.0" />
+                <Font name="System Bold" size="13.0"/>
             </font>
         </Label>
 
         <Group fx:id="towerLevels">
             <!-- 1x1 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="125.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 1x2 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="125.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 1x3 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="125.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 1x4 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="125.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 1x5 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="125.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 2x1 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="242.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 2x2 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="242.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 2x3 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="242.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
 
             <!-- 2x4 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="242.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 2x5 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="242.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 3x1 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="359.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 3x2 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="359.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 3x3 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="359.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 3x4 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="359.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 3x5 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="359.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 4x1 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="476.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="476.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 4x2 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="476.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="476.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 4x3 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="476.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="476.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 4x4 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="476.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="476.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 4x5 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="476.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="476.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 5x1 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="488.0" layoutY="593.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 5x2-->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="605.0" layoutY="593.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 5x3 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="722.0" layoutY="593.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 5x4 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="839.0" layoutY="593.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 5x5 -->
-            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="107.0" fitWidth="103.0" layoutX="956.0" layoutY="593.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
         </Group>
 
@@ -151,103 +195,128 @@
         <Group fx:id="workers">
 
             <!-- 1x1 -->
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="149.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 1x2 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="149.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 1x3 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="149.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 1x4 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="149.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 1x5 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="149.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 2x1 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="266.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="266.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 2x2 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="266.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="266.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 2x3 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="266.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="266.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 2x4 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="266.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="266.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 2x5 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="266.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="266.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 3x1 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="383.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="383.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 3x2 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="383.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="383.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 3x3 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="383.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="383.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 3x4 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="383.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="383.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 3x5 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="383.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="383.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 4x1 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="500.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 4x2 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="500.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 4x3 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="500.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 4x4 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="500.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 4x5 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="500.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 5x1 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="617.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="510.0" layoutY="617.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 5x2 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="617.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="627.0" layoutY="617.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 5x3 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="617.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="744.0" layoutY="617.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 5x4 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="617.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="861.0" layoutY="617.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
             <!-- 5x5 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="617.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="978.0" layoutY="617.0" pickOnBounds="true"
+                       preserveRatio="true"/>
 
 
         </Group>
@@ -256,242 +325,350 @@
         <Group fx:id="domes">
             <!-- 1x1 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="144.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 1x2 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="144.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 1x3 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="144.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 1x4 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="144.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 1x5 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="144.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 2x1 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="261.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 2x2 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="261.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 2x3 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="261.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 2x4 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="261.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 2x5 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="261.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 3x1 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="378.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="378.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 3x2 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="378.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="378.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 3x3 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="378.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="378.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 3x4 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="378.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="378.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 3x5 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="378.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="378.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 4x1 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="495.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 4x2 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="495.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 4x3 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="495.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 4x4 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="495.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 4x5 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="495.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="495.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 5x1 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="612.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="515.0" layoutY="612.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 5x2 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="612.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="632.0" layoutY="612.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 5x3 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="612.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="749.0" layoutY="612.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 5x4 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="612.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="866.0" layoutY="612.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
             <!-- 5x5 -->
 
-            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="612.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="983.0" layoutY="612.0" pickOnBounds="true"
+                       preserveRatio="true" visible="false">
                 <image>
-                    <Image url="@../img/Board/Dome.png" />
+                    <Image url="@../img/Board/Dome.png"/>
                 </image>
             </ImageView>
 
         </Group>
-        <Label fx:id="messageLabel" layoutX="346.0" layoutY="788.0" prefHeight="96.0" prefWidth="428.0" wrapText="true">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Label>
+        <Label fx:id="messageLabel" layoutX="346.0" layoutY="788.0" prefHeight="96.0" prefWidth="397.0" wrapText="true">
+            <font>
+                <Font name="System Bold" size="20.0"/>
+            </font>
+        </Label>
 
 
         <Group fx:id="boardButtons">
-            <Button fx:id="0" layoutX="482.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="1" layoutX="482.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="2" layoutX="482.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="3" layoutX="482.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="4" layoutX="482.0" layoutY="588.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
+            <Button fx:id="0" layoutX="482.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="1" layoutX="482.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="2" layoutX="482.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="3" layoutX="482.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="4" layoutX="482.0" layoutY="588.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
 
-            <Button fx:id="5" layoutX="599.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="6" layoutX="599.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="7" layoutX="599.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="8" layoutX="599.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="9" layoutX="599.0" layoutY="588.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
+            <Button fx:id="5" layoutX="599.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="6" layoutX="599.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="7" layoutX="599.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="8" layoutX="599.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="9" layoutX="599.0" layoutY="588.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
 
-            <Button fx:id="10" layoutX="716.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="11" layoutX="716.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="12" layoutX="716.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="13" layoutX="716.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="14" layoutX="716.0" layoutY="588.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
+            <Button fx:id="10" layoutX="716.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="11" layoutX="716.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="12" layoutX="716.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="13" layoutX="716.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="14" layoutX="716.0" layoutY="588.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
 
-            <Button fx:id="15" layoutX="833.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="16" layoutX="833.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="17" layoutX="833.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="18" layoutX="833.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="19" layoutX="833.0" layoutY="588.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
+            <Button fx:id="15" layoutX="833.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="16" layoutX="833.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="17" layoutX="833.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="18" layoutX="833.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="19" layoutX="833.0" layoutY="588.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
 
-            <Button fx:id="20" layoutX="950.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="21" layoutX="950.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="22" layoutX="950.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="23" layoutX="950.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
-            <Button fx:id="24" layoutX="950.0" layoutY="588.0" mnemonicParsing="false" onAction="#handleBoardButton" opacity="0.0" prefHeight="115.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;" />
+            <Button fx:id="20" layoutX="950.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="21" layoutX="950.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="22" layoutX="950.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="23" layoutX="950.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
+            <Button fx:id="24" layoutX="950.0" layoutY="588.0" mnemonicParsing="false" onAction="#handleBoardButton"
+                    opacity="0.0" prefHeight="115.0" prefWidth="115.0"
+                    style="-fx-background-color: transparent; -fx-border-color: yellow; -fx-border-width: 5px;"/>
         </Group>
-
+        <ImageView fx:id="leftButtonImage" fitHeight="67.0" fitWidth="206.0" layoutX="756.0" layoutY="809.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="rightButtonImage" fitHeight="67.0" fitWidth="206.0" layoutX="970.0" layoutY="809.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+        <Button fx:id="blockButton" layoutX="762.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleBlockButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="Block"
+                visible="false"/>
+        <Button fx:id="domeButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false" onAction="#handleDomeButton"
+                opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="Dome" visible="false"/>
+        <Button fx:id="buildButton" layoutX="762.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleBuildButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="Build"
+                visible="false"/>
+        <Button fx:id="moveButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false" onAction="#handleMoveButton"
+                opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="Move" visible="false"/>
+        <Button fx:id="yesArtemisButton" layoutX="762.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleYesArtemisButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="YesArtemis"
+                visible="false"/>
+        <Button fx:id="noArtemisButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleNoArtemisButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="NoArtemis"
+                visible="false"/>
+        <Ellipse fx:id="workerBorder" centerX="57.5" centerY="58.5" layoutX="716.0" layoutY="354.0" radiusX="40.0"
+                 radiusY="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false">
+            <fill>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="#ffffff00"/>
+                        <Stop color="#ffffff00" offset="0.36398467432950166"/>
+                        <Stop color="WHITE" offset="0.8084291187739462"/>
+                        <Stop color="#ffffff00" offset="1.0"/>
+                    </stops>
+                </RadialGradient>
+            </fill>
+        </Ellipse>
     </children>
 </AnchorPane>

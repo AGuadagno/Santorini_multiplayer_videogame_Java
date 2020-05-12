@@ -26,7 +26,7 @@ public class AskArtemisSecondMove extends Message {
 
     @Override
     public void process(NetworkHandler nh, Client client) throws IOException {
-        Scanner scanner = new Scanner(System.in);
+        /*Scanner scanner = new Scanner(System.in);
         String answer;
 
         System.out.println("Do you want to move your Worker for the second time? y/n");
@@ -46,7 +46,9 @@ public class AskArtemisSecondMove extends Message {
                 System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
                 chosenMovementSpace = scanner.nextInt();
             }
-        }
+        }*/
+
+        int chosenMovementSpace = client.askArtemisSecondMove(playerName, validSecondMovementSpaces);
 
         nh.submit(chosenMovementSpace);
 

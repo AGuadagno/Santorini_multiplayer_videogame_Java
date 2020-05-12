@@ -30,7 +30,7 @@ public class AskBuildBeforeMovePrometheus extends Message {
 
     public void process(NetworkHandler nh, Client client) throws IOException {
 
-        Scanner scanner = new Scanner(System.in);
+        /*Scanner scanner = new Scanner(System.in);
         String answer = null;
 
         // SELECTION OF WORKER
@@ -65,7 +65,9 @@ public class AskBuildBeforeMovePrometheus extends Message {
             workerAndBuildBeforeMove[1] = 1;
         } else {
             workerAndBuildBeforeMove[1] = 0;
-        }
+        }*/
+
+        int[] workerAndBuildBeforeMove = client.askBuildBeforeMovePrometheus(playerName, w1CanMove, w1CanBuild, w2CanMove, w2CanBuild);
 
         nh.submit(workerAndBuildBeforeMove);
     }

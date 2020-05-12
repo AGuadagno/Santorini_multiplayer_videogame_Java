@@ -10,7 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Ellipse;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,8 +29,14 @@ public class Scene6Controller implements GUIObservable {
     private String playerName;
     private List<SpaceCopy> validMovementSpacesW1;
     private List<SpaceCopy> validMovementSpacesW2;
-    private int positioningWorker=1;
+    private int positioningWorker = 1;
     private List<SpaceCopy> validBuildingSpaces;
+    private int[] spaceAndDome;
+    private int[] workerAndBuildBeforeMove;
+    private boolean w1CanBuild;
+    private boolean w2CanBuild;
+    private List<SpaceCopy> validSecondMovementSpaces;
+    private Integer secondSpaceArtemis;
 
     @FXML
     private Group towerLevels;
@@ -40,6 +48,25 @@ public class Scene6Controller implements GUIObservable {
     private Group boardButtons;
     @FXML
     private Label messageLabel;
+    @FXML
+    private Button domeButton;
+    @FXML
+    private Button blockButton;
+    @FXML
+    private Button buildButton;
+    @FXML
+    private Button moveButton;
+    @FXML
+    private Button yesArtemisButton;
+    @FXML
+    private Button noArtemisButton;
+    @FXML
+    private ImageView leftButtonImage;
+    @FXML
+    private ImageView rightButtonImage;
+    @FXML
+    private Ellipse workerBorder;
+
 
     @FXML
     private ImageView background;
@@ -63,6 +90,7 @@ public class Scene6Controller implements GUIObservable {
     private Label playerName2_3Players;
     @FXML
     private Label playerName3_3Players;
+
 
 
     @Override
@@ -123,6 +151,10 @@ public class Scene6Controller implements GUIObservable {
             }
         }
 
+        disableAllButtons();
+        workerBorder.setVisible(false);
+        leftButtonImage.setImage(null);
+        rightButtonImage.setImage(null);
         this.board = board;
     }
 
@@ -130,6 +162,7 @@ public class Scene6Controller implements GUIObservable {
         this.previousPos = previousPos;
         this.playerName = playerName;
 
+        activateAllButtons();
         if (this.previousPos != -1) {
             boardButtons.getChildren().get(previousPos).setVisible(false);
         }
@@ -171,8 +204,10 @@ public class Scene6Controller implements GUIObservable {
                 // Dobbiamo controllare che il bottone cliccato sia in uno space che contiene un worker del giocatore
                 if (board[buttonNumber % 5][buttonNumber / 5].hasWorker() && board[buttonNumber % 5][buttonNumber / 5].getID().
                         equals(playerName.substring(playerName.length() - 4, playerName.length() - 1))) {
+                    moveWorkerBorder(buttonNumber);
                     workerAndSpace[0] = board[buttonNumber % 5][buttonNumber / 5].getWorkerNumber();
-                    workerMovementSelection(playerName, workerAndSpace[0] == 1 ? validMovementSpacesW1 : validMovementSpacesW2);
+                    messageLabel.setText("");
+                    workerMovementSelection(playerName, workerAndSpace[0] == 1 ? validMovementSpacesW1 : validMovementSpacesW2, true);
                 }
                 break;
             case 3:
@@ -180,8 +215,9 @@ public class Scene6Controller implements GUIObservable {
                         board[buttonNumber % 5][buttonNumber / 5].getWorkerNumber()!=workerAndSpace[0]){
                     disableAllButtons();
                     setAllOpacity(0);
-                    workerAndSpace[0]=board[buttonNumber % 5][buttonNumber / 5].getWorkerNumber();
-                    workerMovementSelection(playerName, workerAndSpace[0] == 1 ? validMovementSpacesW1 : validMovementSpacesW2);
+                    moveWorkerBorder(buttonNumber);
+                    workerAndSpace[0] = board[buttonNumber % 5][buttonNumber / 5].getWorkerNumber();
+                    workerMovementSelection(playerName, workerAndSpace[0] == 1 ? validMovementSpacesW1 : validMovementSpacesW2, true);
                 }
                 else{
                     workerAndSpace[1] = buttonNumber;
@@ -196,6 +232,50 @@ public class Scene6Controller implements GUIObservable {
                 gui.updateBuildingSpace(buttonNumber);
                 messageLabel.setText("Waiting for other players ...");
                 break;
+            case 5:
+                disableAllButtons();
+                spaceAndDome[0] = buttonNumber;
+                if (board[buttonNumber % 5][buttonNumber / 5].getTowerHeight() < 3) {
+                    leftButtonImage.setImage(new Image("/img/blockunpressed.png"));
+                    rightButtonImage.setImage(new Image("/img/domeunpressed.png"));
+                    blockButton.setVisible(true);
+                    domeButton.setVisible(true);
+                } else {
+                    spaceAndDome[1] = 1;
+                    gui.updateAtlasBuild(spaceAndDome);
+                    leftButtonImage.setImage(null);
+                    rightButtonImage.setImage(null);
+                    blockButton.setVisible(false);
+                    domeButton.setVisible(false);
+                }
+                buttonPressed.setVisible(true);
+                buttonPressed.setDisable(true);
+                buttonPressed.setOpacity(1);
+                messageLabel.setText("Waiting for other players ...");
+                break;
+            case 6:
+                // Dobbiamo controllare che il bottone cliccato sia in uno space che contiene un worker del giocatore
+                if (board[buttonNumber % 5][buttonNumber / 5].hasWorker() && board[buttonNumber % 5][buttonNumber / 5].getID().
+                        equals(playerName.substring(playerName.length() - 4, playerName.length() - 1))) {
+                    moveWorkerBorder(buttonNumber);
+                    workerAndBuildBeforeMove[0] = board[buttonNumber % 5][buttonNumber / 5].getWorkerNumber();
+                    workerBuildBeforeMove(workerAndBuildBeforeMove[0] == 1 ? w1CanBuild : w2CanBuild);
+                }
+                break;
+            case 7:
+                gui.updateWorkerMovementPrometheus(buttonNumber);
+                messageLabel.setText("");
+                disableAllButtons();
+                setAllOpacity(0);
+                break;
+            case 8:
+                secondSpaceArtemis = buttonNumber;
+                gui.updateArtemisSecondMove(buttonNumber);
+                messageLabel.setText("Waiting for other players");
+                disableAllButtons();
+                setAllOpacity(0);
+                break;
+
         }
     }
 
@@ -212,10 +292,20 @@ public class Scene6Controller implements GUIObservable {
         // SELECTION OF WORKER
         if (validMovementSpacesW1.size() == 0) {
             messageLabel.setText("Worker 1 can't move! Worker 2 is automatically selected");
+            boardButtons.getChildren().get(workerToPosition(1)).setVisible(false);
             workerAndSpace[0] = 2;
+            moveWorkerBorder(workerToPosition(workerAndSpace[0]));
+            workerMovementSelection(playerName, validMovementSpacesW2, false);
+            this.buttonAction = 3;
+            return;
         } else if (validMovementSpacesW2.size() == 0) {
             messageLabel.setText("Worker 2 can't move! Worker 1 is automatically selected");
+            boardButtons.getChildren().get(workerToPosition(2)).setVisible(false);
             workerAndSpace[0] = 1;
+            moveWorkerBorder(workerToPosition(workerAndSpace[0]));
+            workerMovementSelection(playerName, validMovementSpacesW1, false);
+            this.buttonAction = 3;
+            return;
         } else {
             messageLabel.setText(playerName + ": Choose a worker");
         }
@@ -223,10 +313,10 @@ public class Scene6Controller implements GUIObservable {
         this.buttonAction = 2;
     }
 
-    private void workerMovementSelection(String playerName, List<SpaceCopy> validMovementSpacesW) {
+    private void workerMovementSelection(String playerName, List<SpaceCopy> validMovementSpacesW, boolean otherWorkerCanMove) {
         Button button;
 
-        messageLabel.setText(playerName + ": Choose movement space");
+        messageLabel.setText(messageLabel.getText() + " " + playerName + ": Choose movement space");
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -241,7 +331,8 @@ public class Scene6Controller implements GUIObservable {
                 }
 
                 // Attiviamo il button del secondo worker
-                if(playerName.substring(playerName.length() - 4, playerName.length() - 1).equals(board[j][i].getID()) && board[j][i].getWorkerNumber()!=workerAndSpace[0]){
+                if (otherWorkerCanMove && playerName.substring(playerName.length() - 4, playerName.length() - 1).
+                        equals(board[j][i].getID()) && board[j][i].getWorkerNumber() != workerAndSpace[0]) {
                     button.setVisible(true);
                 }
             }
@@ -269,12 +360,142 @@ public class Scene6Controller implements GUIObservable {
             }
         }
 
-        this.buttonAction=4;
+        if (secondSpaceArtemis != null) {
+            moveWorkerBorder(secondSpaceArtemis);
+            secondSpaceArtemis = null;
+        } else if (workerAndSpace != null)
+            moveWorkerBorder(workerAndSpace[1]);
+        else
+            moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));
+
+        this.buttonAction = 4;
+    }
+
+    public void askAtlasBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        this.spaceAndDome = new int[2];
+        this.validBuildingSpaces = validBuildingSpaces;
+
+        messageLabel.setText(playerName + ": Choose building space");
+        Button button;
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                button = (Button) boardButtons.getChildren().get(5 * i + j);
+                button.setVisible(false);
+                for (SpaceCopy space : validBuildingSpaces) {
+                    if (space.getNumber() == (5 * i + j)) {
+                        //System.out.println(button.getId() + " visibile");
+                        button.setVisible(true);
+                        button.setOpacity(1);
+                    }
+                }
+            }
+        }
+
+        moveWorkerBorder(workerToPosition(workerAndSpace[0]));
+
+        this.buttonAction = 5;
+
+    }
+
+    public void askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w1CanBuild, boolean w2CanMove, boolean w2CanBuild) {
+        this.workerAndBuildBeforeMove = new int[2];
+        this.w1CanBuild = w1CanBuild;
+        this.w2CanBuild = w2CanBuild;
+
+        activateAllButtons();
+        setAllOpacity(0);
+
+        if (!w1CanMove) {
+            messageLabel.setText("Worker 1 can't move! Worker 2 is automatically selected");
+            boardButtons.getChildren().get(workerToPosition(1)).setVisible(false);
+            this.workerAndBuildBeforeMove[0] = 2;
+            moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));
+            workerBuildBeforeMove(w2CanBuild);
+        } else if (!w2CanMove) {
+            messageLabel.setText("Worker 2 can't move! Worker 1 is automatically selected");
+            boardButtons.getChildren().get(workerToPosition(2)).setVisible(false);
+            this.workerAndBuildBeforeMove[0] = 1;
+            moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));
+            workerBuildBeforeMove(w1CanBuild);
+        } else {
+            messageLabel.setText(playerName + ": Choose a worker");
+        }
+
+        this.buttonAction = 6;
+    }
+
+    private void workerBuildBeforeMove(boolean wCanBuild) {
+        if (wCanBuild) {
+            messageLabel.setText("Do you want to build before move?");
+            leftButtonImage.setImage(new Image("/img/buildunpressed.png"));
+            rightButtonImage.setImage(new Image("/img/moveunpressed.png"));
+            buildButton.setVisible(true);
+            moveButton.setVisible(true);
+            //this.buttonAction = 7;
+        }
+    }
+
+    public void askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) {
+        Button button;
+
+        messageLabel.setText(playerName + ": Choose movement space");
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                button = (Button) boardButtons.getChildren().get(5 * i + j);
+                button.setVisible(false);
+                for (SpaceCopy space : validMovementSpaces) {
+                    if (space.getNumber() == (5 * i + j)) {
+                        //System.out.println(button.getId() + " visibile");
+                        button.setVisible(true);
+                        button.setOpacity(1);
+                    }
+                }
+            }
+        }
+
+        moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));
+
+        this.buttonAction = 7;
+    }
+
+    public void askArtemisSecondMove(String playerName, List<SpaceCopy> validSecondMovementSpaces) {
+
+        this.validSecondMovementSpaces = validSecondMovementSpaces;
+        messageLabel.setText("Do you want to move your Worker for the second time?");
+
+        moveWorkerBorder(workerToPosition(workerAndSpace[0]));
+        leftButtonImage.setImage(new Image("/img/yesunpressed.png"));
+        rightButtonImage.setImage(new Image("/img/nounpressed.png"));
+        yesArtemisButton.setVisible(true);
+        noArtemisButton.setVisible(true);
+
+
+    }
+
+    private void moveWorkerBorder(int buttonNumber) {
+        workerBorder.setLayoutX(boardButtons.getChildren().get(buttonNumber).getLayoutX());
+        workerBorder.setLayoutY(boardButtons.getChildren().get(buttonNumber).getLayoutY());
+        workerBorder.setVisible(true);
+    }
+
+    private int workerToPosition(int workerNumber) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (playerName.substring(playerName.length() - 4, playerName.length() - 1).equals(board[j][i].getID()) && board[j][i].getWorkerNumber() == workerNumber) {
+                    return 5 * i + j;
+                }
+            }
+        }
+        return -1;
     }
 
     private void activateAllButtons() {
         for (int i = 0; i < 25; i++) {
             boardButtons.getChildren().get(i).setVisible(true);
+            boardButtons.getChildren().get(i).setDisable(false);
+
         }
     }
 
@@ -289,5 +510,75 @@ public class Scene6Controller implements GUIObservable {
             boardButtons.getChildren().get(i).setOpacity(opacity);
         }
     }
+
+
+    public void handleBlockButton(ActionEvent actionEvent) {
+        spaceAndDome[1] = 0;
+        gui.updateAtlasBuild(spaceAndDome);
+        leftButtonImage.setImage(new Image("/img/blockpressed.png"));
+        blockButton.setVisible(false);
+        domeButton.setVisible(false);
+    }
+
+    public void handleDomeButton(ActionEvent actionEvent) {
+        spaceAndDome[1] = 1;
+        gui.updateAtlasBuild(spaceAndDome);
+        rightButtonImage.setImage(new Image("/img/domepressed.png"));
+        blockButton.setVisible(false);
+        domeButton.setVisible(false);
+
+    }
+
+
+    public void handleBuildButton(ActionEvent actionEvent) {
+        workerAndBuildBeforeMove[1] = 1;
+        gui.updateBuildBeforeMovePrometheus(workerAndBuildBeforeMove);
+        leftButtonImage.setImage(new Image("/img/buildpressed.png"));
+        buildButton.setVisible(false);
+        moveButton.setVisible(false);
+        this.buttonAction = 7;
+    }
+
+    public void handleMoveButton(ActionEvent actionEvent) {
+        workerAndBuildBeforeMove[1] = 0;
+        gui.updateBuildBeforeMovePrometheus(workerAndBuildBeforeMove);
+        rightButtonImage.setImage(new Image("/img/movepressed.png"));
+        buildButton.setVisible(false);
+        moveButton.setVisible(false);
+        this.buttonAction = 7;
+    }
+
+    public void handleYesArtemisButton(ActionEvent actionEvent) {
+        Button button;
+
+        messageLabel.setText(playerName + ": Choose movement space");
+        leftButtonImage.setImage(new Image("/img/yespressed.png"));
+        yesArtemisButton.setVisible(false);
+        noArtemisButton.setVisible(false);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                button = (Button) boardButtons.getChildren().get(5 * i + j);
+                button.setVisible(false);
+                for (SpaceCopy space : validSecondMovementSpaces) {
+                    if (space.getNumber() == (5 * i + j)) {
+                        //System.out.println(button.getId() + " visibile");
+                        button.setVisible(true);
+                        button.setOpacity(1);
+                    }
+                }
+            }
+        }
+
+        this.buttonAction = 8;
+    }
+
+    public void handleNoArtemisButton(ActionEvent actionEvent) {
+        rightButtonImage.setImage(new Image("/img/nopressed.png"));
+        yesArtemisButton.setVisible(false);
+        noArtemisButton.setVisible(false);
+        gui.updateArtemisSecondMove(-1);
+    }
+
 
 }

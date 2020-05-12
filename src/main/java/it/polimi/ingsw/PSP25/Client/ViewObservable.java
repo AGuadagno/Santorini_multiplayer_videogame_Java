@@ -28,4 +28,12 @@ public interface ViewObservable {
     void askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2);
 
     void askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces);
+
+    void askAtlasBuild(String playerName, List<SpaceCopy> validBuildingSpaces);
+
+    void askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w1CanBuild, boolean w2CanMove, boolean w2CanBuild);
+
+    void askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces);
+
+    void askArtemisSecondMove(String playerName, List<SpaceCopy> validSecondMovementSpaces);
 }

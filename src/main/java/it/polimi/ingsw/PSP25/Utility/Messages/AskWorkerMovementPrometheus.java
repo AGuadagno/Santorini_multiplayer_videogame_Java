@@ -25,24 +25,9 @@ public class AskWorkerMovementPrometheus extends Message {
     }
 
     public void process(NetworkHandler nh, Client client) throws IOException {
-        int chosenMovementSpace = workerMovementSelection(validMovementSpaces);
+        int chosenMovementSpace = client.askWorkerMovementPrometheus(playerName, validMovementSpaces);
         nh.submit(chosenMovementSpace);
     }
 
-    private int workerMovementSelection(List<SpaceCopy> validMovementSpacesW) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println(validMovementSpacesW.toString());
-        System.out.println(playerName + ": Choose movement space");
-        int chosenMovementSpace = scanner.nextInt();
-        while (!(validMovementSpacesW.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
-                contains(chosenMovementSpace)) {
-            System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
-            chosenMovementSpace = scanner.nextInt();
-        }
-
-        return chosenMovementSpace;
-    }
-
 }
+

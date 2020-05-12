@@ -241,8 +241,141 @@ public class CLI implements ViewObservable {
     }
 
     @Override
+    public void askAtlasBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        int selectedSpace = buildingSpaceSelection(playerName, validBuildingSpaces);
+        SpaceCopy chosenBuildingSpace = null;
+        String answer = null;
+        int[] selectedSpaceAndBuildDome = new int[2];
+
+        int x = selectedSpace % 5;
+        int y = selectedSpace / 5;
+        for (SpaceCopy space : validBuildingSpaces) {
+            if (space.getX() == x && space.getY() == y)
+                chosenBuildingSpace = space;
+        }
+
+
+        if (chosenBuildingSpace.getTowerHeight() < 3) {
+            System.out.println("Do you want to build a dome or a block? (b = block , d = dome)");
+            Scanner scanner = new Scanner(System.in);
+            answer = scanner.next();
+            while (!(answer.equals("d") || answer.equals("b"))) {
+                System.out.println("Your Choice is not valid. insert 'b' to build a block, 'd' to build a dome");
+                answer = scanner.next();
+            }
+        } else {
+            answer = "d";
+        }
+
+        selectedSpaceAndBuildDome[0] = selectedSpace;
+        if (answer.equals("b"))
+            selectedSpaceAndBuildDome[1] = 0;
+        else if (answer.equals("d"))
+            selectedSpaceAndBuildDome[1] = 1;
+
+        client.updateAtlasBuild(selectedSpaceAndBuildDome);
+    }
+
+
+    private int buildingSpaceSelection(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        System.out.println(validBuildingSpaces.toString());
+        System.out.println(playerName + ": Choose building space");
+        int chosenBuildingSpace = scanner.nextInt();
+        while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
+                contains(chosenBuildingSpace)) {
+            System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
+            chosenBuildingSpace = scanner.nextInt();
+        }
+
+        return chosenBuildingSpace;
+    }
+
+    @Override
+    public void askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w1CanBuild, boolean w2CanMove, boolean w2CanBuild) {
+        String answer = null;
+        int workerChoice = -1;
+
+        // SELECTION OF WORKER
+        if (!w1CanMove) {
+            System.out.println("Worker 1 can't move! Worker 2 is automatically selected");
+            workerChoice = 2;
+        } else if (!w2CanMove) {
+            System.out.println("Worker 2 can't move! Worker 1 is automatically selected");
+            workerChoice = 1;
+        } else {
+            System.out.println(playerName + ": Choose a worker");
+            workerChoice = scanner.nextInt();
+            while (workerChoice < 1 || workerChoice > 2) {
+                System.out.println("Worker number is not valid. Choose 1 or 2");
+                workerChoice = scanner.nextInt();
+            }
+        }
+
+        if (workerChoice == 1 ? (w1CanBuild) : (w2CanBuild)) {
+            System.out.println("Do you want to build before move? y|n");
+            answer = scanner.next();
+            while (!(answer.equals("y") || answer.equals("n"))) {
+                System.out.println("Not valid choice. Do you want to build before move? y|n");
+                answer = scanner.next();
+            }
+        }
+
+        int[] workerAndBuildBeforeMove = new int[2];
+        workerAndBuildBeforeMove[0] = workerChoice;
+
+        if (answer.equals("y")) {
+            workerAndBuildBeforeMove[1] = 1;
+        } else {
+            workerAndBuildBeforeMove[1] = 0;
+        }
+
+        client.updateBuildBeforeMovePrometheus(workerAndBuildBeforeMove);
+    }
+
+    @Override
+    public void askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) {
+        System.out.println(validMovementSpaces.toString());
+        System.out.println(playerName + ": Choose movement space");
+        int chosenMovementSpace = scanner.nextInt();
+
+        while (!(validMovementSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
+                contains(chosenMovementSpace)) {
+            System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
+            chosenMovementSpace = scanner.nextInt();
+        }
+
+        client.updateWorkerMovementPrometheus(chosenMovementSpace);
+    }
+
+    @Override
     public void subscribe(ViewObserver client) {
         this.client = client;
+    }
+
+    @Override
+    public void askArtemisSecondMove(String playerName, List<SpaceCopy> validSecondMovementSpaces) {
+        String answer;
+
+        System.out.println("Do you want to move your Worker for the second time? y/n");
+        answer = scanner.next();
+        while (!answer.equals("y") && !answer.equals("n")) {
+            System.out.println("Your choice is not valid! Choose again!");
+            answer = scanner.next();
+        }
+
+        int chosenMovementSpace = -1;
+        if (answer.equals("y")) {
+            System.out.println(validSecondMovementSpaces.toString());
+            System.out.println(playerName + ": Choose movement space");
+            chosenMovementSpace = scanner.nextInt();
+            while (!(validSecondMovementSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
+                    contains(chosenMovementSpace)) {
+                System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
+                chosenMovementSpace = scanner.nextInt();
+            }
+        }
+
+        client.updateArtemisSecondMove(chosenMovementSpace);
     }
 
 }

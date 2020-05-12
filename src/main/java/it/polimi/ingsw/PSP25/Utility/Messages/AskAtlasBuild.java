@@ -24,53 +24,8 @@ public class AskAtlasBuild extends Message {
 
     @Override
     public void process(NetworkHandler nh, Client client) throws IOException {
-        int selectedSpace = buildingSpaceSelection(validBuildingSpaces);
-        SpaceCopy chosenBuildingSpace = null;
-        String answer = null;
-        int[] selectedSpaceAndBuildDome = new int[2];
-
-        int x = selectedSpace % 5;
-        int y = selectedSpace / 5;
-        for (SpaceCopy space : validBuildingSpaces) {
-            if (space.getX() == x && space.getY() == y)
-                chosenBuildingSpace = space;
-        }
-
-
-        if (chosenBuildingSpace.getTowerHeight() < 3) {
-            System.out.println("Do you want to build a dome or a block? (b = block , d = dome)");
-            Scanner scanner = new Scanner(System.in);
-            answer = scanner.next();
-            while (!(answer.equals("d") || answer.equals("b"))) {
-                System.out.println("Your Choice is not valid. insert 'b' to build a block, 'd' to build a dome");
-                answer = scanner.next();
-            }
-        } else {
-            answer = "d";
-        }
-
-        selectedSpaceAndBuildDome[0] = selectedSpace;
-        if (answer.equals("b"))
-            selectedSpaceAndBuildDome[1] = 0;
-        else if (answer.equals("d"))
-            selectedSpaceAndBuildDome[1] = 1;
-
+        int[] selectedSpaceAndBuildDome = client.askAtlasBuild(playerName, validBuildingSpaces);
         nh.submit(selectedSpaceAndBuildDome);
     }
 
-    private int buildingSpaceSelection(List<SpaceCopy> validBuildingSpaces) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println(validBuildingSpaces.toString());
-        System.out.println(playerName + ": Choose building space");
-        int chosenBuildingSpace = scanner.nextInt();
-        while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
-                contains(chosenBuildingSpace)) {
-            System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
-            chosenBuildingSpace = scanner.nextInt();
-        }
-
-        return chosenBuildingSpace;
-    }
 }

@@ -61,6 +61,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -200,6 +201,58 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void updateBuildingSpace(int chosenBuildingSpace) {
         client.updateBuildingSpace(chosenBuildingSpace);
+    }
+
+    @Override
+    public void askAtlasBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        Platform.runLater(() -> {
+            ((Scene6Controller) controller).askAtlasBuild(playerName, validBuildingSpaces);
+        });
+    }
+
+    @Override
+    public void updateAtlasBuild(int[] selectedSpaceAndBuildDome) {
+        client.updateAtlasBuild(selectedSpaceAndBuildDome);
+    }
+
+
+    @Override
+    public void askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w1CanBuild, boolean w2CanMove, boolean w2CanBuild) {
+        Platform.runLater(() -> {
+            ((Scene6Controller) controller).askBuildBeforeMovePrometheus(playerName, w1CanMove, w1CanBuild, w2CanMove, w2CanBuild);
+        });
+    }
+
+
+    @Override
+    public void updateBuildBeforeMovePrometheus(int[] workerAndBuildBeforeMove) {
+        client.updateBuildBeforeMovePrometheus(workerAndBuildBeforeMove);
+    }
+
+    @Override
+    public void askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) {
+        Platform.runLater(() -> {
+            ((Scene6Controller) controller).askWorkerMovementPrometheus(playerName, validMovementSpaces);
+        });
+    }
+
+
+    @Override
+    public void updateWorkerMovementPrometheus(int chosenMovementSpace) {
+        client.updateWorkerMovementPrometheus(chosenMovementSpace);
+    }
+
+    @Override
+    public void askArtemisSecondMove(String playerName, List<SpaceCopy> validSecondMovementSpaces) {
+        Platform.runLater(() -> {
+            ((Scene6Controller) controller).askArtemisSecondMove(playerName, validSecondMovementSpaces);
+        });
+    }
+
+
+    @Override
+    public void updateArtemisSecondMove(int artemisSecondMoveSpace) {
+        client.updateArtemisSecondMove(artemisSecondMoveSpace);
     }
 
 }

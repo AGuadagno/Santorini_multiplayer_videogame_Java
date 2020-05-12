@@ -22,7 +22,11 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private Integer godPowerIndex = null;
     private Integer workerPosition = null;
     private int[] workerAndSpace = null;
-    private  Integer chosenBuildingSpace = null;
+    private Integer chosenBuildingSpace = null;
+    private int[] selectedSpaceAndDome = null;
+    private int[] workerAndBuildBeforeMove = null;
+    private Integer chosenMovementSpace = null;
+    private Integer artemisSecondMoveSpace = null;
 
     public Client(ViewObservable view) {
         this.view = view;
@@ -290,8 +294,119 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     @Override
     public void updateBuildingSpace(int chosenBuildingSpace) {
-        if(this.chosenBuildingSpace==null){
-            this.chosenBuildingSpace=chosenBuildingSpace;
+        if (this.chosenBuildingSpace == null) {
+            this.chosenBuildingSpace = chosenBuildingSpace;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
+    @Override
+    public void updateAtlasBuild(int[] selectedSpaceAndBuildDome) {
+        if (this.selectedSpaceAndDome == null) {
+            this.selectedSpaceAndDome = selectedSpaceAndBuildDome;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
+
+    public int[] askAtlasBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        view.askAtlasBuild(playerName, validBuildingSpaces);
+        while (selectedSpaceAndDome == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int[] selectedSpaceAndDome = this.selectedSpaceAndDome;
+        this.selectedSpaceAndDome = null;
+        return selectedSpaceAndDome;
+    }
+
+    public int[] askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w1CanBuild, boolean w2CanMove, boolean w2CanBuild) {
+        view.askBuildBeforeMovePrometheus(playerName, w1CanMove, w1CanBuild, w2CanMove, w2CanBuild);
+        while (workerAndBuildBeforeMove == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int[] workerAndBuildBeforeMove = this.workerAndBuildBeforeMove;
+        this.workerAndBuildBeforeMove = null;
+        return workerAndBuildBeforeMove;
+    }
+
+    @Override
+    public void updateBuildBeforeMovePrometheus(int[] workerAndBuildBeforeMove) {
+        if (this.workerAndBuildBeforeMove == null) {
+            this.workerAndBuildBeforeMove = workerAndBuildBeforeMove;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
+
+    public int askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) {
+        view.askWorkerMovementPrometheus(playerName, validMovementSpaces);
+        while (chosenMovementSpace == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int chosenMovementSpace = this.chosenMovementSpace;
+        this.chosenMovementSpace = null;
+        return chosenMovementSpace;
+
+    }
+
+    @Override
+    public void updateWorkerMovementPrometheus(int chosenMovementSpace) {
+        if (this.chosenMovementSpace == null) {
+            this.chosenMovementSpace = chosenMovementSpace;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
+    public int askArtemisSecondMove(String playerName, List<SpaceCopy> validSecondMovementSpaces) {
+        view.askArtemisSecondMove(playerName, validSecondMovementSpaces);
+        while (artemisSecondMoveSpace == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int artemisSecondMoveSpace = this.artemisSecondMoveSpace;
+        this.artemisSecondMoveSpace = null;
+        return artemisSecondMoveSpace;
+    }
+
+    @Override
+    public void updateArtemisSecondMove(int artemisSecondMoveSpace) {
+        if (this.artemisSecondMoveSpace == null) {
+            this.artemisSecondMoveSpace = artemisSecondMoveSpace;
             synchronized (Lock) {
                 Lock.notifyAll();
             }

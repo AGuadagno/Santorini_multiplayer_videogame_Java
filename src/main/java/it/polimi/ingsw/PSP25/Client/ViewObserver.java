@@ -19,4 +19,12 @@ public interface ViewObserver {
     void updateWorkerMovement(int[] workerAndSpace);
 
     void updateBuildingSpace(int chosenBuildingSpace);
+
+    void updateAtlasBuild(int[] selectedSpaceAndBuildDome);
+
+    void updateBuildBeforeMovePrometheus(int[] workerAndBuildBeforeMove);
+
+    void updateWorkerMovementPrometheus(int chosenMovementSpace);
+
+    void updateArtemisSecondMove(int artemisSecondMoveSpace);
 }
