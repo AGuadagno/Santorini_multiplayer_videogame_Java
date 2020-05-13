@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
  * where the selected worker has to build.
  */
 public class AskDemeterSecondBuilding extends Message {
-    List<SpaceCopy> validBuildingSpaces;
-    String playerName;
+    private List<SpaceCopy> validBuildingSpaces;
+    private String playerName;
 
     public AskDemeterSecondBuilding(String playerName, List<SpaceCopy> validBuildingSpaces) {
         this.playerName = playerName;
@@ -25,11 +25,12 @@ public class AskDemeterSecondBuilding extends Message {
     }
 
     public void process(NetworkHandler nh, Client client) throws IOException {
-        int chosenBuildingSpace = buildingSpaceSelection(validBuildingSpaces);
+        //int chosenBuildingSpace = buildingSpaceSelection(validBuildingSpaces);
+        int chosenBuildingSpace = client.askDemeterSecondBuilding(playerName, validBuildingSpaces);
         nh.submit(chosenBuildingSpace);
     }
 
-    private int buildingSpaceSelection(List<SpaceCopy> validBuildingSpaces) {
+    /*private int buildingSpaceSelection(List<SpaceCopy> validBuildingSpaces) {
 
         int chosenBuildingSpace = -1;
         Scanner scanner = new Scanner(System.in);
@@ -49,5 +50,5 @@ public class AskDemeterSecondBuilding extends Message {
         }
 
         return chosenBuildingSpace;
-    }
+    }*/
 }

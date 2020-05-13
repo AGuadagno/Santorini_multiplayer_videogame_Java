@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
  */
 public class AskHephaestusBuild extends Message {
 
-    List<SpaceCopy> validBuildingSpaces;
-    String playerName;
+    private List<SpaceCopy> validBuildingSpaces;
+    private String playerName;
 
     public AskHephaestusBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
         this.playerName = playerName;
@@ -26,11 +26,14 @@ public class AskHephaestusBuild extends Message {
 
     public void process(NetworkHandler nh, Client client) throws IOException {
         // SELECTION OF BUILDING SPACE
-        int[] spaceAndDoubleBuilding = buildingSpaceSelection(validBuildingSpaces);
+        //int[] spaceAndDoubleBuilding = buildingSpaceSelection(validBuildingSpaces);
+
+        int[] spaceAndDoubleBuilding = client.askHephaestusBuild(playerName, validBuildingSpaces);
+
         nh.submit(spaceAndDoubleBuilding);
     }
 
-    private int[] buildingSpaceSelection(List<SpaceCopy> validBuildingSpaces) {
+    /*private int[] buildingSpaceSelection(List<SpaceCopy> validBuildingSpaces) {
 
         int[] spaceAndDoubleBuilding = new int[2];
 
@@ -75,6 +78,6 @@ public class AskHephaestusBuild extends Message {
 
         spaceAndDoubleBuilding[0] = chosenBuildingSpace;
         return spaceAndDoubleBuilding;
-    }
+    }*/
 
 }

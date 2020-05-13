@@ -36,4 +36,8 @@ public interface ViewObservable {
     void askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces);
 
     void askArtemisSecondMove(String playerName, List<SpaceCopy> validSecondMovementSpaces);
+
+    void askDemeterSecondBuilding(String playerName, List<SpaceCopy> validBuildingSpaces);
+
+    void askHephaestusBuild(String playerName, List<SpaceCopy> validBuildingSpaces);
 }

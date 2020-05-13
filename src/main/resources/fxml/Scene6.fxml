@@ -657,6 +657,20 @@
         <Button fx:id="noArtemisButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false"
                 onAction="#handleNoArtemisButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="NoArtemis"
                 visible="false"/>
+        <Button fx:id="yesDemeterButton" layoutX="762.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleYesDemeterButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="YesDemeter"
+                visible="false"/>
+        <Button fx:id="noDemeterButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleNoDemeterButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="NoDemeter"
+                visible="false"/>
+        <Button fx:id="yesHephaestusButton" layoutX="762.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleYesHephaestusButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0"
+                text="YesHephaestus"
+                visible="false"/>
+        <Button fx:id="noHephaestusButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleNoHephaestusButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0"
+                text="NoHephaestus"
+                visible="false"/>
         <Ellipse fx:id="workerBorder" centerX="57.5" centerY="58.5" layoutX="716.0" layoutY="354.0" radiusX="40.0"
                  radiusY="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false">
             <fill>

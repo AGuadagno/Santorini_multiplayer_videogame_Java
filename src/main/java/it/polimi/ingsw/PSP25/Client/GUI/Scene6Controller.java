@@ -37,6 +37,8 @@ public class Scene6Controller implements GUIObservable {
     private boolean w2CanBuild;
     private List<SpaceCopy> validSecondMovementSpaces;
     private Integer secondSpaceArtemis;
+    private boolean messageLabelAppended;
+    private int[] spaceAndDoubleBuildingHephaestus;
 
     @FXML
     private Group towerLevels;
@@ -60,6 +62,14 @@ public class Scene6Controller implements GUIObservable {
     private Button yesArtemisButton;
     @FXML
     private Button noArtemisButton;
+    @FXML
+    private Button yesDemeterButton;
+    @FXML
+    private Button noDemeterButton;
+    @FXML
+    private Button yesHephaestusButton;
+    @FXML
+    private Button noHephaestusButton;
     @FXML
     private ImageView leftButtonImage;
     @FXML
@@ -90,7 +100,6 @@ public class Scene6Controller implements GUIObservable {
     private Label playerName2_3Players;
     @FXML
     private Label playerName3_3Players;
-
 
 
     @Override
@@ -271,14 +280,15 @@ public class Scene6Controller implements GUIObservable {
             case 8:
                 secondSpaceArtemis = buttonNumber;
                 gui.updateArtemisSecondMove(buttonNumber);
-                messageLabel.setText("Waiting for other players");
+                messageLabel.setText("Waiting for other players ...");
                 disableAllButtons();
                 setAllOpacity(0);
                 break;
-
+            case 9: //Hephaestus first build
+                hephaestusSecondBuild(buttonNumber, buttonPressed);
+                break;
         }
     }
-
 
     public void askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2) {
         workerAndSpace = new int[2];
@@ -310,13 +320,18 @@ public class Scene6Controller implements GUIObservable {
             messageLabel.setText(playerName + ": Choose a worker");
         }
 
+        messageLabelAppended = false;
+
         this.buttonAction = 2;
     }
 
     private void workerMovementSelection(String playerName, List<SpaceCopy> validMovementSpacesW, boolean otherWorkerCanMove) {
         Button button;
 
-        messageLabel.setText(messageLabel.getText() + " " + playerName + ": Choose movement space");
+        if (messageLabelAppended == false) {
+            messageLabel.setText(messageLabel.getText() + playerName + ": Choose movement space");
+            messageLabelAppended = true;
+        }
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -337,12 +352,44 @@ public class Scene6Controller implements GUIObservable {
                 }
             }
         }
+
         this.buttonAction = 3;
     }
 
     public void askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces) {
         this.playerName = playerName;
         this.validBuildingSpaces = validBuildingSpaces;
+        /*Button button;
+        messageLabel.setText(playerName + ": Choose building space");
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                button = (Button) boardButtons.getChildren().get(5 * i + j);
+                button.setVisible(false);
+                for (SpaceCopy space : validBuildingSpaces) {
+                    if (space.getNumber() == (5 * i + j)) {
+                        //System.out.println(button.getId() + " visibile");
+                        button.setVisible(true);
+                        button.setOpacity(1);
+                    }
+                }
+            }
+        }
+
+        if (secondSpaceArtemis != null) {
+            moveWorkerBorder(secondSpaceArtemis);
+            secondSpaceArtemis = null;
+        } else if (workerAndSpace != null)
+            moveWorkerBorder(workerAndSpace[1]);
+        else
+            moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));*/
+
+        showValidBuildingSpaces();
+
+        this.buttonAction = 4;
+    }
+
+    private void showValidBuildingSpaces() {
         Button button;
         messageLabel.setText(playerName + ": Choose building space");
 
@@ -367,8 +414,6 @@ public class Scene6Controller implements GUIObservable {
             moveWorkerBorder(workerAndSpace[1]);
         else
             moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));
-
-        this.buttonAction = 4;
     }
 
     public void askAtlasBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
@@ -474,6 +519,60 @@ public class Scene6Controller implements GUIObservable {
 
     }
 
+    public void askDemeterSecondBuilding(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        this.validBuildingSpaces = validBuildingSpaces;
+        messageLabel.setText("Do you want to build an additional block?");
+
+        leftButtonImage.setImage(new Image("/img/yesunpressed.png"));
+        rightButtonImage.setImage(new Image("/img/nounpressed.png"));
+        yesDemeterButton.setVisible(true);
+        noDemeterButton.setVisible(true);
+    }
+
+    public void askHephaestusBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        this.validBuildingSpaces = validBuildingSpaces;
+
+        showValidBuildingSpaces();
+
+        this.buttonAction = 9;
+    }
+
+    private void hephaestusSecondBuild(int chosenBuildingSpace, Button buttonPressed) {
+        disableAllButtons();
+        buttonPressed.setVisible(true);
+        buttonPressed.setDisable(true);
+        buttonPressed.setOpacity(1);
+
+        spaceAndDoubleBuildingHephaestus = new int[2];
+        SpaceCopy space = null;
+
+        int x = chosenBuildingSpace % 5;
+        int y = chosenBuildingSpace / 5;
+        for (SpaceCopy spaceCopy : validBuildingSpaces) {
+            if (spaceCopy.getX() == x && spaceCopy.getY() == y)
+                space = spaceCopy;
+        }
+
+        spaceAndDoubleBuildingHephaestus[0] = chosenBuildingSpace;
+
+        // space.getTowerHeight() < 2 perchè l'altezza non viene davvero incrementata tra i 2 step
+        if (space.getTowerHeight() < 2) { // can't build a dome
+            // Choice to build another block
+            ((ImageView) towerLevels.getChildren().get(chosenBuildingSpace % 5 * 5 + chosenBuildingSpace / 5)).
+                    setImage(new Image("/img/Board/" + "TowerLevel" +
+                            (board[chosenBuildingSpace % 5][chosenBuildingSpace / 5].getTowerHeight() + 1) + ".png"));
+            messageLabel.setText("Do you want to build an additional block ?");
+            leftButtonImage.setImage(new Image("/img/yesunpressed.png"));
+            rightButtonImage.setImage(new Image("/img/nounpressed.png"));
+            yesHephaestusButton.setVisible(true);
+            noHephaestusButton.setVisible(true);
+        } else {
+            spaceAndDoubleBuildingHephaestus[1] = 1;
+            messageLabel.setText("Waiting for other players ...");
+            gui.updateHephaestusBuild(spaceAndDoubleBuildingHephaestus);
+        }
+    }
+
     private void moveWorkerBorder(int buttonNumber) {
         workerBorder.setLayoutX(boardButtons.getChildren().get(buttonNumber).getLayoutX());
         workerBorder.setLayoutY(boardButtons.getChildren().get(buttonNumber).getLayoutY());
@@ -511,7 +610,6 @@ public class Scene6Controller implements GUIObservable {
         }
     }
 
-
     public void handleBlockButton(ActionEvent actionEvent) {
         spaceAndDome[1] = 0;
         gui.updateAtlasBuild(spaceAndDome);
@@ -528,7 +626,6 @@ public class Scene6Controller implements GUIObservable {
         domeButton.setVisible(false);
 
     }
-
 
     public void handleBuildButton(ActionEvent actionEvent) {
         workerAndBuildBeforeMove[1] = 1;
@@ -580,5 +677,44 @@ public class Scene6Controller implements GUIObservable {
         gui.updateArtemisSecondMove(-1);
     }
 
+    public void handleYesDemeterButton(ActionEvent actionEvent) {
+        messageLabel.setText(playerName + ": Choose building space");
+        leftButtonImage.setImage(new Image("/img/yespressed.png"));
+        yesDemeterButton.setVisible(false);
+        noDemeterButton.setVisible(false);
 
+        askBuildingSpace(playerName, validBuildingSpaces);
+    }
+
+    public void handleNoDemeterButton(ActionEvent actionEvent) {
+        rightButtonImage.setImage(new Image("/img/nopressed.png"));
+        yesDemeterButton.setVisible(false);
+        noDemeterButton.setVisible(false);
+
+        messageLabel.setText("Waiting for other players ...");
+
+        gui.updateBuildingSpace(-1);
+    }
+
+    public void handleYesHephaestusButton(ActionEvent actionEvent) {
+        messageLabel.setText("Waiting for other players ...");
+        leftButtonImage.setImage(new Image("/img/yespressed.png"));
+        yesHephaestusButton.setVisible(false);
+        noHephaestusButton.setVisible(false);
+
+        spaceAndDoubleBuildingHephaestus[1] = 2;
+
+        gui.updateHephaestusBuild(spaceAndDoubleBuildingHephaestus);
+    }
+
+    public void handleNoHephaestusButton(ActionEvent actionEvent) {
+        messageLabel.setText("Waiting for other players ...");
+        rightButtonImage.setImage(new Image("/img/nopressed.png"));
+        yesHephaestusButton.setVisible(false);
+        noHephaestusButton.setVisible(false);
+
+        spaceAndDoubleBuildingHephaestus[1] = 1;
+
+        gui.updateHephaestusBuild(spaceAndDoubleBuildingHephaestus);
+    }
 }

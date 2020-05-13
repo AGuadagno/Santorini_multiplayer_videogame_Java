@@ -27,4 +27,7 @@ public interface ViewObserver {
     void updateWorkerMovementPrometheus(int chosenMovementSpace);
 
     void updateArtemisSecondMove(int artemisSecondMoveSpace);
+
+    void updateHephaestusBuild(int[] spaceAndDoubleBuilding);
+
 }

@@ -249,10 +249,28 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         });
     }
 
-
     @Override
     public void updateArtemisSecondMove(int artemisSecondMoveSpace) {
         client.updateArtemisSecondMove(artemisSecondMoveSpace);
+    }
+
+    @Override
+    public void askDemeterSecondBuilding(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        Platform.runLater(() -> {
+            ((Scene6Controller) controller).askDemeterSecondBuilding(playerName, validBuildingSpaces);
+        });
+    }
+
+    @Override
+    public void askHephaestusBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        Platform.runLater(() -> {
+            ((Scene6Controller) controller).askHephaestusBuild(playerName, validBuildingSpaces);
+        });
+    }
+
+    @Override
+    public void updateHephaestusBuild(int[] spaceAndDoubleBuildingHephaestus) {
+        client.updateHephaestusBuild(spaceAndDoubleBuildingHephaestus);
     }
 
 }

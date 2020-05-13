@@ -15,9 +15,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private ViewObservable view;
     private Scanner scanner;
     private final Object Lock = "";
-    private String ip = "";
-    private Integer numOfPlayers = 0;
-    private String name = "";
+    private String ip = null;
+    private Integer numOfPlayers = null;
+    private String name = null;
     private List<Integer> allGodPowerIndexes = null;
     private Integer godPowerIndex = null;
     private Integer workerPosition = null;
@@ -27,6 +27,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private int[] workerAndBuildBeforeMove = null;
     private Integer chosenMovementSpace = null;
     private Integer artemisSecondMoveSpace = null;
+    private int[] spaceAndDoubleBuildingHephaestus = null;
 
     public Client(ViewObservable view) {
         this.view = view;
@@ -37,7 +38,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         scanner = new Scanner(System.in);
         view.askIPAddress();
 
-        while (ip.equals("")) {
+        while (ip == null) {
             try {
                 synchronized (Lock) {
                     Lock.wait();
@@ -114,7 +115,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public int askNumOfPlayers(String question) {
         view.askNumOfPlayers(question);
-        while (numOfPlayers == 0) {
+        while (numOfPlayers == null) {
             try {
                 synchronized (Lock) {
                     Lock.wait();
@@ -128,7 +129,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     @Override
     public void updateNumOfPlayers(int numOfPlayers) {
-        if (this.numOfPlayers == 0) {
+        if (this.numOfPlayers == null) {
             this.numOfPlayers = numOfPlayers;
             synchronized (Lock) {
                 Lock.notifyAll();
@@ -138,7 +139,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public String askName(String question) {
         view.askName(question);
-        while (name.equals("")) {
+        while (name == null) {
             try {
                 synchronized (Lock) {
                     Lock.wait();
@@ -152,7 +153,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     @Override
     public void updateName(String name) {
-        if (this.name.equals("")) {
+        if (this.name == null) {
             this.name = name;
             synchronized (Lock) {
                 Lock.notifyAll();
@@ -407,6 +408,52 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     public void updateArtemisSecondMove(int artemisSecondMoveSpace) {
         if (this.artemisSecondMoveSpace == null) {
             this.artemisSecondMoveSpace = artemisSecondMoveSpace;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
+    }
+
+    public int askDemeterSecondBuilding(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        view.askDemeterSecondBuilding(playerName, validBuildingSpaces);
+
+        while (chosenBuildingSpace == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int chosenBuildingSpace = this.chosenBuildingSpace;
+        this.chosenBuildingSpace = null;
+        return chosenBuildingSpace;
+    }
+
+    public int[] askHephaestusBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
+        view.askHephaestusBuild(playerName, validBuildingSpaces);
+
+        while (spaceAndDoubleBuildingHephaestus == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int[] spaceAndDoubleBuildingHephaestus = this.spaceAndDoubleBuildingHephaestus;
+        this.spaceAndDoubleBuildingHephaestus = null;
+        return spaceAndDoubleBuildingHephaestus;
+    }
+
+    @Override
+    public void updateHephaestusBuild(int[] spaceAndDoubleBuildingHephaestus) {
+        if (this.spaceAndDoubleBuildingHephaestus == null) {
+            this.spaceAndDoubleBuildingHephaestus = spaceAndDoubleBuildingHephaestus;
             synchronized (Lock) {
                 Lock.notifyAll();
             }
