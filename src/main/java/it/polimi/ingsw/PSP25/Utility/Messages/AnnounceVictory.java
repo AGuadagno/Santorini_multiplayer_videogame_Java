@@ -20,7 +20,9 @@ public class AnnounceVictory extends Message {
      * @param nh network handler of the client who is the recipient of the message.
      */
     public void process(NetworkHandler nh, Client client) {
-        System.out.println(playerName + " won the Game! Congratulations!");
+       // System.out.println(playerName + " won the Game! Congratulations!");
+
+        client.announceVictory(playerName);
     }
 
 }

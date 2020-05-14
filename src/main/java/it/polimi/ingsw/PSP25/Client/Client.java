@@ -459,4 +459,8 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
             }
         }
     }
+
+    public void announceVictory(String playerName) {
+        view.announceVictory(playerName);
+    }
 }

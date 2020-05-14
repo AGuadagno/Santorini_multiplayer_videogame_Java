@@ -446,4 +446,9 @@ public class CLI implements ViewObservable {
         client.updateHephaestusBuild(spaceAndDoubleBuilding);
     }
 
+    @Override
+    public void announceVictory(String playerName) {
+        System.out.println(playerName + " won the Game! Congratulations!");
+    }
+
 }

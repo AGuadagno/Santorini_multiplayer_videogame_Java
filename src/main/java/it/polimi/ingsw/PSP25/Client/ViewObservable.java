@@ -40,4 +40,6 @@ public interface ViewObservable {
     void askDemeterSecondBuilding(String playerName, List<SpaceCopy> validBuildingSpaces);
 
     void askHephaestusBuild(String playerName, List<SpaceCopy> validBuildingSpaces);
+
+    void announceVictory(String playerName);
 }

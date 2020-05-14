@@ -273,4 +273,11 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         client.updateHephaestusBuild(spaceAndDoubleBuildingHephaestus);
     }
 
+    @Override
+    public void announceVictory(String playerName) {
+        Platform.runLater(() -> {
+            ((Scene6Controller) controller).announceVictory(playerName);
+        });
+    }
+
 }

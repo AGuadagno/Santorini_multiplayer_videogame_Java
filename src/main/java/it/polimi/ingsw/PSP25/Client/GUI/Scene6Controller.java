@@ -717,4 +717,8 @@ public class Scene6Controller implements GUIObservable {
 
         gui.updateHephaestusBuild(spaceAndDoubleBuildingHephaestus);
     }
+
+    public void announceVictory(String playerName) {
+
+    }
 }
