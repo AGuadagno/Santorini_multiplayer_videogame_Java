@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Scene5Controller implements GUIObservable {
+public class GodPowerSceneController implements GUIObservable {
 
     private GUI gui;
     private Integer selectedIndex = null;

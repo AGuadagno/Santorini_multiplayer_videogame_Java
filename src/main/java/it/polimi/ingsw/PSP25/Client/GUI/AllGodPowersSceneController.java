@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Scene4Controller implements GUIObservable {
+public class AllGodPowersSceneController implements GUIObservable {
 
     private GUI gui;
     private List<Integer> selectedIndexes;

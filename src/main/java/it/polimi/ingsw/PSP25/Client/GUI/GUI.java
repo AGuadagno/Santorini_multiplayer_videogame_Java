@@ -23,7 +23,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("CLI")) {
             ViewObservable view = new CLI();
-            Client client = new Client(view);
+            Client client = new Client(view, true);
             view.subscribe(client);
             client.run();
         } else {
@@ -42,7 +42,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     @Override
     public void start(Stage stage) {
-        Client client = new Client(this);
+        Client client = new Client(this, false);
         this.subscribe(client);
         Thread clientThread = new Thread(client);
         clientThread.start();
@@ -50,13 +50,13 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         this.stage = stage;
 
         Parent root = null;
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/Scene1.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/IPAddressScene.fxml"));
         try {
             root = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scene1Controller controller = loader.getController();
+        IPAddressSceneController controller = loader.getController();
         controller.subscribe(this);
 
         Scene scene = new Scene(root);
@@ -79,6 +79,10 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         return scene;
     }
 
+    public void restartFromNumOfPlayersScene() {
+        Scene scene = loadScene("fxml/NumOfPlayersScene.fxml");
+    }
+
     @Override
     public void updateIPAddress(String ip) {
         client.updateIPAddress(ip);
@@ -86,18 +90,18 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     @Override
     public void setConnectionMessage(String s) {
-        Scene scene = loadScene("fxml/Scene2.fxml");
+        Scene scene = loadScene("fxml/NumOfPlayersScene.fxml");
 
         Platform.runLater(() -> {
             stage.setScene(scene);
             stage.show();
-            ((Scene2Controller) controller).setConnectionMessage(s);
+            ((NumOfPlayersSceneController) controller).setConnectionMessage(s);
         });
     }
 
     @Override
     public void askNumOfPlayers(String question) {
-        ((Scene2Controller) controller).askNumOfPlayers();
+        ((NumOfPlayersSceneController) controller).askNumOfPlayers();
     }
 
     public void updateNumOfPlayers(int numOfPlayers) {
@@ -106,12 +110,12 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     @Override
     public void askName(String question) {
-        Scene scene = loadScene("fxml/Scene3.fxml");
+        Scene scene = loadScene("fxml/NameScene.fxml");
 
         Platform.runLater(() -> {
             stage.setScene(scene);
             stage.show();
-            ((Scene3Controller) controller).setQuestion(question);
+            ((NameSceneController) controller).setQuestion(question);
         });
     }
 
@@ -121,12 +125,12 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     @Override
     public void askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
-        Scene scene = loadScene("fxml/Scene4.fxml");
+        Scene scene = loadScene("fxml/AllGodPowersScene.fxml");
 
         Platform.runLater(() -> {
             stage.setScene(scene);
             stage.show();
-            ((Scene4Controller) controller).setQuestion(playerName, numOfPlayers);
+            ((AllGodPowersSceneController) controller).setQuestion(playerName, numOfPlayers);
         });
     }
 
@@ -136,12 +140,12 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     @Override
     public void askGodPower(String playerName, List<String> godPowerNames) {
-        Scene scene = loadScene("fxml/Scene5.fxml");
+        Scene scene = loadScene("fxml/GodPowerScene.fxml");
 
         Platform.runLater(() -> {
             stage.setScene(scene);
             stage.show();
-            ((Scene5Controller) controller).setQuestion(playerName, godPowerNames);
+            ((GodPowerSceneController) controller).setQuestion(playerName, godPowerNames);
         });
     }
 
@@ -153,24 +157,24 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     @Override
     public void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) {
-        Scene scene = loadScene("fxml/Scene6.fxml");
+        Scene scene = loadScene("fxml/BoardScene.fxml");
 
         Platform.runLater(() -> {
             stage.setScene(scene);
             stage.show();
-            ((Scene6Controller) controller).showPlayersGodPowers(playerNames, godPowerNames);
+            ((BoardSceneController) controller).showPlayersGodPowers(playerNames, godPowerNames);
         });
     }
 
     @Override
     public void showBoard(SpaceCopy[][] board) {
-        ((Scene6Controller) controller).showBoard(board);
+        ((BoardSceneController) controller).showBoard(board);
     }
 
     @Override
     public void askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] board) {
         Platform.runLater(() -> {
-            ((Scene6Controller) controller).askWorkerPosition(playerName, workerNumber, previousPos, board);
+            ((BoardSceneController) controller).askWorkerPosition(playerName, workerNumber, previousPos, board);
         });
     }
 
@@ -182,7 +186,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2) {
         Platform.runLater(() -> {
-            ((Scene6Controller) controller).askWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2);
+            ((BoardSceneController) controller).askWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2);
         });
     }
 
@@ -194,7 +198,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces) {
         Platform.runLater(() -> {
-            ((Scene6Controller) controller).askBuildingSpace(playerName, validBuildingSpaces);
+            ((BoardSceneController) controller).askBuildingSpace(playerName, validBuildingSpaces);
         });
     }
 
@@ -206,7 +210,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void askAtlasBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
         Platform.runLater(() -> {
-            ((Scene6Controller) controller).askAtlasBuild(playerName, validBuildingSpaces);
+            ((BoardSceneController) controller).askAtlasBuild(playerName, validBuildingSpaces);
         });
     }
 
@@ -219,7 +223,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w1CanBuild, boolean w2CanMove, boolean w2CanBuild) {
         Platform.runLater(() -> {
-            ((Scene6Controller) controller).askBuildBeforeMovePrometheus(playerName, w1CanMove, w1CanBuild, w2CanMove, w2CanBuild);
+            ((BoardSceneController) controller).askBuildBeforeMovePrometheus(playerName, w1CanMove, w1CanBuild, w2CanMove, w2CanBuild);
         });
     }
 
@@ -232,7 +236,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) {
         Platform.runLater(() -> {
-            ((Scene6Controller) controller).askWorkerMovementPrometheus(playerName, validMovementSpaces);
+            ((BoardSceneController) controller).askWorkerMovementPrometheus(playerName, validMovementSpaces);
         });
     }
 
@@ -245,7 +249,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void askArtemisSecondMove(String playerName, List<SpaceCopy> validSecondMovementSpaces) {
         Platform.runLater(() -> {
-            ((Scene6Controller) controller).askArtemisSecondMove(playerName, validSecondMovementSpaces);
+            ((BoardSceneController) controller).askArtemisSecondMove(playerName, validSecondMovementSpaces);
         });
     }
 
@@ -257,14 +261,14 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void askDemeterSecondBuilding(String playerName, List<SpaceCopy> validBuildingSpaces) {
         Platform.runLater(() -> {
-            ((Scene6Controller) controller).askDemeterSecondBuilding(playerName, validBuildingSpaces);
+            ((BoardSceneController) controller).askDemeterSecondBuilding(playerName, validBuildingSpaces);
         });
     }
 
     @Override
     public void askHephaestusBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
         Platform.runLater(() -> {
-            ((Scene6Controller) controller).askHephaestusBuild(playerName, validBuildingSpaces);
+            ((BoardSceneController) controller).askHephaestusBuild(playerName, validBuildingSpaces);
         });
     }
 
@@ -276,8 +280,18 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void announceVictory(String playerName) {
         Platform.runLater(() -> {
-            ((Scene6Controller) controller).announceVictory(playerName);
+            ((BoardSceneController) controller).announceVictory(playerName);
         });
     }
 
+    @Override
+    public void announceLose(String playerName) {
+        Platform.runLater(() -> {
+            ((BoardSceneController) controller).announceLose(playerName);
+        });
+    }
+
+    public void playAgain(boolean b) {
+        client.playAgain(b);
+    }
 }

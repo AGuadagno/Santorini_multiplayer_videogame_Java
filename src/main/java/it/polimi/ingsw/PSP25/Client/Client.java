@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class Client implements Runnable, ServerObserver, ViewObserver {
 
     private Message receivedMessage = null;
+    private boolean cliIsChosen;
     private ViewObservable view;
     private Scanner scanner;
     private final Object Lock = "";
@@ -29,8 +30,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private Integer artemisSecondMoveSpace = null;
     private int[] spaceAndDoubleBuildingHephaestus = null;
 
-    public Client(ViewObservable view) {
+    public Client(ViewObservable view, boolean cliIsChosen) {
         this.view = view;
+        this.cliIsChosen = cliIsChosen;
     }
 
     @Override
@@ -88,14 +90,22 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
             }
         } while (receivedMessage != null);
 
-        System.out.println("\nDo you want to play again? (y = yes, n = no)");
-        String answer = scanner.next();
-        while (!(answer.equals("y") || answer.equals("n"))) {
-            System.out.println("Your Choice is not valid. insert 'y' to play again, 'n' to close");
-            answer = scanner.next();
-        }
+        if (cliIsChosen) {
+            System.out.println("\nDo you want to play again? (y = yes, n = no)");
+            String answer = scanner.next();
+            while (!(answer.equals("y") || answer.equals("n"))) {
+                System.out.println("Your Choice is not valid. insert 'y' to play again, 'n' to close");
+                answer = scanner.next();
+            }
 
-        if (answer.equals("y"))
+            if (answer.equals("y"))
+                run();
+        }
+    }
+
+    @Override
+    public void playAgain(boolean b) {
+        if (b)
             run();
     }
 
@@ -462,5 +472,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public void announceVictory(String playerName) {
         view.announceVictory(playerName);
+    }
+
+    public void announceLose(String playerName) {
+        view.announceLose(playerName);
     }
 }

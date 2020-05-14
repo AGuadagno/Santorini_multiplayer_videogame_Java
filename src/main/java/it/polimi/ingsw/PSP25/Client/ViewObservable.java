@@ -42,4 +42,6 @@ public interface ViewObservable {
     void askHephaestusBuild(String playerName, List<SpaceCopy> validBuildingSpaces);
 
     void announceVictory(String playerName);
+
+    void announceLose(String playerName);
 }

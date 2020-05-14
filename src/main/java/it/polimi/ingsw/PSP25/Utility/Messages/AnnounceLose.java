@@ -15,12 +15,13 @@ public class AnnounceLose extends Message {
     }
 
     /**
-     * The player client prints the message of victory.
+     * The player client prints the message of lose.
      *
      * @param nh network handler of the client who is the recipient of the message.
      */
     public void process(NetworkHandler nh, Client client) {
-        System.out.println(playerName + " lost the Game! Can't move or build!");
+        //System.out.println(playerName + " lost the Game! Can't move or build!");
+        client.announceLose(playerName);
     }
 
 }

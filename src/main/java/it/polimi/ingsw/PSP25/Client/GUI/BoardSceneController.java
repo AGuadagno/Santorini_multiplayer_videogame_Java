@@ -11,12 +11,15 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Ellipse;
+import javafx.stage.Stage;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Scene6Controller implements GUIObservable {
+import static javafx.application.Application.launch;
+
+public class BoardSceneController implements GUIObservable {
 
     private GUI gui;
     private Integer selectedIndex = null;
@@ -76,6 +79,18 @@ public class Scene6Controller implements GUIObservable {
     private ImageView rightButtonImage;
     @FXML
     private Ellipse workerBorder;
+    @FXML
+    private ImageView victoryWindowImage;
+    @FXML
+    private ImageView victoryCloseImage;
+    @FXML
+    private Label victoryLabel;
+    @FXML
+    private Button victoryCloseButton;
+    @FXML
+    private Button yesPlayAgainButton;
+    @FXML
+    private Button noPlayAgainButton;
 
 
     @FXML
@@ -719,6 +734,75 @@ public class Scene6Controller implements GUIObservable {
     }
 
     public void announceVictory(String playerName) {
+        if (playerName.equals(this.playerName)) {
+            victoryWindowImage.setImage(new Image("/img/WinningWindow.png"));
+            victoryLabel.setText(playerName + " you won the Game! Congratulations!");
+        } else {
+            victoryWindowImage.setImage(new Image("/img/LosingWindow.png"));
+            victoryLabel.setText(playerName + " won the Game!");
+        }
+        victoryWindowImage.setVisible(true);
+        victoryLabel.setVisible(true);
+        victoryCloseImage.setVisible(true);
+        victoryCloseButton.setVisible(true);
 
+        messageLabel.setText("Do you want to play again?");
+        leftButtonImage.setImage(new Image("/img/yesunpressed.png"));
+        rightButtonImage.setImage(new Image("/img/nounpressed.png"));
+        yesPlayAgainButton.setVisible(true);
+        noPlayAgainButton.setVisible(true);
+    }
+
+    public void handleVictoryCloseButton(ActionEvent actionEvent) {
+        victoryCloseImage.setImage(new Image("/img/closebtn_pressed.png"));
+        victoryWindowImage.setVisible(false);
+        victoryLabel.setVisible(false);
+        victoryCloseImage.setVisible(false);
+        victoryCloseButton.setVisible(false);
+    }
+
+    public void announceLose(String playerName) {
+        if (playerName.equals(this.playerName)) {
+            victoryWindowImage.setImage(new Image("/img/LosingWindow.png"));
+            victoryLabel.setText(playerName + " you lost the Game! Can't move or build!");
+
+            messageLabel.setText("Do you want to play again?");
+            leftButtonImage.setImage(new Image("/img/yesunpressed.png"));
+            rightButtonImage.setImage(new Image("/img/nounpressed.png"));
+            yesPlayAgainButton.setVisible(true);
+            noPlayAgainButton.setVisible(true);
+        } else {
+            victoryWindowImage.setImage(new Image("/img/WinningWindow.png"));
+            victoryLabel.setText(playerName + " lost the Game! Can't move or build!");
+        }
+        victoryWindowImage.setVisible(true);
+        victoryLabel.setVisible(true);
+        victoryCloseImage.setVisible(true);
+        victoryCloseButton.setVisible(true);
+    }
+
+    public void handleYesPlayAgainButton(ActionEvent actionEvent) {
+        leftButtonImage.setImage(new Image("/img/yespressed.png"));
+        yesPlayAgainButton.setVisible(false);
+        noPlayAgainButton.setVisible(false);
+
+        /*Button button = (Button) actionEvent.getSource();
+        Stage stage = (Stage) button.getScene().getWindow();
+        stage.close();*/
+        gui.restartFromNumOfPlayersScene();
+
+        gui.playAgain(true);
+    }
+
+    public void handleNoPlayAgainButton(ActionEvent actionEvent) {
+        rightButtonImage.setImage(new Image("/img/nopressed.png"));
+        yesPlayAgainButton.setVisible(false);
+        noPlayAgainButton.setVisible(false);
+
+        Button button = (Button) actionEvent.getSource();
+        Stage stage = (Stage) button.getScene().getWindow();
+        stage.close();
+
+        gui.playAgain(false);
     }
 }

@@ -30,4 +30,5 @@ public interface ViewObserver {
 
     void updateHephaestusBuild(int[] spaceAndDoubleBuilding);
 
+    void playAgain(boolean b);
 }

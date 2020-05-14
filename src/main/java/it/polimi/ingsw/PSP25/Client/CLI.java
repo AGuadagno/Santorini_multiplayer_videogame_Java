@@ -451,4 +451,8 @@ public class CLI implements ViewObservable {
         System.out.println(playerName + " won the Game! Congratulations!");
     }
 
+    @Override
+    public void announceLose(String playerName) {
+        System.out.println(playerName + " lost the Game! Can't move or build!");
+    }
 }

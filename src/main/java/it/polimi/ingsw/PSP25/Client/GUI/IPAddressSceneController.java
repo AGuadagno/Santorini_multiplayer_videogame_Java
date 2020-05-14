@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Scene1Controller implements GUIObservable {
+public class IPAddressSceneController implements GUIObservable {
 
     private ViewObserver gui;
 

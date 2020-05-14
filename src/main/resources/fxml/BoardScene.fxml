@@ -14,7 +14,7 @@
 <!-- tutti i bottoni tranne uno hanno lo stesso stile, conviene fare uno style.css -->
 
 <AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP25.Client.GUI.Scene6Controller">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP25.Client.GUI.BoardSceneController">
     <children>
         <ImageView fx:id="godPower2_2Players" fitHeight="300.0" fitWidth="300.0" layoutX="32.0" layoutY="501.0"
                    pickOnBounds="true" preserveRatio="true" visible="false">
@@ -665,12 +665,16 @@
                 visible="false"/>
         <Button fx:id="yesHephaestusButton" layoutX="762.0" layoutY="814.0" mnemonicParsing="false"
                 onAction="#handleYesHephaestusButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0"
-                text="YesHephaestus"
-                visible="false"/>
+                text="YesHephaestus" visible="false"/>
         <Button fx:id="noHephaestusButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false"
                 onAction="#handleNoHephaestusButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0"
-                text="NoHephaestus"
-                visible="false"/>
+                text="NoHephaestus" visible="false"/>
+        <Button fx:id="yesPlayAgainButton" layoutX="762.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleYesPlayAgainButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0"
+                text="YesPlayAgain" visible="false"/>
+        <Button fx:id="noPlayAgainButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleNoPlayAgainButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0"
+                text="NoPlayAgain" visible="false"/>
         <Ellipse fx:id="workerBorder" centerX="57.5" centerY="58.5" layoutX="716.0" layoutY="354.0" radiusX="40.0"
                  radiusY="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false">
             <fill>
@@ -684,5 +688,27 @@
                 </RadialGradient>
             </fill>
         </Ellipse>
+        <ImageView fx:id="victoryWindowImage" fitHeight="540.0" fitWidth="548.0" layoutX="515.0" layoutY="153.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <image>
+                <Image url="@../img/WinningWindow.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="victoryCloseImage" fitHeight="59.0" fitWidth="47.0" layoutX="963.0" layoutY="179.0"
+                   pickOnBounds="true" preserveRatio="true" visible="false">
+            <image>
+                <Image url="@../img/closebtn.png"/>
+            </image>
+        </ImageView>
+        <Label fx:id="victoryLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="591.0" layoutY="245.0"
+               prefHeight="313.0" prefWidth="366.0" textAlignment="CENTER" textFill="WHITE" visible="false"
+               wrapText="true">
+            <font>
+                <Font name="System Bold" size="48.0"/>
+            </font>
+        </Label>
+        <Button fx:id="victoryCloseButton" layoutX="965.0" layoutY="181.0" mnemonicParsing="false"
+                onAction="#handleVictoryCloseButton" opacity="0.0" prefHeight="42.0" prefWidth="42.0"
+                text="victoryCloseButton" visible="false"/>
     </children>
 </AnchorPane>
