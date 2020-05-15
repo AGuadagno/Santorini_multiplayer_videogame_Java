@@ -81,6 +81,12 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     public void restartFromNumOfPlayersScene() {
         Scene scene = loadScene("fxml/NumOfPlayersScene.fxml");
+
+        Platform.runLater(() -> {
+            stage.setScene(scene);
+            stage.show();
+        });
+
     }
 
     @Override

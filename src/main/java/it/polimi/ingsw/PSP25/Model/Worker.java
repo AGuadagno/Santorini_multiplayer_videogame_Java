@@ -34,15 +34,17 @@ public class Worker {
     /**
      * Modifies the Attribute "space" in Worker,
      * used to link a Worker to a Space
+     *
      * @param space Space where the Worker will be positioned
      */
-    public void setSpace(Space space){
-        this.space=space;
+    public void setSpace(Space space) {
+        this.space = space;
     }
 
     /**
      * Moves the Worker in a given Space, removing the Worker from its original Space,
      * updates heightBeforeMove and Worker reference in the new given Space.
+     *
      * @param space Space where the Worker will be positioned
      */
     public void moveTo(Space space) {
@@ -54,6 +56,7 @@ public class Worker {
 
     /**
      * Sets "heightBeforeMove" attribute
+     *
      * @param height new value of "heightBeforeMove" attribute
      */
     public void setHeightBeforeMove(int height) {
@@ -63,21 +66,21 @@ public class Worker {
     /**
      * @return the Space where the Worker is positioned
      */
-public Space getSpace() {
+    public Space getSpace() {
         return space;
-        }
+    }
 
-/**
- * @return the Player who controls the Worker
- */
-public Player getPlayer() {
+    /**
+     * @return the Player who controls the Worker
+     */
+    public Player getPlayer() {
         return player;
-        }
+    }
 
-/**
- * @return the value of "heightBeforeMove"
- */
-public int getHeightBeforeMove() {
+    /**
+     * @return the value of "heightBeforeMove"
+     */
+    public int getHeightBeforeMove() {
         return heightBeforeMove;
-        }
-        }
+    }
+}

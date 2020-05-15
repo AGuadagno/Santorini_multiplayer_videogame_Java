@@ -105,8 +105,10 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     @Override
     public void playAgain(boolean b) {
-        if (b)
-            run();
+        if (b) {
+            Thread clientThread = new Thread(this);
+            clientThread.start();
+        }
     }
 
     @Override
