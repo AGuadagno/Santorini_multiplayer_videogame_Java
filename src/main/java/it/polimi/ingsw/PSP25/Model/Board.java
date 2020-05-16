@@ -17,6 +17,14 @@ public class Board {
         }
     }
 
+    public void setBoardForAllSpaces() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                spaceMatrix[i][j].setBoard(this);
+            }
+        }
+    }
+
     /**
      * @param x Space column number
      * @param y Space row number

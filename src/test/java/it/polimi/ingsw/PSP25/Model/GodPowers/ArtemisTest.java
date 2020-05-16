@@ -28,16 +28,14 @@ public class ArtemisTest {
     @Before
     public void setup() {
         b = new Board();
-        gp = new Artemis(a, new GameLogic(null));
-
+        b.setBoardForAllSpaces();
         s1 = b.getSpace(0, 0);
-        s1.setBoard(b);
-        s1.setTowerHeight(0);
+        //s1.setBoard(b);
         s2 = b.getSpace(4, 4);
-        s2.setTowerHeight(0);
-        s2.setBoard(b);
+        //s2.setBoard(b);
 
         a = new ActiveEffects(2);
+        gp = new Artemis(a, new GameLogic(null));
         a.initializeEffects();
         p1.initializeGodPower(gp);
         p1.initializeWorkers(s1, s2);

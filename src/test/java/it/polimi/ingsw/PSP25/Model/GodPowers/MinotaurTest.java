@@ -29,6 +29,7 @@ public class MinotaurTest {
         player1 = new Player("Name1", 1, new ClientHandler(new Socket(), 1, new Lobby()));
         gp = new Minotaur(activeEffects, null);
         board = new Board();
+        board.setBoardForAllSpaces();
     }
 
     @After

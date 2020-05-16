@@ -35,6 +35,7 @@ public class GodPowerTest {
         activeEffects.initializeEffects();
         activeEffects2.initializeEffects();
         b = new Board();
+        b.setBoardForAllSpaces();
         demoSpace = b.getSpace(3, 3);
         demoSpace.setBoard(b);
         demoPlayer = new Player("Name", 1, new ClientHandler(new Socket(), 1, new Lobby()));

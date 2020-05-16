@@ -31,7 +31,7 @@ public class GameLogic implements BroadcastInterface {
      */
     public GameLogic(List<VirtualView> clientHandlerList) {
         board = new Board();
-        board.getSpace(0, 0).setBoard(board);
+        board.setBoardForAllSpaces();
         playerList = new ArrayList<>();
         this.clientHandlerList = clientHandlerList;
     }

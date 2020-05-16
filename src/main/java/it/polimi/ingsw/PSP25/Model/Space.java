@@ -21,7 +21,7 @@ public class Space {
     private int towerHeight;
     private boolean hasDome;
     private Worker worker;
-    private static Board board;
+    private Board board;
 
     /**
      * Space constructor

@@ -18,6 +18,7 @@ public class SpaceTest {
     @Before
     public void setup() {
         b = new Board();
+        b.setBoardForAllSpaces();
         space = b.getSpace(0, 0);
     }
 
