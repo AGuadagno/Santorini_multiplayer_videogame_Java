@@ -32,7 +32,6 @@ public class Server
             try {
                 /* accepts connections; for every connection we accept, create a new Thread executing a ClientHandler */
                 Socket client = socket.accept();
-                System.out.println("Socket accepted: " + clientCounter); //DEBUG
                 ClientHandler clientHandler = new ClientHandler(client, clientCounter, lobby);
                 Thread thread = new Thread(clientHandler, "server_" + client.getInetAddress());
                 clientCounter++;

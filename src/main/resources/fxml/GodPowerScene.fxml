@@ -10,7 +10,8 @@
 
 <!-- tutti i bottoni tranne uno hanno lo stesso stile, conviene fare uno style.css -->
 
-<AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+<AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.PSP25.Client.GUI.GodPowerSceneController">
     <children>
         <ImageView fitHeight="900.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
