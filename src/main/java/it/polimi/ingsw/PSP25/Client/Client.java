@@ -136,7 +136,10 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                 e.printStackTrace();
             }
         }
-        return numOfPlayers;
+
+        int numPl = this.numOfPlayers;
+        this.numOfPlayers = null;
+        return numPl;
     }
 
     @Override
@@ -160,6 +163,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                 e.printStackTrace();
             }
         }
+
+        String name = this.name;
+        this.name = null;
         return name;
     }
 
@@ -175,6 +181,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
         view.askAllGodPowers(playerName, numOfPlayers, godPowerNames);
+        allGodPowerIndexes = null;
         while (allGodPowerIndexes == null) {
             try {
                 synchronized (Lock) {
@@ -184,6 +191,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                 e.printStackTrace();
             }
         }
+
         return allGodPowerIndexes;
     }
 
@@ -199,6 +207,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public int askGodPower(String playerName, List<String> godPowerNames) {
         view.askGodPower(playerName, godPowerNames);
+        godPowerIndex = null;
         while (godPowerIndex == null) {
             try {
                 synchronized (Lock) {

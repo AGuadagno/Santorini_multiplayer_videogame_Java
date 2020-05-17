@@ -65,6 +65,10 @@ public class ArtemisTest {
 
         try {
             assertEquals(gp.turnSequence(p1, a), TurnResult.CONTINUE);
+            assertTrue(b.getSpace(2, 0).hasWorker());
+            assertEquals(b.getSpace(2, 0).getWorker(), p1.getWorker1());
+            assertFalse(b.getSpace(1, 0).hasWorker());
+            assertEquals(b.getSpace(1, 0).getTowerHeight(), 1);
         } catch (DisconnectionException e) {
             e.printStackTrace();
         }
@@ -85,7 +89,119 @@ public class ArtemisTest {
         } catch (DisconnectionException e) {
             e.printStackTrace();
         }
+    }
 
+    @Test
+    public void turnSequenceWinTest1() {
+        // Winning with second movement
+
+        b.getSpace(0, 0).setTowerHeight(1);
+        b.getSpace(1, 0).setTowerHeight(2);
+        b.getSpace(2, 0).setTowerHeight(3);
+
+        int[] workerAndSpace = new int[]{1, 1};
+        clientHandlerMock.setAskWorkerMovement(workerAndSpace);
+        int artemisChosenMovementSpace = 2;
+        clientHandlerMock.setArtemisSecondMove(artemisChosenMovementSpace);
+        int selectedSpace = 1;
+        clientHandlerMock.setAskToBuild(selectedSpace);
+
+        try {
+            assertEquals(gp.turnSequence(p1, a), TurnResult.WIN);
+        } catch (DisconnectionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void turnSequenceWinTest2() {
+        // Winning with first movement
+
+        b.getSpace(0, 0).setTowerHeight(2);
+        b.getSpace(1, 0).setTowerHeight(3);
+
+        int[] workerAndSpace = new int[]{1, 1};
+        clientHandlerMock.setAskWorkerMovement(workerAndSpace);
+        int artemisChosenMovementSpace = 2;
+        clientHandlerMock.setArtemisSecondMove(artemisChosenMovementSpace);
+        int selectedSpace = 1;
+        clientHandlerMock.setAskToBuild(selectedSpace);
+
+        try {
+            assertEquals(gp.turnSequence(p1, a), TurnResult.WIN);
+        } catch (DisconnectionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void turnSequenceBaseTest2() {
+        // No second movement
+
+        int[] workerAndSpace = new int[]{1, 1};
+        clientHandlerMock.setAskWorkerMovement(workerAndSpace);
+        int artemisChosenMovementSpace = -1;
+        clientHandlerMock.setArtemisSecondMove(artemisChosenMovementSpace);
+        int selectedSpace = 0;
+        clientHandlerMock.setAskToBuild(selectedSpace);
+
+        try {
+            assertEquals(gp.turnSequence(p1, a), TurnResult.CONTINUE);
+            assertTrue(b.getSpace(1, 0).hasWorker());
+            assertEquals(b.getSpace(1, 0).getWorker(), p1.getWorker1());
+            assertFalse(b.getSpace(0, 0).hasWorker());
+            assertEquals(b.getSpace(0, 0).getTowerHeight(), 1);
+        } catch (DisconnectionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void turnSequenceBaseTest3() {
+        // With Worker 2
+        int[] workerAndSpace = new int[]{2, 23};
+        clientHandlerMock.setAskWorkerMovement(workerAndSpace);
+        int artemisChosenMovementSpace = 22;
+        clientHandlerMock.setArtemisSecondMove(artemisChosenMovementSpace);
+        int selectedSpace = 23;
+        clientHandlerMock.setAskToBuild(selectedSpace);
+
+        try {
+            assertEquals(gp.turnSequence(p1, a), TurnResult.CONTINUE);
+            assertTrue(b.getSpace(2, 4).hasWorker());
+            assertEquals(b.getSpace(2, 4).getWorker(), p1.getWorker2());
+            assertFalse(b.getSpace(3, 4).hasWorker());
+            assertEquals(b.getSpace(3, 4).getTowerHeight(), 1);
+        } catch (DisconnectionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void turnSequenceBaseTest4() {
+
+        b.getSpace(0, 0).setTowerHeight(2);
+        b.getSpace(2, 0).setTowerHeight(2);
+        b.getSpace(0, 1).setTowerHeight(2);
+        b.getSpace(1, 1).setTowerHeight(2);
+        b.getSpace(2, 1).setTowerHeight(2);
+
+        int[] workerAndSpace = new int[]{1, 1};
+        clientHandlerMock.setAskWorkerMovement(workerAndSpace);
+        int artemisChosenMovementSpace = 2;
+        clientHandlerMock.setArtemisSecondMove(artemisChosenMovementSpace);
+        int selectedSpace = 0;
+        clientHandlerMock.setAskToBuild(selectedSpace);
+
+        try {
+            assertEquals(gp.turnSequence(p1, a), TurnResult.CONTINUE);
+            assertTrue(b.getSpace(1, 0).hasWorker());
+            assertEquals(b.getSpace(1, 0).getWorker(), p1.getWorker1());
+            assertFalse(b.getSpace(0, 0).hasWorker());
+            assertEquals(b.getSpace(0, 0).getTowerHeight(), 3);
+        } catch (DisconnectionException e) {
+            e.printStackTrace();
+        }
     }
 
 }

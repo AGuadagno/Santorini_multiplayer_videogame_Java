@@ -12,6 +12,8 @@ public class ClientHandlerMock implements VirtualView {
     private int[] workerAndSpace;
     private int artemisChosenMovementSpace;
     private int selectedSpace;
+    private int[] atlasSpaceAndDome;
+    private int demeterSecondBuilding;
 
     @Override
     public String askName(int i) throws DisconnectionException {
@@ -109,7 +111,6 @@ public class ClientHandlerMock implements VirtualView {
 
     public void setArtemisSecondMove(int chosenMovementSpace) {
         this.artemisChosenMovementSpace = chosenMovementSpace;
-
     }
 
     @Override
@@ -117,13 +118,21 @@ public class ClientHandlerMock implements VirtualView {
         return this.artemisChosenMovementSpace;
     }
 
+    public void setAtlasBuild(int[] atlasSpaceAndDome) {
+        this.atlasSpaceAndDome = atlasSpaceAndDome;
+    }
+
     @Override
     public int[] askAtlasBuild(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
-        return new int[0];
+        return atlasSpaceAndDome;
+    }
+
+    public void setDemeterSecondBuilding(int demeterSecondBuilding) {
+        this.demeterSecondBuilding = demeterSecondBuilding;
     }
 
     @Override
     public int askDemeterSecondBuilding(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
-        return 0;
+        return demeterSecondBuilding;
     }
 }
