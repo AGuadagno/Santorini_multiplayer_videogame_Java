@@ -12,9 +12,13 @@ public class ClientHandlerMock implements VirtualView {
     private int[] workerAndSpace;
     private int artemisChosenMovementSpace;
     private int selectedSpace;
+    private int selectedSpace2;
     private int[] atlasSpaceAndDome;
     private int demeterSecondBuilding;
     private int[] hephaestusBuild;
+    private int[] BuildBeforeMovePrometheus;
+    private int prometheusMovement;
+    private int askToBuildNumber = 0;
 
     @Override
     public String askName(int i) throws DisconnectionException {
@@ -90,19 +94,36 @@ public class ClientHandlerMock implements VirtualView {
         this.selectedSpace = selectedSpace;
     }
 
+    public void setAskToBuild2(int selectedSpace2) {
+        this.selectedSpace2 = selectedSpace2;
+    }
+
     @Override
     public int askBuildingSpace(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
-        return this.selectedSpace;
+        if (askToBuildNumber == 0) {
+            askToBuildNumber++;
+            return this.selectedSpace;
+        } else {
+            return this.selectedSpace2;
+        }
     }
 
     @Override
     public int[] askBuildBeforeMovePrometheus(String playerName, boolean b, boolean b1, boolean b2, boolean b3) throws DisconnectionException {
-        return new int[0];
+        return BuildBeforeMovePrometheus;
+    }
+
+    public void setBuildBeforeMovePrometheus(int[] BuildBeforeMovePrometheus) {
+        this.BuildBeforeMovePrometheus = BuildBeforeMovePrometheus;
     }
 
     @Override
     public int askWorkerMovementPrometheus(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
-        return 0;
+        return prometheusMovement;
+    }
+
+    public void setPrometheusMovement(int prometheusMovement) {
+        this.prometheusMovement = prometheusMovement;
     }
 
     public void setHephaestusBuild(int[] hephaestusBuild) {
