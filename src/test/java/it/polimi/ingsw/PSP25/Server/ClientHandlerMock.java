@@ -14,6 +14,7 @@ public class ClientHandlerMock implements VirtualView {
     private int selectedSpace;
     private int[] atlasSpaceAndDome;
     private int demeterSecondBuilding;
+    private int[] hephaestusBuild;
 
     @Override
     public String askName(int i) throws DisconnectionException {
@@ -104,9 +105,13 @@ public class ClientHandlerMock implements VirtualView {
         return 0;
     }
 
+    public void setHephaestusBuild(int[] hephaestusBuild) {
+        this.hephaestusBuild = hephaestusBuild;
+    }
+
     @Override
     public int[] askHephaestusBuild(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
-        return new int[0];
+        return this.hephaestusBuild;
     }
 
     public void setArtemisSecondMove(int chosenMovementSpace) {
