@@ -9,30 +9,50 @@ import static org.junit.Assert.*;
 
 public class ClientHandlerMock implements VirtualView {
 
-    private int[] workerAndSpace;
+    //private int[] workerAndSpace;
+    private int[][] workerAndSpace;
+    private int workerAndSpaceCurrIndex;
     private int artemisChosenMovementSpace;
-    private int selectedSpace;
-    private int selectedSpace2;
+    private int selectedSpace[];
+    private int selectedSpaceCurrIndex;
     private int[] atlasSpaceAndDome;
-    private int demeterSecondBuilding;
+    private int[] demeterSecondBuilding;
+    private int demeterSecondBuildingCurrIndex;
+    private String name;
+    private List<Integer> allSelectedGodPowers;
+    private int selectedGodPowerIndex;
+    private int[] setupWorkerPosition;
+    private int setupWorkerPositionCurrIndex;
     private int[] hephaestusBuild;
     private int[] BuildBeforeMovePrometheus;
     private int prometheusMovement;
     private int askToBuildNumber = 0;
 
+    public void setAskName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String askName(int i) throws DisconnectionException {
-        return null;
+        return name;
+    }
+
+    public void setAskAllGodPowers(List<Integer> allSelectedGodPowers) {
+        this.allSelectedGodPowers = allSelectedGodPowers;
     }
 
     @Override
     public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> deepCopyGodPowerNames) throws DisconnectionException {
-        return null;
+        return allSelectedGodPowers;
+    }
+
+    public void setAskGodPower(int selectedGodPowerIndex) {
+        this.selectedGodPowerIndex = selectedGodPowerIndex;
     }
 
     @Override
     public int askGodPower(String playerName, List<String> deepCopyGodPowerNames) throws DisconnectionException {
-        return 0;
+        return selectedGodPowerIndex;
     }
 
     @Override
@@ -40,9 +60,27 @@ public class ClientHandlerMock implements VirtualView {
 
     }
 
+    public void setAskWorkerPosition(int setupWorkerPosition) {
+        this.setupWorkerPosition = new int[1];
+        this.setupWorkerPosition[0] = setupWorkerPosition;
+    }
+
+    public void setAskWorkerPosition(int setupWorkerPosition[]) {
+        this.setupWorkerPosition = setupWorkerPosition;
+        this.setupWorkerPositionCurrIndex = 0;
+    }
+
     @Override
     public int askWorkerPosition(String playerName, int i, int i1, SpaceCopy[][] deepCopyBoard) throws DisconnectionException {
-        return 0;
+        if (setupWorkerPosition.length == 1)
+            return setupWorkerPosition[0];
+        if (setupWorkerPositionCurrIndex < setupWorkerPosition.length) {
+            setupWorkerPositionCurrIndex++;
+            return setupWorkerPosition[setupWorkerPositionCurrIndex - 1];
+        }
+
+        System.out.println("Index out of bounds askWorkerPosition");
+        return -1000;
     }
 
     @Override
@@ -80,32 +118,52 @@ public class ClientHandlerMock implements VirtualView {
 
     }
 
-
     public void setAskWorkerMovement(int[] workerAndSpace) {
+        this.workerAndSpace = new int[1][2];
+        this.workerAndSpace[0] = workerAndSpace;
+    }
+
+    public void setAskWorkerMovement(int[][] workerAndSpace) {
         this.workerAndSpace = workerAndSpace;
+        this.workerAndSpaceCurrIndex = 0;
     }
 
     @Override
     public int[] askWorkerMovement(String playerName, List<SpaceCopy> deepCopySpaceList, List<SpaceCopy> deepCopySpaceList1) throws DisconnectionException {
-        return this.workerAndSpace;
+        if (workerAndSpace.length == 1)
+            return workerAndSpace[0];
+        if (workerAndSpaceCurrIndex < workerAndSpace.length) {
+            workerAndSpaceCurrIndex++;
+            return workerAndSpace[workerAndSpaceCurrIndex - 1];
+        }
+
+        System.out.println("Index out of bounds askWorkerMovement");
+        return new int[]{-1000, -1000};
     }
 
     public void setAskToBuild(int selectedSpace) {
-        this.selectedSpace = selectedSpace;
+        //this.selectedSpace = selectedSpace;
+        this.selectedSpace = new int[1];
+        this.selectedSpace[0] = selectedSpace;
     }
 
-    public void setAskToBuild2(int selectedSpace2) {
-        this.selectedSpace2 = selectedSpace2;
+    public void setAskToBuild(int[] selectedSpace) {
+        this.selectedSpace = selectedSpace;
+        this.selectedSpaceCurrIndex = 0;
     }
 
     @Override
     public int askBuildingSpace(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
-        if (askToBuildNumber == 0) {
-            askToBuildNumber++;
-            return this.selectedSpace;
-        } else {
-            return this.selectedSpace2;
+        //return this.selectedSpace;
+        if (selectedSpace.length == 1)
+            return selectedSpace[0];
+        if (selectedSpaceCurrIndex < selectedSpace.length) {
+            selectedSpaceCurrIndex++;
+            return selectedSpace[selectedSpaceCurrIndex - 1];
         }
+
+        System.out.println("Index out of bounds askBuildingSpace");
+        return -1000;
     }
 
     @Override
@@ -154,11 +212,27 @@ public class ClientHandlerMock implements VirtualView {
     }
 
     public void setDemeterSecondBuilding(int demeterSecondBuilding) {
+        //this.demeterSecondBuilding = demeterSecondBuilding;
+        this.demeterSecondBuilding = new int[1];
+        this.demeterSecondBuilding[0] = demeterSecondBuilding;
+    }
+
+    public void setDemeterSecondBuilding(int[] demeterSecondBuilding) {
         this.demeterSecondBuilding = demeterSecondBuilding;
+        this.demeterSecondBuildingCurrIndex = 0;
     }
 
     @Override
     public int askDemeterSecondBuilding(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
-        return demeterSecondBuilding;
+        //return demeterSecondBuilding;
+        if (demeterSecondBuilding.length == 1)
+            return demeterSecondBuilding[0];
+        if (demeterSecondBuildingCurrIndex < demeterSecondBuilding.length) {
+            demeterSecondBuildingCurrIndex++;
+            return demeterSecondBuilding[demeterSecondBuildingCurrIndex - 1];
+        }
+
+        System.out.println("Index out of bounds askDemeterSecondBuilding");
+        return -1000;
     }
 }

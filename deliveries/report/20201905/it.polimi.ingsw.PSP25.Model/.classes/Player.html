@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: Player</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Model</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: Player (it.polimi.ingsw.PSP25.Model)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">Player</td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (1/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (9/ 9)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (19/ 19)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Model;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
+        <i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Server.ClientHandler;
+        <i>5</i>&nbsp;import it.polimi.ingsw.PSP25.Server.VirtualView;
+        <i>6</i>&nbsp;
+        <i>7</i>&nbsp;/**
+        <i>8</i>&nbsp; * Player class. 2 or 3 Players per game.
+        <i>9</i>&nbsp; */
+        <i>10</i>&nbsp;public class Player {
+        <i>11</i>&nbsp;
+        <i>12</i>&nbsp;
+        <i>13</i>&nbsp; /**
+        <i>14</i>&nbsp; * Description of Attributes:
+        <i>15</i>&nbsp; * name: contains the name of the Player
+        <i>16</i>&nbsp; * ID: contains the ID of the player. The ID is automatically generated
+        <i>17</i>&nbsp; * using the name of the player and the player number
+        <i>18</i>&nbsp; * worker1: contains the first worker controlled by the Player
+        <i>19</i>&nbsp; * worker2: contains the second worker controlled by the Player
+        <i>20</i>&nbsp; * godPower: contains the GodPower of the Player
+        <i>21</i>&nbsp; * playerNumber: contains the number of the Player. Different players have different player
+        numbers
+        <i>22</i>&nbsp; * clientHandler: contains the clientHandler associated with the player&#39;s client
+        <i>23</i>&nbsp; */
+        <i>24</i>&nbsp;
+        <i>25</i>&nbsp; private String name;
+        <i>26</i>&nbsp; private String ID;
+        <i>27</i>&nbsp; private Worker worker1;
+        <i>28</i>&nbsp; private Worker worker2;
+        <i>29</i>&nbsp; private GodPower godPower;
+        <i>30</i>&nbsp; private int playerNumber;
+        <i>31</i>&nbsp; private VirtualView clientHandler;
+        <i>32</i>&nbsp;
+        <i>33</i>&nbsp; /**
+        <i>34</i>&nbsp; * Player constructor
+        <i>35</i>&nbsp; *
+        <i>36</i>&nbsp; * @param name contains the name of the Player. The name is chosen by the user
+        <i>37</i>&nbsp; * @param playerNumber contains the number of the Player. The number of the player is assigned by
+        the caller
+        <i>38</i>&nbsp; * @param clientHandler contains the clientHandler associated with the player&#39;s client
+        <i>39</i>&nbsp; */
+        <b class="fc"><i>40</i>&nbsp; public Player(String name, int playerNumber, VirtualView clientHandler) {</b>
+        <b class="fc"><i>41</i>&nbsp; this.name = name;</b>
+        <b class="fc"><i>42</i>&nbsp; this.playerNumber = playerNumber;</b>
+        <b class="fc"><i>43</i>&nbsp; this.ID = name.substring(0, 2).toUpperCase() + playerNumber;</b>
+        <b class="fc"><i>44</i>&nbsp; this.clientHandler = clientHandler;</b>
+        <b class="fc"><i>45</i>&nbsp; }</b>
+        <i>46</i>&nbsp;
+        <i>47</i>&nbsp; /**
+        <i>48</i>&nbsp; * @return the name of the Player
+        <i>49</i>&nbsp; */
+        <i>50</i>&nbsp; public String getName() {
+        <b class="fc"><i>51</i>&nbsp; return this.name;</b>
+        <i>52</i>&nbsp; }
+        <i>53</i>&nbsp;
+        <i>54</i>&nbsp; /**
+        <i>55</i>&nbsp; * @return the ID of the Player
+        <i>56</i>&nbsp; */
+        <i>57</i>&nbsp; public String getID() {
+        <b class="fc"><i>58</i>&nbsp; return ID;</b>
+        <i>59</i>&nbsp; }
+        <i>60</i>&nbsp;
+        <i>61</i>&nbsp; /**
+        <i>62</i>&nbsp; * Sets the initial position of the two workers of the Player.
+        <i>63</i>&nbsp; * @param space1 Space where the first Worker of the Player will be positioned
+        <i>64</i>&nbsp; * @param space2 Space where the second Worker of the Player will be positioned
+        <i>65</i>&nbsp; */
+        <i>66</i>&nbsp; public void initializeWorkers(Space space1, Space space2) {
+        <b class="fc"><i>67</i>&nbsp; this.worker1 = new Worker(space1, this);</b>
+        <b class="fc"><i>68</i>&nbsp; space1.setWorker(worker1);</b>
+        <b class="fc"><i>69</i>&nbsp; this.worker2 = new Worker(space2, this);</b>
+        <b class="fc"><i>70</i>&nbsp; space2.setWorker(worker2);</b>
+        <b class="fc"><i>71</i>&nbsp; }</b>
+        <i>72</i>&nbsp;
+        <i>73</i>&nbsp; /**
+        <i>74</i>&nbsp; * @return the first Worker of the Player
+        <i>75</i>&nbsp; */
+        <i>76</i>&nbsp; public Worker getWorker1() {
+        <b class="fc"><i>77</i>&nbsp; return worker1;</b>
+        <i>78</i>&nbsp; }
+        <i>79</i>&nbsp;
+        <i>80</i>&nbsp; /**
+        <i>81</i>&nbsp; * @return the second Worker of the Player
+        <i>82</i>&nbsp; */
+        <i>83</i>&nbsp; public Worker getWorker2() {
+        <b class="fc"><i>84</i>&nbsp; return worker2;</b>
+        <i>85</i>&nbsp; }
+        <i>86</i>&nbsp;
+        <i>87</i>&nbsp; /**
+        <i>88</i>&nbsp; * Sets the GodPower of the Player
+        <i>89</i>&nbsp; * @param godPower GodPower of the Player
+        <i>90</i>&nbsp; */
+        <i>91</i>&nbsp; public void initializeGodPower(GodPower godPower) {
+        <b class="fc"><i>92</i>&nbsp; this.godPower = godPower;</b>
+        <b class="fc"><i>93</i>&nbsp; }</b>
+        <i>94</i>&nbsp;
+        <i>95</i>&nbsp; /**
+        <i>96</i>&nbsp; * @return the GodPower of the Player
+        <i>97</i>&nbsp; */
+        <i>98</i>&nbsp; public GodPower getGodPower() {
+        <b class="fc"><i>99</i>&nbsp; return this.godPower;</b>
+        <i>100</i>&nbsp; }
+        <i>101</i>&nbsp;
+        <i>102</i>&nbsp; /**
+        <i>103</i>&nbsp; * @return the ClientHandler of the Player
+        <i>104</i>&nbsp; */
+        <i>105</i>&nbsp; public VirtualView getClientHandler() {
+        <b class="fc"><i>106</i>&nbsp; return clientHandler;</b>
+        <i>107</i>&nbsp; }
+        <i>108</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-05-19 00:32</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: Apollo</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Model.GodPowers</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: Apollo (it.polimi.ingsw.PSP25.Model.GodPowers)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">Apollo</td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (1/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (3/ 3)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (19/ 19)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Model.GodPowers;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Model.ActiveEffects;
+        <i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
+        <i>5</i>&nbsp;import it.polimi.ingsw.PSP25.Model.Space;
+        <i>6</i>&nbsp;import it.polimi.ingsw.PSP25.Model.Worker;
+        <i>7</i>&nbsp;
+        <i>8</i>&nbsp;import java.util.ArrayList;
+        <i>9</i>&nbsp;import java.util.List;
+        <i>10</i>&nbsp;
+        <i>11</i>&nbsp;/**
+        <i>12</i>&nbsp; * Apollo class
+        <i>13</i>&nbsp; */
+        <i>14</i>&nbsp;public class Apollo extends GodPower {
+        <i>15</i>&nbsp;
+        <i>16</i>&nbsp; /**
+        <i>17</i>&nbsp; * Apollo constructor
+        <i>18</i>&nbsp; *
+        <i>19</i>&nbsp; * @param activeEffects list of opponent GodPower effects active in the current turn that could
+        limit movement,
+        <i>20</i>&nbsp; * building actions or winning conditions of workers
+        <i>21</i>&nbsp; * @param broadcastInterface used to send the modified board to all the players
+        <i>22</i>&nbsp; */
+        <i>23</i>&nbsp; public Apollo(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
+        <b class="fc"><i>24</i>&nbsp; super(activeEffects, broadcastInterface);</b>
+        <b class="fc"><i>25</i>&nbsp; }</b>
+        <i>26</i>&nbsp;
+        <i>27</i>&nbsp; /**
+        <i>28</i>&nbsp; * Override of &quot;getValidMovementSpaces&quot; according to Apollo&#39;s effect:
+        <i>29</i>&nbsp; * &quot;Your Worker may move into an opponent Worker’s space by forcing their Worker to the
+        space yours just vacated&quot;,
+        <i>30</i>&nbsp; * adjacent spaces occupied by opponent workers are considered valid movement spaces.
+        <i>31</i>&nbsp; *
+        <i>32</i>&nbsp; * @param worker Worker that the player wants to know Spaces valid for the movement
+        <i>33</i>&nbsp; * @return List of possible Spaces where the Worker passed as argument can move to
+        <i>34</i>&nbsp; */
+        <i>35</i>&nbsp; @Override
+        <i>36</i>&nbsp; protected List&lt;Space&gt; getValidMovementSpaces(Worker worker) {
+        <b class="fc"><i>37</i>&nbsp; ArrayList&lt;Space&gt; validMovementSpaces = new ArrayList&lt;Space&gt;();</b>
+        <b class="fc"><i>38</i>&nbsp; for (Space space : worker.getSpace().getAdjacentSpaces()) {</b>
+        <b class="fc"><i>39</i>&nbsp; if ((!space.hasWorker() ||
+            !space.getWorker().getPlayer().equals(worker.getPlayer())) &amp;&amp;</b>
+        <b class="fc"><i>40</i>&nbsp; space.getTowerHeight() - worker.getSpace().getTowerHeight() &lt;= 1 &amp;&amp;
+            !space.hasDome()</b>
+        <b class="fc"><i>41</i>&nbsp; &amp;&amp; activeEffects.canMove(worker, space)) {</b>
+        <b class="fc"><i>42</i>&nbsp; validMovementSpaces.add(space);</b>
+        <i>43</i>&nbsp; }
+        <b class="fc"><i>44</i>&nbsp; }</b>
+        <b class="fc"><i>45</i>&nbsp; return validMovementSpaces;</b>
+        <i>46</i>&nbsp; }
+        <i>47</i>&nbsp;
+        <i>48</i>&nbsp; /**
+        <i>49</i>&nbsp; * Override of &quot;moveWorker&quot; according to Apollo&#39;s effect:
+        <i>50</i>&nbsp; * &quot;Your Worker may move into an opponent Worker’s space by forcing their Worker to the
+        space yours just vacated.&quot;,
+        <i>51</i>&nbsp; * if the space where the player wants to move his worker is occupied by an opponent worker,
+        <i>52</i>&nbsp; * the two worker positions are switched.
+        <i>53</i>&nbsp; *
+        <i>54</i>&nbsp; * @param myWorker Worker moved by the player who has Apollo as GodPower
+        <i>55</i>&nbsp; * @param targetSpace Space where the player who has Apollo as GodPower wants to move his worker
+        <i>56</i>&nbsp; */
+        <i>57</i>&nbsp; @Override
+        <i>58</i>&nbsp; protected void moveWorker(Worker myWorker, Space targetSpace) {
+        <b class="fc"><i>59</i>&nbsp; if (targetSpace.hasWorker()) {</b>
+        <b class="fc"><i>60</i>&nbsp; Space myPreviousSpace = myWorker.getSpace();</b>
+        <b class="fc"><i>61</i>&nbsp; Worker opponentWorker = targetSpace.getWorker();</b>
+        <b class="fc"><i>62</i>&nbsp; targetSpace.setWorker(myWorker);</b>
+        <b class="fc"><i>63</i>&nbsp; myPreviousSpace.setWorker(opponentWorker);</b>
+        <b class="fc"><i>64</i>&nbsp; opponentWorker.setHeightBeforeMove(myPreviousSpace.getTowerHeight());</b>
+        <b class="fc"><i>65</i>&nbsp; } else {</b>
+        <b class="fc"><i>66</i>&nbsp; myWorker.moveTo(targetSpace);</b>
+        <i>67</i>&nbsp; }
+        <b class="fc"><i>68</i>&nbsp; }</b>
+        <i>69</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-05-19 00:32</div>
+</div>
+</body>
+</html>

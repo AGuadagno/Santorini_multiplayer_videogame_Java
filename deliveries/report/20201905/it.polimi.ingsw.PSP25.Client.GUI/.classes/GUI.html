@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: GUI</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Client.GUI</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: GUI (it.polimi.ingsw.PSP25.Client.GUI)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">GUI</td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 55)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 103)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Client.GUI;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Client.CLI;
+        <i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Client.Client;
+        <i>5</i>&nbsp;import it.polimi.ingsw.PSP25.Client.ViewObservable;
+        <i>6</i>&nbsp;import it.polimi.ingsw.PSP25.Client.ViewObserver;
+        <i>7</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+        <i>8</i>&nbsp;import javafx.application.Application;
+        <i>9</i>&nbsp;import javafx.application.Platform;
+        <i>10</i>&nbsp;import javafx.fxml.FXMLLoader;
+        <i>11</i>&nbsp;import javafx.scene.Parent;
+        <i>12</i>&nbsp;import javafx.scene.Scene;
+        <i>13</i>&nbsp;import javafx.stage.Stage;
+        <i>14</i>&nbsp;
+        <i>15</i>&nbsp;import java.io.IOException;
+        <i>16</i>&nbsp;import java.util.List;
+        <i>17</i>&nbsp;
+        <b class="nc"><i>18</i>&nbsp;public class GUI extends Application implements ViewObservable, ViewObserver {</b>
+        <i>19</i>&nbsp; private ViewObserver client;
+        <i>20</i>&nbsp; private Stage stage;
+        <i>21</i>&nbsp; private GUIObservable controller;
+        <i>22</i>&nbsp;
+        <i>23</i>&nbsp; public static void main(String[] args) {
+        <b class="nc"><i>24</i>&nbsp; if (args.length &gt; 0 &amp;&amp; args[0].equals(&quot;CLI&quot;)) {</b>
+        <b class="nc"><i>25</i>&nbsp; ViewObservable view = new CLI();</b>
+        <b class="nc"><i>26</i>&nbsp; Client client = new Client(view, true);</b>
+        <b class="nc"><i>27</i>&nbsp; view.subscribe(client);</b>
+        <b class="nc"><i>28</i>&nbsp; client.run();</b>
+        <b class="nc"><i>29</i>&nbsp; } else {</b>
+        <b class="nc"><i>30</i>&nbsp; launch();</b>
+        <i>31</i>&nbsp; }
+        <i>32</i>&nbsp; }
+        <i>33</i>&nbsp;
+        <i>34</i>&nbsp; @Override
+        <i>35</i>&nbsp; public void subscribe(ViewObserver client) {
+        <b class="nc"><i>36</i>&nbsp; this.client = client;</b>
+        <i>37</i>&nbsp; }
+        <i>38</i>&nbsp;
+        <i>39</i>&nbsp; @Override
+        <i>40</i>&nbsp; public void askIPAddress() {
+        <i>41</i>&nbsp; }
+        <i>42</i>&nbsp;
+        <i>43</i>&nbsp; @Override
+        <i>44</i>&nbsp; public void start(Stage stage) {
+        <b class="nc"><i>45</i>&nbsp; Client client = new Client(this, false);</b>
+        <b class="nc"><i>46</i>&nbsp; this.subscribe(client);</b>
+        <b class="nc"><i>47</i>&nbsp; Thread clientThread = new Thread(client);</b>
+        <b class="nc"><i>48</i>&nbsp; clientThread.start();</b>
+        <i>49</i>&nbsp;
+        <b class="nc"><i>50</i>&nbsp; this.stage = stage;</b>
+        <i>51</i>&nbsp;
+        <b class="nc"><i>52</i>&nbsp; Parent root = null;</b>
+        <b class="nc"><i>53</i>&nbsp; FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(&quot;fxml/IPAddressScene.fxml&quot;));</b>
+        <i>54</i>&nbsp; try {
+        <b class="nc"><i>55</i>&nbsp; root = loader.load();</b>
+        <b class="nc"><i>56</i>&nbsp; } catch (IOException e) {</b>
+        <b class="nc"><i>57</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>58</i>&nbsp; }</b>
+        <b class="nc"><i>59</i>&nbsp; IPAddressSceneController controller = loader.getController();</b>
+        <b class="nc"><i>60</i>&nbsp; controller.subscribe(this);</b>
+        <i>61</i>&nbsp;
+        <b class="nc"><i>62</i>&nbsp; Scene scene = new Scene(root);</b>
+        <b class="nc"><i>63</i>&nbsp; stage.setScene(scene);</b>
+        <b class="nc"><i>64</i>&nbsp; stage.setResizable(false);</b>
+        <b class="nc"><i>65</i>&nbsp; stage.show();</b>
+        <i>66</i>&nbsp; }
+        <i>67</i>&nbsp;
+        <i>68</i>&nbsp; private Scene loadScene(String scenePath) {
+        <b class="nc"><i>69</i>&nbsp; Parent root = null;</b>
+        <b class="nc"><i>70</i>&nbsp; FXMLLoader loader = new
+            FXMLLoader(getClass().getClassLoader().getResource(scenePath));</b>
+        <i>71</i>&nbsp; try {
+        <b class="nc"><i>72</i>&nbsp; root = loader.load();</b>
+        <b class="nc"><i>73</i>&nbsp; } catch (IOException e) {</b>
+        <b class="nc"><i>74</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>75</i>&nbsp; }</b>
+        <b class="nc"><i>76</i>&nbsp; controller = loader.getController();</b>
+        <b class="nc"><i>77</i>&nbsp; controller.subscribe(this);</b>
+        <b class="nc"><i>78</i>&nbsp; Scene scene = new Scene(root);</b>
+        <b class="nc"><i>79</i>&nbsp; return scene;</b>
+        <i>80</i>&nbsp; }
+        <i>81</i>&nbsp;
+        <i>82</i>&nbsp; public void restartFromNumOfPlayersScene() {
+        <b class="nc"><i>83</i>&nbsp; Scene scene = loadScene(&quot;fxml/NumOfPlayersScene.fxml&quot;);</b>
+        <i>84</i>&nbsp;
+        <b class="nc"><i>85</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>86</i>&nbsp; stage.setScene(scene);</b>
+        <b class="nc"><i>87</i>&nbsp; stage.show();</b>
+        <i>88</i>&nbsp; });
+        <i>89</i>&nbsp;
+        <i>90</i>&nbsp; }
+        <i>91</i>&nbsp;
+        <i>92</i>&nbsp; @Override
+        <i>93</i>&nbsp; public void updateIPAddress(String ip) {
+        <b class="nc"><i>94</i>&nbsp; client.updateIPAddress(ip);</b>
+        <i>95</i>&nbsp; }
+        <i>96</i>&nbsp;
+        <i>97</i>&nbsp; @Override
+        <i>98</i>&nbsp; public void setConnectionMessage(String s) {
+        <b class="nc"><i>99</i>&nbsp; Scene scene = loadScene(&quot;fxml/NumOfPlayersScene.fxml&quot;);</b>
+        <i>100</i>&nbsp;
+        <b class="nc"><i>101</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>102</i>&nbsp; stage.setScene(scene);</b>
+        <b class="nc"><i>103</i>&nbsp; stage.show();</b>
+        <b class="nc"><i>104</i>&nbsp; ((NumOfPlayersSceneController) controller).setConnectionMessage(s);</b>
+        <i>105</i>&nbsp; });
+        <i>106</i>&nbsp; }
+        <i>107</i>&nbsp;
+        <i>108</i>&nbsp; @Override
+        <i>109</i>&nbsp; public void askNumOfPlayers(String question) {
+        <b class="nc"><i>110</i>&nbsp; ((NumOfPlayersSceneController) controller).askNumOfPlayers();</b>
+        <i>111</i>&nbsp; }
+        <i>112</i>&nbsp;
+        <i>113</i>&nbsp; public void updateNumOfPlayers(int numOfPlayers) {
+        <b class="nc"><i>114</i>&nbsp; client.updateNumOfPlayers(numOfPlayers);</b>
+        <i>115</i>&nbsp; }
+        <i>116</i>&nbsp;
+        <i>117</i>&nbsp; @Override
+        <i>118</i>&nbsp; public void askName(String question) {
+        <b class="nc"><i>119</i>&nbsp; Scene scene = loadScene(&quot;fxml/NameScene.fxml&quot;);</b>
+        <i>120</i>&nbsp;
+        <b class="nc"><i>121</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>122</i>&nbsp; stage.setScene(scene);</b>
+        <b class="nc"><i>123</i>&nbsp; stage.show();</b>
+        <b class="nc"><i>124</i>&nbsp; ((NameSceneController) controller).setQuestion(question);</b>
+        <i>125</i>&nbsp; });
+        <i>126</i>&nbsp; }
+        <i>127</i>&nbsp;
+        <i>128</i>&nbsp; public void updateName(String name) {
+        <b class="nc"><i>129</i>&nbsp; client.updateName(name);</b>
+        <i>130</i>&nbsp; }
+        <i>131</i>&nbsp;
+        <i>132</i>&nbsp; @Override
+        <i>133</i>&nbsp; public void askAllGodPowers(String playerName, int numOfPlayers, List&lt;String&gt;
+        godPowerNames) {
+        <b class="nc"><i>134</i>&nbsp; Scene scene = loadScene(&quot;fxml/AllGodPowersScene.fxml&quot;);</b>
+        <i>135</i>&nbsp;
+        <b class="nc"><i>136</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>137</i>&nbsp; stage.setScene(scene);</b>
+        <b class="nc"><i>138</i>&nbsp; stage.show();</b>
+        <b class="nc"><i>139</i>&nbsp; ((AllGodPowersSceneController) controller).setQuestion(playerName, numOfPlayers);</b>
+        <i>140</i>&nbsp; });
+        <i>141</i>&nbsp; }
+        <i>142</i>&nbsp;
+        <i>143</i>&nbsp; public void updateAllGodPower(List&lt;Integer&gt; selectedIndexes) {
+        <b class="nc"><i>144</i>&nbsp; client.updateAllGodPower(selectedIndexes);</b>
+        <i>145</i>&nbsp; }
+        <i>146</i>&nbsp;
+        <i>147</i>&nbsp; @Override
+        <i>148</i>&nbsp; public void askGodPower(String playerName, List&lt;String&gt; godPowerNames) {
+        <b class="nc"><i>149</i>&nbsp; Scene scene = loadScene(&quot;fxml/GodPowerScene.fxml&quot;);</b>
+        <i>150</i>&nbsp;
+        <b class="nc"><i>151</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>152</i>&nbsp; stage.setScene(scene);</b>
+        <b class="nc"><i>153</i>&nbsp; stage.show();</b>
+        <b class="nc"><i>154</i>&nbsp; ((GodPowerSceneController) controller).setQuestion(playerName,
+            godPowerNames);</b>
+        <i>155</i>&nbsp; });
+        <i>156</i>&nbsp; }
+        <i>157</i>&nbsp;
+        <i>158</i>&nbsp;
+        <i>159</i>&nbsp; public void updateGodPower(int selectedIndex) {
+        <b class="nc"><i>160</i>&nbsp; client.updateGodPower(selectedIndex);</b>
+        <i>161</i>&nbsp; }
+        <i>162</i>&nbsp;
+        <i>163</i>&nbsp;
+        <i>164</i>&nbsp; @Override
+        <i>165</i>&nbsp; public void showPlayersGodPowers(List&lt;String&gt; playerNames, List&lt;String&gt;
+        godPowerNames) {
+        <b class="nc"><i>166</i>&nbsp; Scene scene = loadScene(&quot;fxml/BoardScene.fxml&quot;);</b>
+        <i>167</i>&nbsp;
+        <b class="nc"><i>168</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>169</i>&nbsp; stage.setScene(scene);</b>
+        <b class="nc"><i>170</i>&nbsp; stage.show();</b>
+        <b class="nc"><i>171</i>&nbsp; ((BoardSceneController) controller).showPlayersGodPowers(playerNames,
+            godPowerNames);</b>
+        <i>172</i>&nbsp; });
+        <i>173</i>&nbsp; }
+        <i>174</i>&nbsp;
+        <i>175</i>&nbsp; @Override
+        <i>176</i>&nbsp; public void showBoard(SpaceCopy[][] board) {
+        <b class="nc"><i>177</i>&nbsp; ((BoardSceneController) controller).showBoard(board);</b>
+        <i>178</i>&nbsp; }
+        <i>179</i>&nbsp;
+        <i>180</i>&nbsp; @Override
+        <i>181</i>&nbsp; public void askWorkerPosition(String playerName, int workerNumber, int previousPos,
+        SpaceCopy[][] board) {
+        <b class="nc"><i>182</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>183</i>&nbsp; ((BoardSceneController) controller).askWorkerPosition(playerName, workerNumber,
+            previousPos, board);</b>
+        <i>184</i>&nbsp; });
+        <i>185</i>&nbsp; }
+        <i>186</i>&nbsp;
+        <i>187</i>&nbsp; @Override
+        <i>188</i>&nbsp; public void updateWorkerPosition(int pos) {
+        <b class="nc"><i>189</i>&nbsp; client.updateWorkerPosition(pos);</b>
+        <i>190</i>&nbsp; }
+        <i>191</i>&nbsp;
+        <i>192</i>&nbsp; @Override
+        <i>193</i>&nbsp; public void askWorkerMovement(String playerName, List&lt;SpaceCopy&gt; validMovementSpacesW1,
+        List&lt;SpaceCopy&gt; validMovementSpacesW2) {
+        <b class="nc"><i>194</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>195</i>&nbsp; ((BoardSceneController) controller).askWorkerMovement(playerName,
+            validMovementSpacesW1, validMovementSpacesW2);</b>
+        <i>196</i>&nbsp; });
+        <i>197</i>&nbsp; }
+        <i>198</i>&nbsp;
+        <i>199</i>&nbsp; @Override
+        <i>200</i>&nbsp; public void updateWorkerMovement(int[] workerAndSpace) {
+        <b class="nc"><i>201</i>&nbsp; client.updateWorkerMovement(workerAndSpace);</b>
+        <i>202</i>&nbsp; }
+        <i>203</i>&nbsp;
+        <i>204</i>&nbsp; @Override
+        <i>205</i>&nbsp; public void askBuildingSpace(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>206</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>207</i>&nbsp; ((BoardSceneController) controller).askBuildingSpace(playerName,
+            validBuildingSpaces);</b>
+        <i>208</i>&nbsp; });
+        <i>209</i>&nbsp; }
+        <i>210</i>&nbsp;
+        <i>211</i>&nbsp; @Override
+        <i>212</i>&nbsp; public void updateBuildingSpace(int chosenBuildingSpace) {
+        <b class="nc"><i>213</i>&nbsp; client.updateBuildingSpace(chosenBuildingSpace);</b>
+        <i>214</i>&nbsp; }
+        <i>215</i>&nbsp;
+        <i>216</i>&nbsp; @Override
+        <i>217</i>&nbsp; public void askAtlasBuild(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>218</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>219</i>&nbsp; ((BoardSceneController) controller).askAtlasBuild(playerName,
+            validBuildingSpaces);</b>
+        <i>220</i>&nbsp; });
+        <i>221</i>&nbsp; }
+        <i>222</i>&nbsp;
+        <i>223</i>&nbsp; @Override
+        <i>224</i>&nbsp; public void updateAtlasBuild(int[] selectedSpaceAndBuildDome) {
+        <b class="nc"><i>225</i>&nbsp; client.updateAtlasBuild(selectedSpaceAndBuildDome);</b>
+        <i>226</i>&nbsp; }
+        <i>227</i>&nbsp;
+        <i>228</i>&nbsp;
+        <i>229</i>&nbsp; @Override
+        <i>230</i>&nbsp; public void askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean
+        w1CanBuild, boolean w2CanMove, boolean w2CanBuild) {
+        <b class="nc"><i>231</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>232</i>&nbsp; ((BoardSceneController) controller).askBuildBeforeMovePrometheus(playerName,
+            w1CanMove, w1CanBuild, w2CanMove, w2CanBuild);</b>
+        <i>233</i>&nbsp; });
+        <i>234</i>&nbsp; }
+        <i>235</i>&nbsp;
+        <i>236</i>&nbsp;
+        <i>237</i>&nbsp; @Override
+        <i>238</i>&nbsp; public void updateBuildBeforeMovePrometheus(int[] workerAndBuildBeforeMove) {
+        <b class="nc"><i>239</i>&nbsp; client.updateBuildBeforeMovePrometheus(workerAndBuildBeforeMove);</b>
+        <i>240</i>&nbsp; }
+        <i>241</i>&nbsp;
+        <i>242</i>&nbsp; @Override
+        <i>243</i>&nbsp; public void askWorkerMovementPrometheus(String playerName, List&lt;SpaceCopy&gt;
+        validMovementSpaces) {
+        <b class="nc"><i>244</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>245</i>&nbsp; ((BoardSceneController) controller).askWorkerMovementPrometheus(playerName,
+            validMovementSpaces);</b>
+        <i>246</i>&nbsp; });
+        <i>247</i>&nbsp; }
+        <i>248</i>&nbsp;
+        <i>249</i>&nbsp;
+        <i>250</i>&nbsp; @Override
+        <i>251</i>&nbsp; public void updateWorkerMovementPrometheus(int chosenMovementSpace) {
+        <b class="nc"><i>252</i>&nbsp; client.updateWorkerMovementPrometheus(chosenMovementSpace);</b>
+        <i>253</i>&nbsp; }
+        <i>254</i>&nbsp;
+        <i>255</i>&nbsp; @Override
+        <i>256</i>&nbsp; public void askArtemisSecondMove(String playerName, List&lt;SpaceCopy&gt;
+        validSecondMovementSpaces) {
+        <b class="nc"><i>257</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>258</i>&nbsp; ((BoardSceneController) controller).askArtemisSecondMove(playerName,
+            validSecondMovementSpaces);</b>
+        <i>259</i>&nbsp; });
+        <i>260</i>&nbsp; }
+        <i>261</i>&nbsp;
+        <i>262</i>&nbsp; @Override
+        <i>263</i>&nbsp; public void updateArtemisSecondMove(int artemisSecondMoveSpace) {
+        <b class="nc"><i>264</i>&nbsp; client.updateArtemisSecondMove(artemisSecondMoveSpace);</b>
+        <i>265</i>&nbsp; }
+        <i>266</i>&nbsp;
+        <i>267</i>&nbsp; @Override
+        <i>268</i>&nbsp; public void askDemeterSecondBuilding(String playerName, List&lt;SpaceCopy&gt;
+        validBuildingSpaces) {
+        <b class="nc"><i>269</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>270</i>&nbsp; ((BoardSceneController) controller).askDemeterSecondBuilding(playerName,
+            validBuildingSpaces);</b>
+        <i>271</i>&nbsp; });
+        <i>272</i>&nbsp; }
+        <i>273</i>&nbsp;
+        <i>274</i>&nbsp; @Override
+        <i>275</i>&nbsp; public void askHephaestusBuild(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>276</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>277</i>&nbsp; ((BoardSceneController) controller).askHephaestusBuild(playerName,
+            validBuildingSpaces);</b>
+        <i>278</i>&nbsp; });
+        <i>279</i>&nbsp; }
+        <i>280</i>&nbsp;
+        <i>281</i>&nbsp; @Override
+        <i>282</i>&nbsp; public void updateHephaestusBuild(int[] spaceAndDoubleBuildingHephaestus) {
+        <b class="nc"><i>283</i>&nbsp; client.updateHephaestusBuild(spaceAndDoubleBuildingHephaestus);</b>
+        <i>284</i>&nbsp; }
+        <i>285</i>&nbsp;
+        <i>286</i>&nbsp; @Override
+        <i>287</i>&nbsp; public void announceVictory(String playerName) {
+        <b class="nc"><i>288</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>289</i>&nbsp; ((BoardSceneController) controller).announceVictory(playerName);</b>
+        <i>290</i>&nbsp; });
+        <i>291</i>&nbsp; }
+        <i>292</i>&nbsp;
+        <i>293</i>&nbsp; @Override
+        <i>294</i>&nbsp; public void announceLose(String playerName) {
+        <b class="nc"><i>295</i>&nbsp; Platform.runLater(() -&gt; {</b>
+        <b class="nc"><i>296</i>&nbsp; ((BoardSceneController) controller).announceLose(playerName);</b>
+        <i>297</i>&nbsp; });
+        <i>298</i>&nbsp; }
+        <i>299</i>&nbsp;
+        <i>300</i>&nbsp; public void playAgain(boolean b) {
+        <b class="nc"><i>301</i>&nbsp; client.playAgain(b);</b>
+        <i>302</i>&nbsp; }
+        <i>303</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-05-19 00:32</div>
+</div>
+</body>
+</html>

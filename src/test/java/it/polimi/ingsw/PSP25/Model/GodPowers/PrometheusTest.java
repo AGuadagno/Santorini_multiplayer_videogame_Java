@@ -52,14 +52,15 @@ public class PrometheusTest {
     @Test
     public void turnSequence() {
         // Build Before Move
+        int[] selectedSpace = new int[2];
         int[] BuildBeforeMovePrometheus = new int[]{1, 1};
         clientHandlerMock.setBuildBeforeMovePrometheus(BuildBeforeMovePrometheus);
-        int selectedSpace = 1;
-        clientHandlerMock.setAskToBuild(selectedSpace);
+        selectedSpace[0] = 1;
+        //clientHandlerMock.setAskToBuild(selectedSpace);
         int prometheusMovement = 5;
         clientHandlerMock.setPrometheusMovement(prometheusMovement);
-        int selectedSpace2 = 6;
-        clientHandlerMock.setAskToBuild2(selectedSpace2);
+        selectedSpace[1] = 6;
+        clientHandlerMock.setAskToBuild(selectedSpace);
 
         try {
             assertEquals(gp.turnSequence(p1, a), TurnResult.CONTINUE);
@@ -76,14 +77,15 @@ public class PrometheusTest {
     @Test
     public void turnSequenceW2() {
         // Build Before Move with W2
+        int[] selectedSpace = new int[2];
         int[] BuildBeforeMovePrometheus = new int[]{2, 1};
         clientHandlerMock.setBuildBeforeMovePrometheus(BuildBeforeMovePrometheus);
-        int selectedSpace = 23;
-        clientHandlerMock.setAskToBuild(selectedSpace);
+        selectedSpace[0] = 23;
+        //clientHandlerMock.setAskToBuild(selectedSpace);
         int prometheusMovement = 19;
         clientHandlerMock.setPrometheusMovement(prometheusMovement);
-        int selectedSpace2 = 18;
-        clientHandlerMock.setAskToBuild2(selectedSpace2);
+        selectedSpace[1] = 18;
+        clientHandlerMock.setAskToBuild(selectedSpace);
 
         try {
             assertEquals(gp.turnSequence(p1, a), TurnResult.CONTINUE);
@@ -100,14 +102,15 @@ public class PrometheusTest {
     @Test
     public void turnSequence2() {
         // NO Build Before Move
+        int[] selectedSpace = new int[2];
         int[] BuildBeforeMovePrometheus = new int[]{1, 0};
         clientHandlerMock.setBuildBeforeMovePrometheus(BuildBeforeMovePrometheus);
-        int selectedSpace = 1;
-        clientHandlerMock.setAskToBuild(selectedSpace);
+        selectedSpace[0] = 1;
+        //clientHandlerMock.setAskToBuild(selectedSpace);
         int prometheusMovement = 5;
         clientHandlerMock.setPrometheusMovement(prometheusMovement);
-        int selectedSpace2 = 6;
-        clientHandlerMock.setAskToBuild2(selectedSpace2);
+        selectedSpace[1] = 6;
+        clientHandlerMock.setAskToBuild(selectedSpace);
 
         try {
             assertEquals(gp.turnSequence(p1, a), TurnResult.CONTINUE);
@@ -145,14 +148,15 @@ public class PrometheusTest {
         b.getSpace(0, 1).setTowerHeight(3);
         b.getSpace(1, 1).setTowerHeight(3);
 
+        int[] selectedSpace = new int[2];
         int[] BuildBeforeMovePrometheus = new int[]{1, 1};
         clientHandlerMock.setBuildBeforeMovePrometheus(BuildBeforeMovePrometheus);
-        int selectedSpace = 1;
-        clientHandlerMock.setAskToBuild(selectedSpace);
+        selectedSpace[0] = 1;
+        //clientHandlerMock.setAskToBuild(selectedSpace);
         int prometheusMovement = 5;
         clientHandlerMock.setPrometheusMovement(prometheusMovement);
-        int selectedSpace2 = 6;
-        clientHandlerMock.setAskToBuild2(selectedSpace2);
+        selectedSpace[1] = 6;
+        clientHandlerMock.setAskToBuild(selectedSpace);
 
         try {
             assertEquals(gp.turnSequence(p1, a), TurnResult.LOSE);

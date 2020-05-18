@@ -1,0 +1,583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: Client</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Client</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: Client (it.polimi.ingsw.PSP25.Client)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">Client</td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 34)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 271)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Client;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.Messages.Message;
+        <i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Server.Server;
+        <i>5</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+        <i>6</i>&nbsp;
+        <i>7</i>&nbsp;import java.io.IOException;
+        <i>8</i>&nbsp;import java.net.Socket;
+        <i>9</i>&nbsp;import java.util.List;
+        <i>10</i>&nbsp;import java.util.Scanner;
+        <i>11</i>&nbsp;
+        <i>12</i>&nbsp;public class Client implements Runnable, ServerObserver, ViewObserver {
+        <i>13</i>&nbsp;
+        <b class="nc"><i>14</i>&nbsp; private Message receivedMessage = null;</b>
+        <i>15</i>&nbsp; private boolean cliIsChosen;
+        <i>16</i>&nbsp; private ViewObservable view;
+        <i>17</i>&nbsp; private Scanner scanner;
+        <b class="nc"><i>18</i>&nbsp; private final Object Lock = &quot;&quot;;</b>
+        <b class="nc"><i>19</i>&nbsp; private String ip = null;</b>
+        <b class="nc"><i>20</i>&nbsp; private Integer numOfPlayers = null;</b>
+        <b class="nc"><i>21</i>&nbsp; private String name = null;</b>
+        <b class="nc"><i>22</i>&nbsp; private List&lt;Integer&gt; allGodPowerIndexes = null;</b>
+        <b class="nc"><i>23</i>&nbsp; private Integer godPowerIndex = null;</b>
+        <b class="nc"><i>24</i>&nbsp; private Integer workerPosition = null;</b>
+        <b class="nc"><i>25</i>&nbsp; private int[] workerAndSpace = null;</b>
+        <b class="nc"><i>26</i>&nbsp; private Integer chosenBuildingSpace = null;</b>
+        <b class="nc"><i>27</i>&nbsp; private int[] selectedSpaceAndDome = null;</b>
+        <b class="nc"><i>28</i>&nbsp; private int[] workerAndBuildBeforeMove = null;</b>
+        <b class="nc"><i>29</i>&nbsp; private Integer chosenMovementSpace = null;</b>
+        <b class="nc"><i>30</i>&nbsp; private Integer artemisSecondMoveSpace = null;</b>
+        <b class="nc"><i>31</i>&nbsp; private int[] spaceAndDoubleBuildingHephaestus = null;</b>
+        <i>32</i>&nbsp;
+        <b class="nc"><i>33</i>&nbsp; public Client(ViewObservable view, boolean cliIsChosen) {</b>
+        <b class="nc"><i>34</i>&nbsp; this.view = view;</b>
+        <b class="nc"><i>35</i>&nbsp; this.cliIsChosen = cliIsChosen;</b>
+        <i>36</i>&nbsp; }
+        <i>37</i>&nbsp;
+        <i>38</i>&nbsp; @Override
+        <i>39</i>&nbsp; public void run() {
+        <b class="nc"><i>40</i>&nbsp; scanner = new Scanner(System.in);</b>
+        <b class="nc"><i>41</i>&nbsp; view.askIPAddress();</b>
+        <i>42</i>&nbsp;
+        <b class="nc"><i>43</i>&nbsp; while (ip == null) {</b>
+        <i>44</i>&nbsp; try {
+        <b class="nc"><i>45</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>46</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>47</i>&nbsp; }</b>
+        <b class="nc"><i>48</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>49</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>50</i>&nbsp; }</b>
+        <i>51</i>&nbsp; }
+        <i>52</i>&nbsp;
+        <i>53</i>&nbsp; //---
+        <i>54</i>&nbsp; Socket server;
+        <i>55</i>&nbsp; try {
+        <b class="nc"><i>56</i>&nbsp; server = new Socket(ip, Server.SOCKET_PORT);</b>
+        <b class="nc"><i>57</i>&nbsp; } catch (IOException e) {</b>
+        <b class="nc"><i>58</i>&nbsp; view.setConnectionMessage(&quot;Server unreachable&quot;);</b>
+        <i>59</i>&nbsp; //System.out.println(&quot;server unreachable&quot;);
+        <i>60</i>&nbsp; return;
+        <b class="nc"><i>61</i>&nbsp; }</b>
+        <b class="nc"><i>62</i>&nbsp; view.setConnectionMessage(&quot;Connected to the server&quot;);</b>
+        <i>63</i>&nbsp; //System.out.println(&quot;Connected&quot;);
+        <i>64</i>&nbsp;
+        <i>65</i>&nbsp; // CREATION OF NETWORK HANDLER
+        <b class="nc"><i>66</i>&nbsp; NetworkHandler networkHandler = new NetworkHandler(server);</b>
+        <b class="nc"><i>67</i>&nbsp; networkHandler.addObserver(this);</b>
+        <b class="nc"><i>68</i>&nbsp; Thread networkHandlerThread = new Thread(networkHandler);</b>
+        <b class="nc"><i>69</i>&nbsp; networkHandlerThread.start();</b>
+        <i>70</i>&nbsp;
+        <i>71</i>&nbsp; // RECEIVING OF MESSAGES FROM SERVER
+        <i>72</i>&nbsp; do {
+        <b class="nc"><i>73</i>&nbsp; synchronized (this) {</b>
+        <i>74</i>&nbsp;
+        <b class="nc"><i>75</i>&nbsp; networkHandler.receiveCommand();</b>
+        <i>76</i>&nbsp; try {
+        <b class="nc"><i>77</i>&nbsp; wait();</b>
+        <b class="nc"><i>78</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>79</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>80</i>&nbsp; }</b>
+        <i>81</i>&nbsp;
+        <b class="nc"><i>82</i>&nbsp; if (receivedMessage != null) {</b>
+        <i>83</i>&nbsp; try {
+        <b class="nc"><i>84</i>&nbsp; receivedMessage.process(networkHandler, this);</b>
+        <b class="nc"><i>85</i>&nbsp; } catch (IOException e) {</b>
+        <b class="nc"><i>86</i>&nbsp; System.out.println(&quot;Disconnected from server&quot;);</b>
+        <i>87</i>&nbsp; //e.printStackTrace();
+        <b class="nc"><i>88</i>&nbsp; }</b>
+        <i>89</i>&nbsp; }
+        <b class="nc"><i>90</i>&nbsp; }</b>
+        <b class="nc"><i>91</i>&nbsp; } while (receivedMessage != null);</b>
+        <i>92</i>&nbsp;
+        <b class="nc"><i>93</i>&nbsp; if (cliIsChosen) {</b>
+        <b class="nc"><i>94</i>&nbsp; System.out.println(&quot;\nDo you want to play again? (y = yes, n =
+            no)&quot;);</b>
+        <b class="nc"><i>95</i>&nbsp; String answer = scanner.next();</b>
+        <b class="nc"><i>96</i>&nbsp; while (!(answer.equals(&quot;y&quot;) || answer.equals(&quot;n&quot;))) {</b>
+        <b class="nc"><i>97</i>&nbsp; System.out.println(&quot;Your Choice is not valid. insert &#39;y&#39; to play
+            again, &#39;n&#39; to close&quot;);</b>
+        <b class="nc"><i>98</i>&nbsp; answer = scanner.next();</b>
+        <i>99</i>&nbsp; }
+        <i>100</i>&nbsp;
+        <b class="nc"><i>101</i>&nbsp; if (answer.equals(&quot;y&quot;))</b>
+        <b class="nc"><i>102</i>&nbsp; run();</b>
+        <i>103</i>&nbsp; }
+        <i>104</i>&nbsp; }
+        <i>105</i>&nbsp;
+        <i>106</i>&nbsp; @Override
+        <i>107</i>&nbsp; public void playAgain(boolean b) {
+        <b class="nc"><i>108</i>&nbsp; if (b) {</b>
+        <b class="nc"><i>109</i>&nbsp; Thread clientThread = new Thread(this);</b>
+        <b class="nc"><i>110</i>&nbsp; clientThread.start();</b>
+        <i>111</i>&nbsp; }
+        <i>112</i>&nbsp; }
+        <i>113</i>&nbsp;
+        <i>114</i>&nbsp; @Override
+        <i>115</i>&nbsp; public synchronized void didReceiveServerMessage(Message message) {
+        <b class="nc"><i>116</i>&nbsp; this.receivedMessage = message;</b>
+        <b class="nc"><i>117</i>&nbsp; notifyAll();</b>
+        <i>118</i>&nbsp; }
+        <i>119</i>&nbsp;
+        <i>120</i>&nbsp; @Override
+        <i>121</i>&nbsp; public void updateIPAddress(String ip) {
+        <b class="nc"><i>122</i>&nbsp; this.ip = ip;</b>
+        <b class="nc"><i>123</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>124</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>125</i>&nbsp; }</b>
+        <i>126</i>&nbsp; }
+        <i>127</i>&nbsp;
+        <i>128</i>&nbsp; public int askNumOfPlayers(String question) {
+        <b class="nc"><i>129</i>&nbsp; view.askNumOfPlayers(question);</b>
+        <b class="nc"><i>130</i>&nbsp; while (numOfPlayers == null) {</b>
+        <i>131</i>&nbsp; try {
+        <b class="nc"><i>132</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>133</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>134</i>&nbsp; }</b>
+        <b class="nc"><i>135</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>136</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>137</i>&nbsp; }</b>
+        <i>138</i>&nbsp; }
+        <i>139</i>&nbsp;
+        <b class="nc"><i>140</i>&nbsp; int numPl = this.numOfPlayers;</b>
+        <b class="nc"><i>141</i>&nbsp; this.numOfPlayers = null;</b>
+        <b class="nc"><i>142</i>&nbsp; return numPl;</b>
+        <i>143</i>&nbsp; }
+        <i>144</i>&nbsp;
+        <i>145</i>&nbsp; @Override
+        <i>146</i>&nbsp; public void updateNumOfPlayers(int numOfPlayers) {
+        <b class="nc"><i>147</i>&nbsp; if (this.numOfPlayers == null) {</b>
+        <b class="nc"><i>148</i>&nbsp; this.numOfPlayers = numOfPlayers;</b>
+        <b class="nc"><i>149</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>150</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>151</i>&nbsp; }</b>
+        <i>152</i>&nbsp; }
+        <i>153</i>&nbsp; }
+        <i>154</i>&nbsp;
+        <i>155</i>&nbsp; public String askName(String question) {
+        <b class="nc"><i>156</i>&nbsp; view.askName(question);</b>
+        <b class="nc"><i>157</i>&nbsp; while (name == null) {</b>
+        <i>158</i>&nbsp; try {
+        <b class="nc"><i>159</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>160</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>161</i>&nbsp; }</b>
+        <b class="nc"><i>162</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>163</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>164</i>&nbsp; }</b>
+        <i>165</i>&nbsp; }
+        <i>166</i>&nbsp;
+        <b class="nc"><i>167</i>&nbsp; String name = this.name;</b>
+        <b class="nc"><i>168</i>&nbsp; this.name = null;</b>
+        <b class="nc"><i>169</i>&nbsp; return name;</b>
+        <i>170</i>&nbsp; }
+        <i>171</i>&nbsp;
+        <i>172</i>&nbsp; @Override
+        <i>173</i>&nbsp; public void updateName(String name) {
+        <b class="nc"><i>174</i>&nbsp; if (this.name == null) {</b>
+        <b class="nc"><i>175</i>&nbsp; this.name = name;</b>
+        <b class="nc"><i>176</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>177</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>178</i>&nbsp; }</b>
+        <i>179</i>&nbsp; }
+        <i>180</i>&nbsp; }
+        <i>181</i>&nbsp;
+        <i>182</i>&nbsp; public List&lt;Integer&gt; askAllGodPowers(String playerName, int numOfPlayers, List&lt;String&gt;
+        godPowerNames) {
+        <b class="nc"><i>183</i>&nbsp; view.askAllGodPowers(playerName, numOfPlayers, godPowerNames);</b>
+        <b class="nc"><i>184</i>&nbsp; allGodPowerIndexes = null;</b>
+        <b class="nc"><i>185</i>&nbsp; while (allGodPowerIndexes == null) {</b>
+        <i>186</i>&nbsp; try {
+        <b class="nc"><i>187</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>188</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>189</i>&nbsp; }</b>
+        <b class="nc"><i>190</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>191</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>192</i>&nbsp; }</b>
+        <i>193</i>&nbsp; }
+        <i>194</i>&nbsp;
+        <b class="nc"><i>195</i>&nbsp; return allGodPowerIndexes;</b>
+        <i>196</i>&nbsp; }
+        <i>197</i>&nbsp;
+        <i>198</i>&nbsp; @Override
+        <i>199</i>&nbsp; public void updateAllGodPower(List&lt;Integer&gt; selectedIndexes) {
+        <b class="nc"><i>200</i>&nbsp; if (this.allGodPowerIndexes == null) {</b>
+        <b class="nc"><i>201</i>&nbsp; this.allGodPowerIndexes = selectedIndexes;</b>
+        <b class="nc"><i>202</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>203</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>204</i>&nbsp; }</b>
+        <i>205</i>&nbsp; }
+        <i>206</i>&nbsp; }
+        <i>207</i>&nbsp;
+        <i>208</i>&nbsp; public int askGodPower(String playerName, List&lt;String&gt; godPowerNames) {
+        <b class="nc"><i>209</i>&nbsp; view.askGodPower(playerName, godPowerNames);</b>
+        <b class="nc"><i>210</i>&nbsp; godPowerIndex = null;</b>
+        <b class="nc"><i>211</i>&nbsp; while (godPowerIndex == null) {</b>
+        <i>212</i>&nbsp; try {
+        <b class="nc"><i>213</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>214</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>215</i>&nbsp; }</b>
+        <b class="nc"><i>216</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>217</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>218</i>&nbsp; }</b>
+        <i>219</i>&nbsp; }
+        <b class="nc"><i>220</i>&nbsp; return godPowerIndex;</b>
+        <i>221</i>&nbsp; }
+        <i>222</i>&nbsp;
+        <i>223</i>&nbsp;
+        <i>224</i>&nbsp; @Override
+        <i>225</i>&nbsp; public void updateGodPower(int selectedIndex) {
+        <b class="nc"><i>226</i>&nbsp; if (this.godPowerIndex == null) {</b>
+        <b class="nc"><i>227</i>&nbsp; this.godPowerIndex = selectedIndex;</b>
+        <b class="nc"><i>228</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>229</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>230</i>&nbsp; }</b>
+        <i>231</i>&nbsp; }
+        <i>232</i>&nbsp; }
+        <i>233</i>&nbsp;
+        <i>234</i>&nbsp;
+        <i>235</i>&nbsp; public void showPlayersGodPowers(List&lt;String&gt; playerNames, List&lt;String&gt;
+        godPowerNames) {
+        <b class="nc"><i>236</i>&nbsp; view.showPlayersGodPowers(playerNames, godPowerNames);</b>
+        <i>237</i>&nbsp; }
+        <i>238</i>&nbsp;
+        <i>239</i>&nbsp; public void showBoard(SpaceCopy[][] board) {
+        <b class="nc"><i>240</i>&nbsp; view.showBoard(board);</b>
+        <i>241</i>&nbsp; }
+        <i>242</i>&nbsp;
+        <i>243</i>&nbsp; public int askWorkerPosition(String playerName, int workerNumber, int previousPos,
+        SpaceCopy[][] board) {
+        <b class="nc"><i>244</i>&nbsp; view.askWorkerPosition(playerName, workerNumber, previousPos, board);</b>
+        <b class="nc"><i>245</i>&nbsp; while (workerPosition == null) {</b>
+        <i>246</i>&nbsp; try {
+        <b class="nc"><i>247</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>248</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>249</i>&nbsp; }</b>
+        <b class="nc"><i>250</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>251</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>252</i>&nbsp; }</b>
+        <i>253</i>&nbsp; }
+        <i>254</i>&nbsp;
+        <b class="nc"><i>255</i>&nbsp; int workerPosition = this.workerPosition;</b>
+        <b class="nc"><i>256</i>&nbsp; this.workerPosition = null;</b>
+        <b class="nc"><i>257</i>&nbsp; return workerPosition;</b>
+        <i>258</i>&nbsp; }
+        <i>259</i>&nbsp;
+        <i>260</i>&nbsp; @Override
+        <i>261</i>&nbsp; public void updateWorkerPosition(int pos) {
+        <b class="nc"><i>262</i>&nbsp; if (this.workerPosition == null) {</b>
+        <b class="nc"><i>263</i>&nbsp; this.workerPosition = pos;</b>
+        <b class="nc"><i>264</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>265</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>266</i>&nbsp; }</b>
+        <i>267</i>&nbsp; }
+        <i>268</i>&nbsp; }
+        <i>269</i>&nbsp;
+        <i>270</i>&nbsp;
+        <i>271</i>&nbsp; public int[] askWorkerMovement(String playerName, List&lt;SpaceCopy&gt; validMovementSpacesW1,
+        List&lt;SpaceCopy&gt; validMovementSpacesW2) {
+        <b class="nc"><i>272</i>&nbsp; view.askWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2);</b>
+        <b class="nc"><i>273</i>&nbsp; while (workerAndSpace == null) {</b>
+        <i>274</i>&nbsp; try {
+        <b class="nc"><i>275</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>276</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>277</i>&nbsp; }</b>
+        <b class="nc"><i>278</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>279</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>280</i>&nbsp; }</b>
+        <i>281</i>&nbsp; }
+        <i>282</i>&nbsp;
+        <b class="nc"><i>283</i>&nbsp; int[] workerAndSpace = this.workerAndSpace;</b>
+        <b class="nc"><i>284</i>&nbsp; this.workerAndSpace = null;</b>
+        <b class="nc"><i>285</i>&nbsp; return workerAndSpace;</b>
+        <i>286</i>&nbsp; }
+        <i>287</i>&nbsp;
+        <i>288</i>&nbsp; @Override
+        <i>289</i>&nbsp; public void updateWorkerMovement(int[] workerAndSpace) {
+        <b class="nc"><i>290</i>&nbsp; if (this.workerAndSpace == null) {</b>
+        <b class="nc"><i>291</i>&nbsp; this.workerAndSpace = workerAndSpace;</b>
+        <b class="nc"><i>292</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>293</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>294</i>&nbsp; }</b>
+        <i>295</i>&nbsp; }
+        <i>296</i>&nbsp; }
+        <i>297</i>&nbsp;
+        <i>298</i>&nbsp;
+        <i>299</i>&nbsp; public int askBuildingSpace(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>300</i>&nbsp; view.askBuildingSpace(playerName, validBuildingSpaces);</b>
+        <b class="nc"><i>301</i>&nbsp; while (chosenBuildingSpace == null) {</b>
+        <i>302</i>&nbsp; try {
+        <b class="nc"><i>303</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>304</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>305</i>&nbsp; }</b>
+        <b class="nc"><i>306</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>307</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>308</i>&nbsp; }</b>
+        <i>309</i>&nbsp; }
+        <i>310</i>&nbsp;
+        <b class="nc"><i>311</i>&nbsp; int chosenBuildingSpace = this.chosenBuildingSpace;</b>
+        <b class="nc"><i>312</i>&nbsp; this.chosenBuildingSpace = null;</b>
+        <b class="nc"><i>313</i>&nbsp; return chosenBuildingSpace;</b>
+        <i>314</i>&nbsp; }
+        <i>315</i>&nbsp;
+        <i>316</i>&nbsp;
+        <i>317</i>&nbsp; @Override
+        <i>318</i>&nbsp; public void updateBuildingSpace(int chosenBuildingSpace) {
+        <b class="nc"><i>319</i>&nbsp; if (this.chosenBuildingSpace == null) {</b>
+        <b class="nc"><i>320</i>&nbsp; this.chosenBuildingSpace = chosenBuildingSpace;</b>
+        <b class="nc"><i>321</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>322</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>323</i>&nbsp; }</b>
+        <i>324</i>&nbsp; }
+        <i>325</i>&nbsp; }
+        <i>326</i>&nbsp;
+        <i>327</i>&nbsp; @Override
+        <i>328</i>&nbsp; public void updateAtlasBuild(int[] selectedSpaceAndBuildDome) {
+        <b class="nc"><i>329</i>&nbsp; if (this.selectedSpaceAndDome == null) {</b>
+        <b class="nc"><i>330</i>&nbsp; this.selectedSpaceAndDome = selectedSpaceAndBuildDome;</b>
+        <b class="nc"><i>331</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>332</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>333</i>&nbsp; }</b>
+        <i>334</i>&nbsp; }
+        <i>335</i>&nbsp; }
+        <i>336</i>&nbsp;
+        <i>337</i>&nbsp;
+        <i>338</i>&nbsp; public int[] askAtlasBuild(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>339</i>&nbsp; view.askAtlasBuild(playerName, validBuildingSpaces);</b>
+        <b class="nc"><i>340</i>&nbsp; while (selectedSpaceAndDome == null) {</b>
+        <i>341</i>&nbsp; try {
+        <b class="nc"><i>342</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>343</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>344</i>&nbsp; }</b>
+        <b class="nc"><i>345</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>346</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>347</i>&nbsp; }</b>
+        <i>348</i>&nbsp; }
+        <i>349</i>&nbsp;
+        <b class="nc"><i>350</i>&nbsp; int[] selectedSpaceAndDome = this.selectedSpaceAndDome;</b>
+        <b class="nc"><i>351</i>&nbsp; this.selectedSpaceAndDome = null;</b>
+        <b class="nc"><i>352</i>&nbsp; return selectedSpaceAndDome;</b>
+        <i>353</i>&nbsp; }
+        <i>354</i>&nbsp;
+        <i>355</i>&nbsp; public int[] askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean
+        w1CanBuild, boolean w2CanMove, boolean w2CanBuild) {
+        <b class="nc"><i>356</i>&nbsp; view.askBuildBeforeMovePrometheus(playerName, w1CanMove, w1CanBuild, w2CanMove,
+            w2CanBuild);</b>
+        <b class="nc"><i>357</i>&nbsp; while (workerAndBuildBeforeMove == null) {</b>
+        <i>358</i>&nbsp; try {
+        <b class="nc"><i>359</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>360</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>361</i>&nbsp; }</b>
+        <b class="nc"><i>362</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>363</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>364</i>&nbsp; }</b>
+        <i>365</i>&nbsp; }
+        <i>366</i>&nbsp;
+        <b class="nc"><i>367</i>&nbsp; int[] workerAndBuildBeforeMove = this.workerAndBuildBeforeMove;</b>
+        <b class="nc"><i>368</i>&nbsp; this.workerAndBuildBeforeMove = null;</b>
+        <b class="nc"><i>369</i>&nbsp; return workerAndBuildBeforeMove;</b>
+        <i>370</i>&nbsp; }
+        <i>371</i>&nbsp;
+        <i>372</i>&nbsp; @Override
+        <i>373</i>&nbsp; public void updateBuildBeforeMovePrometheus(int[] workerAndBuildBeforeMove) {
+        <b class="nc"><i>374</i>&nbsp; if (this.workerAndBuildBeforeMove == null) {</b>
+        <b class="nc"><i>375</i>&nbsp; this.workerAndBuildBeforeMove = workerAndBuildBeforeMove;</b>
+        <b class="nc"><i>376</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>377</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>378</i>&nbsp; }</b>
+        <i>379</i>&nbsp; }
+        <i>380</i>&nbsp; }
+        <i>381</i>&nbsp;
+        <i>382</i>&nbsp;
+        <i>383</i>&nbsp; public int askWorkerMovementPrometheus(String playerName, List&lt;SpaceCopy&gt;
+        validMovementSpaces) {
+        <b class="nc"><i>384</i>&nbsp; view.askWorkerMovementPrometheus(playerName, validMovementSpaces);</b>
+        <b class="nc"><i>385</i>&nbsp; while (chosenMovementSpace == null) {</b>
+        <i>386</i>&nbsp; try {
+        <b class="nc"><i>387</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>388</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>389</i>&nbsp; }</b>
+        <b class="nc"><i>390</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>391</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>392</i>&nbsp; }</b>
+        <i>393</i>&nbsp; }
+        <i>394</i>&nbsp;
+        <b class="nc"><i>395</i>&nbsp; int chosenMovementSpace = this.chosenMovementSpace;</b>
+        <b class="nc"><i>396</i>&nbsp; this.chosenMovementSpace = null;</b>
+        <b class="nc"><i>397</i>&nbsp; return chosenMovementSpace;</b>
+        <i>398</i>&nbsp;
+        <i>399</i>&nbsp; }
+        <i>400</i>&nbsp;
+        <i>401</i>&nbsp; @Override
+        <i>402</i>&nbsp; public void updateWorkerMovementPrometheus(int chosenMovementSpace) {
+        <b class="nc"><i>403</i>&nbsp; if (this.chosenMovementSpace == null) {</b>
+        <b class="nc"><i>404</i>&nbsp; this.chosenMovementSpace = chosenMovementSpace;</b>
+        <b class="nc"><i>405</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>406</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>407</i>&nbsp; }</b>
+        <i>408</i>&nbsp; }
+        <i>409</i>&nbsp; }
+        <i>410</i>&nbsp;
+        <i>411</i>&nbsp; public int askArtemisSecondMove(String playerName, List&lt;SpaceCopy&gt;
+        validSecondMovementSpaces) {
+        <b class="nc"><i>412</i>&nbsp; view.askArtemisSecondMove(playerName, validSecondMovementSpaces);</b>
+        <b class="nc"><i>413</i>&nbsp; while (artemisSecondMoveSpace == null) {</b>
+        <i>414</i>&nbsp; try {
+        <b class="nc"><i>415</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>416</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>417</i>&nbsp; }</b>
+        <b class="nc"><i>418</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>419</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>420</i>&nbsp; }</b>
+        <i>421</i>&nbsp; }
+        <i>422</i>&nbsp;
+        <b class="nc"><i>423</i>&nbsp; int artemisSecondMoveSpace = this.artemisSecondMoveSpace;</b>
+        <b class="nc"><i>424</i>&nbsp; this.artemisSecondMoveSpace = null;</b>
+        <b class="nc"><i>425</i>&nbsp; return artemisSecondMoveSpace;</b>
+        <i>426</i>&nbsp; }
+        <i>427</i>&nbsp;
+        <i>428</i>&nbsp; @Override
+        <i>429</i>&nbsp; public void updateArtemisSecondMove(int artemisSecondMoveSpace) {
+        <b class="nc"><i>430</i>&nbsp; if (this.artemisSecondMoveSpace == null) {</b>
+        <b class="nc"><i>431</i>&nbsp; this.artemisSecondMoveSpace = artemisSecondMoveSpace;</b>
+        <b class="nc"><i>432</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>433</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>434</i>&nbsp; }</b>
+        <i>435</i>&nbsp; }
+        <i>436</i>&nbsp; }
+        <i>437</i>&nbsp;
+        <i>438</i>&nbsp; public int askDemeterSecondBuilding(String playerName, List&lt;SpaceCopy&gt;
+        validBuildingSpaces) {
+        <b class="nc"><i>439</i>&nbsp; view.askDemeterSecondBuilding(playerName, validBuildingSpaces);</b>
+        <i>440</i>&nbsp;
+        <b class="nc"><i>441</i>&nbsp; while (chosenBuildingSpace == null) {</b>
+        <i>442</i>&nbsp; try {
+        <b class="nc"><i>443</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>444</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>445</i>&nbsp; }</b>
+        <b class="nc"><i>446</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>447</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>448</i>&nbsp; }</b>
+        <i>449</i>&nbsp; }
+        <i>450</i>&nbsp;
+        <b class="nc"><i>451</i>&nbsp; int chosenBuildingSpace = this.chosenBuildingSpace;</b>
+        <b class="nc"><i>452</i>&nbsp; this.chosenBuildingSpace = null;</b>
+        <b class="nc"><i>453</i>&nbsp; return chosenBuildingSpace;</b>
+        <i>454</i>&nbsp; }
+        <i>455</i>&nbsp;
+        <i>456</i>&nbsp; public int[] askHephaestusBuild(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>457</i>&nbsp; view.askHephaestusBuild(playerName, validBuildingSpaces);</b>
+        <i>458</i>&nbsp;
+        <b class="nc"><i>459</i>&nbsp; while (spaceAndDoubleBuildingHephaestus == null) {</b>
+        <i>460</i>&nbsp; try {
+        <b class="nc"><i>461</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>462</i>&nbsp; Lock.wait();</b>
+        <b class="nc"><i>463</i>&nbsp; }</b>
+        <b class="nc"><i>464</i>&nbsp; } catch (InterruptedException e) {</b>
+        <b class="nc"><i>465</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>466</i>&nbsp; }</b>
+        <i>467</i>&nbsp; }
+        <i>468</i>&nbsp;
+        <b class="nc"><i>469</i>&nbsp; int[] spaceAndDoubleBuildingHephaestus =
+            this.spaceAndDoubleBuildingHephaestus;</b>
+        <b class="nc"><i>470</i>&nbsp; this.spaceAndDoubleBuildingHephaestus = null;</b>
+        <b class="nc"><i>471</i>&nbsp; return spaceAndDoubleBuildingHephaestus;</b>
+        <i>472</i>&nbsp; }
+        <i>473</i>&nbsp;
+        <i>474</i>&nbsp; @Override
+        <i>475</i>&nbsp; public void updateHephaestusBuild(int[] spaceAndDoubleBuildingHephaestus) {
+        <b class="nc"><i>476</i>&nbsp; if (this.spaceAndDoubleBuildingHephaestus == null) {</b>
+        <b class="nc"><i>477</i>&nbsp; this.spaceAndDoubleBuildingHephaestus = spaceAndDoubleBuildingHephaestus;</b>
+        <b class="nc"><i>478</i>&nbsp; synchronized (Lock) {</b>
+        <b class="nc"><i>479</i>&nbsp; Lock.notifyAll();</b>
+        <b class="nc"><i>480</i>&nbsp; }</b>
+        <i>481</i>&nbsp; }
+        <i>482</i>&nbsp; }
+        <i>483</i>&nbsp;
+        <i>484</i>&nbsp; public void announceVictory(String playerName) {
+        <b class="nc"><i>485</i>&nbsp; view.announceVictory(playerName);</b>
+        <i>486</i>&nbsp; }
+        <i>487</i>&nbsp;
+        <i>488</i>&nbsp; public void announceLose(String playerName) {
+        <b class="nc"><i>489</i>&nbsp; view.announceLose(playerName);</b>
+        <i>490</i>&nbsp; }
+        <i>491</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-05-19 00:32</div>
+</div>
+</body>
+</html>
