@@ -40,13 +40,13 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         scanner = new Scanner(System.in);
         view.askIPAddress();
 
-        while (ip == null) {
-            try {
-                synchronized (Lock) {
+        synchronized (Lock) {
+            while (ip == null) {
+                try {
                     Lock.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
 
