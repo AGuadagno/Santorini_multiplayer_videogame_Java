@@ -13,9 +13,10 @@ public class ClientHandlerMock implements VirtualView {
     private int[][] workerAndSpace;
     private int workerAndSpaceCurrIndex;
     private int artemisChosenMovementSpace;
-    private int selectedSpace[];
+    private int[] selectedSpace;
     private int selectedSpaceCurrIndex;
-    private int[] atlasSpaceAndDome;
+    private int[][] atlasSpaceAndDome;
+    private int atlasSpaceAndDomeCurrIndex;
     private int[] demeterSecondBuilding;
     private int demeterSecondBuildingCurrIndex;
     private String name;
@@ -203,12 +204,39 @@ public class ClientHandlerMock implements VirtualView {
     }
 
     public void setAtlasBuild(int[] atlasSpaceAndDome) {
-        this.atlasSpaceAndDome = atlasSpaceAndDome;
+        this.atlasSpaceAndDome = new int[1][2];
+        this.atlasSpaceAndDome[0] = atlasSpaceAndDome;
     }
+
+    public void setAtlasBuild(int[][] atlasSpaceAndDome) {
+        this.atlasSpaceAndDome = atlasSpaceAndDome;
+        this.atlasSpaceAndDomeCurrIndex = 0;
+    }
+
+    /*public int[] askWorkerMovement(String playerName, List<SpaceCopy> deepCopySpaceList, List<SpaceCopy> deepCopySpaceList1) throws DisconnectionException {
+        if (workerAndSpace.length == 1)
+            return workerAndSpace[0];
+        if (workerAndSpaceCurrIndex < workerAndSpace.length) {
+            workerAndSpaceCurrIndex++;
+            return workerAndSpace[workerAndSpaceCurrIndex - 1];
+        }
+
+        System.out.println("Index out of bounds askWorkerMovement");
+        return new int[]{-1000, -1000};
+    }*/
 
     @Override
     public int[] askAtlasBuild(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
-        return atlasSpaceAndDome;
+        //return atlasSpaceAndDome;
+        if (atlasSpaceAndDome.length == 1)
+            return atlasSpaceAndDome[0];
+        if (atlasSpaceAndDomeCurrIndex < atlasSpaceAndDome.length) {
+            atlasSpaceAndDomeCurrIndex++;
+            return atlasSpaceAndDome[atlasSpaceAndDomeCurrIndex - 1];
+        }
+
+        System.out.println("Index out of bounds askAtlasBuild");
+        return new int[]{-1000, -1000};
     }
 
     public void setDemeterSecondBuilding(int demeterSecondBuilding) {

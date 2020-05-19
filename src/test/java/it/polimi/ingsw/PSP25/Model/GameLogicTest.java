@@ -67,14 +67,48 @@ public class GameLogicTest {
     }
 
     @Test
-    public void broadcastBoard() {
+    public void startGame3PlayersTest() {
+        clientHandler1 = new ClientHandlerMock();
+        clientHandler2 = new ClientHandlerMock();
+        clientHandler3 = new ClientHandlerMock();
+        clientHandlerMockList = new ArrayList(Arrays.asList(clientHandler1, clientHandler2, clientHandler3));
+        gameLogic = new GameLogic(clientHandlerMockList);
+
+        clientHandler1.setAskName("nome1");
+        clientHandler2.setAskName("nome2");
+        clientHandler3.setAskName("nome3");
+
+        //Game with Atlas, Athena, Pan
+        clientHandler1.setAskAllGodPowers(new ArrayList(Arrays.asList(2, 3, 7)));
+        clientHandler2.setAskAllGodPowers(new ArrayList(Arrays.asList(399, 499)));
+        clientHandler3.setAskAllGodPowers(new ArrayList(Arrays.asList(-399, -499)));
+
+        //Player2 chooses Pan, Player3 chooses Athena -> Player1 gets Atlas
+        clientHandler1.setAskGodPower(999);
+        clientHandler2.setAskGodPower(3);
+        clientHandler3.setAskGodPower(1);
+
+        clientHandler1.setAskWorkerPosition(new int[]{5, 19});
+        clientHandler2.setAskWorkerPosition(new int[]{2, 22});
+        clientHandler3.setAskWorkerPosition(new int[]{0, 23});
+
+        clientHandler1.setAskWorkerMovement(new int[][]{new int[]{1, 6}, new int[]{2, 18}, new int[]{1, 0}, new int[]{2, 24}});
+        clientHandler2.setAskWorkerMovement(new int[][]{new int[]{1, 1}, new int[]{2, 23}, new int[]{2, 22}, new int[]{2, 23}});
+        clientHandler3.setAskWorkerMovement(new int[]{2, 24});
+
+        clientHandler1.setAtlasBuild(new int[][]{new int[]{5, 1}, new int[]{19, 1}, new int[]{6, 1}, new int[]{18, 1}});
+        clientHandler2.setAskToBuild(new int[]{2, 22, 23, 22});
+        clientHandler3.setAskToBuild(18);
+
+        try {
+            gameLogic.startGame();
+        } catch (DisconnectionException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Test
-    public void broadcastGodPowers() {
-    }
-
-    @Test
+    /*@Test
     public void stopGame() {
-    }
+
+    }*/
 }
