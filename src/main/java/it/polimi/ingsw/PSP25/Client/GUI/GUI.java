@@ -10,6 +10,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,6 +23,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     private ViewObserver client;
     private Stage stage;
     private GUIObservable controller;
+    private boolean gameEnded;
 
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("CLI")) {
@@ -285,6 +290,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     @Override
     public void announceVictory(String playerName) {
+        gameEnded = true;
         Platform.runLater(() -> {
             ((BoardSceneController) controller).announceVictory(playerName);
         });
@@ -292,12 +298,30 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     @Override
     public void announceLose(String playerName) {
+        gameEnded = true;
         Platform.runLater(() -> {
             ((BoardSceneController) controller).announceLose(playerName);
         });
     }
 
+    @Override
+    public void manageServerDisconnection() {
+        if (!gameEnded) {
+            Scene scene = loadScene("fxml/DisconnectionScene.fxml");
+
+            Platform.runLater(() -> {
+                Stage window = new Stage();
+                window.setScene(scene);
+                window.show();
+                ((DisconnectionSceneController) controller).setWindow(window);
+            });
+        }
+    }
+
     public void playAgain(boolean b) {
         client.playAgain(b);
+        gameEnded = false;
+        if (!b)
+            stage.close();
     }
 }

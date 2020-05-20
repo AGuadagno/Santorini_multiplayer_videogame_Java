@@ -46,7 +46,7 @@
         <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="918.0" layoutY="362.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
-                <Image url="@../img/Godcards/apollo.png"/>
+                <Image url="@../img/Godcards/hera.png"/>
             </image>
         </ImageView>
         <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="118.0" layoutY="130.0" pickOnBounds="true"
@@ -82,7 +82,7 @@
         <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="218.0" layoutY="592.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
-                <Image url="@../img/Godcards/apollo.png"/>
+                <Image url="@../img/Godcards/zeus.png"/>
             </image>
         </ImageView>
         <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="418.0" layoutY="594.0" pickOnBounds="true"

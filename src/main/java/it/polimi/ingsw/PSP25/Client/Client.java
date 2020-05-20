@@ -83,8 +83,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                     try {
                         receivedMessage.process(networkHandler, this);
                     } catch (IOException e) {
-                        System.out.println("Disconnected from server");
-                        //e.printStackTrace();
+                        manageServerDisconnection();
                     }
                 }
             }
@@ -115,6 +114,11 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     public synchronized void didReceiveServerMessage(Message message) {
         this.receivedMessage = message;
         notifyAll();
+    }
+
+    @Override
+    public void manageServerDisconnection() {
+        view.manageServerDisconnection();
     }
 
     @Override

@@ -65,7 +65,7 @@ public class GodPower {
      * @param worker we want to know Spaces in which he can build
      * @return List of possible Spaces where the Worker passed as argument can build
      */
-    public List<Space> getValidBuildSpaces(Worker worker) {
+    protected List<Space> getValidBuildSpaces(Worker worker) {
         ArrayList<Space> validBuildSpaces = new ArrayList<Space>();
         for (Space space : worker.getSpace().getAdjacentSpaces()) {
 

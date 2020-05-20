@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="353.0" prefWidth="364.0"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.PSP25.Client.GUI.DisconnectionSceneController">
+    <children>
+        <ImageView fitHeight="400.0" fitWidth="600.0" layoutX="-13.0" layoutY="-12.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/LosingWindow.png"/>
+            </image>
+        </ImageView>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="73.0" layoutY="104.0" prefHeight="101.0"
+               prefWidth="227.0" text="Disconnected from the server. Do you want to play again?" textAlignment="CENTER"
+               textFill="WHITE" wrapText="true">
+            <font>
+                <Font name="System Bold" size="22.0"/>
+            </font>
+        </Label>
+        <ImageView fitHeight="78.0" fitWidth="143.0" layoutX="42.0" layoutY="228.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/yesunpressed.png"/>
+            </image>
+        </ImageView>
+        <Button fx:id="yesButton" layoutX="42.0" layoutY="228.0" mnemonicParsing="false" opacity="0.0" prefHeight="33.0"
+                prefWidth="140.0" onAction="#handleYesButton"/>
+        <ImageView fitHeight="78.0" fitWidth="143.0" layoutX="184.0" layoutY="228.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../img/nounpressed.png"/>
+            </image>
+        </ImageView>
+        <Button fx:id="noButton" layoutX="188.0" layoutY="228.0" mnemonicParsing="false" opacity="0.0" prefHeight="33.0"
+                prefWidth="140.0" onAction="#handleNoButton"/>
+    </children>
+</AnchorPane>

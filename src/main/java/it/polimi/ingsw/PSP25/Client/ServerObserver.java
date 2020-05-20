@@ -4,4 +4,6 @@ import it.polimi.ingsw.PSP25.Utility.Messages.Message;
 
 public interface ServerObserver {
     void didReceiveServerMessage(Message message);
+
+    void manageServerDisconnection();
 }

@@ -44,4 +44,6 @@ public interface ViewObservable {
     void announceVictory(String playerName);
 
     void announceLose(String playerName);
+
+    void manageServerDisconnection();
 }

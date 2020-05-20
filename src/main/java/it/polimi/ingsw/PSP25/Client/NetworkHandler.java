@@ -51,7 +51,6 @@ public class NetworkHandler implements Runnable {
             handleServerConnection();
         } catch (IOException e) {
             stop();
-            System.out.println("Connection with Server interrupted");
         } catch (ClassCastException | ClassNotFoundException e) {
             System.out.println("Protocol violation");
         }
@@ -79,6 +78,8 @@ public class NetworkHandler implements Runnable {
         for (ServerObserver observer : observers) {
             observer.didReceiveServerMessage(null);
         }
+
+        observers.forEach(ServerObserver::manageServerDisconnection);
         notifyAll();
     }
 

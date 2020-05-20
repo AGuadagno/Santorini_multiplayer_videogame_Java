@@ -805,4 +805,17 @@ public class BoardSceneController implements GUIObservable {
 
         gui.playAgain(false);
     }
+
+    public void manageServerDisconnection() {
+        victoryWindowImage.setImage(new Image("/img/WinningWindow.png"));
+        victoryLabel.setText("Disconnected from server");
+        victoryWindowImage.setVisible(true);
+        victoryLabel.setVisible(true);
+
+        messageLabel.setText("Do you want to play again?");
+        leftButtonImage.setImage(new Image("/img/yesunpressed.png"));
+        rightButtonImage.setImage(new Image("/img/nounpressed.png"));
+        yesPlayAgainButton.setVisible(true);
+        noPlayAgainButton.setVisible(true);
+    }
 }

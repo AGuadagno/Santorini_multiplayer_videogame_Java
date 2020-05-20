@@ -455,4 +455,9 @@ public class CLI implements ViewObservable {
     public void announceLose(String playerName) {
         System.out.println(playerName + " lost the Game! Can't move or build!");
     }
+
+    @Override
+    public void manageServerDisconnection() {
+        System.out.println("Disconnected from server");
+    }
 }
