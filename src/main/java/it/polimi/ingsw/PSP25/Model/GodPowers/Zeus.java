@@ -20,6 +20,13 @@ public class Zeus extends GodPower {
         super(activeEffects, broadcastInterface);
     }
 
+    /**
+     * Override of "getValidBuildSpaces" according to Zeus's effect:
+     * "Your Worker may build a block under itself"
+     *
+     * @param worker we want to know Spaces in which he can build
+     * @return List of possible Spaces where the Worker passed as argument can build
+     */
     @Override
     protected List<Space> getValidBuildSpaces(Worker worker) {
         List<Space> validBuildingSpaces = super.getValidBuildSpaces(worker);

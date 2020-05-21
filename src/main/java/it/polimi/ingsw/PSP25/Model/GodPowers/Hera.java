@@ -17,6 +17,14 @@ public class Hera extends GodPower {
         super(activeEffects, broadcastInterface);
     }
 
+    /**
+     * Override of "canWin" according to Hera's effect:
+     * "An opponent cannot win by moving into a perimeter space."
+     *
+     * @param worker worker we want to know if he can win
+     * @param space  Space where the Worker as been moved
+     * @return true if 'worker' can win
+     */
     @Override
     public boolean canWin(Worker worker, Space space) {
         if (space.getX() == 0 || space.getX() == 4 || space.getY() == 0 || space.getY() == 4) {
