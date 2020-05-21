@@ -46,4 +46,6 @@ public interface ViewObservable {
     void announceLose(String playerName);
 
     void manageServerDisconnection();
+
+    void askRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber);
 }

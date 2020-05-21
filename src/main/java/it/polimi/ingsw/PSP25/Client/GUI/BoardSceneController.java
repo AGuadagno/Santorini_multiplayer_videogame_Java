@@ -42,6 +42,7 @@ public class BoardSceneController implements GUIObservable {
     private Integer secondSpaceArtemis;
     private boolean messageLabelAppended;
     private int[] spaceAndDoubleBuildingHephaestus;
+    private List<SpaceCopy> validRemoveSpaces;
 
     @FXML
     private Group towerLevels;
@@ -74,6 +75,10 @@ public class BoardSceneController implements GUIObservable {
     @FXML
     private Button noHephaestusButton;
     @FXML
+    private Button yesAresButton;
+    @FXML
+    private Button noAresButton;
+    @FXML
     private ImageView leftButtonImage;
     @FXML
     private ImageView rightButtonImage;
@@ -91,7 +96,6 @@ public class BoardSceneController implements GUIObservable {
     private Button yesPlayAgainButton;
     @FXML
     private Button noPlayAgainButton;
-
 
     @FXML
     private ImageView background;
@@ -163,6 +167,8 @@ public class BoardSceneController implements GUIObservable {
             for (int j = 0; j < 5; j++) {
                 if (board[i][j].getTowerHeight() > 0) {
                     ((ImageView) towerLevels.getChildren().get(5 * i + j)).setImage(new Image("/img/Board/" + "TowerLevel" + board[i][j].getTowerHeight() + ".png"));
+                } else {
+                    ((ImageView) towerLevels.getChildren().get(5 * i + j)).setImage(null);
                 }
                 if (board[i][j].hasDome()) {
                     (domes.getChildren().get(5 * i + j)).setVisible(true);
@@ -374,30 +380,6 @@ public class BoardSceneController implements GUIObservable {
     public void askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces) {
         this.playerName = playerName;
         this.validBuildingSpaces = validBuildingSpaces;
-        /*Button button;
-        messageLabel.setText(playerName + ": Choose building space");
-
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                button = (Button) boardButtons.getChildren().get(5 * i + j);
-                button.setVisible(false);
-                for (SpaceCopy space : validBuildingSpaces) {
-                    if (space.getNumber() == (5 * i + j)) {
-                        //System.out.println(button.getId() + " visibile");
-                        button.setVisible(true);
-                        button.setOpacity(1);
-                    }
-                }
-            }
-        }
-
-        if (secondSpaceArtemis != null) {
-            moveWorkerBorder(secondSpaceArtemis);
-            secondSpaceArtemis = null;
-        } else if (workerAndSpace != null)
-            moveWorkerBorder(workerAndSpace[1]);
-        else
-            moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));*/
 
         showValidBuildingSpaces();
 
@@ -429,6 +411,23 @@ public class BoardSceneController implements GUIObservable {
             moveWorkerBorder(workerAndSpace[1]);
         else
             moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));
+    }
+
+    private void showValidAresRemoveSpaces() {
+        Button button;
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                button = (Button) boardButtons.getChildren().get(5 * i + j);
+                button.setVisible(false);
+                for (SpaceCopy space : validRemoveSpaces) {
+                    if (space.getNumber() == (5 * i + j)) {
+                        button.setVisible(true);
+                        button.setOpacity(1);
+                    }
+                }
+            }
+        }
     }
 
     public void askAtlasBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
@@ -542,6 +541,17 @@ public class BoardSceneController implements GUIObservable {
         rightButtonImage.setImage(new Image("/img/nounpressed.png"));
         yesDemeterButton.setVisible(true);
         noDemeterButton.setVisible(true);
+    }
+
+    public void askRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) {
+        this.validRemoveSpaces = validRemoveSpaces;
+        messageLabel.setText("Do you want to remove a non occupied block (without a dome) around your Worker "
+                + nonSelectedWorkerNumber + "?");
+
+        leftButtonImage.setImage(new Image("/img/yesunpressed.png"));
+        rightButtonImage.setImage(new Image("/img/nounpressed.png"));
+        yesAresButton.setVisible(true);
+        noAresButton.setVisible(true);
     }
 
     public void askHephaestusBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
@@ -711,6 +721,27 @@ public class BoardSceneController implements GUIObservable {
         gui.updateBuildingSpace(-1);
     }
 
+    public void handleYesAresButton(ActionEvent actionEvent) {
+        messageLabel.setText(playerName + ": Choose the space where you want to remove a block");
+        leftButtonImage.setImage(new Image("/img/yespressed.png"));
+        yesAresButton.setVisible(false);
+        noAresButton.setVisible(false);
+
+        showValidAresRemoveSpaces();
+
+        this.buttonAction = 4;
+    }
+
+    public void handleNoAresButton(ActionEvent actionEvent) {
+        rightButtonImage.setImage(new Image("/img/nopressed.png"));
+        yesAresButton.setVisible(false);
+        noAresButton.setVisible(false);
+
+        messageLabel.setText("Waiting for other players ...");
+
+        gui.updateBuildingSpace(-1);
+    }
+
     public void handleYesHephaestusButton(ActionEvent actionEvent) {
         messageLabel.setText("Waiting for other players ...");
         leftButtonImage.setImage(new Image("/img/yespressed.png"));
@@ -786,9 +817,6 @@ public class BoardSceneController implements GUIObservable {
         yesPlayAgainButton.setVisible(false);
         noPlayAgainButton.setVisible(false);
 
-        /*Button button = (Button) actionEvent.getSource();
-        Stage stage = (Stage) button.getScene().getWindow();
-        stage.close();*/
         gui.restartFromNumOfPlayersScene();
 
         gui.playAgain(true);

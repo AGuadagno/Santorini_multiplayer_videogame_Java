@@ -299,6 +299,11 @@ public class GodPower {
         activeEffects.pushEffect(this);
     }
 
+    public void initializeWorkers(Player player, Space spaceW1, Space spaceW2) {
+        player.initializeWorkers(spaceW1, spaceW2);
+        addActiveEffects(activeEffects, null, null, null);
+    }
+
     /**
      * @return the name of the God
      */
@@ -306,5 +311,4 @@ public class GodPower {
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
 }

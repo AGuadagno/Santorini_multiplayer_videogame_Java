@@ -1,9 +1,6 @@
 package it.polimi.ingsw.PSP25.Model.GodPowers;
 
-import it.polimi.ingsw.PSP25.Model.ActiveEffects;
-import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
-import it.polimi.ingsw.PSP25.Model.Space;
-import it.polimi.ingsw.PSP25.Model.Worker;
+import it.polimi.ingsw.PSP25.Model.*;
 
 /**
  * Athena class
@@ -58,5 +55,11 @@ public class Athena extends GodPower {
             activeEffects.pushEffect(this);
         else
             activeEffects.pushEffect(new GodPower(activeEffects, null));
+    }
+
+    @Override
+    public void initializeWorkers(Player player, Space spaceW1, Space spaceW2) {
+        player.initializeWorkers(spaceW1, spaceW2);
+        activeEffects.pushEffect(new GodPower(activeEffects, null));
     }
 }

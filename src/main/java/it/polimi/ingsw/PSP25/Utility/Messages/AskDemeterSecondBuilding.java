@@ -29,26 +29,4 @@ public class AskDemeterSecondBuilding extends Message {
         int chosenBuildingSpace = client.askDemeterSecondBuilding(playerName, validBuildingSpaces);
         nh.submit(chosenBuildingSpace);
     }
-
-    /*private int buildingSpaceSelection(List<SpaceCopy> validBuildingSpaces) {
-
-        int chosenBuildingSpace = -1;
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Do you want to build an additional block? y/n");
-        String answer = scanner.next();
-        if (answer.equals("y")) {
-            System.out.println(validBuildingSpaces.toString());
-            System.out.println(playerName + ": Choose building space");
-            // Selection of the second building space
-            chosenBuildingSpace = scanner.nextInt();
-            while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
-                    contains(chosenBuildingSpace)) {
-                System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
-                chosenBuildingSpace = scanner.nextInt();
-            }
-        }
-
-        return chosenBuildingSpace;
-    }*/
 }

@@ -460,4 +460,26 @@ public class CLI implements ViewObservable {
     public void manageServerDisconnection() {
         System.out.println("Disconnected from server");
     }
+
+    @Override
+    public void askRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) {
+        int selectedRemoveSpace = -1;
+
+        System.out.println("Do you want to remove a non occupied block (without a dome) around your Worker "
+                + nonSelectedWorkerNumber + "? y/n");
+        String answer = scanner.next();
+        if (answer.equals("y")) {
+            System.out.println(validRemoveSpaces.toString());
+            System.out.println(playerName + ": Choose the space where you want to remove a block");
+            // Selection of the second building space
+            selectedRemoveSpace = scanner.nextInt();
+            while (!(validRemoveSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
+                    contains(selectedRemoveSpace)) {
+                System.out.println(selectedRemoveSpace + " is not in the valid spaces list");
+                selectedRemoveSpace = scanner.nextInt();
+            }
+        }
+
+        client.updateBuildingSpace(selectedRemoveSpace);
+    }
 }

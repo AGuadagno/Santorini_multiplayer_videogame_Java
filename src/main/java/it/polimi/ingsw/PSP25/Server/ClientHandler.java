@@ -174,6 +174,14 @@ public class ClientHandler implements Runnable, VirtualView {
         return selectedBuildingSpace;
     }
 
+    @Override
+    public int askToRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) throws DisconnectionException {
+        sendMessage(new AskRemoveBlockAres(playerName, validRemoveSpaces, nonSelectedWorkerNumber));
+
+        int selectedRemoveSpace = (int) receiveMessage();
+        return selectedRemoveSpace;
+    }
+
     public int[] askHephaestusBuild(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
         sendMessage(new AskHephaestusBuild(playerName, deepCopySpaceList));
 

@@ -6,6 +6,8 @@ import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -185,7 +187,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
         view.askAllGodPowers(playerName, numOfPlayers, godPowerNames);
-        allGodPowerIndexes = null;
+
         while (allGodPowerIndexes == null) {
             try {
                 synchronized (Lock) {
@@ -196,6 +198,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
             }
         }
 
+        List<Integer> allGodPowerIndexes = new ArrayList<>();
+        allGodPowerIndexes.addAll(this.allGodPowerIndexes);
+        this.allGodPowerIndexes = null;
         return allGodPowerIndexes;
     }
 
@@ -211,7 +216,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public int askGodPower(String playerName, List<String> godPowerNames) {
         view.askGodPower(playerName, godPowerNames);
-        godPowerIndex = null;
+
         while (godPowerIndex == null) {
             try {
                 synchronized (Lock) {
@@ -221,6 +226,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                 e.printStackTrace();
             }
         }
+
+        Integer godPowerIndex = this.godPowerIndex;
+        this.godPowerIndex = null;
         return godPowerIndex;
     }
 
@@ -491,5 +499,23 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public void announceLose(String playerName) {
         view.announceLose(playerName);
+    }
+
+    public int askRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) {
+        view.askRemoveBlockAres(playerName, validRemoveSpaces, nonSelectedWorkerNumber);
+
+        while (chosenBuildingSpace == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int selectedRemoveSpace = this.chosenBuildingSpace;
+        this.chosenBuildingSpace = null;
+        return selectedRemoveSpace;
     }
 }

@@ -70,7 +70,7 @@ public class GameLogic implements BroadcastInterface {
             selectedGodPowers.add(allGodPowers.get(i));
         }
 
-        // 3) the request to chose a God Power from the selected God Powers list to all the players
+        // 3) the request to choose a God Power from the selected God Powers list to all the players
         for (int i = 0; i < numOfPlayers - 1; i++) {
             Player currPlayer = playerList.get(i + 1);
 
@@ -104,7 +104,9 @@ public class GameLogic implements BroadcastInterface {
         godPowers.add(new Minotaur(activeEffects, this));
         godPowers.add(new Pan(activeEffects, this));
         godPowers.add(new Prometheus(activeEffects, this));
+        godPowers.add(new Ares(activeEffects, this));
         godPowers.add(new Hera(activeEffects, this));
+        godPowers.add(new Limus(activeEffects, this));
         godPowers.add(new Zeus(activeEffects, this));
         return godPowers;
     }
@@ -129,7 +131,7 @@ public class GameLogic implements BroadcastInterface {
             pos2 = currPlayer.getClientHandler()
                     .askWorkerPosition(playerName, 2, pos1, deepCopyBoard(board));
 
-            currPlayer.initializeWorkers(board.getSpace(pos1 % 5, pos1 / 5),
+            currPlayer.getGodPower().initializeWorkers(currPlayer, board.getSpace(pos1 % 5, pos1 / 5),
                     board.getSpace(pos2 % 5, pos2 / 5));
 
             broadcastBoard();

@@ -289,6 +289,13 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     }
 
     @Override
+    public void askRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) {
+        Platform.runLater(() -> {
+            ((BoardSceneController) controller).askRemoveBlockAres(playerName, validRemoveSpaces, nonSelectedWorkerNumber);
+        });
+    }
+
+    @Override
     public void announceVictory(String playerName) {
         gameEnded = true;
         Platform.runLater(() -> {

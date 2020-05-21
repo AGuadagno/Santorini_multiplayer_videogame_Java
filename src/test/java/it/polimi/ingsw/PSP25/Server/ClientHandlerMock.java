@@ -263,4 +263,9 @@ public class ClientHandlerMock implements VirtualView {
         System.out.println("Index out of bounds askDemeterSecondBuilding");
         return -1000;
     }
+
+    @Override
+    public int askToRemoveBlockAres(String player, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) throws DisconnectionException {
+        return 0;
+    }
 }

@@ -669,6 +669,12 @@
         <Button fx:id="noHephaestusButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false"
                 onAction="#handleNoHephaestusButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0"
                 text="NoHephaestus" visible="false"/>
+        <Button fx:id="yesAresButton" layoutX="762.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleYesAresButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="YesAres"
+                visible="false"/>
+        <Button fx:id="noAresButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false"
+                onAction="#handleNoAresButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="NoAres"
+                visible="false"/>
         <Button fx:id="yesPlayAgainButton" layoutX="762.0" layoutY="814.0" mnemonicParsing="false"
                 onAction="#handleYesPlayAgainButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0"
                 text="YesPlayAgain" visible="false"/>
