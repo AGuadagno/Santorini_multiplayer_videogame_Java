@@ -36,7 +36,7 @@ public class HypnusTest {
         gp = new Hypnus(activeEffects, null);
         player1.initializeGodPower(gp);
 
-        player2 = new Player("Name2", 1, new ClientHandler(new Socket(), 1, new Lobby()));
+        player2 = new Player("Name2", 2, new ClientHandler(new Socket(), 2, new Lobby()));
         //worker1Player2 = new Worker(board.getSpace(3,4), player2);
         // = new Worker(board.getSpace(1,3), player2);
         player2.initializeWorkers(board.getSpace(3, 4), board.getSpace(1, 3));

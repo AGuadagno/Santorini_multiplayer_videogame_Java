@@ -17,6 +17,14 @@ public class Hypnus extends GodPower {
         super(activeEffects, broadcastInterface);
     }
 
+    /**
+     * Override of "canMove" according tu Hyonus' effect:
+     * "If one of your opponent’s Workers is higher than all of their others, it cannot move"
+     *
+     * @param worker the opponent's Worker that we want to know if he can move to Space
+     * @param space  Space where we want to know if the worker can move
+     * @return true if the worker can move in the selected space, false otherwise
+     */
     @Override
     public boolean canMove(Worker worker, Space space) {
         Worker otherWorker = null;

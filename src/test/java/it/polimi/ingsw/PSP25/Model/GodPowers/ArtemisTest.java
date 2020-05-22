@@ -204,4 +204,24 @@ public class ArtemisTest {
         }
     }
 
+    @Test
+    public void turnSequenceWinTest() {
+
+        b.getSpace(0, 0).setTowerHeight(2);
+        b.getSpace(1, 0).setTowerHeight(3);
+
+        int[] workerAndSpace = new int[]{1, 1};
+        clientHandlerMock.setAskWorkerMovement(workerAndSpace);
+        int selectedSpace = 1;
+        clientHandlerMock.setAskToBuild(selectedSpace);
+        int secondBuildingSpace = 2;
+        clientHandlerMock.setDemeterSecondBuilding(secondBuildingSpace);
+
+        try {
+            assertEquals(gp.turnSequence(p1, a), TurnResult.WIN);
+        } catch (DisconnectionException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

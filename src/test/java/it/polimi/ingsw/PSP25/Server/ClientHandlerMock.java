@@ -28,6 +28,7 @@ public class ClientHandlerMock implements VirtualView {
     private int[] BuildBeforeMovePrometheus;
     private int prometheusMovement;
     private int askToBuildNumber = 0;
+    private int AresDemolition;
 
     public void setAskName(String name) {
         this.name = name;
@@ -264,8 +265,12 @@ public class ClientHandlerMock implements VirtualView {
         return -1000;
     }
 
+    public void setAresDemolition(int aresDemolition) {
+        this.AresDemolition = aresDemolition;
+    }
+
     @Override
     public int askToRemoveBlockAres(String player, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) throws DisconnectionException {
-        return 0;
+        return AresDemolition;
     }
 }

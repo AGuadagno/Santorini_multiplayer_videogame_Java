@@ -190,19 +190,45 @@
 
         <Button fx:id="9" layoutX="918.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
                 opacity="0.0" prefHeight="220.0" prefWidth="163.0"
-                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"/>
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip
+                        text="You may remove an unoccupied block (not dome) neighboring your unmoved Worker. You also remove any Tokens on the block"/>
+            </tooltip>
+        </Button>
+
         <Button fx:id="10" layoutX="218.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
                 opacity="0.0" prefHeight="220.0" prefWidth="163.0"
-                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"/>
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip text="An opponent cannot win by moving into a perimeter space."/>
+            </tooltip>
+        </Button>
+
         <Button fx:id="11" layoutX="418.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
                 opacity="0.0" prefHeight="220.0" prefWidth="163.0"
-                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"/>
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip text="If one of your opponent’s Workers is higher than all of their others, it cannot move"/>
+            </tooltip>
+        </Button>
+
         <Button fx:id="12" layoutX="618.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
                 opacity="0.0" prefHeight="220.0" prefWidth="163.0"
-                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"/>
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip
+                        text="Opponent Workers cannot build on spaces neighboring your Workers, unless building a dome to create a Complete Tower."/>
+            </tooltip>
+        </Button>
+
         <Button fx:id="13" layoutX="818.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleButtonGodPowers"
                 opacity="0.0" prefHeight="220.0" prefWidth="163.0"
-                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"/>
+                style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;">
+            <tooltip>
+                <Tooltip text="Your Worker may build a block under itself"/>
+            </tooltip>
+        </Button>
 
         <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="47.0" prefHeight="43.0"
                prefWidth="1200.0" text="Select god powers" textAlignment="CENTER">

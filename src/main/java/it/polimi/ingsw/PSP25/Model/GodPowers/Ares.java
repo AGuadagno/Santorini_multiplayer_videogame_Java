@@ -7,10 +7,6 @@ import java.util.List;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 
-/*Fine del Tuo Turno:Puoi rimuovere
-        un blocco non occupato (non una
-        cupola) intorno al tuo Lavoratore
-        che non si è mosso.*/
 public class Ares extends GodPower {
 
     /**
@@ -18,13 +14,24 @@ public class Ares extends GodPower {
      *
      * @param activeEffects      list of opponent GodPower effect active in our turn that could limit movement,
      *                           building action or winning conditions of our player
-     * @param broadcastInterface
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public Ares(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
     }
 
     @Override
+    /**
+     * Override of "turnSequence" according to Ares' effect:
+     * "You may remove an unoccupied block (not dome) neighboring your unmoved Worker. You also remove any Tokens on the block".
+     * The player is asked if he wants to remove a block.
+     *
+     *  @param player        playing the turn
+     *  @param activeEffects array containing opponents' god powers' effects that may influence this turn
+     *  @return TurnResult.LOSE if the player has lost during this turn
+     *  TurnResult.WIN if the player has won during this turn
+     *  TurnResult.CONTINUE if the player hasn't lost or won during this turn
+     */
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {
 
         List<Space> validMovementSpacesW1;
@@ -62,6 +69,13 @@ public class Ares extends GodPower {
         return TurnResult.CONTINUE;
     }
 
+    /**
+     * The worker is asked if he wants to remove a block (not dome) neighboring your unmoved Worker.
+     *
+     * @param player         playing the turn
+     * @param selectedWorker moved worker
+     * @throws DisconnectionException
+     */
     private void askToRemoveBlock(Player player, Worker selectedWorker) throws DisconnectionException {
         Worker nonSelectedWorker;
         int nonSelectedWorkerNumber;
@@ -81,6 +95,7 @@ public class Ares extends GodPower {
         if (validRemoveSpaces.size() > 0)
             removeSpaceNumber = player.getClientHandler().askToRemoveBlockAres(playerName,
                     deepCopySpaceList(validRemoveSpaces), nonSelectedWorkerNumber);
+        // -1 = don't want to remove a block
         if (removeSpaceNumber != -1) {
             int x = removeSpaceNumber % 5;
             int y = removeSpaceNumber / 5;
