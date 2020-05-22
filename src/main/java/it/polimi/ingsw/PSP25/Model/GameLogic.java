@@ -106,6 +106,7 @@ public class GameLogic implements BroadcastInterface {
         godPowers.add(new Prometheus(activeEffects, this));
         godPowers.add(new Ares(activeEffects, this));
         godPowers.add(new Hera(activeEffects, this));
+        godPowers.add(new Hypnus(activeEffects, this));
         godPowers.add(new Limus(activeEffects, this));
         godPowers.add(new Zeus(activeEffects, this));
         return godPowers;

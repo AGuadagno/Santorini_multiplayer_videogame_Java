@@ -88,19 +88,19 @@
         <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="418.0" layoutY="594.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
-                <Image url="@../img/Godcards/limus.png"/>
+                <Image url="@../img/Godcards/hypnus.png"/>
             </image>
         </ImageView>
         <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="618.0" layoutY="594.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
-                <Image url="@../img/Godcards/zeus.png"/>
+                <Image url="@../img/Godcards/limus.png"/>
             </image>
         </ImageView>
         <ImageView fitHeight="220.0" fitWidth="163.0" layoutX="818.0" layoutY="592.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
-                <Image url="@../img/Godcards/apollo.png"/>
+                <Image url="@../img/Godcards/zeus.png"/>
             </image>
         </ImageView>
 
