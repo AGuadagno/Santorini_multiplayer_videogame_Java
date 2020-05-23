@@ -48,4 +48,6 @@ public interface ViewObservable {
     void manageServerDisconnection();
 
     void askRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber);
+
+    void tellAssignedGodPower(String playerName, List<String> godPowerName);
 }

@@ -243,6 +243,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         }
     }
 
+    public void tellAssignedGodPower(String playerName, List<String> godPowerName) {
+        view.tellAssignedGodPower(playerName, godPowerName);
+    }
 
     public void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) {
         view.showPlayersGodPowers(playerNames, godPowerNames);

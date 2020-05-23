@@ -21,7 +21,8 @@ public class TellAssignedGodPower extends Message {
     }
 
     public void process(NetworkHandler nh, Client client) throws IOException {
-        System.out.println(playerName + " you got: " + godPowerName);
+        //System.out.println(playerName + " you got: " + godPowerName);
+        client.tellAssignedGodPower(playerName, godPowerName);
     }
 
 }

@@ -160,9 +160,7 @@ public class BoardSceneController implements GUIObservable {
         }
     }
 
-
     public void showBoard(SpaceCopy[][] board) {
-
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (board[i][j].getTowerHeight() > 0) {
@@ -211,7 +209,6 @@ public class BoardSceneController implements GUIObservable {
         messageLabel.setText(playerName + " it's your turn! Choose the position of your "
                 + ((workerNumber == 1) ? "first" : "second") + " worker");
     }
-
 
     public void handleBoardButton(ActionEvent actionEvent) {
         Button buttonPressed = (Button) actionEvent.getSource();
@@ -454,7 +451,6 @@ public class BoardSceneController implements GUIObservable {
         moveWorkerBorder(workerToPosition(workerAndSpace[0]));
 
         this.buttonAction = 5;
-
     }
 
     public void askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w1CanBuild, boolean w2CanMove, boolean w2CanBuild) {
@@ -520,7 +516,6 @@ public class BoardSceneController implements GUIObservable {
     }
 
     public void askArtemisSecondMove(String playerName, List<SpaceCopy> validSecondMovementSpaces) {
-
         this.validSecondMovementSpaces = validSecondMovementSpaces;
         messageLabel.setText("Do you want to move your Worker for the second time?");
 
@@ -529,8 +524,6 @@ public class BoardSceneController implements GUIObservable {
         rightButtonImage.setImage(new Image("/img/nounpressed.png"));
         yesArtemisButton.setVisible(true);
         noArtemisButton.setVisible(true);
-
-
     }
 
     public void askDemeterSecondBuilding(String playerName, List<SpaceCopy> validBuildingSpaces) {
@@ -649,7 +642,6 @@ public class BoardSceneController implements GUIObservable {
         rightButtonImage.setImage(new Image("/img/domepressed.png"));
         blockButton.setVisible(false);
         domeButton.setVisible(false);
-
     }
 
     public void handleBuildButton(ActionEvent actionEvent) {

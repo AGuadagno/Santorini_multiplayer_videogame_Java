@@ -482,4 +482,9 @@ public class CLI implements ViewObservable {
 
         client.updateBuildingSpace(selectedRemoveSpace);
     }
+
+    @Override
+    public void tellAssignedGodPower(String playerName, List<String> godPowerName) {
+        System.out.println(playerName + " you got: " + godPowerName);
+    }
 }

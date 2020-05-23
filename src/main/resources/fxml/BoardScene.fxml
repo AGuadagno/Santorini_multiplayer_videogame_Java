@@ -549,7 +549,8 @@
             </ImageView>
 
         </Group>
-        <Label fx:id="messageLabel" layoutX="346.0" layoutY="788.0" prefHeight="96.0" prefWidth="397.0" wrapText="true">
+        <Label fx:id="messageLabel" layoutX="346.0" layoutY="788.0" prefHeight="96.0" prefWidth="397.0"
+               text="Waiting for other players ..." wrapText="true">
             <font>
                 <Font name="System Bold" size="20.0"/>
             </font>
@@ -679,8 +680,8 @@
                 onAction="#handleYesPlayAgainButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0"
                 text="YesPlayAgain" visible="false"/>
         <Button fx:id="noPlayAgainButton" layoutX="976.0" layoutY="814.0" mnemonicParsing="false"
-                onAction="#handleNoPlayAgainButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0"
-                text="NoPlayAgain" visible="false"/>
+                onAction="#handleNoPlayAgainButton" opacity="0.0" prefHeight="44.0" prefWidth="195.0" text="NoPlayAgain"
+                visible="false"/>
         <Ellipse fx:id="workerBorder" centerX="57.5" centerY="58.5" layoutX="716.0" layoutY="354.0" radiusX="40.0"
                  radiusY="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false">
             <fill>

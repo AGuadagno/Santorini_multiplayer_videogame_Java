@@ -19,6 +19,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     private Stage stage;
     private GUIObservable controller;
     private boolean gameEnded;
+    private List<String> godPowerNames;
 
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("CLI")) {
@@ -62,6 +63,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.setTitle("Santorini");
         stage.show();
     }
 
@@ -86,7 +88,6 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
             stage.setScene(scene);
             stage.show();
         });
-
     }
 
     @Override
@@ -127,6 +128,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     public void updateName(String name) {
         client.updateName(name);
+        stage.setTitle("Santorini " + name);
     }
 
     @Override
@@ -147,6 +149,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void askGodPower(String playerName, List<String> godPowerNames) {
         Scene scene = loadScene("fxml/GodPowerScene.fxml");
+        this.godPowerNames = godPowerNames;
 
         Platform.runLater(() -> {
             stage.setScene(scene);
@@ -155,11 +158,17 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         });
     }
 
-
     public void updateGodPower(int selectedIndex) {
         client.updateGodPower(selectedIndex);
+        stage.setTitle(stage.getTitle() + " " + godPowerNames.get(selectedIndex - 1));
     }
 
+    @Override
+    public void tellAssignedGodPower(String playerName, List<String> godPowerName) {
+        Platform.runLater(() -> {
+            stage.setTitle(stage.getTitle() + " " + godPowerName.get(0));
+        });
+    }
 
     @Override
     public void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) {
@@ -225,14 +234,12 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         client.updateAtlasBuild(selectedSpaceAndBuildDome);
     }
 
-
     @Override
     public void askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w1CanBuild, boolean w2CanMove, boolean w2CanBuild) {
         Platform.runLater(() -> {
             ((BoardSceneController) controller).askBuildBeforeMovePrometheus(playerName, w1CanMove, w1CanBuild, w2CanMove, w2CanBuild);
         });
     }
-
 
     @Override
     public void updateBuildBeforeMovePrometheus(int[] workerAndBuildBeforeMove) {
@@ -245,7 +252,6 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
             ((BoardSceneController) controller).askWorkerMovementPrometheus(playerName, validMovementSpaces);
         });
     }
-
 
     @Override
     public void updateWorkerMovementPrometheus(int chosenMovementSpace) {
