@@ -1,8 +1,11 @@
 package it.polimi.ingsw.PSP25.Client;
 
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+import it.polimi.ingsw.PSP25.Utility.Utilities;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -26,12 +29,13 @@ public class CLI implements ViewObservable {
 
     @Override
     public void askNumOfPlayers(String question) {
-        int numOfPlayers;
+        String numOfPlayers;
         do {
             System.out.println(question);
-            numOfPlayers = scanner.nextInt();
-        } while (numOfPlayers < 2 || numOfPlayers > 3);
-        client.updateNumOfPlayers(numOfPlayers);
+            numOfPlayers = scanner.next();
+        } while (!numOfPlayers.equals("2") && !numOfPlayers.equals("3"));
+
+        client.updateNumOfPlayers(Integer.parseInt(numOfPlayers));
     }
 
     @Override
@@ -48,19 +52,25 @@ public class CLI implements ViewObservable {
     @Override
     public void askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
 
-        System.out.print(playerName + " choose " + numOfPlayers + " god powers from the list: [");
-        System.out.print("1 - " + godPowerNames.get(0));
+        String question = "";
+        question = question + playerName + " choose " + numOfPlayers + " god powers from the list: [" + 1 + " - " + godPowerNames.get(0);
         for (int i = 1; i < godPowerNames.size(); i++) {
-            System.out.print(", " + (i + 1) + " - " + godPowerNames.get(i));
+            question = question + ", " + (i + 1) + " - " + godPowerNames.get(i);
         }
-        System.out.println("]");
+        question = question + "]";
+
         List<Integer> selectedIndexes = new ArrayList<>(numOfPlayers);
+
+        System.out.println(question);
         for (int i = 1; i <= numOfPlayers; i++) {
-            int index = scanner.nextInt();
+
+            int index = Utilities.readIntegerInput(scanner);
+
             while (index <= 0 || index > godPowerNames.size() || selectedIndexes.contains(index - 1)) {
-                System.out.println("God power index is not valid. Choose an index between 1 and " +
-                        godPowerNames.size() + " and different from other chosen indexes");
-                index = scanner.nextInt();
+                question = "God power index is not valid. Choose an index between 1 and " +
+                        godPowerNames.size() + " and different from other chosen indexes";
+                System.out.println(question);
+                index = Utilities.readIntegerInput(scanner);
             }
             selectedIndexes.add(index - 1);
         }
@@ -85,12 +95,12 @@ public class CLI implements ViewObservable {
         }
         System.out.println("]");
 
-        // TODO: verificare eccezione nel caso in cui inserisca una stringa
-        int selectedIndex = scanner.nextInt();
+
+        int selectedIndex = Utilities.readIntegerInput(scanner);
         while (selectedIndex - 1 >= godPowerNames.size() || selectedIndex - 1 < 0) {
             System.out.println("God power index is not valid. Choose an index between 1 and " +
                     godPowerNames.size());
-            selectedIndex = scanner.nextInt();
+            selectedIndex = Utilities.readIntegerInput(scanner);
         }
 
         client.updateGodPower(selectedIndex);
@@ -164,14 +174,14 @@ public class CLI implements ViewObservable {
 
         System.out.println(playerName + " it's your turn! Choose the position of your "
                 + ((workerNumber == 1) ? "first" : "second") + " worker");
-        int pos = scanner.nextInt();
+        int pos = Utilities.readIntegerInput(scanner);
         int x = pos % 5;
         int y = pos / 5;
         while (pos < 0 || pos > 24 || pos == previousPos || board[x][y].hasWorker()) {
             System.out.println("Position not valid. Choose the position of your "
                     + ((workerNumber == 1) ? "first" : "second") + " worker, between 0 and 24 " +
                     "and not already occupied by other workers");
-            pos = scanner.nextInt();
+            pos = Utilities.readIntegerInput(scanner);
             x = pos % 5;
             y = pos / 5;
         }
@@ -192,10 +202,10 @@ public class CLI implements ViewObservable {
             workerChoice = 1;
         } else {
             System.out.println(playerName + ": Choose a worker");
-            workerChoice = scanner.nextInt();
+            workerChoice = Utilities.readIntegerInput(scanner);
             while (workerChoice < 1 || workerChoice > 2) {
                 System.out.println("Worker number is not valid. Choose 1 or 2");
-                workerChoice = scanner.nextInt();
+                workerChoice = Utilities.readIntegerInput(scanner);
             }
         }
 
@@ -216,11 +226,11 @@ public class CLI implements ViewObservable {
 
         System.out.println(validMovementSpacesW.toString());
         System.out.println(playerName + ": Choose movement space");
-        int chosenMovementSpace = scanner.nextInt();
+        int chosenMovementSpace = Utilities.readIntegerInput(scanner);
         while (!(validMovementSpacesW.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                 contains(chosenMovementSpace)) {
             System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
-            chosenMovementSpace = scanner.nextInt();
+            chosenMovementSpace = Utilities.readIntegerInput(scanner);
         }
 
         return chosenMovementSpace;
@@ -230,11 +240,11 @@ public class CLI implements ViewObservable {
     public void askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces) {
         System.out.println(validBuildingSpaces.toString());
         System.out.println(playerName + ": Choose building space");
-        int chosenBuildingSpace = scanner.nextInt();
+        int chosenBuildingSpace = Utilities.readIntegerInput(scanner);
         while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                 contains(chosenBuildingSpace)) {
             System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
-            chosenBuildingSpace = scanner.nextInt();
+            chosenBuildingSpace = Utilities.readIntegerInput(scanner);
         }
 
         client.updateBuildingSpace(chosenBuildingSpace);
@@ -280,11 +290,11 @@ public class CLI implements ViewObservable {
     private int buildingSpaceSelection(String playerName, List<SpaceCopy> validBuildingSpaces) {
         System.out.println(validBuildingSpaces.toString());
         System.out.println(playerName + ": Choose building space");
-        int chosenBuildingSpace = scanner.nextInt();
+        int chosenBuildingSpace = Utilities.readIntegerInput(scanner);
         while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                 contains(chosenBuildingSpace)) {
             System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
-            chosenBuildingSpace = scanner.nextInt();
+            chosenBuildingSpace = Utilities.readIntegerInput(scanner);
         }
 
         return chosenBuildingSpace;
@@ -304,10 +314,10 @@ public class CLI implements ViewObservable {
             workerChoice = 1;
         } else {
             System.out.println(playerName + ": Choose a worker");
-            workerChoice = scanner.nextInt();
+            workerChoice = Utilities.readIntegerInput(scanner);
             while (workerChoice < 1 || workerChoice > 2) {
                 System.out.println("Worker number is not valid. Choose 1 or 2");
-                workerChoice = scanner.nextInt();
+                workerChoice = Utilities.readIntegerInput(scanner);
             }
         }
 
@@ -336,12 +346,12 @@ public class CLI implements ViewObservable {
     public void askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) {
         System.out.println(validMovementSpaces.toString());
         System.out.println(playerName + ": Choose movement space");
-        int chosenMovementSpace = scanner.nextInt();
+        int chosenMovementSpace = Utilities.readIntegerInput(scanner);
 
         while (!(validMovementSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                 contains(chosenMovementSpace)) {
             System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
-            chosenMovementSpace = scanner.nextInt();
+            chosenMovementSpace = Utilities.readIntegerInput(scanner);
         }
 
         client.updateWorkerMovementPrometheus(chosenMovementSpace);
@@ -367,11 +377,11 @@ public class CLI implements ViewObservable {
         if (answer.equals("y")) {
             System.out.println(validSecondMovementSpaces.toString());
             System.out.println(playerName + ": Choose movement space");
-            chosenMovementSpace = scanner.nextInt();
+            chosenMovementSpace = Utilities.readIntegerInput(scanner);
             while (!(validSecondMovementSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                     contains(chosenMovementSpace)) {
                 System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
-                chosenMovementSpace = scanner.nextInt();
+                chosenMovementSpace = Utilities.readIntegerInput(scanner);
             }
         }
 
@@ -388,11 +398,11 @@ public class CLI implements ViewObservable {
             System.out.println(validBuildingSpaces.toString());
             System.out.println(playerName + ": Choose building space");
             // Selection of the second building space
-            chosenBuildingSpace = scanner.nextInt();
+            chosenBuildingSpace = Utilities.readIntegerInput(scanner);
             while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                     contains(chosenBuildingSpace)) {
                 System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
-                chosenBuildingSpace = scanner.nextInt();
+                chosenBuildingSpace = Utilities.readIntegerInput(scanner);
             }
         }
 
@@ -406,11 +416,11 @@ public class CLI implements ViewObservable {
 
         System.out.println(validBuildingSpaces.toString());
         System.out.println(playerName + ": Choose building space");
-        int chosenBuildingSpace = scanner.nextInt();
+        int chosenBuildingSpace = Utilities.readIntegerInput(scanner);
         while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                 contains(chosenBuildingSpace)) {
             System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
-            chosenBuildingSpace = scanner.nextInt();
+            chosenBuildingSpace = Utilities.readIntegerInput(scanner);
         }
 
         SpaceCopy space = null;
@@ -472,11 +482,11 @@ public class CLI implements ViewObservable {
             System.out.println(validRemoveSpaces.toString());
             System.out.println(playerName + ": Choose the space where you want to remove a block");
             // Selection of the second building space
-            selectedRemoveSpace = scanner.nextInt();
+            selectedRemoveSpace = Utilities.readIntegerInput(scanner);
             while (!(validRemoveSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                     contains(selectedRemoveSpace)) {
                 System.out.println(selectedRemoveSpace + " is not in the valid spaces list");
-                selectedRemoveSpace = scanner.nextInt();
+                selectedRemoveSpace = Utilities.readIntegerInput(scanner);
             }
         }
 

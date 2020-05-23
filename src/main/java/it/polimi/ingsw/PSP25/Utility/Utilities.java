@@ -5,7 +5,9 @@ import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
 import it.polimi.ingsw.PSP25.Model.Space;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Utilities Class.
@@ -56,6 +58,24 @@ public class Utilities {
             copied.add(new SpaceCopy(s));
         }
         return copied;
+    }
+
+    public static int readIntegerInput(Scanner scanner) {
+        boolean validInput;
+        int input = -1;
+
+        do {
+            validInput = true;
+            try {
+                input = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Not valid input");
+                scanner.nextLine();
+                validInput = false;
+            }
+        } while (!validInput);
+
+        return input;
     }
 }
 
