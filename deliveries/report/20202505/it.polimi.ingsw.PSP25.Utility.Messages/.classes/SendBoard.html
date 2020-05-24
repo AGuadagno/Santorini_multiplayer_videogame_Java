@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: SendBoard</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Utility.Messages</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: SendBoard (it.polimi.ingsw.PSP25.Utility.Messages)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">SendBoard</td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 2)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 5)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Utility.Messages;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Client.Client;
+        <i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Client.NetworkHandler;
+        <i>5</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+        <i>6</i>&nbsp;
+        <i>7</i>&nbsp;
+        <i>8</i>&nbsp;import java.io.IOException;
+        <i>9</i>&nbsp;
+        <i>10</i>&nbsp;/**
+        <i>11</i>&nbsp; * SendBoard Message.
+        <i>12</i>&nbsp; * This message is sent to the players in order to show them a copy of the board.
+        <i>13</i>&nbsp; */
+        <i>14</i>&nbsp;public class SendBoard extends Message {
+        <i>15</i>&nbsp; private SpaceCopy[][] board;
+        <i>16</i>&nbsp;
+        <b class="nc"><i>17</i>&nbsp; public SendBoard(SpaceCopy[][] board) {</b>
+        <b class="nc"><i>18</i>&nbsp; this.board = board;</b>
+        <b class="nc"><i>19</i>&nbsp; }</b>
+        <i>20</i>&nbsp;
+        <i>21</i>&nbsp; public void process(NetworkHandler nh, Client client) throws IOException {
+        <i>22</i>&nbsp;
+        <b class="nc"><i>23</i>&nbsp; client.showBoard(board);</b>
+        <i>24</i>&nbsp;
+        <i>25</i>&nbsp; // USED IN CLI
+        <i>26</i>&nbsp; /* for (int j = 0; j &lt; 5; j++) {
+        <i>27</i>&nbsp; StringBuilder[] rowLines = new StringBuilder[5];
+        <i>28</i>&nbsp; for (int k = 0; k &lt; 5; k++) {
+        <i>29</i>&nbsp; rowLines[k] = new StringBuilder(&quot;&quot;);
+        <i>30</i>&nbsp; rowLines[0].append(&quot;+ - - - - &quot;); //first line: cell separator
+        <i>31</i>&nbsp; }
+        <i>32</i>&nbsp; rowLines[0].append(&quot;+&quot;); //last &#39;+&#39;
+        <i>33</i>&nbsp;
+        <i>34</i>&nbsp; for (int i = 0; i &lt; 5; i++) {
+        <i>35</i>&nbsp; int cellNum = (5 * j) + i;
+        <i>36</i>&nbsp;
+        <i>37</i>&nbsp; rowLines[1].append(&quot;|&quot; + cellNum + (cellNum &lt; 10 ? &quot; &quot; : &quot; &quot;));
+        <i>38</i>&nbsp; rowLines[2].append(&quot;| H:&quot; + board[i][j].getTowerHeight() +
+        <i>39</i>&nbsp; (board[i][j].hasDome() ? &quot; D &quot; : &quot; &quot;));
+        <i>40</i>&nbsp; rowLines[3].append(&quot;| &quot;);
+        <i>41</i>&nbsp; rowLines[4].append(&quot;| &quot;);
+        <i>42</i>&nbsp; SpaceCopy currSpace = board[i][j];
+        <i>43</i>&nbsp; if (currSpace.hasWorker()) {
+        <i>44</i>&nbsp; rowLines[3].append(currSpace.getID() + &quot; &quot;);
+        <i>45</i>&nbsp; rowLines[4].append(&quot;W &quot;);
+        <i>46</i>&nbsp; if (currSpace.getWorkerNumber() == 1)
+        <i>47</i>&nbsp; rowLines[4].append(&quot;1 &quot;);
+        <i>48</i>&nbsp; else if (currSpace.getWorkerNumber() == 2)
+        <i>49</i>&nbsp; rowLines[4].append(&quot;2 &quot;);
+        <i>50</i>&nbsp; else {
+        <i>51</i>&nbsp; try {
+        <i>52</i>&nbsp; throw new Exception();
+        <i>53</i>&nbsp; } catch (Exception e) {
+        <i>54</i>&nbsp; System.out.println(&quot;Worker in cell &quot; + cellNum + &quot;doesn&#39;t correspond to his
+        Player&quot;);
+        <i>55</i>&nbsp; e.printStackTrace();
+        <i>56</i>&nbsp; }
+        <i>57</i>&nbsp; }
+        <i>58</i>&nbsp; } else {
+        <i>59</i>&nbsp; rowLines[3].append(&quot; &quot;);
+        <i>60</i>&nbsp; rowLines[4].append(&quot; &quot;);
+        <i>61</i>&nbsp; }
+        <i>62</i>&nbsp; }
+        <i>63</i>&nbsp; for (int k = 1; k &lt; 5; k++) {
+        <i>64</i>&nbsp; rowLines[k].append(&quot;|&quot;); //last &#39;|&#39;
+        <i>65</i>&nbsp; }
+        <i>66</i>&nbsp; for (int l = 0; l &lt; 5; l++) {
+        <i>67</i>&nbsp; System.out.println(rowLines[l]);
+        <i>68</i>&nbsp; }
+        <i>69</i>&nbsp; }
+        <i>70</i>&nbsp; for (int k = 0; k &lt; 5; k++) {
+        <i>71</i>&nbsp; System.out.print(&quot;+ - - - - &quot;); //last line: cell separator
+        <i>72</i>&nbsp; }
+        <i>73</i>&nbsp; System.out.print(&quot;+&quot;); //last &#39;+&#39;
+        <i>74</i>&nbsp; System.out.println();
+        <i>75</i>&nbsp; */
+        <i>76</i>&nbsp;
+        <b class="nc"><i>77</i>&nbsp; }</b>
+        <i>78</i>&nbsp;}
+        <i>79</i>&nbsp;
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-05-25 00:07</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: VirtualView</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Server</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: VirtualView (it.polimi.ingsw.PSP25.Server)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+        </tr>
+        <tr>
+            <td class="name">VirtualView</td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Server;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+        <i>4</i>&nbsp;
+        <i>5</i>&nbsp;import java.net.InetAddress;
+        <i>6</i>&nbsp;import java.util.List;
+        <i>7</i>&nbsp;
+        <i>8</i>&nbsp;public interface VirtualView {
+        <i>9</i>&nbsp; String askName(int i) throws DisconnectionException;
+        <i>10</i>&nbsp;
+        <i>11</i>&nbsp; List&lt;Integer&gt; askAllGodPowers(String playerName, int numOfPlayers, List&lt;String&gt;
+        deepCopyGodPowerNames) throws DisconnectionException;
+        <i>12</i>&nbsp;
+        <i>13</i>&nbsp; int askGodPower(String playerName, List&lt;String&gt; deepCopyGodPowerNames) throws
+        DisconnectionException;
+        <i>14</i>&nbsp;
+        <i>15</i>&nbsp; void tellAssignedGodPower(String playerName, List&lt;String&gt; deepCopyGodPowerNames) throws
+        DisconnectionException;
+        <i>16</i>&nbsp;
+        <i>17</i>&nbsp; int askWorkerPosition(String playerName, int i, int i1, SpaceCopy[][] deepCopyBoard) throws
+        DisconnectionException;
+        <i>18</i>&nbsp;
+        <i>19</i>&nbsp; void manageVictory(String playerName) throws DisconnectionException;
+        <i>20</i>&nbsp;
+        <i>21</i>&nbsp; void stopGame();
+        <i>22</i>&nbsp;
+        <i>23</i>&nbsp; void manageLose(String playerName) throws DisconnectionException;
+        <i>24</i>&nbsp;
+        <i>25</i>&nbsp; void sendBoard(SpaceCopy[][] deepCopyBoard) throws DisconnectionException;
+        <i>26</i>&nbsp;
+        <i>27</i>&nbsp; void sendPlayersGodPowers(List&lt;String&gt; playerNames, List&lt;String&gt; godPowerNames)
+        throws DisconnectionException;
+        <i>28</i>&nbsp;
+        <i>29</i>&nbsp; int getClientNumber();
+        <i>30</i>&nbsp;
+        <i>31</i>&nbsp; void sendStop(InetAddress disconnectedAddress) throws DisconnectionException;
+        <i>32</i>&nbsp;
+        <i>33</i>&nbsp; int[] askWorkerMovement(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList, List&lt;SpaceCopy&gt;
+        deepCopySpaceList1) throws DisconnectionException;
+        <i>34</i>&nbsp;
+        <i>35</i>&nbsp; int askBuildingSpace(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws
+        DisconnectionException;
+        <i>36</i>&nbsp;
+        <i>37</i>&nbsp; int[] askBuildBeforeMovePrometheus(String playerName, boolean b, boolean b1, boolean b2, boolean
+        b3) throws DisconnectionException;
+        <i>38</i>&nbsp;
+        <i>39</i>&nbsp; int askWorkerMovementPrometheus(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList)
+        throws DisconnectionException;
+        <i>40</i>&nbsp;
+        <i>41</i>&nbsp; int[] askHephaestusBuild(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws
+        DisconnectionException;
+        <i>42</i>&nbsp;
+        <i>43</i>&nbsp; int askArtemisSecondMove(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws
+        DisconnectionException;
+        <i>44</i>&nbsp;
+        <i>45</i>&nbsp; int[] askAtlasBuild(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws
+        DisconnectionException;
+        <i>46</i>&nbsp;
+        <i>47</i>&nbsp; int askDemeterSecondBuilding(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws
+        DisconnectionException;
+        <i>48</i>&nbsp;
+        <i>49</i>&nbsp; int askToRemoveBlockAres(String player, List&lt;SpaceCopy&gt; validRemoveSpaces, int
+        nonSelectedWorkerNumber) throws DisconnectionException;
+        <i>50</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-05-25 00:07</div>
+</div>
+</body>
+</html>

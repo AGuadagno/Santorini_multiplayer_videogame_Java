@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: AskHephaestusBuild</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Utility.Messages</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: AskHephaestusBuild (it.polimi.ingsw.PSP25.Utility.Messages)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">AskHephaestusBuild</td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 2)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 7)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Utility.Messages;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Client.Client;
+        <i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Client.NetworkHandler;
+        <i>5</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+        <i>6</i>&nbsp;
+        <i>7</i>&nbsp;import java.io.IOException;
+        <i>8</i>&nbsp;import java.util.List;
+        <i>9</i>&nbsp;import java.util.Scanner;
+        <i>10</i>&nbsp;import java.util.stream.Collectors;
+        <i>11</i>&nbsp;
+        <i>12</i>&nbsp;/**
+        <i>13</i>&nbsp; * AskHephaestusBuild Message Class.
+        <i>14</i>&nbsp; * This Message is sent to the player who controls Hephaestus to ask him if he wants to build 2
+        block in the
+        <i>15</i>&nbsp; * selected building space.
+        <i>16</i>&nbsp; */
+        <i>17</i>&nbsp;public class AskHephaestusBuild extends Message {
+        <i>18</i>&nbsp;
+        <i>19</i>&nbsp; private List&lt;SpaceCopy&gt; validBuildingSpaces;
+        <i>20</i>&nbsp; private String playerName;
+        <i>21</i>&nbsp;
+        <b class="nc"><i>22</i>&nbsp; public AskHephaestusBuild(String playerName, List&lt;SpaceCopy&gt;
+            validBuildingSpaces) {</b>
+        <b class="nc"><i>23</i>&nbsp; this.playerName = playerName;</b>
+        <b class="nc"><i>24</i>&nbsp; this.validBuildingSpaces = validBuildingSpaces;</b>
+        <b class="nc"><i>25</i>&nbsp; }</b>
+        <i>26</i>&nbsp;
+        <i>27</i>&nbsp; public void process(NetworkHandler nh, Client client) throws IOException {
+        <i>28</i>&nbsp; // SELECTION OF BUILDING SPACE
+        <i>29</i>&nbsp; //int[] spaceAndDoubleBuilding = buildingSpaceSelection(validBuildingSpaces);
+        <i>30</i>&nbsp;
+        <b class="nc"><i>31</i>&nbsp; int[] spaceAndDoubleBuilding = client.askHephaestusBuild(playerName,
+            validBuildingSpaces);</b>
+        <i>32</i>&nbsp;
+        <b class="nc"><i>33</i>&nbsp; nh.submit(spaceAndDoubleBuilding);</b>
+        <b class="nc"><i>34</i>&nbsp; }</b>
+        <i>35</i>&nbsp;
+        <i>36</i>&nbsp; /*private int[] buildingSpaceSelection(List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <i>37</i>&nbsp;
+        <i>38</i>&nbsp; int[] spaceAndDoubleBuilding = new int[2];
+        <i>39</i>&nbsp;
+        <i>40</i>&nbsp; Scanner scanner = new Scanner(System.in);
+        <i>41</i>&nbsp;
+        <i>42</i>&nbsp; System.out.println(validBuildingSpaces.toString());
+        <i>43</i>&nbsp; System.out.println(playerName + &quot;: Choose building space&quot;);
+        <i>44</i>&nbsp; int chosenBuildingSpace = scanner.nextInt();
+        <i>45</i>&nbsp; while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
+        <i>46</i>&nbsp; contains(chosenBuildingSpace)) {
+        <i>47</i>&nbsp; System.out.println(chosenBuildingSpace + &quot; is not in the valid building spaces list&quot;);
+        <i>48</i>&nbsp; chosenBuildingSpace = scanner.nextInt();
+        <i>49</i>&nbsp; }
+        <i>50</i>&nbsp;
+        <i>51</i>&nbsp; SpaceCopy space = null;
+        <i>52</i>&nbsp;
+        <i>53</i>&nbsp; int x = chosenBuildingSpace % 5;
+        <i>54</i>&nbsp; int y = chosenBuildingSpace / 5;
+        <i>55</i>&nbsp; for (SpaceCopy spaceCopy : validBuildingSpaces) {
+        <i>56</i>&nbsp; if (spaceCopy.getX() == x &amp;&amp; spaceCopy.getY() == y)
+        <i>57</i>&nbsp; space = spaceCopy;
+        <i>58</i>&nbsp; }
+        <i>59</i>&nbsp;
+        <i>60</i>&nbsp; // space.getTowerHeight() &lt; 2 perchè l&#39;altezza non viene davvero incrementata tra i 2
+        step
+        <i>61</i>&nbsp; if (space.getTowerHeight() &lt; 2) { // can&#39;t build a dome
+        <i>62</i>&nbsp; // Choice to build another block
+        <i>63</i>&nbsp; System.out.println(&quot;Do you want to build an additional block in &quot; + space.toString() +
+        &quot; ?&quot; + &quot; y/n&quot;);
+        <i>64</i>&nbsp; String answer = scanner.next();
+        <i>65</i>&nbsp; while (!(answer.equals(&quot;y&quot;) || answer.equals(&quot;n&quot;))) {
+        <i>66</i>&nbsp; System.out.println(&quot;Answer is not valid! y = yes, n = no!&quot;);
+        <i>67</i>&nbsp; answer = scanner.next();
+        <i>68</i>&nbsp; }
+        <i>69</i>&nbsp;
+        <i>70</i>&nbsp; if (answer.equals(&quot;y&quot;)) {
+        <i>71</i>&nbsp; spaceAndDoubleBuilding[1] = 2;
+        <i>72</i>&nbsp; } else if (answer.equals(&quot;n&quot;)) {
+        <i>73</i>&nbsp; spaceAndDoubleBuilding[1] = 1;
+        <i>74</i>&nbsp; }
+        <i>75</i>&nbsp; } else {
+        <i>76</i>&nbsp; spaceAndDoubleBuilding[1] = 1;
+        <i>77</i>&nbsp; }
+        <i>78</i>&nbsp;
+        <i>79</i>&nbsp; spaceAndDoubleBuilding[0] = chosenBuildingSpace;
+        <i>80</i>&nbsp; return spaceAndDoubleBuilding;
+        <i>81</i>&nbsp; }*/
+        <i>82</i>&nbsp;
+        <i>83</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-05-25 00:07</div>
+</div>
+</body>
+</html>

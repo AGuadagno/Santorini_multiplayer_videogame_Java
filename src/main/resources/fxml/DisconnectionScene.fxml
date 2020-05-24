@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="353.0" prefWidth="364.0"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.PSP25.Client.GUI.DisconnectionSceneController">
@@ -18,7 +17,7 @@
                 <Image url="@../img/LosingWindow.png"/>
             </image>
         </ImageView>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="73.0" layoutY="104.0" prefHeight="101.0"
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="73.0" layoutY="69.0" prefHeight="142.0"
                prefWidth="227.0" text="Disconnected from the server. Do you want to play again?" textAlignment="CENTER"
                textFill="WHITE" wrapText="true">
             <font>
@@ -31,15 +30,15 @@
                 <Image url="@../img/yesunpressed.png"/>
             </image>
         </ImageView>
-        <Button fx:id="yesButton" layoutX="42.0" layoutY="228.0" mnemonicParsing="false" opacity="0.0" prefHeight="33.0"
-                prefWidth="140.0" onAction="#handleYesButton"/>
+        <Button fx:id="yesButton" layoutX="42.0" layoutY="228.0" mnemonicParsing="false" onAction="#handleYesButton"
+                opacity="0.0" prefHeight="33.0" prefWidth="140.0"/>
         <ImageView fitHeight="78.0" fitWidth="143.0" layoutX="184.0" layoutY="228.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
                 <Image url="@../img/nounpressed.png"/>
             </image>
         </ImageView>
-        <Button fx:id="noButton" layoutX="188.0" layoutY="228.0" mnemonicParsing="false" opacity="0.0" prefHeight="33.0"
-                prefWidth="140.0" onAction="#handleNoButton"/>
+        <Button fx:id="noButton" layoutX="188.0" layoutY="228.0" mnemonicParsing="false" onAction="#handleNoButton"
+                opacity="0.0" prefHeight="33.0" prefWidth="140.0"/>
     </children>
 </AnchorPane>

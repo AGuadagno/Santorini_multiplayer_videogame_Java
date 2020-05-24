@@ -1,9 +1,7 @@
 package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.*;
-import it.polimi.ingsw.PSP25.Server.ClientHandler;
-import it.polimi.ingsw.PSP25.Server.DisconnectionException;
-import it.polimi.ingsw.PSP25.Server.Lobby;
+import it.polimi.ingsw.PSP25.Server.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +15,8 @@ import static org.junit.Assert.*;
 
 public class GodPowerTest {
 
-    ActiveEffects activeEffects = new ActiveEffects(2);
-    ActiveEffects activeEffects2 = new ActiveEffects(2);
+    ActiveEffects activeEffects;
+    ActiveEffects activeEffects2;
     GodPower godPower = null;
     GodPower godPower2 = null;
     Board b = null;
@@ -30,7 +28,13 @@ public class GodPowerTest {
 
     @Before
     public void setup() {
-        godPower = new GodPower(activeEffects, null);
+        activeEffects = new ActiveEffects(2);
+        activeEffects2 = new ActiveEffects(2);
+        List<VirtualView> clientList = new ArrayList<>();
+        clientList.add(new ClientHandlerMock());
+        clientList.add(new ClientHandlerMock());
+
+        godPower = new GodPower(activeEffects, new GameLogic(clientList));
         godPower2 = new GodPower(activeEffects2, null);
         activeEffects.initializeEffects();
         activeEffects2.initializeEffects();
@@ -46,14 +50,16 @@ public class GodPowerTest {
 
     @After
     public void tearDown() {
-        GodPower godPower2 = null;
-        Board b = null;
-        Space demoSpace = null;
-        Player demoPlayer = null;
-        Worker demoWorker = null;
-        Player demoPlayer2 = null;
-        Worker demoWorker2 = null;
-        GodPower godPower = null;
+        activeEffects = null;
+        activeEffects2 = null;
+        godPower2 = null;
+        b = null;
+        demoSpace = null;
+        demoPlayer = null;
+        demoWorker = null;
+        demoPlayer2 = null;
+        demoWorker2 = null;
+        godPower = null;
     }
 
     @Test
@@ -365,6 +371,20 @@ public class GodPowerTest {
     }
 
     @Test
+    public void turnSequence_test_LoseByBuilding() throws DisconnectionException {
+        ClientHandlerMock clientHandlerMock = new ClientHandlerMock();
+        Player demoPlayer3 = new Player("Name", 1, clientHandlerMock);
+        demoPlayer3.initializeWorkers(b.getSpace(0, 1), b.getSpace(4, 4));
+        GodPower limus = new Limus(activeEffects, null);
+        limus.initializeWorkers(new Player("nome2", 2, new ClientHandler(new Socket(), 2, new Lobby())),
+                b.getSpace(1, 1), b.getSpace(3, 4));
+        activeEffects.pushEffect(limus);
+
+        clientHandlerMock.setAskWorkerMovement(new int[]{1, 0});
+        assertEquals(TurnResult.LOSE, godPower.turnSequence(demoPlayer3, activeEffects));
+    }
+
+    @Test
     public void addActiveEffects_test() {
         godPower.addActiveEffects(activeEffects, demoWorker, demoWorker2, demoWorker);
         demoWorker.moveTo(b.getSpace(4, 4));
@@ -384,6 +404,4 @@ public class GodPowerTest {
         assertEquals(GP2.toString(), expectedString2);
     }
 
-
 }
-

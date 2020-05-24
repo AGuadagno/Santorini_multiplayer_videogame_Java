@@ -3,6 +3,7 @@ package it.polimi.ingsw.PSP25.Model;
 import it.polimi.ingsw.PSP25.Model.GodPowers.Apollo;
 import it.polimi.ingsw.PSP25.Model.GodPowers.Athena;
 import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
+import it.polimi.ingsw.PSP25.Model.GodPowers.Limus;
 import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
@@ -11,6 +12,7 @@ import org.junit.Test;
 
 import java.net.Socket;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ActiveEffectsTest {
@@ -25,6 +27,7 @@ public class ActiveEffectsTest {
         activeEffects = new ActiveEffects(2);
         activeEffects.initializeEffects();
         b = new Board();
+        b.setBoardForAllSpaces();
         b.getSpace(0, 0).setBoard(b);
         p = new Player("Nome", 1, new ClientHandler(new Socket(), 1, new Lobby()));
         w = new Worker(b.getSpace(1, 1), p);
@@ -87,8 +90,7 @@ public class ActiveEffectsTest {
     }
 
     @Test
-    //Line 63 can not be tested because there isn't any GodPower that limits building conditions.
-    public void canBuild() {
+    public void canBuildPositiveTest() {
         ActiveEffects activeEffects3 = new ActiveEffects(3);
         activeEffects3.initializeEffects();
         activeEffects3.pushEffect(new Athena(activeEffects3, null));
@@ -97,6 +99,20 @@ public class ActiveEffectsTest {
         Space highSpace2 = b.getSpace(2, 2);
 
         assertTrue(activeEffects3.canBuild(w, highSpace2));
+    }
+
+    @Test
+    public void canBuildNegativeTest() {
+        ActiveEffects activeEffects2 = new ActiveEffects(2);
+        activeEffects2.initializeEffects();
+        GodPower limus = new Limus(activeEffects2, null);
+        limus.initializeWorkers(new Player("nome2", 2, new ClientHandler(new Socket(), 2, new Lobby())),
+                b.getSpace(4, 4), b.getSpace(3, 4));
+        activeEffects2.pushEffect(limus);
+
+        Space spaceNearLimus = b.getSpace(3, 3);
+
+        assertFalse(activeEffects2.canBuild(w, spaceNearLimus));
     }
 
 }

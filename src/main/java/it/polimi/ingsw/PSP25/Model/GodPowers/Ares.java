@@ -20,7 +20,6 @@ public class Ares extends GodPower {
         super(activeEffects, broadcastInterface);
     }
 
-    @Override
     /**
      * Override of "turnSequence" according to Ares' effect:
      * "You may remove an unoccupied block (not dome) neighboring your unmoved Worker. You also remove any Tokens on the block".
@@ -32,6 +31,7 @@ public class Ares extends GodPower {
      *  TurnResult.WIN if the player has won during this turn
      *  TurnResult.CONTINUE if the player hasn't lost or won during this turn
      */
+    @Override
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {
 
         List<Space> validMovementSpacesW1;
