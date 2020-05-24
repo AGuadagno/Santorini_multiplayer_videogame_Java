@@ -61,6 +61,7 @@ public class Apollo extends GodPower {
             Worker opponentWorker = targetSpace.getWorker();
             targetSpace.setWorker(myWorker);
             myPreviousSpace.setWorker(opponentWorker);
+            myWorker.setHeightBeforeMove(myPreviousSpace.getTowerHeight());
             opponentWorker.setHeightBeforeMove(myPreviousSpace.getTowerHeight());
         } else {
             myWorker.moveTo(targetSpace);

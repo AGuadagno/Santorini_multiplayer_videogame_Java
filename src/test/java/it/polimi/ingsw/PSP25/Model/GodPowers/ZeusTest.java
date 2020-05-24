@@ -2,6 +2,7 @@ package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.*;
 import it.polimi.ingsw.PSP25.Server.ClientHandlerMock;
+import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,5 +75,23 @@ public class ZeusTest {
 
         List<Space> validBuildingSpaces = gp.getValidBuildSpaces(p1.getWorker1());
         assertTrue(validBuildingSpaces.containsAll(spaces) && spaces.size() == validBuildingSpaces.size());
+    }
+
+    @Test
+    public void askToBuild() {
+        int[] workerAndSpace = new int[]{1, 1};
+        clientHandlerMock.setAskWorkerMovement(workerAndSpace);
+        int selectedSpace = 1;
+        clientHandlerMock.setAskToBuild(selectedSpace);
+
+        try {
+            gp.turnSequence(p1, a);
+        } catch (DisconnectionException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue(b.getSpace(1, 0).getWorker().equals(p1.getWorker1()));
+        assertTrue(b.getSpace(1, 0).getTowerHeight() == 1);
+        assertTrue(p1.getWorker1().getHeightBeforeMove() == 1);
     }
 }

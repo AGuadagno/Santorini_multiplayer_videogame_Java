@@ -127,14 +127,14 @@ public class CLI implements ViewObservable {
             rowLines[0].append("+"); //last '+'
 
             for (int i = 0; i < 5; i++) {
-                int cellNum = (5 * j) + i;
+                int cellNum = (5 * i) + j;
 
                 rowLines[1].append("|" + cellNum + (cellNum < 10 ? "        " : "       "));
-                rowLines[2].append("|   H:" + board[i][j].getTowerHeight() +
-                        (board[i][j].hasDome() ? " D " : "   "));
+                rowLines[2].append("|   H:" + board[j][i].getTowerHeight() +
+                        (board[j][i].hasDome() ? " D " : "   "));
                 rowLines[3].append("|   ");
                 rowLines[4].append("|   ");
-                SpaceCopy currSpace = board[i][j];
+                SpaceCopy currSpace = board[j][i];
                 if (currSpace.hasWorker()) {
                     rowLines[3].append(currSpace.getID() + "   ");
                     rowLines[4].append("W ");

@@ -1,9 +1,7 @@
 package it.polimi.ingsw.PSP25.Model.GodPowers;
 
-import it.polimi.ingsw.PSP25.Model.ActiveEffects;
-import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
-import it.polimi.ingsw.PSP25.Model.Space;
-import it.polimi.ingsw.PSP25.Model.Worker;
+import it.polimi.ingsw.PSP25.Model.*;
+import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 
 import java.util.List;
 
@@ -35,4 +33,12 @@ public class Zeus extends GodPower {
         return validBuildingSpaces;
     }
 
+    @Override
+    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
+        Space selectedSpace = super.askToBuild(player, validBuildingSpaces);
+        if (selectedSpace.equals(selectedWorker.getSpace())) {
+            selectedWorker.setHeightBeforeMove(selectedSpace.getTowerHeight());
+        }
+        return selectedSpace;
+    }
 }
