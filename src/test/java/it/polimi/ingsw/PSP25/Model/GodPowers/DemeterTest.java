@@ -1,11 +1,15 @@
 package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.*;
+import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.ClientHandlerMock;
 import it.polimi.ingsw.PSP25.Server.DisconnectionException;
+import it.polimi.ingsw.PSP25.Server.Lobby;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.net.Socket;
 
 import static org.junit.Assert.*;
 
@@ -130,5 +134,20 @@ public class DemeterTest {
         } catch (DisconnectionException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void turnSequenceLoseByBuildingTest() throws DisconnectionException {
+        ClientHandlerMock clientHandlerMock = new ClientHandlerMock();
+        Player demoPlayer = new Player("Name", 1, clientHandlerMock);
+        b.getSpace(0, 0).removeWorker();
+        demoPlayer.initializeWorkers(b.getSpace(0, 1), b.getSpace(4, 4));
+        GodPower limus = new Limus(a, null);
+        limus.initializeWorkers(new Player("nome2", 2, new ClientHandler(new Socket(), 2, new Lobby())),
+                b.getSpace(1, 1), b.getSpace(3, 4));
+        a.pushEffect(limus);
+
+        clientHandlerMock.setAskWorkerMovement(new int[]{1, 0});
+        assertEquals(TurnResult.LOSE, gp.turnSequence(demoPlayer, a));
     }
 }
