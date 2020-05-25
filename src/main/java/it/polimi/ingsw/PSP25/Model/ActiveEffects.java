@@ -92,6 +92,9 @@ public class ActiveEffects {
         return true;
     }
 
+    /**
+     * Reduces the size of the effect list if one of the player in a 3-player game loses
+     */
     public void adaptEffectsAfterPlayerLose() {
         effectsList.remove(effectsList.size() - 1);
         numOfEffects--;

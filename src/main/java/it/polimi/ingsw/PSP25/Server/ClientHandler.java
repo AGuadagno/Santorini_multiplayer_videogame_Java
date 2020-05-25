@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Server;
 
+import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Model.GameLogic;
 import it.polimi.ingsw.PSP25.Utility.Messages.*;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
@@ -39,7 +40,7 @@ public class ClientHandler implements Runnable, VirtualView {
             try {
                 System.out.println("Client " + e.getClientHandler().getClientNumber() + " DisconnectionException: stopping game");
                 if (game != null) {
-                    game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress());
+                    game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress(), ClientHandler.this);
                 }
                 lobby.removeClient(this);
             } catch (DisconnectionException stopException) {
@@ -253,12 +254,12 @@ public class ClientHandler implements Runnable, VirtualView {
                         System.out.println("DisconnectionException: fermo il pingSender del server");
                         if (game != null) {
                             try {
-                                game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress());
+                                game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress(), ClientHandler.this);
                             } catch (DisconnectionException ex) {
                                 System.out.println("PingSender: Lobby.stopGame() DisconnectionException");
                             }
                         }
-                        lobby.removeClient(ClientHandler.this);
+                        //lobby.removeClient(ClientHandler.this);
                         return;
                     }
 

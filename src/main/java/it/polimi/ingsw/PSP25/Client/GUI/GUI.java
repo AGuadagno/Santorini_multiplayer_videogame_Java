@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
@@ -64,6 +65,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Santorini");
+        stage.getIcons().add(new Image("img/Icon.png"));
         stage.show();
     }
 
@@ -320,6 +322,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
             Platform.runLater(() -> {
                 Stage window = new Stage();
                 window.setScene(scene);
+                window.setResizable(false);
                 window.show();
                 ((DisconnectionSceneController) controller).setWindow(window);
             });

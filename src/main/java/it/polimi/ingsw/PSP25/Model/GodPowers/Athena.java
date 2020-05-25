@@ -57,6 +57,13 @@ public class Athena extends GodPower {
             activeEffects.pushEffect(new GodPower(activeEffects, null));
     }
 
+    /**
+     * First positioning of workers in the board
+     *
+     * @param player  who controls Athena
+     * @param spaceW1 Space where the player wants to position his first worker
+     * @param spaceW2 Space where the player wants to position his second worker
+     */
     @Override
     public void initializeWorkers(Player player, Space spaceW1, Space spaceW2) {
         player.initializeWorkers(spaceW1, spaceW2);

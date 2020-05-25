@@ -3,6 +3,7 @@ package it.polimi.ingsw.PSP25.Client.GUI;
 import it.polimi.ingsw.PSP25.Client.ViewObserver;
 import it.polimi.ingsw.PSP25.Model.Space;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -387,20 +388,6 @@ public class BoardSceneController implements GUIObservable {
         Button button;
         messageLabel.setText(playerName + ": Choose building space");
 
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                button = (Button) boardButtons.getChildren().get(5 * i + j);
-                button.setVisible(false);
-                for (SpaceCopy space : validBuildingSpaces) {
-                    if (space.getNumber() == (5 * i + j)) {
-                        //System.out.println(button.getId() + " visibile");
-                        button.setVisible(true);
-                        button.setOpacity(1);
-                    }
-                }
-            }
-        }
-
         if (secondSpaceArtemis != null) {
             moveWorkerBorder(secondSpaceArtemis);
             secondSpaceArtemis = null;
@@ -408,6 +395,20 @@ public class BoardSceneController implements GUIObservable {
             moveWorkerBorder(workerAndSpace[1]);
         else
             moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                button = (Button) boardButtons.getChildren().get(5 * i + j);
+                button.setVisible(false);
+                for (SpaceCopy space : validBuildingSpaces) {
+                    if (space.getNumber() == (5 * i + j)) {
+                        button.setVisible(true);
+                        button.setOpacity(1);
+                    }
+                }
+            }
+        }
+
     }
 
     private void showValidAresRemoveSpaces() {
@@ -440,7 +441,6 @@ public class BoardSceneController implements GUIObservable {
                 button.setVisible(false);
                 for (SpaceCopy space : validBuildingSpaces) {
                     if (space.getNumber() == (5 * i + j)) {
-                        //System.out.println(button.getId() + " visibile");
                         button.setVisible(true);
                         button.setOpacity(1);
                     }
@@ -487,7 +487,6 @@ public class BoardSceneController implements GUIObservable {
             rightButtonImage.setImage(new Image("/img/moveunpressed.png"));
             buildButton.setVisible(true);
             moveButton.setVisible(true);
-            //this.buttonAction = 7;
         }
     }
 
@@ -502,7 +501,6 @@ public class BoardSceneController implements GUIObservable {
                 button.setVisible(false);
                 for (SpaceCopy space : validMovementSpaces) {
                     if (space.getNumber() == (5 * i + j)) {
-                        //System.out.println(button.getId() + " visibile");
                         button.setVisible(true);
                         button.setOpacity(1);
                     }

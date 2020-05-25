@@ -17,6 +17,10 @@ public class Board {
         }
     }
 
+    /**
+     * Set the belonging bord for all the 25 spaces.
+     * (In case of multiple matches, there are different boards whit 25 different spaces each one)
+     */
     public void setBoardForAllSpaces() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {

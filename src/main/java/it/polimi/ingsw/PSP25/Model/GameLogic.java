@@ -227,6 +227,11 @@ public class GameLogic implements BroadcastInterface {
         }
     }
 
+    /**
+     * Broadcast the GodPower controlled by each player to inform other players of opponents' GodPower
+     *
+     * @throws DisconnectionException
+     */
     public void broadcastGodPowers() throws DisconnectionException {
         List<String> playerNames = playerList.stream().map(p -> p.getName() + "(" + p.getID() + ")").collect(Collectors.toList());
         List<String> godPowerNames = playerList.stream().map(p -> p.getGodPower().toString()).collect(Collectors.toList());
@@ -236,8 +241,14 @@ public class GameLogic implements BroadcastInterface {
         }
     }
 
-    // NEW
-    public void stopGame(VirtualView timeOutClient, InetAddress disconnectedAddress) throws DisconnectionException {
+    /**
+     * Sends StopMassege to inform players of the end of a game due to disconnection of a client
+     *
+     * @param timeOutClient       Disconnected Client
+     * @param disconnectedAddress Disconnected Client address
+     * @throws DisconnectionException
+     */
+    public void stopGame(VirtualView timeOutClient, InetAddress disconnectedAddress, ClientHandler stopGameCaller) throws DisconnectionException {
         int disconnectedClientIndex = timeOutClient.getClientNumber();
 
         System.out.println("Client " + disconnectedClientIndex + " with address " + disconnectedAddress + " disconnected.");
@@ -247,6 +258,7 @@ public class GameLogic implements BroadcastInterface {
             }
             clientHandlerList.get(i).stopGame();
         }
+        clientHandlerList.remove(stopGameCaller);
     }
 }
 

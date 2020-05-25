@@ -37,6 +37,8 @@ public class Limus extends GodPower {
 
 
     /**
+     * First positioning of workers in the board
+     *
      * @param player  who controls Limus
      * @param spaceW1 Space where the player wants to position his first worker
      * @param spaceW2 Space where the player wants to position his second worker
@@ -51,6 +53,12 @@ public class Limus extends GodPower {
 
     /**
      * Override of "turnSequence" in which the positions of workers of the player who controls Limus are saved.
+     *
+     * @param player        playing the round
+     * @param activeEffects array containing opponent god power effects that may influence this turn
+     * @return TurnResult.LOSE if the player has lost during this turn
+     * TurnResult.WIN if the player has won during this turn
+     * TurnResult.CONTINUE if the player hasn't lost or won during this turn
      */
     @Override
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {

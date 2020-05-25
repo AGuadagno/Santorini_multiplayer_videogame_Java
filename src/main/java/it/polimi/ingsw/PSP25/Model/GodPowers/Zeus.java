@@ -33,6 +33,15 @@ public class Zeus extends GodPower {
         return validBuildingSpaces;
     }
 
+    /**
+     * Override of "askToBuild" in which the "HeightBeforeMove" of the worker is updated if the player decides to build
+     * in the space where the worker itself is located.
+     *
+     * @param player              who is playing the turn
+     * @param validBuildingSpaces List of valid spaces where the selected worker can build
+     * @return
+     * @throws DisconnectionException
+     */
     @Override
     public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
         Space selectedSpace = super.askToBuild(player, validBuildingSpaces);

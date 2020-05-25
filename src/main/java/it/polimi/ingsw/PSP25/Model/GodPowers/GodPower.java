@@ -9,7 +9,8 @@ import java.util.List;
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 
 /**
- * God Power class. This class represents the class "Strategy" in a Strategy Pattern in which specific Gods
+ * God Power class.
+ * This class represents the class "Strategy" in a Strategy Pattern in which specific Gods
  * (Athena, Apollo, Artemis etc) are the Concrete Strategies and Player is the Context.
  * Workers can move, build, check the victory by using the methods in GodPower
  * (or Overridden methods in the extensions of God Power)
@@ -299,6 +300,14 @@ public class GodPower {
         activeEffects.pushEffect(this);
     }
 
+
+    /**
+     * First positioning of workers in the board
+     *
+     * @param player  who controls is playing the turn
+     * @param spaceW1 Space where the player wants to position his first worker
+     * @param spaceW2 Space where the player wants to position his second worker
+     */
     public void initializeWorkers(Player player, Space spaceW1, Space spaceW2) {
         player.initializeWorkers(spaceW1, spaceW2);
         addActiveEffects(activeEffects, null, null, null);

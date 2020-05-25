@@ -72,6 +72,8 @@ public class Minotaur extends GodPower {
     }
 
     /**
+     * @param space1 generic space adjacent to space2
+     * @param space2 space where the worker controlled by the player who has Minotaur as Godpower is located
      * @return the space that is positioned after space1, along the direction defined by space2 -> space1,
      * if it doesn't exist, returns null
      */
