@@ -198,7 +198,7 @@ public class PrometheusTest {
         a.pushEffect(limus);
 
         int selectedSpace;
-        int[] BuildBeforeMovePrometheus = new int[]{0, 2};
+        int[] BuildBeforeMovePrometheus = new int[]{1, 0};
         clientHandlerMock.setBuildBeforeMovePrometheus(BuildBeforeMovePrometheus);
         selectedSpace = 1;
         //clientHandlerMock.setAskToBuild(selectedSpace);

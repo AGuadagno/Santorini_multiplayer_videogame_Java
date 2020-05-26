@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 public class GUI extends Application implements ViewObservable, ViewObserver {
     private ViewObserver client;
@@ -23,7 +24,10 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     private List<String> godPowerNames;
 
     public static void main(String[] args) {
-        if (args.length > 0 && args[0].equals("CLI")) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Do you want to play with the GUI or CLI? (Default: GUI)");
+        String answer = scanner.next();
+        if (answer.equalsIgnoreCase("CLI")) {
             ViewObservable view = new CLI();
             Client client = new Client(view, true);
             view.subscribe(client);
