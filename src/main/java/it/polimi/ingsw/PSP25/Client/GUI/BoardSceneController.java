@@ -465,19 +465,21 @@ public class BoardSceneController implements GUIObservable {
             messageLabel.setText("Worker 1 can't move! Worker 2 is automatically selected");
             boardButtons.getChildren().get(workerToPosition(1)).setVisible(false);
             this.workerAndBuildBeforeMove[0] = 2;
+            disableAllButtons();
             moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));
             workerBuildBeforeMove(w2CanBuild);
         } else if (!w2CanMove) {
             messageLabel.setText("Worker 2 can't move! Worker 1 is automatically selected");
             boardButtons.getChildren().get(workerToPosition(2)).setVisible(false);
             this.workerAndBuildBeforeMove[0] = 1;
+            disableAllButtons();
             moveWorkerBorder(workerToPosition(workerAndBuildBeforeMove[0]));
             workerBuildBeforeMove(w1CanBuild);
         } else {
             messageLabel.setText(playerName + ": Choose a worker");
+            this.buttonAction = 6;
         }
 
-        this.buttonAction = 6;
     }
 
     private void workerBuildBeforeMove(boolean wCanBuild) {
@@ -486,6 +488,13 @@ public class BoardSceneController implements GUIObservable {
             leftButtonImage.setImage(new Image("/img/buildunpressed.png"));
             rightButtonImage.setImage(new Image("/img/moveunpressed.png"));
             buildButton.setVisible(true);
+            moveButton.setVisible(true);
+
+        } else {
+            messageLabel.setText(playerName + ": Choose a worker (Click 'move' to confirm selection) - your worker can't build");
+            buildButton.setVisible(false);
+            leftButtonImage.setImage(null);
+            rightButtonImage.setImage(new Image("/img/moveunpressed.png"));
             moveButton.setVisible(true);
         }
     }
