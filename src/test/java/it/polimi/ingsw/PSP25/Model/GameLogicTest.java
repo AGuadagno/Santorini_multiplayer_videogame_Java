@@ -1,12 +1,11 @@
 package it.polimi.ingsw.PSP25.Model;
 
-import it.polimi.ingsw.PSP25.Server.ClientHandlerMock;
-import it.polimi.ingsw.PSP25.Server.DisconnectionException;
-import it.polimi.ingsw.PSP25.Server.VirtualView;
+import it.polimi.ingsw.PSP25.Server.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -107,8 +106,15 @@ public class GameLogicTest {
         }
     }
 
-    /*@Test
-    public void stopGame() {
+    @Test
+    public void stopGameTest() throws DisconnectionException {
+        clientHandler1 = new ClientHandlerMock();
+        clientHandler2 = new ClientHandlerMock();
+        clientHandler3 = new ClientHandlerMock();
+        clientHandlerMockList = new ArrayList(Arrays.asList(clientHandler1, clientHandler2, clientHandler3));
+        gameLogic = new GameLogic(clientHandlerMockList);
 
-    }*/
+        gameLogic.stopGame(clientHandler1, new ClientHandler(new Socket(), 1, new Lobby()).getClientAddress(),
+                new ClientHandler(new Socket(), 2, new Lobby()));
+    }
 }
