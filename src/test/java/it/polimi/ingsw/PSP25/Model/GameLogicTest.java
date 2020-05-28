@@ -114,7 +114,7 @@ public class GameLogicTest {
         clientHandlerMockList = new ArrayList(Arrays.asList(clientHandler1, clientHandler2, clientHandler3));
         gameLogic = new GameLogic(clientHandlerMockList);
 
-        gameLogic.stopGame(clientHandler1, new ClientHandler(new Socket(), 1, new Lobby()).getClientAddress().toString(),
+        gameLogic.stopGame(clientHandler1, "127.0.0.1)",
                 new ClientHandler(new Socket(), 2, new Lobby()));
     }
 }
