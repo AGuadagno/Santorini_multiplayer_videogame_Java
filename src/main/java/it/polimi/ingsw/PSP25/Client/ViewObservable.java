@@ -5,6 +5,7 @@ import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 import java.util.List;
 
 public interface ViewObservable {
+
     void subscribe(ViewObserver o);
 
     void askIPAddress();

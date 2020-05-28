@@ -49,11 +49,10 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void start(Stage stage) {
         Client client = new Client(this, false);
-        this.subscribe(client);
         Thread clientThread = new Thread(client);
-        clientThread.start();
-
+        this.subscribe(client);
         this.stage = stage;
+        clientThread.start();
 
         Parent root = null;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/IPAddressScene.fxml"));
@@ -64,7 +63,6 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         }
         IPAddressSceneController controller = loader.getController();
         controller.subscribe(this);
-
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -75,6 +73,7 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     private Scene loadScene(String scenePath) {
         Parent root = null;
+
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(scenePath));
         try {
             root = loader.load();
@@ -155,8 +154,8 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     @Override
     public void askGodPower(String playerName, List<String> godPowerNames) {
         Scene scene = loadScene("fxml/GodPowerScene.fxml");
-        this.godPowerNames = godPowerNames;
 
+        this.godPowerNames = godPowerNames;
         Platform.runLater(() -> {
             stage.setScene(scene);
             stage.show();

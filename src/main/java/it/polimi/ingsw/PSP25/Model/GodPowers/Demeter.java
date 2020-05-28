@@ -19,10 +19,8 @@ public class Demeter extends GodPower {
     /**
      * Demeter constructor
      *
-     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
-     *                           building action or winning conditions of workers
-     * @param broadcastInterface used to send the modified board to all the players
-     *
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public Demeter(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -34,7 +32,7 @@ public class Demeter extends GodPower {
      * The player is asked if the wants to build twice.
      *
      * @param player        playing the turn
-     * @param activeEffects array containing opponent god power effects that may influence this turn
+     * @param activeEffects array containing opponents god power effects that may influence this turn
      * @return TurnResult.LOSE if the player has lost during this turn
      * TurnResult.WIN if the player has won during this turn
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn
@@ -46,19 +44,20 @@ public class Demeter extends GodPower {
         List<Space> validBuildSpaces;
         Space selectedBuildingSpace = null;
 
+        // Verify if the player can move
         validMovementSpacesW1 = getValidMovementSpaces(player.getWorker1());
         validMovementSpacesW2 = getValidMovementSpaces(player.getWorker2());
-
-
         if (verifyLoseByMovement(validMovementSpacesW1, validMovementSpacesW2)) {
             return TurnResult.LOSE;
         }
 
-        if (askToMoveWorker(player, validMovementSpacesW1, validMovementSpacesW2) == true) {
+        // If the player can move at least one of his workers, he is asked to move a worker and then win by movement is verified.
+        if (askToMoveWorker(player, validMovementSpacesW1, validMovementSpacesW2)) {
             return TurnResult.WIN;
         }
 
         validBuildSpaces = getValidBuildSpaces(selectedWorker);
+        // Verify if selected worker can build
         if (verifyLoseByBuilding(validBuildSpaces)) {
             return TurnResult.LOSE;
         }
@@ -66,11 +65,10 @@ public class Demeter extends GodPower {
         selectedBuildingSpace = askToBuild(player, validBuildSpaces);
         validBuildSpaces.remove(selectedBuildingSpace);
 
-        // The player is asked if he wants to build twice
+        // Demeter Effect: The player is asked if he wants to build twice
         askSecondBuilding(player, validBuildSpaces);
 
         addActiveEffects(activeEffects, player.getWorker1(), player.getWorker2(), selectedWorker);
-
         return TurnResult.CONTINUE;
     }
 
@@ -86,11 +84,10 @@ public class Demeter extends GodPower {
     private void askSecondBuilding(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
-
         int selectedSpace = player.getClientHandler().askDemeterSecondBuilding(playerName, deepCopySpaceList(validBuildingSpaces));
 
+        // -1 = the player doesn't want to build twice
         if (selectedSpace == -1)
-            // The player has chosen to not build twice
             return;
 
         int x = selectedSpace % 5;
@@ -99,7 +96,6 @@ public class Demeter extends GodPower {
             if (space.getX() == x && space.getY() == y)
                 selectedBuildingSpace = space;
         }
-
         buildBlock(selectedBuildingSpace);
         broadcastInterface.broadcastBoard();
     }

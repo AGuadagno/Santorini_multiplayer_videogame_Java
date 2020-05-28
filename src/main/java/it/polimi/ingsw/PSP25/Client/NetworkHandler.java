@@ -35,12 +35,6 @@ public class NetworkHandler implements Runnable {
         }
     }
 
-    public void removeObserver(ServerObserver observer) {
-        synchronized (observers) {
-            observers.remove(observer);
-        }
-    }
-
     @Override
     public void run() {
         try {
@@ -78,7 +72,6 @@ public class NetworkHandler implements Runnable {
         for (ServerObserver observer : observers) {
             observer.didReceiveServerMessage(null);
         }
-
         observers.forEach(ServerObserver::manageServerDisconnection);
         notifyAll();
     }
@@ -87,7 +80,6 @@ public class NetworkHandler implements Runnable {
         // WAIT FOR COMMANDS FROM THE CLIENT
         while (true) {
             nextCommand = null;
-
             try {
                 isWaiting = true;
                 notifyAll();
@@ -96,10 +88,8 @@ public class NetworkHandler implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             if (nextCommand == null)
                 continue;
-
             switch (nextCommand) {
                 case RECEIVE:
                     receive();
@@ -118,7 +108,6 @@ public class NetworkHandler implements Runnable {
             System.out.println("Network handler: socket timeout exception.");
             throw new SocketTimeoutException();
         }
-
         for (ServerObserver observer : observers) {
             observer.didReceiveServerMessage(receivedMessage);
         }

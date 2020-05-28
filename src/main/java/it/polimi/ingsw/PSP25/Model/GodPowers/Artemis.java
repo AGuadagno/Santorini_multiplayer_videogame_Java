@@ -19,10 +19,8 @@ public class Artemis extends GodPower {
     /**
      * Artemis constructor
      *
-     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
-     *                           building action or winning conditions of workers
-     * @param broadcastInterface used to send the modified board to all the players
-     *
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public Artemis(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -30,11 +28,11 @@ public class Artemis extends GodPower {
 
     /**
      * Override of "turnSequence" according to Artemis' effect:
-     * "Your Worker may move one additional time, but not back to its initial space.".
+     * "Your Worker may move one additional time, but not back to its initial space."
      * The player is asked if the wants to move twice.
      *
      * @param player        playing the turn
-     * @param activeEffects array containing opponents' god powers' effects that may influence this turn
+     * @param activeEffects array containing opponents god power effects that may influence this turn
      * @return TurnResult.LOSE if the player has lost during this turn
      * TurnResult.WIN if the player has won during this turn
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn
@@ -49,17 +47,19 @@ public class Artemis extends GodPower {
         Space originalSpaceW2 = player.getWorker2().getSpace();
         Space originalSpace = null;
 
+        // Verify if the player can move
         validMovementSpacesW1 = getValidMovementSpaces(player.getWorker1());
         validMovementSpacesW2 = getValidMovementSpaces(player.getWorker2());
-
         if (verifyLoseByMovement(validMovementSpacesW1, validMovementSpacesW2)) {
             return TurnResult.LOSE;
         }
 
-        if (askToMoveWorker(player, validMovementSpacesW1, validMovementSpacesW2) == true) {
+        // If the player can move at least one of his workers, he is asked to move a worker and then win by movement is verified.
+        if (askToMoveWorker(player, validMovementSpacesW1, validMovementSpacesW2)) {
             return TurnResult.WIN;
         }
 
+        // We memorize the space occupied by the selected worker before his first move
         if (selectedWorker.equals(player.getWorker1()))
             originalSpace = originalSpaceW1;
         else if (selectedWorker.equals(player.getWorker2()))
@@ -68,17 +68,18 @@ public class Artemis extends GodPower {
         List<Space> validSecondMovementSpaces = getValidMovementSpaces(selectedWorker);
         validSecondMovementSpaces.remove(originalSpace);
 
-        // Second Movement
-        if (askSecondMovement(player, validSecondMovementSpaces) == true) {
+        // Artemis Effect: Artemis second sovement
+        if (askSecondMovement(player, validSecondMovementSpaces)) {
             return TurnResult.WIN;
         }
 
         validBuildSpaces = getValidBuildSpaces(selectedWorker);
-
+        // Verify if selected worker can build
         if (verifyLoseByBuilding(validBuildSpaces)) {
             return TurnResult.LOSE;
         }
 
+        // If selected worker can build, the player is asked to choose a building space and then a block (or a dome) is built in the selected space.
         askToBuild(player, validBuildSpaces);
 
         addActiveEffects(activeEffects, player.getWorker1(), player.getWorker2(), selectedWorker);
@@ -102,10 +103,9 @@ public class Artemis extends GodPower {
             // We ask to the player if the wants to move the selected worker for a second time
             int chosenMovementSpace = player.getClientHandler().askArtemisSecondMove(playerName,
                     deepCopySpaceList(validSecondMovementSpaces));
-
+            // -1 = no second movement
             if (chosenMovementSpace == -1)
                 return false;
-
             int x = chosenMovementSpace % 5;
             int y = chosenMovementSpace / 5;
             for (Space space : validSecondMovementSpaces) {
@@ -113,11 +113,11 @@ public class Artemis extends GodPower {
                     selectedMovementSpace = space;
             }
 
+            // Artemis second movement
             moveWorker(selectedWorker, selectedMovementSpace);
 
             broadcastInterface.broadcastBoard();
-
-            if (activeEffects.canWin(selectedWorker, selectedMovementSpace) && verifyWin(selectedWorker) == true) {
+            if (activeEffects.canWin(selectedWorker, selectedMovementSpace) && verifyWin(selectedWorker)) {
                 return true;
             } else {
                 return false;

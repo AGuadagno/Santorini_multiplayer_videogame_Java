@@ -28,7 +28,7 @@ public interface VirtualView {
 
     int getClientNumber();
 
-    void sendStop(InetAddress disconnectedAddress) throws DisconnectionException;
+    void sendStop(String disconnectedAddress) throws DisconnectionException;
 
     int[] askWorkerMovement(String playerName, List<SpaceCopy> deepCopySpaceList, List<SpaceCopy> deepCopySpaceList1) throws DisconnectionException;
 

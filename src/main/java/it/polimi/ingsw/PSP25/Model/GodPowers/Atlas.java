@@ -18,10 +18,8 @@ public class Atlas extends GodPower {
     /**
      * Atlas constructor
      *
-     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
-     *                           building action or winning conditions of workers
-     * @param broadcastInterface used to send the modified board to all the players
-     *
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public Atlas(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -35,7 +33,6 @@ public class Atlas extends GodPower {
      * @param buildDome if equals to 1, the player has chosen to build a Dome,
      *                  if equals to 0, the player has chosen to build a Block
      */
-
     private void buildBlock(Space space, int buildDome) {
         if (space.getTowerHeight() < 3) {
             if (buildDome == 0)
@@ -62,20 +59,16 @@ public class Atlas extends GodPower {
     public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
-
         int[] selectedSpaceAndBuildDome = player.getClientHandler().askAtlasBuild(playerName,
                 deepCopySpaceList(validBuildingSpaces));
-
         int x = selectedSpaceAndBuildDome[0] % 5;
         int y = selectedSpaceAndBuildDome[0] / 5;
         for (Space space : validBuildingSpaces) {
             if (space.getX() == x && space.getY() == y)
                 selectedBuildingSpace = space;
         }
-
         buildBlock(selectedBuildingSpace, selectedSpaceAndBuildDome[1]);
         broadcastInterface.broadcastBoard();
-
         return selectedBuildingSpace;
     }
 }

@@ -7,7 +7,6 @@ import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +15,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private Message receivedMessage = null;
     private boolean cliIsChosen;
     private ViewObservable view;
-    private Scanner scanner;
     private final Object Lock = "";
     private String ip = null;
     private Integer numOfPlayers = null;
@@ -39,9 +37,8 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     @Override
     public void run() {
-        scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         view.askIPAddress();
-
         synchronized (Lock) {
             while (ip == null) {
                 try {
@@ -51,18 +48,14 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                 }
             }
         }
-
-        //---
         Socket server;
         try {
             server = new Socket(ip, Server.SOCKET_PORT);
         } catch (IOException e) {
             view.setConnectionMessage("Server unreachable");
-            //System.out.println("server unreachable");
             return;
         }
         view.setConnectionMessage("Connected to the server");
-        //System.out.println("Connected");
 
         // CREATION OF NETWORK HANDLER
         NetworkHandler networkHandler = new NetworkHandler(server);
@@ -73,24 +66,19 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         // RECEIVING OF MESSAGES FROM SERVER
         do {
             synchronized (this) {
-
                 networkHandler.receiveCommand();
                 try {
                     wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 if (receivedMessage != null) {
                     try {
                         receivedMessage.process(networkHandler, this);
-                    } catch (IOException e) {
-                        //manageServerDisconnection();
-                    }
+                    } catch (IOException e) {/* exception managed in network handler */}
                 }
             }
         } while (receivedMessage != null);
-
         if (cliIsChosen) {
             System.out.println("\nDo you want to play again? (y = yes, n = no)");
             String answer = scanner.next();
@@ -98,7 +86,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                 System.out.println("Your Choice is not valid. insert 'y' to play again, 'n' to close");
                 answer = scanner.next();
             }
-
             if (answer.equals("y"))
                 run();
         }
@@ -157,7 +144,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
             }
         }
     }
-
     public String askName(String question) {
         view.askName(question);
         while (name == null) {
@@ -184,10 +170,8 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
             }
         }
     }
-
     public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
         view.askAllGodPowers(playerName, numOfPlayers, godPowerNames);
-
         while (allGodPowerIndexes == null) {
             try {
                 synchronized (Lock) {
@@ -216,7 +200,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public int askGodPower(String playerName, List<String> godPowerNames) {
         view.askGodPower(playerName, godPowerNames);
-
         while (godPowerIndex == null) {
             try {
                 synchronized (Lock) {
@@ -452,7 +435,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public int askDemeterSecondBuilding(String playerName, List<SpaceCopy> validBuildingSpaces) {
         view.askDemeterSecondBuilding(playerName, validBuildingSpaces);
-
         while (chosenBuildingSpace == null) {
             try {
                 synchronized (Lock) {
@@ -470,7 +452,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public int[] askHephaestusBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
         view.askHephaestusBuild(playerName, validBuildingSpaces);
-
         while (spaceAndDoubleBuildingHephaestus == null) {
             try {
                 synchronized (Lock) {
@@ -506,7 +487,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public int askRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) {
         view.askRemoveBlockAres(playerName, validRemoveSpaces, nonSelectedWorkerNumber);
-
         while (chosenBuildingSpace == null) {
             try {
                 synchronized (Lock) {

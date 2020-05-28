@@ -3,9 +3,7 @@ package it.polimi.ingsw.PSP25.Client;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 import it.polimi.ingsw.PSP25.Utility.Utilities;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -18,7 +16,6 @@ public class CLI implements ViewObservable {
     public void askIPAddress() {
         System.out.println("IP address of server?");
         String ip = scanner.nextLine();
-
         client.updateIPAddress(ip);
     }
 
@@ -30,11 +27,11 @@ public class CLI implements ViewObservable {
     @Override
     public void askNumOfPlayers(String question) {
         String numOfPlayers;
+
         do {
             System.out.println(question);
             numOfPlayers = scanner.next();
         } while (!numOfPlayers.equals("2") && !numOfPlayers.equals("3"));
-
         client.updateNumOfPlayers(Integer.parseInt(numOfPlayers));
     }
 
@@ -51,30 +48,24 @@ public class CLI implements ViewObservable {
 
     @Override
     public void askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
-
         String question = "";
+        List<Integer> selectedIndexes = new ArrayList<>(numOfPlayers);
+
         question = question + playerName + " choose " + numOfPlayers + " god powers from the list: [" + 1 + " - " + godPowerNames.get(0);
         for (int i = 1; i < godPowerNames.size(); i++) {
             question = question + ", " + (i + 1) + " - " + godPowerNames.get(i);
         }
         question = question + "]";
-
-        List<Integer> selectedIndexes = new ArrayList<>(numOfPlayers);
-
         System.out.println(question);
         for (int i = 1; i <= numOfPlayers; i++) {
-
             int index = Utilities.readIntegerInput(scanner);
-
             while (index <= 0 || index > godPowerNames.size() || selectedIndexes.contains(index - 1)) {
-                question = "God power index is not valid. Choose an index between 1 and " +
-                        godPowerNames.size() + " and different from other chosen indexes";
+                question = "God power index is not valid. Choose an index between 1 and " + godPowerNames.size() + " and different from other chosen indexes";
                 System.out.println(question);
                 index = Utilities.readIntegerInput(scanner);
             }
             selectedIndexes.add(index - 1);
         }
-
         String printedChoice = "You have chosen: ";
         for (int i = 0; i < selectedIndexes.size(); i++) {
             printedChoice += godPowerNames.get(selectedIndexes.get(i));
@@ -82,7 +73,6 @@ public class CLI implements ViewObservable {
                 printedChoice += ", ";
         }
         System.out.println(printedChoice);
-
         client.updateAllGodPower(selectedIndexes);
     }
 
@@ -94,15 +84,12 @@ public class CLI implements ViewObservable {
             System.out.print(", " + (i + 1) + " - " + godPowerNames.get(i));
         }
         System.out.println("]");
-
-
         int selectedIndex = Utilities.readIntegerInput(scanner);
         while (selectedIndex - 1 >= godPowerNames.size() || selectedIndex - 1 < 0) {
             System.out.println("God power index is not valid. Choose an index between 1 and " +
                     godPowerNames.size());
             selectedIndex = Utilities.readIntegerInput(scanner);
         }
-
         client.updateGodPower(selectedIndex);
     }
 
@@ -112,7 +99,6 @@ public class CLI implements ViewObservable {
         for (int i = 0; i < playerNames.size(); i++) {
             s = s + playerNames.get(i) + " has " + godPowerNames.get(i) + "\n";
         }
-
         System.out.println(s);
     }
 
@@ -125,10 +111,8 @@ public class CLI implements ViewObservable {
                 rowLines[0].append("+ - - - - ");    //first line: cell separator
             }
             rowLines[0].append("+"); //last '+'
-
             for (int i = 0; i < 5; i++) {
                 int cellNum = (5 * i) + j;
-
                 rowLines[1].append("|" + cellNum + (cellNum < 10 ? "        " : "       "));
                 rowLines[2].append("|   H:" + board[j][i].getTowerHeight() +
                         (board[j][i].hasDome() ? " D " : "   "));
@@ -171,21 +155,17 @@ public class CLI implements ViewObservable {
 
     @Override
     public void askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] board) {
-
-        System.out.println(playerName + " it's your turn! Choose the position of your "
-                + ((workerNumber == 1) ? "first" : "second") + " worker");
+        System.out.println(playerName + " it's your turn! Choose the position of your " + ((workerNumber == 1) ? "first" : "second") + " worker");
         int pos = Utilities.readIntegerInput(scanner);
         int x = pos % 5;
         int y = pos / 5;
         while (pos < 0 || pos > 24 || pos == previousPos || board[x][y].hasWorker()) {
-            System.out.println("Position not valid. Choose the position of your "
-                    + ((workerNumber == 1) ? "first" : "second") + " worker, between 0 and 24 " +
+            System.out.println("Position not valid. Choose the position of your " + ((workerNumber == 1) ? "first" : "second") + " worker, between 0 and 24 " +
                     "and not already occupied by other workers");
             pos = Utilities.readIntegerInput(scanner);
             x = pos % 5;
             y = pos / 5;
         }
-
         client.updateWorkerPosition(pos);
     }
 
@@ -210,20 +190,15 @@ public class CLI implements ViewObservable {
         }
 
         //SELECTION OF MOVEMENT SPACE
-        int chosenMovementSpace = workerMovementSelection(playerName, workerChoice == 1 ?
-                validMovementSpacesW1 : validMovementSpacesW2);
-
+        int chosenMovementSpace = workerMovementSelection(playerName, workerChoice == 1 ? validMovementSpacesW1 : validMovementSpacesW2);
         int[] workerAndSpace = new int[2];
-
         workerAndSpace[0] = workerChoice;
         workerAndSpace[1] = chosenMovementSpace;
-
         client.updateWorkerMovement(workerAndSpace);
     }
 
 
     private int workerMovementSelection(String playerName, List<SpaceCopy> validMovementSpacesW) {
-
         System.out.println(validMovementSpacesW.toString());
         System.out.println(playerName + ": Choose movement space");
         int chosenMovementSpace = Utilities.readIntegerInput(scanner);
@@ -232,7 +207,6 @@ public class CLI implements ViewObservable {
             System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
             chosenMovementSpace = Utilities.readIntegerInput(scanner);
         }
-
         return chosenMovementSpace;
     }
 
@@ -246,7 +220,6 @@ public class CLI implements ViewObservable {
             System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
             chosenBuildingSpace = Utilities.readIntegerInput(scanner);
         }
-
         client.updateBuildingSpace(chosenBuildingSpace);
     }
 
@@ -256,15 +229,13 @@ public class CLI implements ViewObservable {
         SpaceCopy chosenBuildingSpace = null;
         String answer = null;
         int[] selectedSpaceAndBuildDome = new int[2];
-
         int x = selectedSpace % 5;
         int y = selectedSpace / 5;
+
         for (SpaceCopy space : validBuildingSpaces) {
             if (space.getX() == x && space.getY() == y)
                 chosenBuildingSpace = space;
         }
-
-
         if (chosenBuildingSpace.getTowerHeight() < 3) {
             System.out.println("Do you want to build a dome or a block? (b = block , d = dome)");
             Scanner scanner = new Scanner(System.in);
@@ -276,13 +247,10 @@ public class CLI implements ViewObservable {
         } else {
             answer = "d";
         }
-
         selectedSpaceAndBuildDome[0] = selectedSpace;
         if (answer.equals("b"))
             selectedSpaceAndBuildDome[1] = 0;
-        else if (answer.equals("d"))
-            selectedSpaceAndBuildDome[1] = 1;
-
+        else selectedSpaceAndBuildDome[1] = 1;
         client.updateAtlasBuild(selectedSpaceAndBuildDome);
     }
 
@@ -296,7 +264,6 @@ public class CLI implements ViewObservable {
             System.out.println(chosenBuildingSpace + " is not in the valid building spaces list");
             chosenBuildingSpace = Utilities.readIntegerInput(scanner);
         }
-
         return chosenBuildingSpace;
     }
 
@@ -321,6 +288,7 @@ public class CLI implements ViewObservable {
             }
         }
 
+        // BUILD BEFORE MOVE
         if (workerChoice == 1 ? (w1CanBuild) : (w2CanBuild)) {
             System.out.println("Do you want to build before move? y|n");
             answer = scanner.next();
@@ -329,16 +297,13 @@ public class CLI implements ViewObservable {
                 answer = scanner.next();
             }
         }
-
         int[] workerAndBuildBeforeMove = new int[2];
         workerAndBuildBeforeMove[0] = workerChoice;
-
         if (answer.equals("y")) {
             workerAndBuildBeforeMove[1] = 1;
         } else {
             workerAndBuildBeforeMove[1] = 0;
         }
-
         client.updateBuildBeforeMovePrometheus(workerAndBuildBeforeMove);
     }
 
@@ -347,13 +312,11 @@ public class CLI implements ViewObservable {
         System.out.println(validMovementSpaces.toString());
         System.out.println(playerName + ": Choose movement space");
         int chosenMovementSpace = Utilities.readIntegerInput(scanner);
-
         while (!(validMovementSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                 contains(chosenMovementSpace)) {
             System.out.println(chosenMovementSpace + " is not in the valid movement spaces list");
             chosenMovementSpace = Utilities.readIntegerInput(scanner);
         }
-
         client.updateWorkerMovementPrometheus(chosenMovementSpace);
     }
 
@@ -365,7 +328,6 @@ public class CLI implements ViewObservable {
     @Override
     public void askArtemisSecondMove(String playerName, List<SpaceCopy> validSecondMovementSpaces) {
         String answer;
-
         System.out.println("Do you want to move your Worker for the second time? y/n");
         answer = scanner.next();
         while (!answer.equals("y") && !answer.equals("n")) {
@@ -373,6 +335,7 @@ public class CLI implements ViewObservable {
             answer = scanner.next();
         }
 
+        // ARTEMIS SECOND MOVEMENT
         int chosenMovementSpace = -1;
         if (answer.equals("y")) {
             System.out.println(validSecondMovementSpaces.toString());
@@ -384,7 +347,6 @@ public class CLI implements ViewObservable {
                 chosenMovementSpace = Utilities.readIntegerInput(scanner);
             }
         }
-
         client.updateArtemisSecondMove(chosenMovementSpace);
     }
 
@@ -397,7 +359,7 @@ public class CLI implements ViewObservable {
         if (answer.equals("y")) {
             System.out.println(validBuildingSpaces.toString());
             System.out.println(playerName + ": Choose building space");
-            // Selection of the second building space
+            // SELECTION OF THE SECOND BUILDING SPACE
             chosenBuildingSpace = Utilities.readIntegerInput(scanner);
             while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                     contains(chosenBuildingSpace)) {
@@ -405,8 +367,6 @@ public class CLI implements ViewObservable {
                 chosenBuildingSpace = Utilities.readIntegerInput(scanner);
             }
         }
-
-        //client.updateDemeterSecondBuilding(chosenBuildingSpace);
         client.updateBuildingSpace(chosenBuildingSpace);
     }
 
@@ -424,7 +384,6 @@ public class CLI implements ViewObservable {
         }
 
         SpaceCopy space = null;
-
         int x = chosenBuildingSpace % 5;
         int y = chosenBuildingSpace / 5;
         for (SpaceCopy spaceCopy : validBuildingSpaces) {
@@ -432,16 +391,14 @@ public class CLI implements ViewObservable {
                 space = spaceCopy;
         }
 
-        // space.getTowerHeight() < 2 perchè l'altezza non viene davvero incrementata tra i 2 step
         if (space.getTowerHeight() < 2) { // can't build a dome
-            // Choice to build another block
+            // HEPHAESTUS SECOND BUILDING
             System.out.println("Do you want to build an additional block in " + space.toString() + " ?" + " y/n");
             String answer = scanner.next();
             while (!(answer.equals("y") || answer.equals("n"))) {
                 System.out.println("Answer is not valid! y = yes, n = no!");
                 answer = scanner.next();
             }
-
             if (answer.equals("y")) {
                 spaceAndDoubleBuilding[1] = 2;
             } else if (answer.equals("n")) {
@@ -450,9 +407,7 @@ public class CLI implements ViewObservable {
         } else {
             spaceAndDoubleBuilding[1] = 1;
         }
-
         spaceAndDoubleBuilding[0] = chosenBuildingSpace;
-
         client.updateHephaestusBuild(spaceAndDoubleBuilding);
     }
 
@@ -475,13 +430,12 @@ public class CLI implements ViewObservable {
     public void askRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) {
         int selectedRemoveSpace = -1;
 
-        System.out.println("Do you want to remove a non occupied block (without a dome) around your Worker "
-                + nonSelectedWorkerNumber + "? y/n");
+        System.out.println("Do you want to remove a non occupied block (without a dome) around your Worker " + nonSelectedWorkerNumber + "? y/n");
         String answer = scanner.next();
         if (answer.equals("y")) {
             System.out.println(validRemoveSpaces.toString());
             System.out.println(playerName + ": Choose the space where you want to remove a block");
-            // Selection of the second building space
+            // SELECTION OF THE BLOCK THE PLAYER WANTS TO REMOVE
             selectedRemoveSpace = Utilities.readIntegerInput(scanner);
             while (!(validRemoveSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).
                     contains(selectedRemoveSpace)) {
@@ -489,7 +443,6 @@ public class CLI implements ViewObservable {
                 selectedRemoveSpace = Utilities.readIntegerInput(scanner);
             }
         }
-
         client.updateBuildingSpace(selectedRemoveSpace);
     }
 

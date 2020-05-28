@@ -248,7 +248,7 @@ public class GameLogic implements BroadcastInterface {
      * @param disconnectedAddress Disconnected Client address
      * @throws DisconnectionException
      */
-    public void stopGame(VirtualView timeOutClient, InetAddress disconnectedAddress, ClientHandler stopGameCaller) throws DisconnectionException {
+    public void stopGame(VirtualView timeOutClient, String disconnectedAddress, ClientHandler stopGameCaller) throws DisconnectionException {
         int disconnectedClientIndex = timeOutClient.getClientNumber();
 
         System.out.println("Client " + disconnectedClientIndex + " with address " + disconnectedAddress + " disconnected.");

@@ -40,7 +40,7 @@ public class ClientHandler implements Runnable, VirtualView {
             try {
                 System.out.println("Client " + e.getClientHandler().getClientNumber() + " DisconnectionException: stopping game");
                 if (game != null) {
-                    game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress(), ClientHandler.this);
+                    game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress().toString(), ClientHandler.this);
                 }
                 lobby.removeClient(this);
             } catch (DisconnectionException stopException) {
@@ -237,7 +237,7 @@ public class ClientHandler implements Runnable, VirtualView {
         }
     }
 
-    public void sendStop(InetAddress disconnectedAddress) throws DisconnectionException {
+    public void sendStop(String disconnectedAddress) throws DisconnectionException {
 
         System.out.println("Sending stop message to client " + this.clientNumber + " with address " + client.getInetAddress());
         sendMessage(new SendStop(disconnectedAddress));
@@ -254,7 +254,7 @@ public class ClientHandler implements Runnable, VirtualView {
                         System.out.println("DisconnectionException: fermo il pingSender del server");
                         if (game != null) {
                             try {
-                                game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress(), ClientHandler.this);
+                                game.stopGame(e.getClientHandler(), e.getClientHandler().getClientAddress().toString(), ClientHandler.this);
                             } catch (DisconnectionException ex) {
                                 System.out.println("PingSender: Lobby.stopGame() DisconnectionException");
                             }

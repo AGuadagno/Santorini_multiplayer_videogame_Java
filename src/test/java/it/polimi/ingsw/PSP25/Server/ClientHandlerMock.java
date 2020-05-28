@@ -116,7 +116,7 @@ public class ClientHandlerMock implements VirtualView {
     }
 
     @Override
-    public void sendStop(InetAddress disconnectedAddress) throws DisconnectionException {
+    public void sendStop(String disconnectedAddress) throws DisconnectionException {
 
     }
 

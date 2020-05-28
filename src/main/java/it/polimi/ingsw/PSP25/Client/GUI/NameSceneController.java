@@ -42,6 +42,7 @@ public class NameSceneController implements GUIObservable {
 
     @FXML
     private void handleButton(ActionEvent event) {
+        // Player name selection
         String name = nameTextField.getText();
         if (name.length() < 2) {
             errorLabel.setText("Name is too short. Enter another name (2 Characters or more)");

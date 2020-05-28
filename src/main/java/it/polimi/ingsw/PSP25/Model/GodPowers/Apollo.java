@@ -16,9 +16,8 @@ public class Apollo extends GodPower {
     /**
      * Apollo constructor
      *
-     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
-     *                           building actions or winning conditions of workers
-     * @param broadcastInterface used to send the modified board to all the players
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public Apollo(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -26,8 +25,8 @@ public class Apollo extends GodPower {
 
     /**
      * Override of "getValidMovementSpaces" according to Apollo's effect:
-     * "Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated",
-     * adjacent spaces occupied by opponent workers are considered valid movement spaces.
+     * "Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated."
+     * Adjacent spaces occupied by opponent workers are considered valid movement spaces.
      *
      * @param worker Worker that the player wants to know Spaces valid for the movement
      * @return List of possible Spaces where the Worker passed as argument can move to
@@ -47,8 +46,8 @@ public class Apollo extends GodPower {
 
     /**
      * Override of "moveWorker" according to Apollo's effect:
-     * "Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated.",
-     * if the space where the player wants to move his worker is occupied by an opponent worker,
+     * "Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated."
+     * If the space where the player wants to move his worker is occupied by an opponent worker,
      * the two worker positions are switched.
      *
      * @param myWorker    Worker moved by the player who has Apollo as GodPower

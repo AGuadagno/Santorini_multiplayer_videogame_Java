@@ -7,13 +7,15 @@ import java.util.List;
 
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 
+/**
+ * Ares Class
+ */
 public class Ares extends GodPower {
 
     /**
-     * God Power Constructor
+     * Ares Constructor
      *
-     * @param activeEffects      list of opponent GodPower effect active in our turn that could limit movement,
-     *                           building action or winning conditions of our player
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
      * @param broadcastInterface Interface used to share information with all the other players
      */
     public Ares(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
@@ -25,11 +27,11 @@ public class Ares extends GodPower {
      * "You may remove an unoccupied block (not dome) neighboring your unmoved Worker. You also remove any Tokens on the block".
      * The player is asked if he wants to remove a block.
      *
-     *  @param player        playing the turn
-     *  @param activeEffects array containing opponents' god powers' effects that may influence this turn
-     *  @return TurnResult.LOSE if the player has lost during this turn
-     *  TurnResult.WIN if the player has won during this turn
-     *  TurnResult.CONTINUE if the player hasn't lost or won during this turn
+     * @param player        playing the turn
+     * @param activeEffects array containing opponents god power effects that may influence this turn
+     * @return TurnResult.LOSE if the player has lost during this turn
+     * TurnResult.WIN if the player has won during this turn
+     * TurnResult.CONTINUE if the player hasn't lost or won during this turn
      */
     @Override
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {
@@ -45,23 +47,21 @@ public class Ares extends GodPower {
             return TurnResult.LOSE;
         }
 
-        // If the player can move at least one of his workers, he's ask to move a worker
-        // and then win by movement is verified.
+        // If the player can move at least one of his workers, he is asked to move a worker and then win by movement is verified.
         if (askToMoveWorker(player, validMovementSpacesW1, validMovementSpacesW2) == true) {
             return TurnResult.WIN;
         }
 
         validBuildSpaces = getValidBuildSpaces(selectedWorker);
-
         // Verify if selected worker can build
         if (verifyLoseByBuilding(validBuildSpaces)) {
             return TurnResult.LOSE;
         }
 
-        // If selected worker can build, the player his asked to chose a building space and then
-        // a block (or a dome) is built in the selected space.
+        // If selected worker can build, the player is asked to choose a building space and then a block (or a dome) is built in the selected space.
         askToBuild(player, validBuildSpaces);
 
+        // Ares Effects: the player is asked if he wants to remove a block
         askToRemoveBlock(player, selectedWorker);
 
         addActiveEffects(activeEffects, player.getWorker1(), player.getWorker2(), selectedWorker);
@@ -70,7 +70,7 @@ public class Ares extends GodPower {
     }
 
     /**
-     * The worker is asked if he wants to remove a block (not dome) neighboring your unmoved Worker.
+     * The Player is asked if he wants to remove a block (not dome) neighboring his unmoved Worker.
      *
      * @param player         playing the turn
      * @param selectedWorker moved worker
@@ -79,6 +79,7 @@ public class Ares extends GodPower {
     private void askToRemoveBlock(Player player, Worker selectedWorker) throws DisconnectionException {
         Worker nonSelectedWorker;
         int nonSelectedWorkerNumber;
+
         if (selectedWorker == player.getWorker1()) {
             nonSelectedWorker = player.getWorker2();
             nonSelectedWorkerNumber = 2;
@@ -88,7 +89,6 @@ public class Ares extends GodPower {
         }
         List<Space> validRemoveSpaces = nonSelectedWorker.getSpace().getAdjacentSpaces();
         validRemoveSpaces.removeIf(s -> s.hasDome() || s.hasWorker() || s.getTowerHeight() == 0);
-
         Space removeSpace = null;
         int removeSpaceNumber = -1;
         String playerName = player.getName() + "(" + player.getID() + ")";

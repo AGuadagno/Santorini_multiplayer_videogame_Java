@@ -11,9 +11,9 @@ import java.net.InetAddress;
  * This message is sent to notify the disconnection of one of the players.
  */
 public class SendStop extends Message {
-    private InetAddress disconnectedAddress;
+    private String disconnectedAddress;
 
-    public SendStop(InetAddress disconnectedAddress) {
+    public SendStop(String disconnectedAddress) {
         this.disconnectedAddress = disconnectedAddress;
     }
 

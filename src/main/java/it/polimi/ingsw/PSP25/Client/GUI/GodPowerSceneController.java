@@ -7,12 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class GodPowerSceneController implements GUIObservable {
-
     private GUI gui;
     private Integer selectedIndex = null;
     private Button previousButton;
@@ -54,20 +51,15 @@ public class GodPowerSceneController implements GUIObservable {
         if (godPowerNames.size() == 2) {
             button1_2godPowers.setVisible(true);
             button2_2godPowers.setVisible(true);
-            image1_2godPowers.setImage(new Image("/img/Godcards/"
-                    + godPowerNames.get(0).toLowerCase() + ".png"));
-            image2_2godPowers.setImage(new Image("/img/Godcards/"
-                    + godPowerNames.get(1).toLowerCase() + ".png"));
+            image1_2godPowers.setImage(new Image("/img/Godcards/" + godPowerNames.get(0).toLowerCase() + ".png"));
+            image2_2godPowers.setImage(new Image("/img/Godcards/" + godPowerNames.get(1).toLowerCase() + ".png"));
         } else {
             button1_3godPowers.setVisible(true);
             button2_3godPowers.setVisible(true);
             button3_3godPowers.setVisible(true);
-            image1_3godPowers.setImage(new Image("/img/Godcards/"
-                    + godPowerNames.get(0).toLowerCase() + ".png"));
-            image2_3godPowers.setImage(new Image("/img/Godcards/"
-                    + godPowerNames.get(1).toLowerCase() + ".png"));
-            image3_3godPowers.setImage(new Image("/img/Godcards/"
-                    + godPowerNames.get(2).toLowerCase() + ".png"));
+            image1_3godPowers.setImage(new Image("/img/Godcards/" + godPowerNames.get(0).toLowerCase() + ".png"));
+            image2_3godPowers.setImage(new Image("/img/Godcards/" + godPowerNames.get(1).toLowerCase() + ".png"));
+            image3_3godPowers.setImage(new Image("/img/Godcards/" + godPowerNames.get(2).toLowerCase() + ".png"));
         }
     }
 
