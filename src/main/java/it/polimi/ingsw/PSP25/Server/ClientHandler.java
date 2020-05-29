@@ -115,6 +115,14 @@ public class ClientHandler implements Runnable, VirtualView {
         sendMessage(new TellAssignedGodPower(playerName, godPowerName));
     }
 
+    @Override
+    public int askFirstPlayer(List<String> playerNames) throws DisconnectionException {
+        sendMessage(new AskFirstPlayer(playerNames));
+
+        int firstPlayerIndex = (int) receiveMessage();
+        return firstPlayerIndex;
+    }
+
     public void sendBoard(SpaceCopy[][] boardCopy) throws DisconnectionException {
         sendMessage(new SendBoard(boardCopy));
     }

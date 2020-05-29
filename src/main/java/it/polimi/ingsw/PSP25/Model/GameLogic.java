@@ -57,7 +57,6 @@ public class GameLogic implements BroadcastInterface {
 
         activeEffects = new ActiveEffects(playerList.size());
         activeEffects.initializeEffects();
-        nowPlaying = playerList.get(0);
 
         List<GodPower> allGodPowers = getGodPowerList(activeEffects);
 
@@ -83,9 +82,9 @@ public class GameLogic implements BroadcastInterface {
         }
 
         playerName = playerList.get(0).getName() + "(" + playerList.get(0).getID() + ")";
-        playerList.get(0).getClientHandler().tellAssignedGodPower(playerName, deepCopyGodPowerNames(selectedGodPowers));
-
         playerList.get(0).initializeGodPower(selectedGodPowers.get(0));
+        playerList.get(0).getClientHandler().tellAssignedGodPower(playerName, deepCopyGodPowerNames(
+                playerList.stream().map(p -> p.getGodPower()).collect(Collectors.toList())));
     }
 
     /**
@@ -112,17 +111,28 @@ public class GameLogic implements BroadcastInterface {
         return godPowers;
     }
 
+    private int askFirstPlayer() throws DisconnectionException {
+        int firstPlayerIndex = playerList.get(0).getClientHandler().askFirstPlayer(playerList.stream().map(
+                p -> p.getName() + "(" + p.getID() + ")").collect(Collectors.toList()));
+
+        nowPlaying = playerList.get(firstPlayerIndex - 1);
+        return firstPlayerIndex - 1;
+    }
+
+
     /**
      * Asks to all players to position their workers at the beginning of the game
      *
+     * @param firstPlayerIndex
      * @throws DisconnectionException
      */
-    private void boardSetup() throws DisconnectionException {
+    private void boardSetup(int firstPlayerIndex) throws DisconnectionException {
         int pos1, pos2;
 
         broadcastBoard();
 
-        for (int i = 0; i < playerList.size(); i++) {
+        for (int j = firstPlayerIndex; j < playerList.size() + firstPlayerIndex; j++) {
+            int i = j % playerList.size();
             Player currPlayer = playerList.get(i);
 
             String playerName = currPlayer.getName() + "(" + currPlayer.getID() + ")";
@@ -173,8 +183,9 @@ public class GameLogic implements BroadcastInterface {
      */
     public void startGame() throws DisconnectionException {
         playerInitialization();
+        int firstPlayerIndex = askFirstPlayer();
         broadcastGodPowers();
-        boardSetup();
+        boardSetup(firstPlayerIndex);
         boolean endGame = false;
         while (!endGame) {
             endGame = gameLoop();

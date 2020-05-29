@@ -273,4 +273,9 @@ public class ClientHandlerMock implements VirtualView {
     public int askToRemoveBlockAres(String player, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) throws DisconnectionException {
         return AresDemolition;
     }
+
+    @Override
+    public int askFirstPlayer(List<String> playerNames) throws DisconnectionException {
+        return 0;
+    }
 }

@@ -21,6 +21,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private String name = null;
     private List<Integer> allGodPowerIndexes = null;
     private Integer godPowerIndex = null;
+    private Integer firstPlayerIndex = null;
     private Integer workerPosition = null;
     private int[] workerAndSpace = null;
     private Integer chosenBuildingSpace = null;
@@ -226,12 +227,40 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         }
     }
 
+
     public void tellAssignedGodPower(String playerName, List<String> godPowerName) {
         view.tellAssignedGodPower(playerName, godPowerName);
     }
 
     public void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames) {
         view.showPlayersGodPowers(playerNames, godPowerNames);
+    }
+
+    public int askFirstPlayer(List<String> playerNames) {
+        view.askFirstPlayer(playerNames);
+        while (firstPlayerIndex == null) {
+            try {
+                synchronized (Lock) {
+                    Lock.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int firstPlayerIndex = this.firstPlayerIndex;
+        this.firstPlayerIndex = null;
+        return firstPlayerIndex;
+    }
+
+    @Override
+    public void updateFirstPlayer(int firstPlayerIndex) {
+        if (this.firstPlayerIndex == null) {
+            this.firstPlayerIndex = firstPlayerIndex;
+            synchronized (Lock) {
+                Lock.notifyAll();
+            }
+        }
     }
 
     public void showBoard(SpaceCopy[][] board) {
@@ -501,4 +530,5 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         this.chosenBuildingSpace = null;
         return selectedRemoveSpace;
     }
+
 }

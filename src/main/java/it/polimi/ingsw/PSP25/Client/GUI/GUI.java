@@ -169,9 +169,10 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
     }
 
     @Override
-    public void tellAssignedGodPower(String playerName, List<String> godPowerName) {
+    public void tellAssignedGodPower(String playerName, List<String> godPowerNames) {
+        this.godPowerNames = godPowerNames;
         Platform.runLater(() -> {
-            stage.setTitle(stage.getTitle() + " " + godPowerName.get(0));
+            stage.setTitle(stage.getTitle() + " " + godPowerNames.get(0));
         });
     }
 
@@ -184,6 +185,22 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
             stage.show();
             ((BoardSceneController) controller).showPlayersGodPowers(playerNames, godPowerNames);
         });
+    }
+
+    @Override
+    public void askFirstPlayer(List<String> playerNames) {
+        Scene scene = loadScene("fxml/FirstPlayerScene.fxml");
+
+        Platform.runLater(() -> {
+            stage.setScene(scene);
+            stage.show();
+            ((FirstPlayerSceneController) controller).askFirstPlayer(playerNames, godPowerNames);
+        });
+    }
+
+    @Override
+    public void updateFirstPlayer(int firstPlayerIndex) {
+        client.updateFirstPlayer(firstPlayerIndex);
     }
 
     @Override

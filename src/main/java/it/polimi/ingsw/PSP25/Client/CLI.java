@@ -103,6 +103,24 @@ public class CLI implements ViewObservable {
     }
 
     @Override
+    public void askFirstPlayer(List<String> playerNames) {
+        System.out.println(playerNames.get(0) + " choose the first player from the list: [");
+        System.out.print("1 - " + playerNames.get(0));
+        for (int i = 1; i < playerNames.size(); i++) {
+            System.out.print(", " + (i + 1) + " - " + playerNames.get(i));
+        }
+        System.out.println("]");
+
+        int firstPlayerIndex = Utilities.readIntegerInput(scanner);
+        while (firstPlayerIndex < 1 || firstPlayerIndex > playerNames.size()) {
+            System.out.println("Player index is not valid. Choose an index between 1 and  " +
+                    playerNames.size());
+            firstPlayerIndex = Utilities.readIntegerInput(scanner);
+        }
+        client.updateFirstPlayer(firstPlayerIndex);
+    }
+
+    @Override
     public void showBoard(SpaceCopy[][] board) {
         for (int j = 0; j < 5; j++) {
             StringBuilder[] rowLines = new StringBuilder[5];
@@ -448,6 +466,6 @@ public class CLI implements ViewObservable {
 
     @Override
     public void tellAssignedGodPower(String playerName, List<String> godPowerName) {
-        System.out.println(playerName + " you got: " + godPowerName);
+        System.out.println(playerName + " you got: " + godPowerName.get(0));
     }
 }

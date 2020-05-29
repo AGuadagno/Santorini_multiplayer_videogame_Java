@@ -14,6 +14,8 @@ public interface ViewObserver {
 
     void updateGodPower(int selectedIndex);
 
+    void updateFirstPlayer(int firstPlayerIndex);
+
     void updateWorkerPosition(int pos);
 
     void updateWorkerMovement(int[] workerAndSpace);
@@ -31,4 +33,6 @@ public interface ViewObserver {
     void updateHephaestusBuild(int[] spaceAndDoubleBuilding);
 
     void playAgain(boolean b);
+
+
 }

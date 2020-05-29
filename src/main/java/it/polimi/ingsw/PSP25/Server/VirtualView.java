@@ -47,4 +47,6 @@ public interface VirtualView {
 
     int askToRemoveBlockAres(String player, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) throws DisconnectionException;
 
+    int askFirstPlayer(List<String> playerNames) throws DisconnectionException;
+
 }

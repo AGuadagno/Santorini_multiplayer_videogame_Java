@@ -22,6 +22,8 @@ public interface ViewObservable {
 
     void showPlayersGodPowers(List<String> playerNames, List<String> godPowerNames);
 
+    void askFirstPlayer(List<String> playerNames);
+
     void showBoard(SpaceCopy[][] board);
 
     void askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] board);
@@ -51,4 +53,5 @@ public interface ViewObservable {
     void askRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber);
 
     void tellAssignedGodPower(String playerName, List<String> godPowerName);
+
 }
