@@ -2,18 +2,16 @@ package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.*;
 import it.polimi.ingsw.PSP25.Server.DisconnectionException;
-
 import java.util.List;
-
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 
 /**
- * Ares Class
+ * Ares class
  */
 public class Ares extends GodPower {
 
     /**
-     * Ares Constructor
+     * Ares constructor
      *
      * @param activeEffects      array containing opponents god power effects that may influence this turn
      * @param broadcastInterface Interface used to share information with all the other players

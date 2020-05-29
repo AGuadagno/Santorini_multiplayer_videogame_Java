@@ -1,6 +1,5 @@
 package it.polimi.ingsw.PSP25.Server;
 
-import it.polimi.ingsw.PSP25.Model.GameLogic;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +23,10 @@ public class Lobby {
                 gameFound = true;
             }
         }
-
         gameList.remove(fullGame);
-
         if(gameFound==false){
             gameList.add(new WaitingGame(numberOfPlayers, c));
         }
-
     }
 
     public synchronized void removeClient(ClientHandler clientHandler) {

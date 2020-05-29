@@ -4,23 +4,20 @@ import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 import it.polimi.ingsw.PSP25.Model.Space;
 import it.polimi.ingsw.PSP25.Model.Worker;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * Minotaus class
+ * Minotaur class
  */
 public class Minotaur extends GodPower {
 
     /**
      * Minotaur constructor
      *
-     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
-     *                           building action or winning conditions of workers
-     * @param broadcastInterface used to send the modified board to all the players
-     *
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public Minotaur(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -28,12 +25,10 @@ public class Minotaur extends GodPower {
 
     /**
      * Override of "getValidMovementSpaces" according to Minotaur's effect:
-     * "Your Worker may move into an opponent Worker’s space, if their Worker
-     * can be forced one space straight backwards to an unoccupied space at any level".
-     * So, spaces occupied by opponent workers could be added to the list of valid movement spaces
-     * if the previous condition is respected.
+     * "Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level".
+     * Spaces occupied by opponent workers could be added to the list of valid movement spaces if the previous condition is respected.
      *
-     * @param worker the Worker we want to know Spaces where he can move to
+     * @param worker we want to know Spaces where he can move to
      * @return List of possible Spaces where the Worker passed as argument can move to
      */
     @Override
@@ -52,8 +47,6 @@ public class Minotaur extends GodPower {
         return validMovementSpaces;
     }
 
-
-    @Override
     /**
      * Override of "moveWorker" according to Minotaur's effect:
      * "Your Worker may move into an opponent Worker’s space, if their Worker
@@ -63,6 +56,7 @@ public class Minotaur extends GodPower {
      * @param worker Worker that the player wants to move
      * @param space Space where the player wants to move the Worker
      */
+    @Override
     protected void moveWorker(Worker worker, Space space) {
         if (space.hasWorker()) {
             Space spaceSameDir = spaceSameDir(space, worker.getSpace());
@@ -82,6 +76,7 @@ public class Minotaur extends GodPower {
         int dirY = space1.getY() - space2.getY();
         List<Space> adjacentSpaces = space1.getAdjacentSpaces();
         Space spaceSameDir = null;
+
         for (Space space : adjacentSpaces) {
             if (space.getX() == space1.getX() + dirX && space.getY() == space1.getY() + dirY) {
                 spaceSameDir = space;

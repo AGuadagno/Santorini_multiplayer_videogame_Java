@@ -5,9 +5,7 @@ import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 import it.polimi.ingsw.PSP25.Model.Player;
 import it.polimi.ingsw.PSP25.Model.Space;
 import it.polimi.ingsw.PSP25.Server.DisconnectionException;
-
 import java.util.List;
-
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 
 /**
@@ -18,45 +16,37 @@ public class Hephaestus extends GodPower {
     /**
      * Hephaestus constructor
      *
-     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
-     *                           building action or winning conditions of workers
-     * @param broadcastInterface used to send the modified board to all the players
-     *
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public Hephaestus(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
     }
 
     /**
-     * According to Hephaestus effect, we ask to the player if he wants to build 2 blocks in the selected building space.
+     * According to Hephaestus effect, we ask to the player if he wants to build an additional block in the selected building space.
      *
      * @param player              playing the turn
      * @param validBuildingSpaces List of valid building spaces
-     * @return
+     * @return the selected building space
      * @throws DisconnectionException
      */
     @Override
     public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
-
         int[] spaceAndDoubleBuilding = player.getClientHandler().askHephaestusBuild(playerName, deepCopySpaceList(validBuildingSpaces));
-
         int x = spaceAndDoubleBuilding[0] % 5;
         int y = spaceAndDoubleBuilding[0] / 5;
         for (Space space : validBuildingSpaces) {
             if (space.getX() == x && space.getY() == y)
                 selectedBuildingSpace = space;
         }
-
         buildBlock(selectedBuildingSpace);
-
         if (spaceAndDoubleBuilding[1] == 2) {
             selectedBuildingSpace.increaseTowerHeight();
         }
-
         broadcastInterface.broadcastBoard();
-
         return selectedBuildingSpace;
     }
 }

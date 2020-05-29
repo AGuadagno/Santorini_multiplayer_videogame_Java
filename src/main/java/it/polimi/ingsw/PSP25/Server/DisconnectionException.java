@@ -8,7 +8,6 @@ public class DisconnectionException extends IOException {
     public DisconnectionException(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
     }
-
     public ClientHandler getClientHandler() {
         return clientHandler;
     }

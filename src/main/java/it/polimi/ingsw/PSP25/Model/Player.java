@@ -1,14 +1,12 @@
 package it.polimi.ingsw.PSP25.Model;
 
 import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
-import it.polimi.ingsw.PSP25.Server.ClientHandler;
 import it.polimi.ingsw.PSP25.Server.VirtualView;
 
 /**
  * Player class. 2 or 3 Players per game.
  */
 public class Player {
-
 
     /**
      * Description of Attributes:

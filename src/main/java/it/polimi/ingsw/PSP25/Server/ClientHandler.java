@@ -1,10 +1,8 @@
 package it.polimi.ingsw.PSP25.Server;
 
-import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Model.GameLogic;
 import it.polimi.ingsw.PSP25.Utility.Messages.*;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -60,26 +58,21 @@ public class ClientHandler implements Runnable, VirtualView {
         } catch (IOException e) {
             throw new DisconnectionException(this);
         }
-
         startPingSender();
-
         System.out.println("Connected to " + client.getInetAddress());
-
-            sendMessage(new AskNumberOfPlayers());
-            numOfParticipants = (int) receiveMessage();
-            lobby.setGame(this, numOfParticipants);
-
+        sendMessage(new AskNumberOfPlayers());
+        numOfParticipants = (int) receiveMessage();
+        lobby.setGame(this, numOfParticipants);
         try {
-            synchronized (this){
-                while(game==null){
+            synchronized (this) {
+                while (game == null) {
                     wait();
                 }
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        if(isFirstClient) {
+        if (isFirstClient) {
             game.startGame();
         }
     }
@@ -102,21 +95,18 @@ public class ClientHandler implements Runnable, VirtualView {
 
     public String askName(int playerNumber) throws DisconnectionException {
         sendMessage(new AskName(playerNumber));
-
         String name = (String) receiveMessage();
         return name;
     }
 
     public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) throws DisconnectionException {
         sendMessage(new AskAllGodPowers(playerName, numOfPlayers, godPowerNames));
-
         List<Integer> selectedIndexes = (List<Integer>) receiveMessage();
         return selectedIndexes;
     }
 
     public int askGodPower(String playerName, List<String> godPowerNames) throws DisconnectionException {
         sendMessage(new AskGodPower(playerName, godPowerNames));
-
         int index = (int) receiveMessage();
         return index;
     }
@@ -129,48 +119,38 @@ public class ClientHandler implements Runnable, VirtualView {
         sendMessage(new SendBoard(boardCopy));
     }
 
-    public int askWorkerPosition(String playerName, int workerNumber, int previousPos,
-                                 SpaceCopy[][] boardCopy) throws DisconnectionException {
-
+    public int askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] boardCopy) throws DisconnectionException {
         sendMessage(new AskWorkerPosition(playerName, workerNumber, previousPos, boardCopy));
-
         int pos = (int) receiveMessage();
         return pos;
     }
 
-    public int[] askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1,
-                                   List<SpaceCopy> validMovementSpacesW2) throws DisconnectionException {
-
+    public int[] askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2) throws DisconnectionException {
         sendMessage(new AskWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2));
-
         int[] workerAndSpace = (int[]) receiveMessage();
         return workerAndSpace;
     }
 
     public int askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces) throws DisconnectionException {
         sendMessage(new AskBuildingSpace(playerName, validBuildingSpaces));
-
         int selectedBuildingSpace = (int) receiveMessage();
         return selectedBuildingSpace;
     }
 
     public int askArtemisSecondMove(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
         sendMessage(new AskArtemisSecondMove(playerName, deepCopySpaceList));
-
         int selectedMovementSpace = (int) receiveMessage();
         return selectedMovementSpace;
     }
 
     public int[] askAtlasBuild(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
         sendMessage(new AskAtlasBuild(playerName, deepCopySpaceList));
-
         int[] selectedSpaceAndBuildDome = (int[]) receiveMessage();
         return selectedSpaceAndBuildDome;
     }
 
     public int askDemeterSecondBuilding(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
         sendMessage(new AskDemeterSecondBuilding(playerName, deepCopySpaceList));
-
         int selectedBuildingSpace = (int) receiveMessage();
         return selectedBuildingSpace;
     }
@@ -178,37 +158,30 @@ public class ClientHandler implements Runnable, VirtualView {
     @Override
     public int askToRemoveBlockAres(String playerName, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) throws DisconnectionException {
         sendMessage(new AskRemoveBlockAres(playerName, validRemoveSpaces, nonSelectedWorkerNumber));
-
         int selectedRemoveSpace = (int) receiveMessage();
         return selectedRemoveSpace;
     }
 
     public int[] askHephaestusBuild(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException {
         sendMessage(new AskHephaestusBuild(playerName, deepCopySpaceList));
-
         int[] spaceAndDoubleBuilding = (int[]) receiveMessage();
         return spaceAndDoubleBuilding;
     }
 
-    public int[] askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w2CanMove,
-                                              boolean w1CanBuild, boolean w2CanBuild) throws DisconnectionException {
-
+    public int[] askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w2CanMove, boolean w1CanBuild, boolean w2CanBuild) throws DisconnectionException {
         sendMessage(new AskBuildBeforeMovePrometheus(playerName, w1CanMove, w2CanMove, w1CanBuild, w2CanBuild));
-
         int[] workerAndBuildBeforeMove = (int[]) receiveMessage();
         return workerAndBuildBeforeMove;
     }
 
     public int askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) throws DisconnectionException {
         sendMessage(new AskWorkerMovementPrometheus(playerName, validMovementSpaces));
-
         int selectedSpace = (int) receiveMessage();
         return selectedSpace;
     }
 
     private Object receiveMessage() throws DisconnectionException {
         Object message = null;
-
         try {
             do {
                 message = inputStream.readObject();
@@ -220,7 +193,6 @@ public class ClientHandler implements Runnable, VirtualView {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return message;
     }
 
@@ -229,8 +201,6 @@ public class ClientHandler implements Runnable, VirtualView {
             try {
                 outputStream.writeObject(message);
             } catch (IOException e) {
-                //DEBUG
-                //e.printStackTrace();
                 System.out.println("IOException dall'outputStream di clientHandler " + this.clientNumber + " lancio una DisconnectionException");
                 throw new DisconnectionException(this);
             }
@@ -238,7 +208,6 @@ public class ClientHandler implements Runnable, VirtualView {
     }
 
     public void sendStop(String disconnectedAddress) throws DisconnectionException {
-
         System.out.println("Sending stop message to client " + this.clientNumber + " with address " + client.getInetAddress());
         sendMessage(new SendStop(disconnectedAddress));
     }
@@ -259,10 +228,8 @@ public class ClientHandler implements Runnable, VirtualView {
                                 System.out.println("PingSender: Lobby.stopGame() DisconnectionException");
                             }
                         }
-                        //lobby.removeClient(ClientHandler.this);
                         return;
                     }
-
                     try {
                         Thread.sleep(10000);
                     } catch (InterruptedException e) {

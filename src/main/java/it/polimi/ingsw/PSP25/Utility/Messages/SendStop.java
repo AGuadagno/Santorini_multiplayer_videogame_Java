@@ -2,9 +2,7 @@ package it.polimi.ingsw.PSP25.Utility.Messages;
 
 import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
-
 import java.io.IOException;
-import java.net.InetAddress;
 
 /**
  * SendStop Message Class.

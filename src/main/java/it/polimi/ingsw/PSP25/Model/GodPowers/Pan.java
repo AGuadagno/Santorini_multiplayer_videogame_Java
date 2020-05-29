@@ -12,10 +12,8 @@ public class Pan extends GodPower {
     /**
      * Pan constructor
      *
-     * @param activeEffects      list of opponent GodPower effects active in the current turn that could limit movement,
-     *                           building action or winning conditions of workers
-     * @param broadcastInterface used to send the modified board to all the players
-     *
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public Pan(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -23,11 +21,11 @@ public class Pan extends GodPower {
 
     /**
      * Override of "verifyWin" according to Pan's effect:
-     * "You also win if your Worker moves down two or more levels"
+     * "You also win if your Worker moves down two or more levels."
      * Controls if the moved worker moves down two or more levels,
      * super.verifyWin(worker) it's used because normal winning conditions are also valid.
      *
-     * @param worker Worker whose movement can make his player win
+     * @param worker Worker whose movement can make his Player win
      * @return true if the winning condition is verified
      */
     @Override

@@ -4,17 +4,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
 public class Server
 {
     public final static int SOCKET_PORT = 7777;
-
-
     public static void main(String[] args)
     {
-
         Lobby lobby = new Lobby();
-
         ServerSocket socket;
         try {
             socket = new ServerSocket(SOCKET_PORT);
@@ -23,10 +18,7 @@ public class Server
             System.exit(1);
             return;
         }
-
-        //DEBUG
         System.out.println("Server OK!");
-
         int clientCounter = 0;
         while (true) {
             try {
@@ -36,7 +28,6 @@ public class Server
                 Thread thread = new Thread(clientHandler, "server_" + client.getInetAddress());
                 clientCounter++;
                 thread.start();
-
             } catch (IOException e) {
                 System.out.println("connection dropped");
             }

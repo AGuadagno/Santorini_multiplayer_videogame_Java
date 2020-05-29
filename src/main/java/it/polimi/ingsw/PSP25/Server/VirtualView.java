@@ -1,11 +1,10 @@
 package it.polimi.ingsw.PSP25.Server;
 
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
-
-import java.net.InetAddress;
 import java.util.List;
 
 public interface VirtualView {
+
     String askName(int i) throws DisconnectionException;
 
     List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> deepCopyGodPowerNames) throws DisconnectionException;
@@ -47,4 +46,5 @@ public interface VirtualView {
     int askDemeterSecondBuilding(String playerName, List<SpaceCopy> deepCopySpaceList) throws DisconnectionException;
 
     int askToRemoveBlockAres(String player, List<SpaceCopy> validRemoveSpaces, int nonSelectedWorkerNumber) throws DisconnectionException;
+
 }

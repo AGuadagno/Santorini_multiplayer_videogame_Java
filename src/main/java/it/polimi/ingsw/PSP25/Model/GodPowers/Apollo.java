@@ -4,7 +4,6 @@ import it.polimi.ingsw.PSP25.Model.ActiveEffects;
 import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 import it.polimi.ingsw.PSP25.Model.Space;
 import it.polimi.ingsw.PSP25.Model.Worker;
-
 import java.util.ArrayList;
 import java.util.List;
 

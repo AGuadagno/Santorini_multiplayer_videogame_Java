@@ -3,11 +3,8 @@ package it.polimi.ingsw.PSP25.Utility.Messages;
 import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
-
 import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 /**
  * AskAtlasBuild Message Class.

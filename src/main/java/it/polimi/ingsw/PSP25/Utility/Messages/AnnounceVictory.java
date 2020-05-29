@@ -14,14 +14,7 @@ public class AnnounceVictory extends Message {
         this.playerName = playerName;
     }
 
-    /**
-     * The player client prints the message of lose.
-     *
-     * @param nh network handler of the client who is the recipient of the message.
-     */
     public void process(NetworkHandler nh, Client client) {
-       // System.out.println(playerName + " won the Game! Congratulations!");
-
         client.announceVictory(playerName);
     }
 

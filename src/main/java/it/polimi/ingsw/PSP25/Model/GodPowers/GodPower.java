@@ -4,7 +4,6 @@ import it.polimi.ingsw.PSP25.Model.*;
 import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 import java.util.ArrayList;
 import java.util.List;
-
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 
 /**
@@ -21,7 +20,7 @@ public class GodPower {
     protected Worker selectedWorker = null;
 
     /**
-     * God Power Constructor
+     * God Power constructor
      *
      * @param activeEffects array containing opponents god power effects that may influence this turn
      */

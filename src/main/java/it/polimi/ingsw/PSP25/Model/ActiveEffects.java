@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP25.Model;
 
 import it.polimi.ingsw.PSP25.Model.GodPowers.GodPower;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +20,7 @@ public class ActiveEffects {
     private int numOfEffects;
 
     /**
+     * ActiveEffects constructor.
      * Creates effectsList, a (numOfPlayers-1) size array containing GodPower objects.
      *
      * @param numOfPlayers number of players playing the game
@@ -32,7 +32,7 @@ public class ActiveEffects {
 
     /**
      * Initialize effectsList adding generic GodPower Objects which do not influence player turns.
-     * GodPower objects are added to avoid null pointer exceptions.
+     * (GodPower objects are added to avoid null pointer exceptions).
      */
     public void initializeEffects() {
         for (int i = 0; i < numOfEffects; i++) {
@@ -41,8 +41,7 @@ public class ActiveEffects {
     }
 
     /**
-     * Inserts an effect in position 0 in effectsList and remove the last effect in the stack
-     * which effects are no longer valid.
+     * Inserts an effect in position 0 in effectsList and remove the last GodPower in the stack (which effect is no longer valid).
      *
      * @param effect we have to add in position 0 of effectsList
      */
@@ -53,6 +52,7 @@ public class ActiveEffects {
 
     /**
      * Check if opponents' GodPowers in effectsList limit the building action of a Worker.
+     *
      * @param worker who wants to build
      * @param space where the worker wants to build
      * @return true if the GodPowers in effectList permit the building
@@ -67,6 +67,7 @@ public class ActiveEffects {
 
     /**
      * Check if opponents GodPower in effectsList limits the movement of a Worker.
+     *
      * @param worker we want to move
      * @param space where we want to move the worker
      * @return true if the GodPowers in effectList permit the movement
@@ -80,6 +81,8 @@ public class ActiveEffects {
     }
 
     /**
+     * * Check if opponents GodPower in effectsList limits the winning conditions for a Worker.
+     *
      * @param worker the player has moved
      * @param space  where the worker has been moved
      * @return true if the win condition is valid considering opponents' GodPower effects

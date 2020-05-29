@@ -2,10 +2,8 @@ package it.polimi.ingsw.PSP25.Utility.Messages;
 
 import it.polimi.ingsw.PSP25.Client.Client;
 import it.polimi.ingsw.PSP25.Client.NetworkHandler;
-
 import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * AskGodPower Message class.

@@ -6,9 +6,7 @@ import it.polimi.ingsw.PSP25.Model.Player;
 import it.polimi.ingsw.PSP25.Model.Space;
 import it.polimi.ingsw.PSP25.Model.TurnResult;
 import it.polimi.ingsw.PSP25.Server.DisconnectionException;
-
 import java.util.List;
-
 import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
 
 /**

@@ -2,17 +2,18 @@ package it.polimi.ingsw.PSP25.Model.GodPowers;
 
 import it.polimi.ingsw.PSP25.Model.*;
 import it.polimi.ingsw.PSP25.Server.DisconnectionException;
-
 import java.util.List;
 
+/**
+ * Zeus class
+ */
 public class Zeus extends GodPower {
 
     /**
-     * God Power Constructor
+     * Zeus constructor
      *
-     * @param activeEffects      list of opponent GodPower effect active in our turn that could limit movement,
-     *                           building action or winning conditions of our player
-     * @param broadcastInterface
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public Zeus(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
@@ -20,7 +21,8 @@ public class Zeus extends GodPower {
 
     /**
      * Override of "getValidBuildSpaces" according to Zeus's effect:
-     * "Your Worker may build a block under itself"
+     * "Your Worker may build a block under itself."
+     * The space where the Worker is located is added to the valid build spaces list.
      *
      * @param worker we want to know Spaces in which he can build
      * @return List of possible Spaces where the Worker passed as argument can build

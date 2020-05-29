@@ -5,13 +5,15 @@ import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
 import it.polimi.ingsw.PSP25.Model.Space;
 import it.polimi.ingsw.PSP25.Model.Worker;
 
+/**
+ * Hypnus class.
+ */
 public class Hypnus extends GodPower {
     /**
-     * God Power Constructor
+     * Hypnus constructor
      *
-     * @param activeEffects      list of opponent GodPower effect active in our turn that could limit movement,
-     *                           building action or winning conditions of our player
-     * @param broadcastInterface
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public Hypnus(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);

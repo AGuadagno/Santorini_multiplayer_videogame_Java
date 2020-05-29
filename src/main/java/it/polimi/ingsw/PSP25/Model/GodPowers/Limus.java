@@ -3,21 +3,22 @@ package it.polimi.ingsw.PSP25.Model.GodPowers;
 import it.polimi.ingsw.PSP25.Model.*;
 import it.polimi.ingsw.PSP25.Server.DisconnectionException;
 
+/**
+ * Limus class.
+ */
 public class Limus extends GodPower {
     private Space workerSpace1 = null;
     private Space workerSpace2 = null;
 
     /**
-     * God Power Constructor
+     * Limus constructor
      *
-     * @param activeEffects      list of opponent GodPower effect active in our turn that could limit movement,
-     *                           building action or winning conditions of our player
+     * @param activeEffects      array containing opponents god power effects that may influence this turn
      * @param broadcastInterface Interface used to share information with all the other players
      */
     public Limus(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         super(activeEffects, broadcastInterface);
     }
-
 
     /**
      * Override of "canBuild" according to Limus' effect:
@@ -35,7 +36,6 @@ public class Limus extends GodPower {
             return true;
     }
 
-
     /**
      * First positioning of workers in the board
      *
@@ -50,12 +50,11 @@ public class Limus extends GodPower {
         this.workerSpace2 = spaceW2;
     }
 
-
     /**
      * Override of "turnSequence" in which the positions of workers of the player who controls Limus are saved.
      *
      * @param player        playing the round
-     * @param activeEffects array containing opponent god power effects that may influence this turn
+     * @param activeEffects array containing opponents god power effects that may influence this turn
      * @return TurnResult.LOSE if the player has lost during this turn
      * TurnResult.WIN if the player has won during this turn
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn

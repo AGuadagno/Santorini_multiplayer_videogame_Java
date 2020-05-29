@@ -2,7 +2,6 @@ package it.polimi.ingsw.PSP25.Utility;
 
 import it.polimi.ingsw.PSP25.Model.Space;
 import it.polimi.ingsw.PSP25.Model.Worker;
-
 import java.io.Serializable;
 
 /**
@@ -23,7 +22,6 @@ public class SpaceCopy implements Serializable {
         this.y = s.getY();
         this.towerHeight = s.getTowerHeight();
         this.hasDome = s.hasDome();
-
         if (s.hasWorker()) {
             Worker worker = s.getWorker();
             this.playerID = worker.getPlayer().getID();

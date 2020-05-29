@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP25.Server;
 
 import it.polimi.ingsw.PSP25.Model.GameLogic;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +15,6 @@ public class WaitingGame {
         clientList = new ArrayList<>();
         clientList.add(c);
     }
-
 
     public int getNumOfParticipants(){
         return numOfParticipants;

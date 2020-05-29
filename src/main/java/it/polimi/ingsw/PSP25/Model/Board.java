@@ -1,13 +1,14 @@
 package it.polimi.ingsw.PSP25.Model;
 
 /**
- * Class Board. Board is the playground and it's made of 25 spaces organized in a 5x5 matrix.
+ * Board class.
+ * Board is the playground and it's made of 25 Spaces organized in a 5x5 matrix.
  */
 public class Board {
     private Space[][] spaceMatrix = new Space[5][5];
 
     /**
-     * Board Constructor.
+     * Board constructor.
      */
     public Board() {
         for (int i = 0; i < 5; i++) {
