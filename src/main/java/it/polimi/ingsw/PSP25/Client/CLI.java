@@ -104,7 +104,7 @@ public class CLI implements ViewObservable {
 
     @Override
     public void askFirstPlayer(List<String> playerNames) {
-        System.out.println(playerNames.get(0) + " choose the first player from the list: [");
+        System.out.print(playerNames.get(0) + " choose the first player from the list: [");
         System.out.print("1 - " + playerNames.get(0));
         for (int i = 1; i < playerNames.size(); i++) {
             System.out.print(", " + (i + 1) + " - " + playerNames.get(i));

@@ -29,7 +29,7 @@
                         <version>0.0.3</version>
                         <configuration>
                             <mainClass>it.polimi.ingsw.PSP25.Client.GUI.GUI</mainClass>
-                            <launcher>launchClient.bat</launcher>
+                            <launcher>launchClient</launcher>
                             <commandlineArgs>-Xmx=1024m</commandlineArgs>
                             <compress>2</compress>
                             <jlinkZipName>SantoriniClient</jlinkZipName>
@@ -51,7 +51,7 @@
                         <version>0.0.3</version>
                         <configuration>
                             <mainClass>it.polimi.ingsw.PSP25.Server.Server</mainClass>
-                            <launcher>launchServer.bat</launcher>
+                            <launcher>launchServer</launcher>
                             <compress>2</compress>
                             <jlinkZipName>SantoriniServer</jlinkZipName>
                             <jlinkImageName>SantoriniServer</jlinkImageName>
@@ -146,7 +146,7 @@
                 <version>0.0.3</version>
                 <configuration>
                     <mainClass>it.polimi.ingsw.PSP25.Client.GUI.GUI</mainClass>
-                    <launcher>launch.bat</launcher>
+                    <launcher>launch</launcher>
                     <compress>2</compress>
                     <jlinkZipName>Santorini</jlinkZipName>
                     <jlinkImageName>Santorini</jlinkImageName>
