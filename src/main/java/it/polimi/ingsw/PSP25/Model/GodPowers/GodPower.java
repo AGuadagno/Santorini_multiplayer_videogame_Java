@@ -250,7 +250,7 @@ public class GodPower {
      * @return the Spaces selected for the building action
      * @throws DisconnectionException
      */
-    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
+    protected Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
         Space selectedBuildingSpace = null;
         String playerName = player.getName() + "(" + player.getID() + ")";
 

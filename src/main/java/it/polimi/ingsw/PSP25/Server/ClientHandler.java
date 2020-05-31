@@ -235,7 +235,8 @@ public class ClientHandler implements Runnable, VirtualView {
                             } catch (DisconnectionException ex) {
                                 System.out.println("PingSender: Lobby.stopGame() DisconnectionException");
                             }
-                        }
+                        } else
+                            lobby.removeClient(ClientHandler.this);
                         return;
                     }
                     try {

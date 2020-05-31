@@ -76,7 +76,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                 if (receivedMessage != null) {
                     try {
                         receivedMessage.process(networkHandler, this);
-                    } catch (IOException e) {/* exception managed in network handler */}
+                    } catch (IOException e) {
+                        System.out.println("Disconnected from the server");
+                    }
                 }
             }
         } while (receivedMessage != null);

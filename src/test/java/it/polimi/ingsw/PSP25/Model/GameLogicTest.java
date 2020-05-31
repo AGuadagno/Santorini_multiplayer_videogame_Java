@@ -48,6 +48,8 @@ public class GameLogicTest {
         clientHandler1.setAskGodPower(999);
         clientHandler2.setAskGodPower(2);
 
+        clientHandler1.setAskFirstPlayer(1);
+
         clientHandler1.setAskWorkerPosition(new int[]{6, 8});
         clientHandler2.setAskWorkerPosition(new int[]{7, 11});
 
@@ -86,6 +88,8 @@ public class GameLogicTest {
         clientHandler1.setAskGodPower(999);
         clientHandler2.setAskGodPower(3);
         clientHandler3.setAskGodPower(1);
+
+        clientHandler1.setAskFirstPlayer(1);
 
         clientHandler1.setAskWorkerPosition(new int[]{5, 19});
         clientHandler2.setAskWorkerPosition(new int[]{2, 22});

@@ -157,7 +157,7 @@ public class BoardSceneController implements GUIObservable {
                     ((ImageView) towerLevels.getChildren().get(5 * i + j)).setImage(null);
                 }
                 if (board[i][j].hasDome()) {
-                    (domes.getChildren().get(5 * i + j)).setVisible(true);
+                    ((ImageView) (domes.getChildren().get(5 * i + j))).setImage(new Image("/img/Board/Dome.png"));
                 }
                 if (board[i][j].hasWorker()) {
                     ((ImageView) workers.getChildren().get(5 * i + j)).setImage(new Image("/img/Board/" + "P" + board[i][j].getID().substring(2, 3) + "W"

@@ -8,8 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<!-- tutti i bottoni tranne uno hanno lo stesso stile, conviene fare uno style.css -->
-
 <AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.PSP25.Client.GUI.GodPowerSceneController">
@@ -60,14 +58,24 @@
                 <Tooltip text="If your Worker does not move up, it may build both before and after moving"/>
             </tooltip>
         </Button>
+
         <Button fx:id="button1_2godPowers" layoutX="418.0" layoutY="361.0" mnemonicParsing="false"
                 onAction="#handleButton1" opacity="0.0" prefHeight="220.0" prefWidth="163.0"
                 style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"
-                visible="false"/>
+                visible="false">
+            <tooltip>
+                <Tooltip text="If your Worker does not move up, it may build both before and after moving"/>
+            </tooltip>
+        </Button>
+
         <Button fx:id="button2_2godPowers" layoutX="618.0" layoutY="361.0" mnemonicParsing="false"
                 onAction="#handleButton2" opacity="0.0" prefHeight="220.0" prefWidth="163.0"
                 style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 5px; -fx-border-radius: 15px;"
-                visible="false"/>
+                visible="false">
+            <tooltip>
+                <Tooltip text="If your Worker does not move up, it may build both before and after moving"/>
+            </tooltip>
+        </Button>
 
         <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="47.0" prefHeight="43.0"
                prefWidth="1200.0" textAlignment="CENTER">
@@ -76,13 +84,14 @@
             </font>
         </Label>
         <ImageView fx:id="confirmImage" fitHeight="150.0" fitWidth="200.0" layoutX="1000.0" layoutY="443.0"
-                   pickOnBounds="true" preserveRatio="true">
+                   pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
                 <Image url="@../img/CutConfirmUnpressed.png"/>
             </image>
         </ImageView>
         <Button fx:id="confirmButton" layoutX="1005.0" layoutY="447.0" mnemonicParsing="false"
-                onAction="#handleConfirmButton" opacity="0.0" prefHeight="48.0" prefWidth="195.0" text="Confirm"/>
+                onAction="#handleConfirmButton" opacity="0.0" prefHeight="48.0" prefWidth="195.0" text="Confirm"
+                visible="false"/>
 
     </children>
 </AnchorPane>

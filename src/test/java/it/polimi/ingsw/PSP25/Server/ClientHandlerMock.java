@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class ClientHandlerMock implements VirtualView {
 
-    //private int[] workerAndSpace;
+    private int firstPlayerIndex;
     private int[][] workerAndSpace;
     private int workerAndSpaceCurrIndex;
     private int artemisChosenMovementSpace;
@@ -60,6 +60,16 @@ public class ClientHandlerMock implements VirtualView {
     @Override
     public void tellAssignedGodPower(String playerName, List<String> deepCopyGodPowerNames) throws DisconnectionException {
 
+    }
+
+    public void setAskFirstPlayer(int firstPlayerIndex) {
+        this.firstPlayerIndex = firstPlayerIndex;
+    }
+
+
+    @Override
+    public int askFirstPlayer(List<String> playerNames) throws DisconnectionException {
+        return firstPlayerIndex;
     }
 
     public void setAskWorkerPosition(int setupWorkerPosition) {
@@ -274,8 +284,5 @@ public class ClientHandlerMock implements VirtualView {
         return AresDemolition;
     }
 
-    @Override
-    public int askFirstPlayer(List<String> playerNames) throws DisconnectionException {
-        return 0;
-    }
+
 }

@@ -69,6 +69,10 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
         stage.setTitle("Santorini");
         stage.getIcons().add(new Image("img/Icon.png"));
         stage.show();
+        stage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     private Scene loadScene(String scenePath) {
@@ -205,7 +209,9 @@ public class GUI extends Application implements ViewObservable, ViewObserver {
 
     @Override
     public void showBoard(SpaceCopy[][] board) {
-        ((BoardSceneController) controller).showBoard(board);
+        Platform.runLater(() -> {
+            ((BoardSceneController) controller).showBoard(board);
+        });
     }
 
     @Override
