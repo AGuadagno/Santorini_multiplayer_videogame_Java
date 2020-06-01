@@ -1,8 +1,10 @@
 package it.polimi.ingsw.PSP25.Client;
 
+import it.polimi.ingsw.PSP25.Client.GUI.GUI;
 import it.polimi.ingsw.PSP25.Utility.Messages.Message;
 import it.polimi.ingsw.PSP25.Server.Server;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+import javafx.application.Application;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -30,10 +32,25 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private Integer chosenMovementSpace = null;
     private Integer artemisSecondMoveSpace = null;
     private int[] spaceAndDoubleBuildingHephaestus = null;
+    private boolean disconnectionNotified = false;
 
     public Client(ViewObservable view, boolean cliIsChosen) {
         this.view = view;
         this.cliIsChosen = cliIsChosen;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Do you want to play with the GUI or CLI? (Default: GUI)");
+        String answer = scanner.next();
+        if (answer.equalsIgnoreCase("CLI")) {
+            ViewObservable view = new CLI();
+            Client client = new Client(view, true);
+            view.subscribe(client);
+            client.run();
+        } else {
+            Application.launch(GUI.class);
+        }
     }
 
     @Override
@@ -77,7 +94,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                     try {
                         receivedMessage.process(networkHandler, this);
                     } catch (IOException e) {
-                        System.out.println("Disconnected from the server");
+                        manageServerDisconnection();
                     }
                 }
             }
@@ -95,8 +112,9 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     }
 
     @Override
-    public void playAgain(boolean b) {
-        if (b) {
+    public void playAgain(boolean buttonYes) {
+        if (buttonYes) {
+            disconnectionNotified = false;
             Thread clientThread = new Thread(this);
             clientThread.start();
         }
@@ -110,7 +128,10 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     @Override
     public void manageServerDisconnection() {
-        view.manageServerDisconnection();
+        if (!disconnectionNotified) {
+            view.manageServerDisconnection();
+            disconnectionNotified = true;
+        }
     }
 
     @Override

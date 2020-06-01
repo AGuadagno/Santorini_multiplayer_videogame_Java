@@ -179,7 +179,7 @@ public class GameLogic implements BroadcastInterface {
     /**
      * Begins the game.
      *
-     * @throws DisconnectionException
+     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     public void startGame() throws DisconnectionException {
         playerInitialization();
@@ -241,7 +241,7 @@ public class GameLogic implements BroadcastInterface {
     /**
      * Broadcast the GodPower controlled by each player to inform other players of opponents' GodPower
      *
-     * @throws DisconnectionException
+     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     public void broadcastGodPowers() throws DisconnectionException {
         List<String> playerNames = playerList.stream().map(p -> p.getName() + "(" + p.getID() + ")").collect(Collectors.toList());
@@ -257,7 +257,8 @@ public class GameLogic implements BroadcastInterface {
      *
      * @param timeOutClient       Disconnected Client
      * @param disconnectedAddress Disconnected Client address
-     * @throws DisconnectionException
+     * @param stopGameCaller      client who disconnected
+     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     public void stopGame(VirtualView timeOutClient, String disconnectedAddress, ClientHandler stopGameCaller) throws DisconnectionException {
         int disconnectedClientIndex = timeOutClient.getClientNumber();

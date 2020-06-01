@@ -34,7 +34,7 @@ public class Artemis extends GodPower {
      * @return TurnResult.LOSE if the player has lost during this turn
      * TurnResult.WIN if the player has won during this turn
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn
-     * @throws DisconnectionException
+     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     @Override
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {

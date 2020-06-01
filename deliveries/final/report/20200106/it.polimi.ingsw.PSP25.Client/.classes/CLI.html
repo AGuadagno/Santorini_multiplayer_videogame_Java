@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: CLI</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Client</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: CLI (it.polimi.ingsw.PSP25.Client)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">CLI</td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 27)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+                <span class="absValue">
+    (0/ 280)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Client;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+        <i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.Utilities;
+        <i>5</i>&nbsp;
+        <i>6</i>&nbsp;import java.util.ArrayList;
+        <i>7</i>&nbsp;import java.util.List;
+        <i>8</i>&nbsp;import java.util.Scanner;
+        <i>9</i>&nbsp;import java.util.stream.Collectors;
+        <i>10</i>&nbsp;
+        <b class="nc"><i>11</i>&nbsp;public class CLI implements ViewObservable {</b>
+        <b class="nc"><i>12</i>&nbsp; private Scanner scanner = new Scanner(System.in);</b>
+        <i>13</i>&nbsp; private ViewObserver client;
+        <i>14</i>&nbsp;
+        <i>15</i>&nbsp; @Override
+        <i>16</i>&nbsp; public void askIPAddress() {
+        <b class="nc"><i>17</i>&nbsp; System.out.println(&quot;IP address of server?&quot;);</b>
+        <b class="nc"><i>18</i>&nbsp; String ip = scanner.nextLine();</b>
+        <b class="nc"><i>19</i>&nbsp; client.updateIPAddress(ip);</b>
+        <i>20</i>&nbsp; }
+        <i>21</i>&nbsp;
+        <i>22</i>&nbsp; @Override
+        <i>23</i>&nbsp; public void setConnectionMessage(String s) {
+        <b class="nc"><i>24</i>&nbsp; System.out.println(s);</b>
+        <i>25</i>&nbsp; }
+        <i>26</i>&nbsp;
+        <i>27</i>&nbsp; @Override
+        <i>28</i>&nbsp; public void askNumOfPlayers(String question) {
+        <i>29</i>&nbsp; String numOfPlayers;
+        <i>30</i>&nbsp;
+        <i>31</i>&nbsp; do {
+        <b class="nc"><i>32</i>&nbsp; System.out.println(question);</b>
+        <b class="nc"><i>33</i>&nbsp; numOfPlayers = scanner.next();</b>
+        <b class="nc"><i>34</i>&nbsp; } while (!numOfPlayers.equals(&quot;2&quot;) &amp;&amp; !numOfPlayers.equals(&quot;3&quot;));</b>
+        <b class="nc"><i>35</i>&nbsp; client.updateNumOfPlayers(Integer.parseInt(numOfPlayers));</b>
+        <i>36</i>&nbsp; }
+        <i>37</i>&nbsp;
+        <i>38</i>&nbsp; @Override
+        <i>39</i>&nbsp; public void askName(String question) {
+        <b class="nc"><i>40</i>&nbsp; System.out.println(question);</b>
+        <b class="nc"><i>41</i>&nbsp; String name = scanner.next();</b>
+        <b class="nc"><i>42</i>&nbsp; while (name.length() &lt; 2) {</b>
+        <b class="nc"><i>43</i>&nbsp; System.out.println(&quot;Your name it&#39;s too short. Enter another name (2 Characters or more): &quot;);</b>
+        <b class="nc"><i>44</i>&nbsp; name = scanner.next();</b>
+        <i>45</i>&nbsp; }
+        <b class="nc"><i>46</i>&nbsp; client.updateName(name);</b>
+        <i>47</i>&nbsp; }
+        <i>48</i>&nbsp;
+        <i>49</i>&nbsp; @Override
+        <i>50</i>&nbsp; public void askAllGodPowers(String playerName, int numOfPlayers, List&lt;String&gt; godPowerNames) {
+        <b class="nc"><i>51</i>&nbsp; String question = &quot;&quot;;</b>
+        <b class="nc"><i>52</i>&nbsp; List&lt;Integer&gt; selectedIndexes = new ArrayList&lt;&gt;(numOfPlayers);</b>
+        <i>53</i>&nbsp;
+        <b class="nc"><i>54</i>&nbsp; question = question + playerName + &quot; choose &quot; + numOfPlayers + &quot; god powers from the list: [&quot; + 1 + &quot; - &quot; +
+            godPowerNames.get(0);</b>
+        <b class="nc"><i>55</i>&nbsp; for (int i = 1; i &lt; godPowerNames.size(); i++) {</b>
+        <b class="nc"><i>56</i>&nbsp; question = question + &quot;, &quot; + (i + 1) + &quot; - &quot; + godPowerNames.get(i);</b>
+        <i>57</i>&nbsp; }
+        <b class="nc"><i>58</i>&nbsp; question = question + &quot;]&quot;;</b>
+        <b class="nc"><i>59</i>&nbsp; System.out.println(question);</b>
+        <b class="nc"><i>60</i>&nbsp; for (int i = 1; i &lt;= numOfPlayers; i++) {</b>
+        <b class="nc"><i>61</i>&nbsp; int index = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>62</i>&nbsp; while (index &lt;= 0 || index &gt; godPowerNames.size() || selectedIndexes.contains(index - 1)) {</b>
+        <b class="nc"><i>63</i>&nbsp; question = &quot;God power index is not valid. Choose an index between 1 and &quot; + godPowerNames.size() + &quot; and different from other
+            chosen indexes&quot;;</b>
+        <b class="nc"><i>64</i>&nbsp; System.out.println(question);</b>
+        <b class="nc"><i>65</i>&nbsp; index = Utilities.readIntegerInput(scanner);</b>
+        <i>66</i>&nbsp; }
+        <b class="nc"><i>67</i>&nbsp; selectedIndexes.add(index - 1);</b>
+        <i>68</i>&nbsp; }
+        <b class="nc"><i>69</i>&nbsp; String printedChoice = &quot;You have chosen: &quot;;</b>
+        <b class="nc"><i>70</i>&nbsp; for (int i = 0; i &lt; selectedIndexes.size(); i++) {</b>
+        <b class="nc"><i>71</i>&nbsp; printedChoice += godPowerNames.get(selectedIndexes.get(i));</b>
+        <b class="nc"><i>72</i>&nbsp; if (i &lt; selectedIndexes.size() - 1)</b>
+        <b class="nc"><i>73</i>&nbsp; printedChoice += &quot;, &quot;;</b>
+        <i>74</i>&nbsp; }
+        <b class="nc"><i>75</i>&nbsp; System.out.println(printedChoice);</b>
+        <b class="nc"><i>76</i>&nbsp; client.updateAllGodPower(selectedIndexes);</b>
+        <i>77</i>&nbsp; }
+        <i>78</i>&nbsp;
+        <i>79</i>&nbsp; @Override
+        <i>80</i>&nbsp; public void askGodPower(String playerName, List&lt;String&gt; godPowerNames) {
+        <b class="nc"><i>81</i>&nbsp; System.out.print(playerName + &quot; choose your god power from the list: [&quot;);</b>
+        <b class="nc"><i>82</i>&nbsp; System.out.print(&quot;1 - &quot; + godPowerNames.get(0));</b>
+        <b class="nc"><i>83</i>&nbsp; for (int i = 1; i &lt; godPowerNames.size(); i++) {</b>
+        <b class="nc"><i>84</i>&nbsp; System.out.print(&quot;, &quot; + (i + 1) + &quot; - &quot; + godPowerNames.get(i));</b>
+        <i>85</i>&nbsp; }
+        <b class="nc"><i>86</i>&nbsp; System.out.println(&quot;]&quot;);</b>
+        <b class="nc"><i>87</i>&nbsp; int selectedIndex = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>88</i>&nbsp; while (selectedIndex - 1 &gt;= godPowerNames.size() || selectedIndex - 1 &lt; 0) {</b>
+        <b class="nc"><i>89</i>&nbsp; System.out.println(&quot;God power index is not valid. Choose an index between 1 and &quot; +</b>
+        <b class="nc"><i>90</i>&nbsp; godPowerNames.size());</b>
+        <b class="nc"><i>91</i>&nbsp; selectedIndex = Utilities.readIntegerInput(scanner);</b>
+        <i>92</i>&nbsp; }
+        <b class="nc"><i>93</i>&nbsp; client.updateGodPower(selectedIndex);</b>
+        <i>94</i>&nbsp; }
+        <i>95</i>&nbsp;
+        <i>96</i>&nbsp; @Override
+        <i>97</i>&nbsp; public void showPlayersGodPowers(List&lt;String&gt; playerNames, List&lt;String&gt; godPowerNames) {
+        <b class="nc"><i>98</i>&nbsp; String s = &quot;&quot;;</b>
+        <b class="nc"><i>99</i>&nbsp; for (int i = 0; i &lt; playerNames.size(); i++) {</b>
+        <b class="nc"><i>100</i>&nbsp; s = s + playerNames.get(i) + &quot; has &quot; + godPowerNames.get(i) + &quot;\n&quot;;</b>
+        <i>101</i>&nbsp; }
+        <b class="nc"><i>102</i>&nbsp; System.out.println(s);</b>
+        <i>103</i>&nbsp; }
+        <i>104</i>&nbsp;
+        <i>105</i>&nbsp; @Override
+        <i>106</i>&nbsp; public void askFirstPlayer(List&lt;String&gt; playerNames) {
+        <b class="nc"><i>107</i>&nbsp; System.out.print(playerNames.get(0) + &quot; choose the first player from the list: [&quot;);</b>
+        <b class="nc"><i>108</i>&nbsp; System.out.print(&quot;1 - &quot; + playerNames.get(0));</b>
+        <b class="nc"><i>109</i>&nbsp; for (int i = 1; i &lt; playerNames.size(); i++) {</b>
+        <b class="nc"><i>110</i>&nbsp; System.out.print(&quot;, &quot; + (i + 1) + &quot; - &quot; + playerNames.get(i));</b>
+        <i>111</i>&nbsp; }
+        <b class="nc"><i>112</i>&nbsp; System.out.println(&quot;]&quot;);</b>
+        <i>113</i>&nbsp;
+        <b class="nc"><i>114</i>&nbsp; int firstPlayerIndex = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>115</i>&nbsp; while (firstPlayerIndex &lt; 1 || firstPlayerIndex &gt; playerNames.size()) {</b>
+        <b class="nc"><i>116</i>&nbsp; System.out.println(&quot;Player index is not valid. Choose an index between 1 and &quot; +</b>
+        <b class="nc"><i>117</i>&nbsp; playerNames.size());</b>
+        <b class="nc"><i>118</i>&nbsp; firstPlayerIndex = Utilities.readIntegerInput(scanner);</b>
+        <i>119</i>&nbsp; }
+        <b class="nc"><i>120</i>&nbsp; client.updateFirstPlayer(firstPlayerIndex);</b>
+        <i>121</i>&nbsp; }
+        <i>122</i>&nbsp;
+        <i>123</i>&nbsp; @Override
+        <i>124</i>&nbsp; public void showBoard(SpaceCopy[][] board) {
+        <b class="nc"><i>125</i>&nbsp; for (int j = 0; j &lt; 5; j++) {</b>
+        <b class="nc"><i>126</i>&nbsp; StringBuilder[] rowLines = new StringBuilder[5];</b>
+        <b class="nc"><i>127</i>&nbsp; for (int k = 0; k &lt; 5; k++) {</b>
+        <b class="nc"><i>128</i>&nbsp; rowLines[k] = new StringBuilder(&quot;&quot;);</b>
+        <b class="nc"><i>129</i>&nbsp; rowLines[0].append(&quot;+ - - - - &quot;); //first line: cell separator</b>
+        <i>130</i>&nbsp; }
+        <b class="nc"><i>131</i>&nbsp; rowLines[0].append(&quot;+&quot;); //last &#39;+&#39;</b>
+        <b class="nc"><i>132</i>&nbsp; for (int i = 0; i &lt; 5; i++) {</b>
+        <b class="nc"><i>133</i>&nbsp; int cellNum = (5 * i) + j;</b>
+        <b class="nc"><i>134</i>&nbsp; rowLines[1].append(&quot;|&quot; + cellNum + (cellNum &lt; 10 ? &quot; &quot; : &quot; &quot;));</b>
+        <b class="nc"><i>135</i>&nbsp; rowLines[2].append(&quot;| H:&quot; + board[j][i].getTowerHeight() +</b>
+        <b class="nc"><i>136</i>&nbsp; (board[j][i].hasDome() ? &quot; D &quot; : &quot; &quot;));</b>
+        <b class="nc"><i>137</i>&nbsp; rowLines[3].append(&quot;| &quot;);</b>
+        <b class="nc"><i>138</i>&nbsp; rowLines[4].append(&quot;| &quot;);</b>
+        <b class="nc"><i>139</i>&nbsp; SpaceCopy currSpace = board[j][i];</b>
+        <b class="nc"><i>140</i>&nbsp; if (currSpace.hasWorker()) {</b>
+        <b class="nc"><i>141</i>&nbsp; rowLines[3].append(currSpace.getID() + &quot; &quot;);</b>
+        <b class="nc"><i>142</i>&nbsp; rowLines[4].append(&quot;W &quot;);</b>
+        <b class="nc"><i>143</i>&nbsp; if (currSpace.getWorkerNumber() == 1)</b>
+        <b class="nc"><i>144</i>&nbsp; rowLines[4].append(&quot;1 &quot;);</b>
+        <b class="nc"><i>145</i>&nbsp; else if (currSpace.getWorkerNumber() == 2)</b>
+        <b class="nc"><i>146</i>&nbsp; rowLines[4].append(&quot;2 &quot;);</b>
+        <i>147</i>&nbsp; else {
+        <i>148</i>&nbsp; try {
+        <b class="nc"><i>149</i>&nbsp; throw new Exception();</b>
+        <b class="nc"><i>150</i>&nbsp; } catch (Exception e) {</b>
+        <b class="nc"><i>151</i>&nbsp; System.out.println(&quot;Worker in cell &quot; + cellNum + &quot;doesn&#39;t correspond to his Player&quot;);</b>
+        <b class="nc"><i>152</i>&nbsp; e.printStackTrace();</b>
+        <b class="nc"><i>153</i>&nbsp; }</b>
+        <i>154</i>&nbsp; }
+        <i>155</i>&nbsp; } else {
+        <b class="nc"><i>156</i>&nbsp; rowLines[3].append(&quot; &quot;);</b>
+        <b class="nc"><i>157</i>&nbsp; rowLines[4].append(&quot; &quot;);</b>
+        <i>158</i>&nbsp; }
+        <i>159</i>&nbsp; }
+        <b class="nc"><i>160</i>&nbsp; for (int k = 1; k &lt; 5; k++) {</b>
+        <b class="nc"><i>161</i>&nbsp; rowLines[k].append(&quot;|&quot;); //last &#39;|&#39;</b>
+        <i>162</i>&nbsp; }
+        <b class="nc"><i>163</i>&nbsp; for (int l = 0; l &lt; 5; l++) {</b>
+        <b class="nc"><i>164</i>&nbsp; System.out.println(rowLines[l]);</b>
+        <i>165</i>&nbsp; }
+        <i>166</i>&nbsp; }
+        <b class="nc"><i>167</i>&nbsp; for (int k = 0; k &lt; 5; k++) {</b>
+        <b class="nc"><i>168</i>&nbsp; System.out.print(&quot;+ - - - - &quot;); //last line: cell separator</b>
+        <i>169</i>&nbsp; }
+        <b class="nc"><i>170</i>&nbsp; System.out.print(&quot;+&quot;); //last &#39;+&#39;</b>
+        <b class="nc"><i>171</i>&nbsp; System.out.println();</b>
+        <i>172</i>&nbsp; }
+        <i>173</i>&nbsp;
+        <i>174</i>&nbsp; @Override
+        <i>175</i>&nbsp; public void askWorkerPosition(String playerName, int workerNumber, int previousPos, SpaceCopy[][] board) {
+        <b class="nc"><i>176</i>&nbsp; System.out.println(playerName + &quot; it&#39;s your turn! Choose the position of your &quot; + ((workerNumber == 1) ? &quot;first&quot; :
+            &quot;second&quot;) + &quot; worker&quot;);</b>
+        <b class="nc"><i>177</i>&nbsp; int pos = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>178</i>&nbsp; int x = pos % 5;</b>
+        <b class="nc"><i>179</i>&nbsp; int y = pos / 5;</b>
+        <b class="nc"><i>180</i>&nbsp; while (pos &lt; 0 || pos &gt; 24 || pos == previousPos || board[x][y].hasWorker()) {</b>
+        <b class="nc"><i>181</i>&nbsp; System.out.println(&quot;Position not valid. Choose the position of your &quot; + ((workerNumber == 1) ? &quot;first&quot; : &quot;second&quot;)
+            + &quot; worker, between 0 and 24 &quot; +</b>
+        <i>182</i>&nbsp; &quot;and not already occupied by other workers&quot;);
+        <b class="nc"><i>183</i>&nbsp; pos = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>184</i>&nbsp; x = pos % 5;</b>
+        <b class="nc"><i>185</i>&nbsp; y = pos / 5;</b>
+        <i>186</i>&nbsp; }
+        <b class="nc"><i>187</i>&nbsp; client.updateWorkerPosition(pos);</b>
+        <i>188</i>&nbsp; }
+        <i>189</i>&nbsp;
+        <i>190</i>&nbsp; @Override
+        <i>191</i>&nbsp; public void askWorkerMovement(String playerName, List&lt;SpaceCopy&gt; validMovementSpacesW1, List&lt;SpaceCopy&gt; validMovementSpacesW2) {
+        <b class="nc"><i>192</i>&nbsp; int workerChoice = -1;</b>
+        <i>193</i>&nbsp;
+        <i>194</i>&nbsp; // SELECTION OF WORKER
+        <b class="nc"><i>195</i>&nbsp; if (validMovementSpacesW1.size() == 0) {</b>
+        <b class="nc"><i>196</i>&nbsp; System.out.println(&quot;Worker 1 can&#39;t move! Worker 2 is automatically selected&quot;);</b>
+        <b class="nc"><i>197</i>&nbsp; workerChoice = 2;</b>
+        <b class="nc"><i>198</i>&nbsp; } else if (validMovementSpacesW2.size() == 0) {</b>
+        <b class="nc"><i>199</i>&nbsp; System.out.println(&quot;Worker 2 can&#39;t move! Worker 1 is automatically selected&quot;);</b>
+        <b class="nc"><i>200</i>&nbsp; workerChoice = 1;</b>
+        <i>201</i>&nbsp; } else {
+        <b class="nc"><i>202</i>&nbsp; System.out.println(playerName + &quot;: Choose a worker&quot;);</b>
+        <b class="nc"><i>203</i>&nbsp; workerChoice = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>204</i>&nbsp; while (workerChoice &lt; 1 || workerChoice &gt; 2) {</b>
+        <b class="nc"><i>205</i>&nbsp; System.out.println(&quot;Worker number is not valid. Choose 1 or 2&quot;);</b>
+        <b class="nc"><i>206</i>&nbsp; workerChoice = Utilities.readIntegerInput(scanner);</b>
+        <i>207</i>&nbsp; }
+        <i>208</i>&nbsp; }
+        <i>209</i>&nbsp;
+        <i>210</i>&nbsp; //SELECTION OF MOVEMENT SPACE
+        <b class="nc"><i>211</i>&nbsp; int chosenMovementSpace = workerMovementSelection(playerName, workerChoice == 1 ? validMovementSpacesW1 : validMovementSpacesW2);</b>
+        <b class="nc"><i>212</i>&nbsp; int[] workerAndSpace = new int[2];</b>
+        <b class="nc"><i>213</i>&nbsp; workerAndSpace[0] = workerChoice;</b>
+        <b class="nc"><i>214</i>&nbsp; workerAndSpace[1] = chosenMovementSpace;</b>
+        <b class="nc"><i>215</i>&nbsp; client.updateWorkerMovement(workerAndSpace);</b>
+        <i>216</i>&nbsp; }
+        <i>217</i>&nbsp;
+        <i>218</i>&nbsp;
+        <i>219</i>&nbsp; private int workerMovementSelection(String playerName, List&lt;SpaceCopy&gt; validMovementSpacesW) {
+        <b class="nc"><i>220</i>&nbsp; System.out.println(validMovementSpacesW.toString());</b>
+        <b class="nc"><i>221</i>&nbsp; System.out.println(playerName + &quot;: Choose movement space&quot;);</b>
+        <b class="nc"><i>222</i>&nbsp; int chosenMovementSpace = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>223</i>&nbsp; while (!(validMovementSpacesW.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).</b>
+        <b class="nc"><i>224</i>&nbsp; contains(chosenMovementSpace)) {</b>
+        <b class="nc"><i>225</i>&nbsp; System.out.println(chosenMovementSpace + &quot; is not in the valid movement spaces list&quot;);</b>
+        <b class="nc"><i>226</i>&nbsp; chosenMovementSpace = Utilities.readIntegerInput(scanner);</b>
+        <i>227</i>&nbsp; }
+        <b class="nc"><i>228</i>&nbsp; return chosenMovementSpace;</b>
+        <i>229</i>&nbsp; }
+        <i>230</i>&nbsp;
+        <i>231</i>&nbsp; @Override
+        <i>232</i>&nbsp; public void askBuildingSpace(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>233</i>&nbsp; System.out.println(validBuildingSpaces.toString());</b>
+        <b class="nc"><i>234</i>&nbsp; System.out.println(playerName + &quot;: Choose building space&quot;);</b>
+        <b class="nc"><i>235</i>&nbsp; int chosenBuildingSpace = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>236</i>&nbsp; while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).</b>
+        <b class="nc"><i>237</i>&nbsp; contains(chosenBuildingSpace)) {</b>
+        <b class="nc"><i>238</i>&nbsp; System.out.println(chosenBuildingSpace + &quot; is not in the valid building spaces list&quot;);</b>
+        <b class="nc"><i>239</i>&nbsp; chosenBuildingSpace = Utilities.readIntegerInput(scanner);</b>
+        <i>240</i>&nbsp; }
+        <b class="nc"><i>241</i>&nbsp; client.updateBuildingSpace(chosenBuildingSpace);</b>
+        <i>242</i>&nbsp; }
+        <i>243</i>&nbsp;
+        <i>244</i>&nbsp; @Override
+        <i>245</i>&nbsp; public void askAtlasBuild(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>246</i>&nbsp; int selectedSpace = buildingSpaceSelection(playerName, validBuildingSpaces);</b>
+        <b class="nc"><i>247</i>&nbsp; SpaceCopy chosenBuildingSpace = null;</b>
+        <b class="nc"><i>248</i>&nbsp; String answer = null;</b>
+        <b class="nc"><i>249</i>&nbsp; int[] selectedSpaceAndBuildDome = new int[2];</b>
+        <b class="nc"><i>250</i>&nbsp; int x = selectedSpace % 5;</b>
+        <b class="nc"><i>251</i>&nbsp; int y = selectedSpace / 5;</b>
+        <i>252</i>&nbsp;
+        <b class="nc"><i>253</i>&nbsp; for (SpaceCopy space : validBuildingSpaces) {</b>
+        <b class="nc"><i>254</i>&nbsp; if (space.getX() == x &amp;&amp; space.getY() == y)</b>
+        <b class="nc"><i>255</i>&nbsp; chosenBuildingSpace = space;</b>
+        <b class="nc"><i>256</i>&nbsp; }</b>
+        <b class="nc"><i>257</i>&nbsp; if (chosenBuildingSpace.getTowerHeight() &lt; 3) {</b>
+        <b class="nc"><i>258</i>&nbsp; System.out.println(&quot;Do you want to build a dome or a block? (b = block , d = dome)&quot;);</b>
+        <b class="nc"><i>259</i>&nbsp; Scanner scanner = new Scanner(System.in);</b>
+        <b class="nc"><i>260</i>&nbsp; answer = scanner.next();</b>
+        <b class="nc"><i>261</i>&nbsp; while (!(answer.equals(&quot;d&quot;) || answer.equals(&quot;b&quot;))) {</b>
+        <b class="nc"><i>262</i>&nbsp; System.out.println(&quot;Your Choice is not valid. insert &#39;b&#39; to build a block, &#39;d&#39; to build a dome&quot;);</b>
+        <b class="nc"><i>263</i>&nbsp; answer = scanner.next();</b>
+        <i>264</i>&nbsp; }
+        <b class="nc"><i>265</i>&nbsp; } else {</b>
+        <b class="nc"><i>266</i>&nbsp; answer = &quot;d&quot;;</b>
+        <i>267</i>&nbsp; }
+        <b class="nc"><i>268</i>&nbsp; selectedSpaceAndBuildDome[0] = selectedSpace;</b>
+        <b class="nc"><i>269</i>&nbsp; if (answer.equals(&quot;b&quot;))</b>
+        <b class="nc"><i>270</i>&nbsp; selectedSpaceAndBuildDome[1] = 0;</b>
+        <b class="nc"><i>271</i>&nbsp; else selectedSpaceAndBuildDome[1] = 1;</b>
+        <b class="nc"><i>272</i>&nbsp; client.updateAtlasBuild(selectedSpaceAndBuildDome);</b>
+        <i>273</i>&nbsp; }
+        <i>274</i>&nbsp;
+        <i>275</i>&nbsp;
+        <i>276</i>&nbsp; private int buildingSpaceSelection(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>277</i>&nbsp; System.out.println(validBuildingSpaces.toString());</b>
+        <b class="nc"><i>278</i>&nbsp; System.out.println(playerName + &quot;: Choose building space&quot;);</b>
+        <b class="nc"><i>279</i>&nbsp; int chosenBuildingSpace = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>280</i>&nbsp; while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).</b>
+        <b class="nc"><i>281</i>&nbsp; contains(chosenBuildingSpace)) {</b>
+        <b class="nc"><i>282</i>&nbsp; System.out.println(chosenBuildingSpace + &quot; is not in the valid building spaces list&quot;);</b>
+        <b class="nc"><i>283</i>&nbsp; chosenBuildingSpace = Utilities.readIntegerInput(scanner);</b>
+        <i>284</i>&nbsp; }
+        <b class="nc"><i>285</i>&nbsp; return chosenBuildingSpace;</b>
+        <i>286</i>&nbsp; }
+        <i>287</i>&nbsp;
+        <i>288</i>&nbsp; @Override
+        <i>289</i>&nbsp; public void askBuildBeforeMovePrometheus(String playerName, boolean w1CanMove, boolean w1CanBuild, boolean w2CanMove, boolean w2CanBuild) {
+        <b class="nc"><i>290</i>&nbsp; String answer = null;</b>
+        <b class="nc"><i>291</i>&nbsp; int workerChoice = -1;</b>
+        <i>292</i>&nbsp;
+        <i>293</i>&nbsp; // SELECTION OF WORKER
+        <b class="nc"><i>294</i>&nbsp; if (!w1CanMove) {</b>
+        <b class="nc"><i>295</i>&nbsp; System.out.println(&quot;Worker 1 can&#39;t move! Worker 2 is automatically selected&quot;);</b>
+        <b class="nc"><i>296</i>&nbsp; workerChoice = 2;</b>
+        <b class="nc"><i>297</i>&nbsp; } else if (!w2CanMove) {</b>
+        <b class="nc"><i>298</i>&nbsp; System.out.println(&quot;Worker 2 can&#39;t move! Worker 1 is automatically selected&quot;);</b>
+        <b class="nc"><i>299</i>&nbsp; workerChoice = 1;</b>
+        <i>300</i>&nbsp; } else {
+        <b class="nc"><i>301</i>&nbsp; System.out.println(playerName + &quot;: Choose a worker&quot;);</b>
+        <b class="nc"><i>302</i>&nbsp; workerChoice = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>303</i>&nbsp; while (workerChoice &lt; 1 || workerChoice &gt; 2) {</b>
+        <b class="nc"><i>304</i>&nbsp; System.out.println(&quot;Worker number is not valid. Choose 1 or 2&quot;);</b>
+        <b class="nc"><i>305</i>&nbsp; workerChoice = Utilities.readIntegerInput(scanner);</b>
+        <i>306</i>&nbsp; }
+        <i>307</i>&nbsp; }
+        <i>308</i>&nbsp;
+        <i>309</i>&nbsp; // BUILD BEFORE MOVE
+        <b class="nc"><i>310</i>&nbsp; if (workerChoice == 1 ? (w1CanBuild) : (w2CanBuild)) {</b>
+        <b class="nc"><i>311</i>&nbsp; System.out.println(&quot;Do you want to build before move? y|n&quot;);</b>
+        <b class="nc"><i>312</i>&nbsp; answer = scanner.next();</b>
+        <b class="nc"><i>313</i>&nbsp; while (!(answer.equals(&quot;y&quot;) || answer.equals(&quot;n&quot;))) {</b>
+        <b class="nc"><i>314</i>&nbsp; System.out.println(&quot;Not valid choice. Do you want to build before move? y|n&quot;);</b>
+        <b class="nc"><i>315</i>&nbsp; answer = scanner.next();</b>
+        <i>316</i>&nbsp; }
+        <i>317</i>&nbsp; }
+        <b class="nc"><i>318</i>&nbsp; int[] workerAndBuildBeforeMove = new int[2];</b>
+        <b class="nc"><i>319</i>&nbsp; workerAndBuildBeforeMove[0] = workerChoice;</b>
+        <b class="nc"><i>320</i>&nbsp; if (answer.equals(&quot;y&quot;)) {</b>
+        <b class="nc"><i>321</i>&nbsp; workerAndBuildBeforeMove[1] = 1;</b>
+        <i>322</i>&nbsp; } else {
+        <b class="nc"><i>323</i>&nbsp; workerAndBuildBeforeMove[1] = 0;</b>
+        <i>324</i>&nbsp; }
+        <b class="nc"><i>325</i>&nbsp; client.updateBuildBeforeMovePrometheus(workerAndBuildBeforeMove);</b>
+        <i>326</i>&nbsp; }
+        <i>327</i>&nbsp;
+        <i>328</i>&nbsp; @Override
+        <i>329</i>&nbsp; public void askWorkerMovementPrometheus(String playerName, List&lt;SpaceCopy&gt; validMovementSpaces) {
+        <b class="nc"><i>330</i>&nbsp; System.out.println(validMovementSpaces.toString());</b>
+        <b class="nc"><i>331</i>&nbsp; System.out.println(playerName + &quot;: Choose movement space&quot;);</b>
+        <b class="nc"><i>332</i>&nbsp; int chosenMovementSpace = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>333</i>&nbsp; while (!(validMovementSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).</b>
+        <b class="nc"><i>334</i>&nbsp; contains(chosenMovementSpace)) {</b>
+        <b class="nc"><i>335</i>&nbsp; System.out.println(chosenMovementSpace + &quot; is not in the valid movement spaces list&quot;);</b>
+        <b class="nc"><i>336</i>&nbsp; chosenMovementSpace = Utilities.readIntegerInput(scanner);</b>
+        <i>337</i>&nbsp; }
+        <b class="nc"><i>338</i>&nbsp; client.updateWorkerMovementPrometheus(chosenMovementSpace);</b>
+        <i>339</i>&nbsp; }
+        <i>340</i>&nbsp;
+        <i>341</i>&nbsp; @Override
+        <i>342</i>&nbsp; public void subscribe(ViewObserver client) {
+        <b class="nc"><i>343</i>&nbsp; this.client = client;</b>
+        <i>344</i>&nbsp; }
+        <i>345</i>&nbsp;
+        <i>346</i>&nbsp; @Override
+        <i>347</i>&nbsp; public void askArtemisSecondMove(String playerName, List&lt;SpaceCopy&gt; validSecondMovementSpaces) {
+        <i>348</i>&nbsp; String answer;
+        <b class="nc"><i>349</i>&nbsp; System.out.println(&quot;Do you want to move your Worker for the second time? y/n&quot;);</b>
+        <b class="nc"><i>350</i>&nbsp; answer = scanner.next();</b>
+        <b class="nc"><i>351</i>&nbsp; while (!answer.equals(&quot;y&quot;) &amp;&amp; !answer.equals(&quot;n&quot;)) {</b>
+        <b class="nc"><i>352</i>&nbsp; System.out.println(&quot;Your choice is not valid! Choose again!&quot;);</b>
+        <b class="nc"><i>353</i>&nbsp; answer = scanner.next();</b>
+        <i>354</i>&nbsp; }
+        <i>355</i>&nbsp;
+        <i>356</i>&nbsp; // ARTEMIS SECOND MOVEMENT
+        <b class="nc"><i>357</i>&nbsp; int chosenMovementSpace = -1;</b>
+        <b class="nc"><i>358</i>&nbsp; if (answer.equals(&quot;y&quot;)) {</b>
+        <b class="nc"><i>359</i>&nbsp; System.out.println(validSecondMovementSpaces.toString());</b>
+        <b class="nc"><i>360</i>&nbsp; System.out.println(playerName + &quot;: Choose movement space&quot;);</b>
+        <b class="nc"><i>361</i>&nbsp; chosenMovementSpace = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>362</i>&nbsp; while (!(validSecondMovementSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).</b>
+        <b class="nc"><i>363</i>&nbsp; contains(chosenMovementSpace)) {</b>
+        <b class="nc"><i>364</i>&nbsp; System.out.println(chosenMovementSpace + &quot; is not in the valid movement spaces list&quot;);</b>
+        <b class="nc"><i>365</i>&nbsp; chosenMovementSpace = Utilities.readIntegerInput(scanner);</b>
+        <i>366</i>&nbsp; }
+        <i>367</i>&nbsp; }
+        <b class="nc"><i>368</i>&nbsp; client.updateArtemisSecondMove(chosenMovementSpace);</b>
+        <i>369</i>&nbsp; }
+        <i>370</i>&nbsp;
+        <i>371</i>&nbsp; @Override
+        <i>372</i>&nbsp; public void askDemeterSecondBuilding(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>373</i>&nbsp; int chosenBuildingSpace = -1;</b>
+        <i>374</i>&nbsp;
+        <b class="nc"><i>375</i>&nbsp; System.out.println(&quot;Do you want to build an additional block? y/n&quot;);</b>
+        <b class="nc"><i>376</i>&nbsp; String answer = scanner.next();</b>
+        <b class="nc"><i>377</i>&nbsp; if (answer.equals(&quot;y&quot;)) {</b>
+        <b class="nc"><i>378</i>&nbsp; System.out.println(validBuildingSpaces.toString());</b>
+        <b class="nc"><i>379</i>&nbsp; System.out.println(playerName + &quot;: Choose building space&quot;);</b>
+        <i>380</i>&nbsp; // SELECTION OF THE SECOND BUILDING SPACE
+        <b class="nc"><i>381</i>&nbsp; chosenBuildingSpace = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>382</i>&nbsp; while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).</b>
+        <b class="nc"><i>383</i>&nbsp; contains(chosenBuildingSpace)) {</b>
+        <b class="nc"><i>384</i>&nbsp; System.out.println(chosenBuildingSpace + &quot; is not in the valid building spaces list&quot;);</b>
+        <b class="nc"><i>385</i>&nbsp; chosenBuildingSpace = Utilities.readIntegerInput(scanner);</b>
+        <i>386</i>&nbsp; }
+        <i>387</i>&nbsp; }
+        <b class="nc"><i>388</i>&nbsp; client.updateBuildingSpace(chosenBuildingSpace);</b>
+        <i>389</i>&nbsp; }
+        <i>390</i>&nbsp;
+        <i>391</i>&nbsp; @Override
+        <i>392</i>&nbsp; public void askHephaestusBuild(String playerName, List&lt;SpaceCopy&gt; validBuildingSpaces) {
+        <b class="nc"><i>393</i>&nbsp; int[] spaceAndDoubleBuilding = new int[2];</b>
+        <i>394</i>&nbsp;
+        <b class="nc"><i>395</i>&nbsp; System.out.println(validBuildingSpaces.toString());</b>
+        <b class="nc"><i>396</i>&nbsp; System.out.println(playerName + &quot;: Choose building space&quot;);</b>
+        <b class="nc"><i>397</i>&nbsp; int chosenBuildingSpace = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>398</i>&nbsp; while (!(validBuildingSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).</b>
+        <b class="nc"><i>399</i>&nbsp; contains(chosenBuildingSpace)) {</b>
+        <b class="nc"><i>400</i>&nbsp; System.out.println(chosenBuildingSpace + &quot; is not in the valid building spaces list&quot;);</b>
+        <b class="nc"><i>401</i>&nbsp; chosenBuildingSpace = Utilities.readIntegerInput(scanner);</b>
+        <i>402</i>&nbsp; }
+        <i>403</i>&nbsp;
+        <b class="nc"><i>404</i>&nbsp; SpaceCopy space = null;</b>
+        <b class="nc"><i>405</i>&nbsp; int x = chosenBuildingSpace % 5;</b>
+        <b class="nc"><i>406</i>&nbsp; int y = chosenBuildingSpace / 5;</b>
+        <b class="nc"><i>407</i>&nbsp; for (SpaceCopy spaceCopy : validBuildingSpaces) {</b>
+        <b class="nc"><i>408</i>&nbsp; if (spaceCopy.getX() == x &amp;&amp; spaceCopy.getY() == y)</b>
+        <b class="nc"><i>409</i>&nbsp; space = spaceCopy;</b>
+        <b class="nc"><i>410</i>&nbsp; }</b>
+        <i>411</i>&nbsp;
+        <b class="nc"><i>412</i>&nbsp; if (space.getTowerHeight() &lt; 2) { // can&#39;t build a dome</b>
+        <i>413</i>&nbsp; // HEPHAESTUS SECOND BUILDING
+        <b class="nc"><i>414</i>&nbsp; System.out.println(&quot;Do you want to build an additional block in &quot; + space.toString() + &quot; ?&quot; + &quot; y/n&quot;);</b>
+        <b class="nc"><i>415</i>&nbsp; String answer = scanner.next();</b>
+        <b class="nc"><i>416</i>&nbsp; while (!(answer.equals(&quot;y&quot;) || answer.equals(&quot;n&quot;))) {</b>
+        <b class="nc"><i>417</i>&nbsp; System.out.println(&quot;Answer is not valid! y = yes, n = no!&quot;);</b>
+        <b class="nc"><i>418</i>&nbsp; answer = scanner.next();</b>
+        <i>419</i>&nbsp; }
+        <b class="nc"><i>420</i>&nbsp; if (answer.equals(&quot;y&quot;)) {</b>
+        <b class="nc"><i>421</i>&nbsp; spaceAndDoubleBuilding[1] = 2;</b>
+        <b class="nc"><i>422</i>&nbsp; } else if (answer.equals(&quot;n&quot;)) {</b>
+        <b class="nc"><i>423</i>&nbsp; spaceAndDoubleBuilding[1] = 1;</b>
+        <i>424</i>&nbsp; }
+        <b class="nc"><i>425</i>&nbsp; } else {</b>
+        <b class="nc"><i>426</i>&nbsp; spaceAndDoubleBuilding[1] = 1;</b>
+        <i>427</i>&nbsp; }
+        <b class="nc"><i>428</i>&nbsp; spaceAndDoubleBuilding[0] = chosenBuildingSpace;</b>
+        <b class="nc"><i>429</i>&nbsp; client.updateHephaestusBuild(spaceAndDoubleBuilding);</b>
+        <i>430</i>&nbsp; }
+        <i>431</i>&nbsp;
+        <i>432</i>&nbsp; @Override
+        <i>433</i>&nbsp; public void announceVictory(String playerName) {
+        <b class="nc"><i>434</i>&nbsp; System.out.println(playerName + &quot; won the Game! Congratulations!&quot;);</b>
+        <i>435</i>&nbsp; }
+        <i>436</i>&nbsp;
+        <i>437</i>&nbsp; @Override
+        <i>438</i>&nbsp; public void announceLose(String playerName) {
+        <b class="nc"><i>439</i>&nbsp; System.out.println(playerName + &quot; lost the Game! Can&#39;t move or build!&quot;);</b>
+        <i>440</i>&nbsp; }
+        <i>441</i>&nbsp;
+        <i>442</i>&nbsp; @Override
+        <i>443</i>&nbsp; public void manageServerDisconnection() {
+        <b class="nc"><i>444</i>&nbsp; System.out.println(&quot;Disconnected from server&quot;);</b>
+        <i>445</i>&nbsp; }
+        <i>446</i>&nbsp;
+        <i>447</i>&nbsp; @Override
+        <i>448</i>&nbsp; public void askRemoveBlockAres(String playerName, List&lt;SpaceCopy&gt; validRemoveSpaces, int nonSelectedWorkerNumber) {
+        <b class="nc"><i>449</i>&nbsp; int selectedRemoveSpace = -1;</b>
+        <i>450</i>&nbsp;
+        <b class="nc"><i>451</i>&nbsp; System.out.println(&quot;Do you want to remove a non occupied block (without a dome) around your Worker &quot; + nonSelectedWorkerNumber +
+            &quot;? y/n&quot;);</b>
+        <b class="nc"><i>452</i>&nbsp; String answer = scanner.next();</b>
+        <b class="nc"><i>453</i>&nbsp; if (answer.equals(&quot;y&quot;)) {</b>
+        <b class="nc"><i>454</i>&nbsp; System.out.println(validRemoveSpaces.toString());</b>
+        <b class="nc"><i>455</i>&nbsp; System.out.println(playerName + &quot;: Choose the space where you want to remove a block&quot;);</b>
+        <i>456</i>&nbsp; // SELECTION OF THE BLOCK THE PLAYER WANTS TO REMOVE
+        <b class="nc"><i>457</i>&nbsp; selectedRemoveSpace = Utilities.readIntegerInput(scanner);</b>
+        <b class="nc"><i>458</i>&nbsp; while (!(validRemoveSpaces.stream().map(SpaceCopy::getNumber).collect(Collectors.toList())).</b>
+        <b class="nc"><i>459</i>&nbsp; contains(selectedRemoveSpace)) {</b>
+        <b class="nc"><i>460</i>&nbsp; System.out.println(selectedRemoveSpace + &quot; is not in the valid spaces list&quot;);</b>
+        <b class="nc"><i>461</i>&nbsp; selectedRemoveSpace = Utilities.readIntegerInput(scanner);</b>
+        <i>462</i>&nbsp; }
+        <i>463</i>&nbsp; }
+        <b class="nc"><i>464</i>&nbsp; client.updateBuildingSpace(selectedRemoveSpace);</b>
+        <i>465</i>&nbsp; }
+        <i>466</i>&nbsp;
+        <i>467</i>&nbsp; @Override
+        <i>468</i>&nbsp; public void tellAssignedGodPower(String playerName, List&lt;String&gt; godPowerName) {
+        <b class="nc"><i>469</i>&nbsp; System.out.println(playerName + &quot; you got: &quot; + godPowerName.get(0));</b>
+        <i>470</i>&nbsp; }
+        <i>471</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-06-01 23:04</div>
+</div>
+</body>
+</html>

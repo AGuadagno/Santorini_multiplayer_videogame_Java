@@ -51,7 +51,7 @@ public class Atlas extends GodPower {
      * @param player              who has Atlas as GodPower
      * @param validBuildingSpaces List of Spaces where the selected worker can build
      * @return the selected building space
-     * @throws DisconnectionException
+     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     @Override
     public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {

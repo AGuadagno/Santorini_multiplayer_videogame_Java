@@ -64,6 +64,8 @@ public class Worker {
     }
 
     /**
+     * Returns the Space where the Worker is positioned
+     *
      * @return the Space where the Worker is positioned
      */
     public Space getSpace() {
@@ -71,6 +73,7 @@ public class Worker {
     }
 
     /**
+     * Returns the Player who controls the Worker
      * @return the Player who controls the Worker
      */
     public Player getPlayer() {
@@ -78,6 +81,7 @@ public class Worker {
     }
 
     /**
+     * Returns the value of "heightBeforeMove"
      * @return the value of "heightBeforeMove"
      */
     public int getHeightBeforeMove() {

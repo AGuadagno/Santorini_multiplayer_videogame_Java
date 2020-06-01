@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+    <title>Coverage Report :: Minotaur</title>
+    <style type="text/css">
+        @import "../../.css/coverage.css";
+    </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+    <div class="breadCrumbs">
+        [ <a href="../../index.html">all classes</a> ]
+        [ <a href="../index.html">it.polimi.ingsw.PSP25.Model.GodPowers</a> ]
+    </div>
+
+    <h1>Coverage Summary for Class: Minotaur (it.polimi.ingsw.PSP25.Model.GodPowers)</h1>
+
+    <table class="coverageStats">
+        <tr>
+            <th class="name">Class</th>
+            <th class="coverageStat
+">
+                Class, %
+            </th>
+            <th class="coverageStat
+">
+                Method, %
+            </th>
+            <th class="coverageStat
+">
+                Line, %
+            </th>
+        </tr>
+        <tr>
+            <td class="name">Minotaur</td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (1/ 1)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (4/ 4)
+  </span>
+            </td>
+            <td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+                <span class="absValue">
+    (27/ 27)
+  </span>
+            </td>
+        </tr>
+
+    </table>
+
+    <br/>
+    <br/>
+
+
+    <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Model.GodPowers;
+        <i>2</i>&nbsp;
+        <i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Model.ActiveEffects;
+        <i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
+        <i>5</i>&nbsp;import it.polimi.ingsw.PSP25.Model.Space;
+        <i>6</i>&nbsp;import it.polimi.ingsw.PSP25.Model.Worker;
+        <i>7</i>&nbsp;import java.util.ArrayList;
+        <i>8</i>&nbsp;import java.util.List;
+        <i>9</i>&nbsp;
+        <i>10</i>&nbsp;
+        <i>11</i>&nbsp;/**
+        <i>12</i>&nbsp; * Minotaur class
+        <i>13</i>&nbsp; */
+        <i>14</i>&nbsp;public class Minotaur extends GodPower {
+        <i>15</i>&nbsp;
+        <i>16</i>&nbsp; /**
+        <i>17</i>&nbsp; * Minotaur constructor
+        <i>18</i>&nbsp; *
+        <i>19</i>&nbsp; * @param activeEffects array containing opponents god power effects that may influence this turn
+        <i>20</i>&nbsp; * @param broadcastInterface Interface used to share information with all the other players
+        <i>21</i>&nbsp; */
+        <i>22</i>&nbsp; public Minotaur(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
+        <b class="fc"><i>23</i>&nbsp; super(activeEffects, broadcastInterface);</b>
+        <b class="fc"><i>24</i>&nbsp; }</b>
+        <i>25</i>&nbsp;
+        <i>26</i>&nbsp; /**
+        <i>27</i>&nbsp; * Override of &quot;getValidMovementSpaces&quot; according to Minotaur&#39;s effect:
+        <i>28</i>&nbsp; * &quot;Your Worker may move into an opponent Worker�s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level&quot;.
+        <i>29</i>&nbsp; * Spaces occupied by opponent workers could be added to the list of valid movement spaces if the previous condition is respected.
+        <i>30</i>&nbsp; *
+        <i>31</i>&nbsp; * @param worker we want to know Spaces where he can move to
+        <i>32</i>&nbsp; * @return List of possible Spaces where the Worker passed as argument can move to
+        <i>33</i>&nbsp; */
+        <i>34</i>&nbsp; @Override
+        <i>35</i>&nbsp; protected List&lt;Space&gt; getValidMovementSpaces(Worker worker) {
+        <b class="fc"><i>36</i>&nbsp; ArrayList&lt;Space&gt; validMovementSpaces = new ArrayList&lt;&gt;();</b>
+        <i>37</i>&nbsp;
+        <b class="fc"><i>38</i>&nbsp; for (Space space : worker.getSpace().getAdjacentSpaces()) {</b>
+        <b class="fc"><i>39</i>&nbsp; Space spaceSameDir = spaceSameDir(space, worker.getSpace());</b>
+        <b class="fc"><i>40</i>&nbsp; if ((space.getWorker() == null || (space.getWorker().getPlayer() != worker.getPlayer()</b>
+        <b class="fc"><i>41</i>&nbsp; &amp;&amp; spaceSameDir != null &amp;&amp; spaceSameDir.getWorker() == null &amp;&amp; !spaceSameDir.hasDome()))</b>
+        <b class="fc"><i>42</i>&nbsp; &amp;&amp; space.getTowerHeight() - worker.getSpace().getTowerHeight() &lt;= 1 &amp;&amp; !space.hasDome()</b>
+        <b class="fc"><i>43</i>&nbsp; &amp;&amp; activeEffects.canMove(worker, space)) {</b>
+        <b class="fc"><i>44</i>&nbsp; validMovementSpaces.add(space);</b>
+        <i>45</i>&nbsp; }
+        <b class="fc"><i>46</i>&nbsp; }</b>
+        <b class="fc"><i>47</i>&nbsp; return validMovementSpaces;</b>
+        <i>48</i>&nbsp; }
+        <i>49</i>&nbsp;
+        <i>50</i>&nbsp; /**
+        <i>51</i>&nbsp; * Override of &quot;moveWorker&quot; according to Minotaur&#39;s effect:
+        <i>52</i>&nbsp; * &quot;Your Worker may move into an opponent Worker�s space, if their Worker
+        <i>53</i>&nbsp; * can be forced one space straight backwards to an unoccupied space at any level&quot;.
+        <i>54</i>&nbsp; * This method moves the player&#39;s worker and also the opponent&#39;s worker.
+        <i>55</i>&nbsp; *
+        <i>56</i>&nbsp; * @param worker Worker that the player wants to move
+        <i>57</i>&nbsp; * @param space Space where the player wants to move the Worker
+        <i>58</i>&nbsp; */
+        <i>59</i>&nbsp; @Override
+        <i>60</i>&nbsp; protected void moveWorker(Worker worker, Space space) {
+        <b class="fc"><i>61</i>&nbsp; if (space.hasWorker()) {</b>
+        <b class="fc"><i>62</i>&nbsp; Space spaceSameDir = spaceSameDir(space, worker.getSpace());</b>
+        <b class="fc"><i>63</i>&nbsp; space.getWorker().moveTo(spaceSameDir);</b>
+        <i>64</i>&nbsp; }
+        <b class="fc"><i>65</i>&nbsp; worker.moveTo(space);</b>
+        <b class="fc"><i>66</i>&nbsp; }</b>
+        <i>67</i>&nbsp;
+        <i>68</i>&nbsp; /**
+        <i>69</i>&nbsp; * @param space1 generic space adjacent to space2
+        <i>70</i>&nbsp; * @param space2 space where the worker controlled by the player who has Minotaur as Godpower is located
+        <i>71</i>&nbsp; * @return the space that is positioned after space1, along the direction defined by space2 -&gt; space1,
+        <i>72</i>&nbsp; * if it doesn&#39;t exist, returns null
+        <i>73</i>&nbsp; */
+        <i>74</i>&nbsp; private Space spaceSameDir(Space space1, Space space2) {
+        <b class="fc"><i>75</i>&nbsp; int dirX = space1.getX() - space2.getX();</b>
+        <b class="fc"><i>76</i>&nbsp; int dirY = space1.getY() - space2.getY();</b>
+        <b class="fc"><i>77</i>&nbsp; List&lt;Space&gt; adjacentSpaces = space1.getAdjacentSpaces();</b>
+        <b class="fc"><i>78</i>&nbsp; Space spaceSameDir = null;</b>
+        <i>79</i>&nbsp;
+        <b class="fc"><i>80</i>&nbsp; for (Space space : adjacentSpaces) {</b>
+        <b class="fc"><i>81</i>&nbsp; if (space.getX() == space1.getX() + dirX &amp;&amp; space.getY() == space1.getY() + dirY) {</b>
+        <b class="fc"><i>82</i>&nbsp; spaceSameDir = space;</b>
+        <b class="fc"><i>83</i>&nbsp; break;</b>
+        <i>84</i>&nbsp; }
+        <b class="fc"><i>85</i>&nbsp; }</b>
+        <b class="fc"><i>86</i>&nbsp; return spaceSameDir;</b>
+        <i>87</i>&nbsp; }
+        <i>88</i>&nbsp;}
+    </div>
+</div>
+
+<div class="footer">
+
+    <div style="float:right;">generated on 2020-06-01 23:04</div>
+</div>
+</body>
+</html>

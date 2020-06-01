@@ -43,6 +43,8 @@ public class Player {
     }
 
     /**
+     * Returns the name of the player
+     *
      * @return the name of the Player
      */
     public String getName() {
@@ -50,6 +52,7 @@ public class Player {
     }
 
     /**
+     * Returns the ID of the Player
      * @return the ID of the Player
      */
     public String getID() {
@@ -69,6 +72,7 @@ public class Player {
     }
 
     /**
+     * Returns the first worker of the player
      * @return the first Worker of the Player
      */
     public Worker getWorker1() {
@@ -76,6 +80,7 @@ public class Player {
     }
 
     /**
+     * Returns the second worker of the player
      * @return the second Worker of the Player
      */
     public Worker getWorker2() {
@@ -91,6 +96,7 @@ public class Player {
     }
 
     /**
+     * Returns the GodPower of the Player
      * @return the GodPower of the Player
      */
     public GodPower getGodPower() {
@@ -98,6 +104,7 @@ public class Player {
     }
 
     /**
+     * Returns the clienthandler of the player
      * @return the ClientHandler of the Player
      */
     public VirtualView getClientHandler() {

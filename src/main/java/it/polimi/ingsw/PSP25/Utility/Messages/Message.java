@@ -14,8 +14,9 @@ public abstract class Message implements Serializable {
     /**
      * Method that the client who receive the message has to perform.
      *
-     * @param nh network handler of the client who is the recipient of the message.
-     * @throws IOException
+     * @param nh     network handler of the client who is the recipient of the message.
+     * @param client linked to the networkhandler
+     * @throws IOException exception thrown in case of disconnection of a client or disconnection of the server
      */
     public void process(NetworkHandler nh, Client client) throws IOException {
     }

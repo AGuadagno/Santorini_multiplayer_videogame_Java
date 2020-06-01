@@ -1,0 +1,8 @@
+module:it.polimi.ingsw.PSP25
+it.polimi.ingsw.PSP25.Client
+it.polimi.ingsw.PSP25.Client.GUI
+it.polimi.ingsw.PSP25.Model
+it.polimi.ingsw.PSP25.Model.GodPowers
+it.polimi.ingsw.PSP25.Server
+it.polimi.ingsw.PSP25.Utility
+it.polimi.ingsw.PSP25.Utility.Messages

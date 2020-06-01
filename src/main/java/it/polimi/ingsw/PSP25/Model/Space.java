@@ -61,6 +61,8 @@ public class Space {
     }
 
     /**
+     * Returns the value of the tower height built on the space
+     *
      * @return the value of the tower height built on the space
      */
     public int getTowerHeight() {
@@ -82,6 +84,7 @@ public class Space {
     }
 
     /**
+     * Returns true only if the tower has a dome
      * @return true only if the tower has a dome
      */
     public boolean hasDome() {
@@ -100,6 +103,7 @@ public class Space {
     }
 
     /**
+     * Returns the Worker positioned on the Space
      * @return the Worker positioned on the Space
      */
     public Worker getWorker() {
@@ -107,6 +111,7 @@ public class Space {
     }
 
     /**
+     * Returns the column number of the Space
      * @return the column number of the Space
      */
     public int getX() {
@@ -114,6 +119,7 @@ public class Space {
     }
 
     /**
+     * Returns the row number of the Space
      * @return the row number of the Space
      */
     public int getY() {
@@ -129,6 +135,7 @@ public class Space {
     }
 
     /**
+     * Returns the 8 spaces directly connected to the Space, the 8 spaces surrounding it
      * @return the 8 spaces directly connected to the Space, the 8 spaces surrounding it
      */
     public List<Space> getAdjacentSpaces() {
@@ -144,6 +151,7 @@ public class Space {
     }
 
     /**
+     * Returns a String cotaining "space" + spaceNumber
      * @return a String containing "Space xxx".
      * xxx is the Space number
      */
@@ -153,6 +161,7 @@ public class Space {
     }
 
     /**
+     * Returns the space number
      * @return the space number
      * The Space at the top left of the board is Space number 0,
      * the Space at the bottom right of the board is Space number 24.
@@ -169,6 +178,7 @@ public class Space {
     }
 
     /**
+     * Returns true if the Space is occupied by a Worker
      * @return true if the Space is occupied by a Worker
      */
     public boolean hasWorker() {

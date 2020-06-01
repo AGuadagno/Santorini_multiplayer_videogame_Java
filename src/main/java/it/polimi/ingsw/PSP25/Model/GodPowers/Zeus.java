@@ -41,8 +41,8 @@ public class Zeus extends GodPower {
      *
      * @param player              who is playing the turn
      * @param validBuildingSpaces List of valid spaces where the selected worker can build
-     * @return
-     * @throws DisconnectionException
+     * @return Space where we want to build
+     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     @Override
     public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {

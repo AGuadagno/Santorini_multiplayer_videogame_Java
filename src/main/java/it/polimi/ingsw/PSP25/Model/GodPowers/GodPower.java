@@ -14,15 +14,20 @@ import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopySpaceList;
  * (or Overridden methods in the extensions of God Power)
  */
 public class GodPower {
-
+    /**
+     * array containing opponents god power effects that may influence this turn
+     **/
     protected ActiveEffects activeEffects;
+    /** Interface used to share information with all the other players **/
     protected BroadcastInterface broadcastInterface;
+    /** Worker selected for actions in this turn **/
     protected Worker selectedWorker = null;
 
     /**
      * God Power constructor
      *
      * @param activeEffects array containing opponents god power effects that may influence this turn
+     * @param broadcastInterface Interface used to share information with all the other players
      */
     public GodPower(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
         this.activeEffects = activeEffects;
@@ -176,6 +181,7 @@ public class GodPower {
      * @return TurnResult.LOSE if the player has lost during this turn
      * TurnResult.WIN if the player has won during this turn
      * TurnResult.CONTINUE if the player hasn't lost or won during this turn
+     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {
 
@@ -215,7 +221,7 @@ public class GodPower {
      * @param validMovementSpacesW1 List of valid Spaces where Worker 1 can move
      * @param validMovementSpacesW2 List of valid Spaces where Worker 2 can move
      * @return true if the Player has won the game
-     * @throws DisconnectionException
+     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     protected boolean askToMoveWorker(Player player, List<Space> validMovementSpacesW1, List<Space> validMovementSpacesW2) throws DisconnectionException {
         Space selectedMovementSpace = null;
@@ -248,7 +254,7 @@ public class GodPower {
      * @param player              who is playing the turn
      * @param validBuildingSpaces List of valid Spaces where the selected Worker can build
      * @return the Spaces selected for the building action
-     * @throws DisconnectionException
+     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     protected Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
         Space selectedBuildingSpace = null;

@@ -81,7 +81,7 @@ public class ActiveEffects {
     }
 
     /**
-     * * Check if opponents GodPower in effectsList limits the winning conditions for a Worker.
+     * Check if opponents GodPower in effectsList limits the winning conditions for a Worker.
      *
      * @param worker the player has moved
      * @param space  where the worker has been moved

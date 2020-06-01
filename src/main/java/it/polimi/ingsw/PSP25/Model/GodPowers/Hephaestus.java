@@ -29,7 +29,7 @@ public class Hephaestus extends GodPower {
      * @param player              playing the turn
      * @param validBuildingSpaces List of valid building spaces
      * @return the selected building space
-     * @throws DisconnectionException
+     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     @Override
     public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {

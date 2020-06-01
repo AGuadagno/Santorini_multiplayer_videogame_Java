@@ -2,7 +2,6 @@ package it.polimi.ingsw.PSP25.Client;
 
 import it.polimi.ingsw.PSP25.Utility.Messages.Message;
 import it.polimi.ingsw.PSP25.Utility.Messages.PingMessage;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -125,6 +124,7 @@ public class NetworkHandler implements Runnable {
                     try {
                         outputStream.writeObject(new PingMessage());
                     } catch (IOException e) {
+                        observers.forEach(ServerObserver::manageServerDisconnection);
                         return;
                     }
                     try {

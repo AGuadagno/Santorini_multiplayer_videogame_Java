@@ -32,7 +32,7 @@ public class Utilities {
      * Creates a copy of the board in order to share it with players.
      *
      * @param board Original board
-     * @return
+     * @return a copy of board
      */
     public static SpaceCopy[][] deepCopyBoard(Board board) {
         SpaceCopy[][] boardCopy = new SpaceCopy[5][5];
@@ -48,6 +48,9 @@ public class Utilities {
      * Creates a copy of a list of Spaces.
      * Useful for valid movement spaces and valid building spaces, sent to players
      * during their turn.
+     *
+     * @param spaceList list of spaces we want to capy
+     * @return a copy of spaceList
      */
     public static List<SpaceCopy> deepCopySpaceList(List<Space> spaceList) {
         List<SpaceCopy> copied = new ArrayList<>();
