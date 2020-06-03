@@ -22,6 +22,7 @@ public class NetworkHandler implements Runnable {
     private ObjectInputStream inputStream;
     private Commands nextCommand;
     private List<ServerObserver> observers = new ArrayList<>();
+    private Thread pingSender;
     private boolean isWaiting = false;
 
     public NetworkHandler(Socket server) {
@@ -36,13 +37,16 @@ public class NetworkHandler implements Runnable {
 
     @Override
     public void run() {
+        Thread pingSender = null;
         try {
             outputStream = new ObjectOutputStream(server.getOutputStream());
             inputStream = new ObjectInputStream(server.getInputStream());
             server.setSoTimeout(20000);
-            startPingSender();
+            this.pingSender = startPingSender();
             handleServerConnection();
         } catch (IOException e) {
+            System.out.println("E1");
+            this.pingSender.interrupt();
             stop();
         } catch (ClassCastException | ClassNotFoundException e) {
             System.out.println("Protocol violation");
@@ -73,6 +77,11 @@ public class NetworkHandler implements Runnable {
         }
         observers.forEach(ServerObserver::manageServerDisconnection);
         notifyAll();
+    }
+
+    public void stopPingsender() {
+        System.out.println("E3");
+        this.pingSender.interrupt();
     }
 
     private synchronized void handleServerConnection() throws IOException, ClassNotFoundException {
@@ -116,24 +125,32 @@ public class NetworkHandler implements Runnable {
         outputStream.writeObject(response);
     }
 
-    public void startPingSender() {
-        new Thread(new Runnable() {
+    public Thread startPingSender() {
+        Thread pingSender;
+
+        class PingSender implements Runnable {
+
             @Override
             public void run() {
                 while (true) {
                     try {
                         outputStream.writeObject(new PingMessage());
                     } catch (IOException e) {
+                        System.out.println("E2");
                         observers.forEach(ServerObserver::manageServerDisconnection);
                         return;
                     }
                     try {
                         Thread.sleep(10000);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        return;
                     }
                 }
             }
-        }).start();
+        }
+
+        pingSender = new Thread(new PingSender());
+        pingSender.start();
+        return pingSender;
     }
 }

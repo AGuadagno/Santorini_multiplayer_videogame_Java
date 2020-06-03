@@ -7,8 +7,10 @@ import it.polimi.ingsw.PSP25.Server.DisconnectionException;
  * Limus class.
  */
 public class Limus extends GodPower {
-    private Space workerSpace1 = null;
-    private Space workerSpace2 = null;
+    //private Space workerSpace1 = null;
+    //private Space workerSpace2 = null;
+    private Worker worker1;
+    private Worker worker2;
 
     /**
      * Limus constructor
@@ -29,8 +31,8 @@ public class Limus extends GodPower {
      */
     @Override
     public boolean canBuild(Worker worker, Space space) {
-        if (space.getTowerHeight() < 3 && (workerSpace1.getAdjacentSpaces().contains(space) ||
-                workerSpace2.getAdjacentSpaces().contains(space))) {
+        if (space.getTowerHeight() < 3 && (worker1.getSpace().getAdjacentSpaces().contains(space) ||
+                worker2.getSpace().getAdjacentSpaces().contains(space))) {
             return false;
         } else
             return true;
@@ -46,8 +48,10 @@ public class Limus extends GodPower {
     @Override
     public void initializeWorkers(Player player, Space spaceW1, Space spaceW2) {
         super.initializeWorkers(player, spaceW1, spaceW2);
-        this.workerSpace1 = spaceW1;
-        this.workerSpace2 = spaceW2;
+        //this.workerSpace1 = spaceW1;
+        //this.workerSpace2 = spaceW2;
+        this.worker1 = player.getWorker1();
+        this.worker2 = player.getWorker2();
     }
 
     /**
@@ -62,8 +66,10 @@ public class Limus extends GodPower {
     @Override
     public TurnResult turnSequence(Player player, ActiveEffects activeEffects) throws DisconnectionException {
         TurnResult turnResult = super.turnSequence(player, activeEffects);
-        workerSpace1 = player.getWorker1().getSpace();
-        workerSpace2 = player.getWorker2().getSpace();
+        //workerSpace1 = player.getWorker1().getSpace();
+        //workerSpace2 = player.getWorker2().getSpace();
+        this.worker1 = player.getWorker1();
+        this.worker2 = player.getWorker2();
         return turnResult;
     }
 }

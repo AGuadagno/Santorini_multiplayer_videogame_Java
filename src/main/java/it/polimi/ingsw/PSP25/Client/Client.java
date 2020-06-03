@@ -3,6 +3,7 @@ package it.polimi.ingsw.PSP25.Client;
 import it.polimi.ingsw.PSP25.Client.GUI.GUI;
 import it.polimi.ingsw.PSP25.Utility.Messages.Message;
 import it.polimi.ingsw.PSP25.Server.Server;
+import it.polimi.ingsw.PSP25.Utility.Messages.PingMessage;
 import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
 import javafx.application.Application;
 
@@ -17,6 +18,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     private Message receivedMessage = null;
     private boolean cliIsChosen;
     private ViewObservable view;
+    private NetworkHandler networkHandler;
     private final Object Lock = "";
     private String ip = null;
     private Integer numOfPlayers = null;
@@ -76,7 +78,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         view.setConnectionMessage("Connected to the server");
 
         // CREATION OF NETWORK HANDLER
-        NetworkHandler networkHandler = new NetworkHandler(server);
+        networkHandler = new NetworkHandler(server);
         networkHandler.addObserver(this);
         Thread networkHandlerThread = new Thread(networkHandler);
         networkHandlerThread.start();
@@ -98,6 +100,8 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                     }
                 }
             }
+            if (!(receivedMessage instanceof PingMessage))
+                System.out.println("Messaggio ricevuto");
         } while (receivedMessage != null);
         if (cliIsChosen) {
             System.out.println("\nDo you want to play again? (y = yes, n = no)");
@@ -115,6 +119,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     public void playAgain(boolean buttonYes) {
         if (buttonYes) {
             disconnectionNotified = false;
+            networkHandler.stopPingsender();
             Thread clientThread = new Thread(this);
             clientThread.start();
         }
@@ -530,10 +535,12 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     }
 
     public void announceVictory(String playerName) {
+        disconnectionNotified = true;
         view.announceVictory(playerName);
     }
 
     public void announceLose(String playerName) {
+        disconnectionNotified = true;
         view.announceLose(playerName);
     }
 
