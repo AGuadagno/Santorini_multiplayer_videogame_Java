@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class Server {
     public final static int SOCKET_PORT = 7777;
-    public static final int PING_TIMEOUT = 1000;
+    public static final int PING_TIMEOUT = 20000;
 
     public static void main(String[] args) {
         Lobby lobby = new Lobby();
