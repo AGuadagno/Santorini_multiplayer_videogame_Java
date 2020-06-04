@@ -442,6 +442,14 @@ public class CLI implements ViewObservable {
     @Override
     public void manageServerDisconnection() {
         System.out.println("Disconnected from server");
+        System.out.println("\nDo you want to play again? (y = yes, n = no)");
+        String answer = scanner.next();
+        while (!(answer.equals("y") || answer.equals("n"))) {
+            System.out.println("Your Choice is not valid. insert 'y' to play again, 'n' to close");
+            answer = scanner.next();
+        }
+        if (answer.equals("y"))
+            client.playAgain(true);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP25.Client;
 
+import it.polimi.ingsw.PSP25.Server.Server;
 import it.polimi.ingsw.PSP25.Utility.Messages.Message;
 import it.polimi.ingsw.PSP25.Utility.Messages.PingMessage;
 import java.io.IOException;
@@ -41,11 +42,10 @@ public class NetworkHandler implements Runnable {
         try {
             outputStream = new ObjectOutputStream(server.getOutputStream());
             inputStream = new ObjectInputStream(server.getInputStream());
-            server.setSoTimeout(20000);
+            server.setSoTimeout(Server.PING_TIMEOUT);
             this.pingSender = startPingSender();
             handleServerConnection();
         } catch (IOException e) {
-            System.out.println("E1");
             this.pingSender.interrupt();
             stop();
         } catch (ClassCastException | ClassNotFoundException e) {
@@ -80,7 +80,6 @@ public class NetworkHandler implements Runnable {
     }
 
     public void stopPingsender() {
-        System.out.println("E3");
         this.pingSender.interrupt();
     }
 
@@ -136,12 +135,11 @@ public class NetworkHandler implements Runnable {
                     try {
                         outputStream.writeObject(new PingMessage());
                     } catch (IOException e) {
-                        System.out.println("E2");
-                        observers.forEach(ServerObserver::manageServerDisconnection);
+                        stop();
                         return;
                     }
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(Server.PING_TIMEOUT / 2);
                     } catch (InterruptedException e) {
                         return;
                     }

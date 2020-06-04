@@ -16,10 +16,10 @@ import java.util.Scanner;
 public class Client implements Runnable, ServerObserver, ViewObserver {
 
     private Message receivedMessage = null;
-    private boolean cliIsChosen;
     private ViewObservable view;
     private NetworkHandler networkHandler;
     private final Object Lock = "";
+    private final Object receiveMessageLock = "";
     private String ip = null;
     private Integer numOfPlayers = null;
     private String name = null;
@@ -38,7 +38,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     public Client(ViewObservable view, boolean cliIsChosen) {
         this.view = view;
-        this.cliIsChosen = cliIsChosen;
     }
 
     public static void main(String[] args) {
@@ -57,7 +56,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
     @Override
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         view.askIPAddress();
         synchronized (Lock) {
             while (ip == null) {
@@ -85,10 +83,10 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
 
         // RECEIVING OF MESSAGES FROM SERVER
         do {
-            synchronized (this) {
+            synchronized (receiveMessageLock) {
                 networkHandler.receiveCommand();
                 try {
-                    wait();
+                    receiveMessageLock.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -100,19 +98,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
                     }
                 }
             }
-            if (!(receivedMessage instanceof PingMessage))
-                System.out.println("Messaggio ricevuto");
         } while (receivedMessage != null);
-        if (cliIsChosen) {
-            System.out.println("\nDo you want to play again? (y = yes, n = no)");
-            String answer = scanner.next();
-            while (!(answer.equals("y") || answer.equals("n"))) {
-                System.out.println("Your Choice is not valid. insert 'y' to play again, 'n' to close");
-                answer = scanner.next();
-            }
-            if (answer.equals("y"))
-                run();
-        }
     }
 
     @Override
@@ -126,9 +112,11 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
     }
 
     @Override
-    public synchronized void didReceiveServerMessage(Message message) {
+    public void didReceiveServerMessage(Message message) {
         this.receivedMessage = message;
-        notifyAll();
+        synchronized (receiveMessageLock) {
+            receiveMessageLock.notifyAll();
+        }
     }
 
     @Override
@@ -173,6 +161,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
             }
         }
     }
+
     public String askName(String question) {
         view.askName(question);
         while (name == null) {
@@ -199,6 +188,7 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
             }
         }
     }
+
     public List<Integer> askAllGodPowers(String playerName, int numOfPlayers, List<String> godPowerNames) {
         view.askAllGodPowers(playerName, numOfPlayers, godPowerNames);
         while (allGodPowerIndexes == null) {
@@ -322,7 +312,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         }
     }
 
-
     public int[] askWorkerMovement(String playerName, List<SpaceCopy> validMovementSpacesW1, List<SpaceCopy> validMovementSpacesW2) {
         view.askWorkerMovement(playerName, validMovementSpacesW1, validMovementSpacesW2);
         while (workerAndSpace == null) {
@@ -350,7 +339,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         }
     }
 
-
     public int askBuildingSpace(String playerName, List<SpaceCopy> validBuildingSpaces) {
         view.askBuildingSpace(playerName, validBuildingSpaces);
         while (chosenBuildingSpace == null) {
@@ -367,7 +355,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
         this.chosenBuildingSpace = null;
         return chosenBuildingSpace;
     }
-
 
     @Override
     public void updateBuildingSpace(int chosenBuildingSpace) {
@@ -388,7 +375,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
             }
         }
     }
-
 
     public int[] askAtlasBuild(String playerName, List<SpaceCopy> validBuildingSpaces) {
         view.askAtlasBuild(playerName, validBuildingSpaces);
@@ -433,7 +419,6 @@ public class Client implements Runnable, ServerObserver, ViewObserver {
             }
         }
     }
-
 
     public int askWorkerMovementPrometheus(String playerName, List<SpaceCopy> validMovementSpaces) {
         view.askWorkerMovementPrometheus(playerName, validMovementSpaces);

@@ -54,7 +54,7 @@ public class ClientHandler implements Runnable, VirtualView {
         try {
             outputStream = new ObjectOutputStream(client.getOutputStream());
             inputStream = new ObjectInputStream(client.getInputStream());
-            client.setSoTimeout(20000);
+            client.setSoTimeout(Server.PING_TIMEOUT);
         } catch (IOException e) {
             throw new DisconnectionException(this);
         }
@@ -240,7 +240,7 @@ public class ClientHandler implements Runnable, VirtualView {
                         return;
                     }
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(Server.PING_TIMEOUT / 2);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
