@@ -1066,7 +1066,7 @@ memberSearchIndex = [{"p": "it.polimi.ingsw.PSP25.Model.GodPowers", "c": "GodPow
     "p": "it.polimi.ingsw.PSP25.Model",
     "c": "TurnResult",
     "l": "LOSE"
-}, {"p": "it.polimi.ingsw.PSP25.Client.GUI", "c": "GUI", "l": "main(String[])", "url": "main(java.lang.String[])"}, {
+}, {"p": "it.polimi.ingsw.PSP25.Client", "c": "Client", "l": "main(String[])", "url": "main(java.lang.String[])"}, {
     "p": "it.polimi.ingsw.PSP25.Server",
     "c": "Server",
     "l": "main(String[])",
@@ -1129,15 +1129,16 @@ memberSearchIndex = [{"p": "it.polimi.ingsw.PSP25.Model.GodPowers", "c": "GodPow
     "c": "Pan",
     "l": "Pan(ActiveEffects, BroadcastInterface)",
     "url": "%3Cinit%3E(it.polimi.ingsw.PSP25.Model.ActiveEffects,it.polimi.ingsw.PSP25.Model.BroadcastInterface)"
-}, {"p": "it.polimi.ingsw.PSP25.Utility.Messages", "c": "PingMessage", "l": "PingMessage()", "url": "%3Cinit%3E()"}, {
+}, {"p": "it.polimi.ingsw.PSP25.Server", "c": "Server", "l": "PING_TIMEOUT"}, {
+    "p": "it.polimi.ingsw.PSP25.Utility.Messages",
+    "c": "PingMessage",
+    "l": "PingMessage()",
+    "url": "%3Cinit%3E()"
+}, {"p": "it.polimi.ingsw.PSP25.Client", "c": "Client", "l": "playAgain(boolean)"}, {
     "p": "it.polimi.ingsw.PSP25.Client",
-    "c": "Client",
+    "c": "ViewObserver",
     "l": "playAgain(boolean)"
-}, {"p": "it.polimi.ingsw.PSP25.Client", "c": "ViewObserver", "l": "playAgain(boolean)"}, {
-    "p": "it.polimi.ingsw.PSP25.Client.GUI",
-    "c": "GUI",
-    "l": "playAgain(boolean)"
-}, {
+}, {"p": "it.polimi.ingsw.PSP25.Client.GUI", "c": "GUI", "l": "playAgain(boolean)"}, {
     "p": "it.polimi.ingsw.PSP25.Model",
     "c": "Player",
     "l": "Player(String, int, VirtualView)",
@@ -1463,7 +1464,12 @@ memberSearchIndex = [{"p": "it.polimi.ingsw.PSP25.Model.GodPowers", "c": "GodPow
     "c": "GameLogic",
     "l": "stopGame(VirtualView, String, ClientHandler)",
     "url": "stopGame(it.polimi.ingsw.PSP25.Server.VirtualView,java.lang.String,it.polimi.ingsw.PSP25.Server.ClientHandler)"
-}, {"p": "it.polimi.ingsw.PSP25.Client", "c": "NetworkHandler", "l": "submit(Object)", "url": "submit(java.lang.Object)"}, {
+}, {"p": "it.polimi.ingsw.PSP25.Client", "c": "NetworkHandler", "l": "stopPingsender()"}, {
+    "p": "it.polimi.ingsw.PSP25.Client",
+    "c": "NetworkHandler",
+    "l": "submit(Object)",
+    "url": "submit(java.lang.Object)"
+}, {
     "p": "it.polimi.ingsw.PSP25.Client",
     "c": "CLI",
     "l": "subscribe(ViewObserver)",

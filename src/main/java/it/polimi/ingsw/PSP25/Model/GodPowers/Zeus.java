@@ -45,7 +45,7 @@ public class Zeus extends GodPower {
      * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
      */
     @Override
-    public Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
+    protected Space askToBuild(Player player, List<Space> validBuildingSpaces) throws DisconnectionException {
         Space selectedSpace = super.askToBuild(player, validBuildingSpaces);
         if (selectedSpace.equals(selectedWorker.getSpace())) {
             selectedWorker.setHeightBeforeMove(selectedSpace.getTowerHeight());
