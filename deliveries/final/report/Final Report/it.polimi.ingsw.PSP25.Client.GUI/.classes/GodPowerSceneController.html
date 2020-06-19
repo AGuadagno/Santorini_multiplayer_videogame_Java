@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GodPowerSceneController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP25.Client.GUI</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GodPowerSceneController (it.polimi.ingsw.PSP25.Client.GUI)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GodPowerSceneController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 58)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Client.GUI;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Client.ViewObserver;
+<i>4</i>&nbsp;import javafx.event.ActionEvent;
+<i>5</i>&nbsp;import javafx.fxml.FXML;
+<i>6</i>&nbsp;import javafx.fxml.Initializable;
+<i>7</i>&nbsp;import javafx.scene.control.Button;
+<i>8</i>&nbsp;import javafx.scene.control.Label;
+<i>9</i>&nbsp;import javafx.scene.image.Image;
+<i>10</i>&nbsp;import javafx.scene.image.ImageView;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import java.util.*;
+<i>13</i>&nbsp;
+<b class="nc"><i>14</i>&nbsp;public class GodPowerSceneController implements GUIObservable {</b>
+<i>15</i>&nbsp;    private GUI gui;
+<b class="nc"><i>16</i>&nbsp;    private Integer selectedIndex = null;</b>
+<i>17</i>&nbsp;    private Button previousButton;
+<b class="nc"><i>18</i>&nbsp;    private Map&lt;String, String&gt; godPowersDescriptions = new HashMap&lt;&gt;();</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    @FXML
+<i>21</i>&nbsp;    private Label questionLabel;
+<i>22</i>&nbsp;    @FXML
+<i>23</i>&nbsp;    private Button confirmButton;
+<i>24</i>&nbsp;    @FXML
+<i>25</i>&nbsp;    private ImageView image1_3godPowers;
+<i>26</i>&nbsp;    @FXML
+<i>27</i>&nbsp;    private ImageView image2_3godPowers;
+<i>28</i>&nbsp;    @FXML
+<i>29</i>&nbsp;    private ImageView image3_3godPowers;
+<i>30</i>&nbsp;    @FXML
+<i>31</i>&nbsp;    private ImageView image1_2godPowers;
+<i>32</i>&nbsp;    @FXML
+<i>33</i>&nbsp;    private ImageView image2_2godPowers;
+<i>34</i>&nbsp;    @FXML
+<i>35</i>&nbsp;    private Button button1_3godPowers;
+<i>36</i>&nbsp;    @FXML
+<i>37</i>&nbsp;    private Button button2_3godPowers;
+<i>38</i>&nbsp;    @FXML
+<i>39</i>&nbsp;    private Button button3_3godPowers;
+<i>40</i>&nbsp;    @FXML
+<i>41</i>&nbsp;    private Button button1_2godPowers;
+<i>42</i>&nbsp;    @FXML
+<i>43</i>&nbsp;    private Button button2_2godPowers;
+<i>44</i>&nbsp;    @FXML
+<i>45</i>&nbsp;    private ImageView confirmImage;
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    @Override
+<i>48</i>&nbsp;    public void subscribe(ViewObserver gui) {
+<b class="nc"><i>49</i>&nbsp;        this.gui = (GUI) gui;</b>
+<i>50</i>&nbsp;    }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    public void setQuestion(String playerName, List&lt;String&gt; godPowerNames) {
+<b class="nc"><i>53</i>&nbsp;        setDescriptions();</b>
+<b class="nc"><i>54</i>&nbsp;        questionLabel.setText(playerName + &quot; choose your god power from the list: &quot;);</b>
+<b class="nc"><i>55</i>&nbsp;        if (godPowerNames.size() == 2) {</b>
+<b class="nc"><i>56</i>&nbsp;            button1_2godPowers.setVisible(true);</b>
+<b class="nc"><i>57</i>&nbsp;            button1_2godPowers.getTooltip().setText(godPowersDescriptions.get(godPowerNames.get(0)));</b>
+<b class="nc"><i>58</i>&nbsp;            button2_2godPowers.setVisible(true);</b>
+<b class="nc"><i>59</i>&nbsp;            button2_2godPowers.getTooltip().setText(godPowersDescriptions.get(godPowerNames.get(1)));</b>
+<b class="nc"><i>60</i>&nbsp;            image1_2godPowers.setImage(new Image(&quot;/img/Godcards/&quot; + godPowerNames.get(0).toLowerCase() + &quot;.png&quot;));</b>
+<b class="nc"><i>61</i>&nbsp;            image2_2godPowers.setImage(new Image(&quot;/img/Godcards/&quot; + godPowerNames.get(1).toLowerCase() + &quot;.png&quot;));</b>
+<i>62</i>&nbsp;        } else {
+<b class="nc"><i>63</i>&nbsp;            button1_3godPowers.setVisible(true);</b>
+<b class="nc"><i>64</i>&nbsp;            button1_3godPowers.getTooltip().setText(godPowersDescriptions.get(godPowerNames.get(0)));</b>
+<b class="nc"><i>65</i>&nbsp;            button2_3godPowers.setVisible(true);</b>
+<b class="nc"><i>66</i>&nbsp;            button2_3godPowers.getTooltip().setText(godPowersDescriptions.get(godPowerNames.get(1)));</b>
+<b class="nc"><i>67</i>&nbsp;            button3_3godPowers.setVisible(true);</b>
+<b class="nc"><i>68</i>&nbsp;            button3_3godPowers.getTooltip().setText(godPowersDescriptions.get(godPowerNames.get(2)));</b>
+<b class="nc"><i>69</i>&nbsp;            image1_3godPowers.setImage(new Image(&quot;/img/Godcards/&quot; + godPowerNames.get(0).toLowerCase() + &quot;.png&quot;));</b>
+<b class="nc"><i>70</i>&nbsp;            image2_3godPowers.setImage(new Image(&quot;/img/Godcards/&quot; + godPowerNames.get(1).toLowerCase() + &quot;.png&quot;));</b>
+<b class="nc"><i>71</i>&nbsp;            image3_3godPowers.setImage(new Image(&quot;/img/Godcards/&quot; + godPowerNames.get(2).toLowerCase() + &quot;.png&quot;));</b>
+<i>72</i>&nbsp;        }
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    private void setDescriptions() {
+<b class="nc"><i>76</i>&nbsp;        godPowersDescriptions.put(&quot;Apollo&quot;, &quot;Your Worker may move into an opponent Worker’s space by forcing their worker to the space yours just vacated.&quot;);</b>
+<b class="nc"><i>77</i>&nbsp;        godPowersDescriptions.put(&quot;Artemis&quot;, &quot;Your Worker may move one additional time, but not back to its initial space.&quot;);</b>
+<b class="nc"><i>78</i>&nbsp;        godPowersDescriptions.put(&quot;Athena&quot;, &quot;If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn&quot;);</b>
+<b class="nc"><i>79</i>&nbsp;        godPowersDescriptions.put(&quot;Atlas&quot;, &quot;Your Worker may build a dome at any level. &quot;);</b>
+<b class="nc"><i>80</i>&nbsp;        godPowersDescriptions.put(&quot;Demeter&quot;, &quot;Your Worker may build one additional time, but not on the same space\&quot;&quot;);</b>
+<b class="nc"><i>81</i>&nbsp;        godPowersDescriptions.put(&quot;Hephaestus&quot;, &quot;Your Worker may build one additional block (not dome) on top of your first block.&quot;);</b>
+<b class="nc"><i>82</i>&nbsp;        godPowersDescriptions.put(&quot;Minotaur&quot;, &quot;Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level. &quot;);</b>
+<b class="nc"><i>83</i>&nbsp;        godPowersDescriptions.put(&quot;Pan&quot;, &quot;You also win if your Worker moves down two or more levels&quot;);</b>
+<b class="nc"><i>84</i>&nbsp;        godPowersDescriptions.put(&quot;Prometheus&quot;, &quot;If your Worker does not move up, it may build both before and after moving&quot;);</b>
+<b class="nc"><i>85</i>&nbsp;        godPowersDescriptions.put(&quot;Ares&quot;, &quot;You may remove an unoccupied block (not dome) neighboring your unmoved Worker. You also remove any Tokens on the block&quot;);</b>
+<b class="nc"><i>86</i>&nbsp;        godPowersDescriptions.put(&quot;Hera&quot;, &quot;An opponent cannot win by moving into a perimeter space.&quot;);</b>
+<b class="nc"><i>87</i>&nbsp;        godPowersDescriptions.put(&quot;Hypnus&quot;, &quot;If one of your opponent’s Workers is higher than all of their others, it cannot move&quot;);</b>
+<b class="nc"><i>88</i>&nbsp;        godPowersDescriptions.put(&quot;Limus&quot;, &quot;Opponent Workers cannot build on spaces neighboring your Workers, unless building a dome to create a Complete Tower.&quot;);</b>
+<b class="nc"><i>89</i>&nbsp;        godPowersDescriptions.put(&quot;Zeus&quot;, &quot;Your Worker may build a block under itself&quot;);</b>
+<i>90</i>&nbsp;    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    public void handleConfirmButton(ActionEvent actionEvent) {
+<b class="nc"><i>93</i>&nbsp;        confirmButton.setDisable(true);</b>
+<b class="nc"><i>94</i>&nbsp;        confirmImage.setImage(new Image(&quot;/img/CutConfirmPressed.png&quot;));</b>
+<b class="nc"><i>95</i>&nbsp;        confirmImage.setOpacity(0.8);</b>
+<b class="nc"><i>96</i>&nbsp;        questionLabel.setText(&quot;Waiting for other players..&quot;);</b>
+<b class="nc"><i>97</i>&nbsp;        gui.updateGodPower(selectedIndex);</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    private void handleButton(ActionEvent actionEvent, int buttonNum) {
+<b class="nc"><i>101</i>&nbsp;        Button pressedButton = (Button) actionEvent.getSource();</b>
+<b class="nc"><i>102</i>&nbsp;        if (selectedIndex == null) {</b>
+<b class="nc"><i>103</i>&nbsp;            selectedIndex = buttonNum;</b>
+<b class="nc"><i>104</i>&nbsp;            pressedButton.setOpacity(1);</b>
+<b class="nc"><i>105</i>&nbsp;            confirmButton.setVisible(true);</b>
+<b class="nc"><i>106</i>&nbsp;            confirmImage.setVisible(true);</b>
+<i>107</i>&nbsp;        } else {
+<b class="nc"><i>108</i>&nbsp;            selectedIndex = buttonNum;</b>
+<b class="nc"><i>109</i>&nbsp;            pressedButton.setOpacity(1);</b>
+<b class="nc"><i>110</i>&nbsp;            previousButton.setOpacity(0);</b>
+<b class="nc"><i>111</i>&nbsp;            if (previousButton == pressedButton) {</b>
+<b class="nc"><i>112</i>&nbsp;                confirmButton.setVisible(false);</b>
+<b class="nc"><i>113</i>&nbsp;                confirmImage.setVisible(false);</b>
+<b class="nc"><i>114</i>&nbsp;                selectedIndex = null;</b>
+<i>115</i>&nbsp;            }
+<i>116</i>&nbsp;        }
+<b class="nc"><i>117</i>&nbsp;        previousButton = pressedButton;</b>
+<i>118</i>&nbsp;    }
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    public void handleButton1(ActionEvent actionEvent) {
+<b class="nc"><i>121</i>&nbsp;        handleButton(actionEvent, 1);</b>
+<i>122</i>&nbsp;    }
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;    public void handleButton2(ActionEvent actionEvent) {
+<b class="nc"><i>125</i>&nbsp;        handleButton(actionEvent, 2);</b>
+<i>126</i>&nbsp;    }
+<i>127</i>&nbsp;
+<i>128</i>&nbsp;    public void handleButton3(ActionEvent actionEvent) {
+<b class="nc"><i>129</i>&nbsp;        handleButton(actionEvent, 3);</b>
+<i>130</i>&nbsp;    }
+<i>131</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-19 22:57</div>
+</div>
+</body>
+</html>

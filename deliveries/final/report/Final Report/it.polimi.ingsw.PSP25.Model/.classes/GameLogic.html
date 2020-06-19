@@ -1,0 +1,359 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GameLogic</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP25.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GameLogic (it.polimi.ingsw.PSP25.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameLogic</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (122/ 122)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Model.GodPowers.*;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Server.ClientHandler;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP25.Server.DisconnectionException;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP25.Server.VirtualView;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyBoard;
+<i>9</i>&nbsp;import static it.polimi.ingsw.PSP25.Utility.Utilities.deepCopyGodPowerNames;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.net.InetAddress;
+<i>12</i>&nbsp;import java.util.ArrayList;
+<i>13</i>&nbsp;import java.util.List;
+<i>14</i>&nbsp;import java.util.stream.Collectors;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;/**
+<i>17</i>&nbsp; * Game Logic class.
+<i>18</i>&nbsp; * This class contains the status and supervise the entire game
+<i>19</i>&nbsp; */
+<i>20</i>&nbsp;public class GameLogic implements BroadcastInterface {
+<i>21</i>&nbsp;    private ActiveEffects activeEffects;
+<i>22</i>&nbsp;    private Board board;
+<i>23</i>&nbsp;    private List&lt;Player&gt; playerList;
+<i>24</i>&nbsp;    private Player nowPlaying;
+<i>25</i>&nbsp;    private List&lt;VirtualView&gt; clientHandlerList;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    /**
+<i>28</i>&nbsp;     * Game Logic constructor.
+<i>29</i>&nbsp;     *
+<i>30</i>&nbsp;     * @param clientHandlerList List of players&#39; client handler.
+<i>31</i>&nbsp;     */
+<b class="fc"><i>32</i>&nbsp;    public GameLogic(List&lt;VirtualView&gt; clientHandlerList) {</b>
+<b class="fc"><i>33</i>&nbsp;        board = new Board();</b>
+<b class="fc"><i>34</i>&nbsp;        board.setBoardForAllSpaces();</b>
+<b class="fc"><i>35</i>&nbsp;        playerList = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>36</i>&nbsp;        this.clientHandlerList = clientHandlerList;</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * This method manage the beginning of the game.
+<i>41</i>&nbsp;     * This is the list of actions performed by this method:
+<i>42</i>&nbsp;     * 1) the request of the names of the players
+<i>43</i>&nbsp;     * 2) the request to the player who create the game of the God Powers selected for the game
+<i>44</i>&nbsp;     * 3) the request to chose a God Power from the selected God Powers list to all the players
+<i>45</i>&nbsp;     *
+<i>46</i>&nbsp;     * @throws DisconnectionException
+<i>47</i>&nbsp;     */
+<i>48</i>&nbsp;    private void playerInitialization() throws DisconnectionException {
+<b class="fc"><i>49</i>&nbsp;        System.out.println(&quot;The game begins.&quot;);</b>
+<b class="fc"><i>50</i>&nbsp;        int numOfPlayers = clientHandlerList.size();</b>
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;        // 1) the request of the names of the players
+<b class="fc"><i>53</i>&nbsp;        for (int i = 1; i &lt;= numOfPlayers; i++) {</b>
+<b class="fc"><i>54</i>&nbsp;            String name = clientHandlerList.get(i - 1).askName(i);</b>
+<b class="fc"><i>55</i>&nbsp;            playerList.add(new Player(name, i, clientHandlerList.get(i - 1)));</b>
+<i>56</i>&nbsp;        }
+<i>57</i>&nbsp;
+<b class="fc"><i>58</i>&nbsp;        activeEffects = new ActiveEffects(playerList.size());</b>
+<b class="fc"><i>59</i>&nbsp;        activeEffects.initializeEffects();</b>
+<i>60</i>&nbsp;
+<b class="fc"><i>61</i>&nbsp;        List&lt;GodPower&gt; allGodPowers = getGodPowerList(activeEffects);</b>
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;        // 2) the request to the player who create the game of the God Powers selected for the game
+<b class="fc"><i>64</i>&nbsp;        String playerName = playerList.get(0).getName() + &quot;(&quot; + playerList.get(0).getID() + &quot;)&quot;;</b>
+<b class="fc"><i>65</i>&nbsp;        List&lt;Integer&gt; selectedIndexes = playerList.get(0).getClientHandler().</b>
+<b class="fc"><i>66</i>&nbsp;                askAllGodPowers(playerName, numOfPlayers, deepCopyGodPowerNames(allGodPowers));</b>
+<b class="fc"><i>67</i>&nbsp;        List&lt;GodPower&gt; selectedGodPowers = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>68</i>&nbsp;        for (Integer i : selectedIndexes) {</b>
+<b class="fc"><i>69</i>&nbsp;            selectedGodPowers.add(allGodPowers.get(i));</b>
+<b class="fc"><i>70</i>&nbsp;        }</b>
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;        // 3) the request to choose a God Power from the selected God Powers list to all the players
+<b class="fc"><i>73</i>&nbsp;        for (int i = 0; i &lt; numOfPlayers - 1; i++) {</b>
+<b class="fc"><i>74</i>&nbsp;            Player currPlayer = playerList.get(i + 1);</b>
+<i>75</i>&nbsp;
+<b class="fc"><i>76</i>&nbsp;            playerName = currPlayer.getName() + &quot;(&quot; + currPlayer.getID() + &quot;)&quot;;</b>
+<b class="fc"><i>77</i>&nbsp;            int selectedGodPowerIndex = currPlayer.getClientHandler().</b>
+<b class="fc"><i>78</i>&nbsp;                    askGodPower(playerName, deepCopyGodPowerNames(selectedGodPowers));</b>
+<i>79</i>&nbsp;
+<b class="fc"><i>80</i>&nbsp;            currPlayer.initializeGodPower(selectedGodPowers.get(selectedGodPowerIndex - 1));</b>
+<b class="fc"><i>81</i>&nbsp;            selectedGodPowers.remove(selectedGodPowerIndex - 1);</b>
+<i>82</i>&nbsp;        }
+<i>83</i>&nbsp;
+<b class="fc"><i>84</i>&nbsp;        playerName = playerList.get(0).getName() + &quot;(&quot; + playerList.get(0).getID() + &quot;)&quot;;</b>
+<b class="fc"><i>85</i>&nbsp;        playerList.get(0).initializeGodPower(selectedGodPowers.get(0));</b>
+<b class="fc"><i>86</i>&nbsp;        playerList.get(0).getClientHandler().tellAssignedGodPower(playerName, deepCopyGodPowerNames(</b>
+<b class="fc"><i>87</i>&nbsp;                playerList.stream().map(p -&gt; p.getGodPower()).collect(Collectors.toList())));</b>
+<b class="fc"><i>88</i>&nbsp;    }</b>
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    /**
+<i>91</i>&nbsp;     * @param activeEffects list where the of opponent GodPower effects active in the current turn that could limit movement,
+<i>92</i>&nbsp;     *                      building action or winning conditions of workers will be included
+<i>93</i>&nbsp;     * @return The list of all the God Power that can be chosen for the game
+<i>94</i>&nbsp;     */
+<i>95</i>&nbsp;    private List&lt;GodPower&gt; getGodPowerList(ActiveEffects activeEffects) {
+<b class="fc"><i>96</i>&nbsp;        List&lt;GodPower&gt; godPowers = new ArrayList&lt;GodPower&gt;();</b>
+<b class="fc"><i>97</i>&nbsp;        godPowers.add(new Apollo(activeEffects, this));</b>
+<b class="fc"><i>98</i>&nbsp;        godPowers.add(new Artemis(activeEffects, this));</b>
+<b class="fc"><i>99</i>&nbsp;        godPowers.add(new Athena(activeEffects, this));</b>
+<b class="fc"><i>100</i>&nbsp;        godPowers.add(new Atlas(activeEffects, this));</b>
+<b class="fc"><i>101</i>&nbsp;        godPowers.add(new Demeter(activeEffects, this));</b>
+<b class="fc"><i>102</i>&nbsp;        godPowers.add(new Hephaestus(activeEffects, this));</b>
+<b class="fc"><i>103</i>&nbsp;        godPowers.add(new Minotaur(activeEffects, this));</b>
+<b class="fc"><i>104</i>&nbsp;        godPowers.add(new Pan(activeEffects, this));</b>
+<b class="fc"><i>105</i>&nbsp;        godPowers.add(new Prometheus(activeEffects, this));</b>
+<b class="fc"><i>106</i>&nbsp;        godPowers.add(new Ares(activeEffects, this));</b>
+<b class="fc"><i>107</i>&nbsp;        godPowers.add(new Hera(activeEffects, this));</b>
+<b class="fc"><i>108</i>&nbsp;        godPowers.add(new Hypnus(activeEffects, this));</b>
+<b class="fc"><i>109</i>&nbsp;        godPowers.add(new Limus(activeEffects, this));</b>
+<b class="fc"><i>110</i>&nbsp;        godPowers.add(new Zeus(activeEffects, this));</b>
+<b class="fc"><i>111</i>&nbsp;        return godPowers;</b>
+<i>112</i>&nbsp;    }
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;    private int askFirstPlayer() throws DisconnectionException {
+<b class="fc"><i>115</i>&nbsp;        int firstPlayerIndex = playerList.get(0).getClientHandler().askFirstPlayer(playerList.stream().map(</b>
+<b class="fc"><i>116</i>&nbsp;                p -&gt; p.getName() + &quot;(&quot; + p.getID() + &quot;)&quot;).collect(Collectors.toList()));</b>
+<i>117</i>&nbsp;
+<b class="fc"><i>118</i>&nbsp;        nowPlaying = playerList.get(firstPlayerIndex - 1);</b>
+<b class="fc"><i>119</i>&nbsp;        return firstPlayerIndex - 1;</b>
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;    /**
+<i>124</i>&nbsp;     * Asks to all players to position their workers at the beginning of the game
+<i>125</i>&nbsp;     *
+<i>126</i>&nbsp;     * @param firstPlayerIndex
+<i>127</i>&nbsp;     * @throws DisconnectionException
+<i>128</i>&nbsp;     */
+<i>129</i>&nbsp;    private void boardSetup(int firstPlayerIndex) throws DisconnectionException {
+<i>130</i>&nbsp;        int pos1, pos2;
+<i>131</i>&nbsp;
+<b class="fc"><i>132</i>&nbsp;        broadcastBoard();</b>
+<i>133</i>&nbsp;
+<b class="fc"><i>134</i>&nbsp;        for (int j = firstPlayerIndex; j &lt; playerList.size() + firstPlayerIndex; j++) {</b>
+<b class="fc"><i>135</i>&nbsp;            int i = j % playerList.size();</b>
+<b class="fc"><i>136</i>&nbsp;            Player currPlayer = playerList.get(i);</b>
+<i>137</i>&nbsp;
+<b class="fc"><i>138</i>&nbsp;            String playerName = currPlayer.getName() + &quot;(&quot; + currPlayer.getID() + &quot;)&quot;;</b>
+<b class="fc"><i>139</i>&nbsp;            pos1 = currPlayer.getClientHandler()</b>
+<b class="fc"><i>140</i>&nbsp;                    .askWorkerPosition(playerName, 1, -1, deepCopyBoard(board));</b>
+<i>141</i>&nbsp;
+<b class="fc"><i>142</i>&nbsp;            pos2 = currPlayer.getClientHandler()</b>
+<b class="fc"><i>143</i>&nbsp;                    .askWorkerPosition(playerName, 2, pos1, deepCopyBoard(board));</b>
+<i>144</i>&nbsp;
+<b class="fc"><i>145</i>&nbsp;            currPlayer.getGodPower().initializeWorkers(currPlayer, board.getSpace(pos1 % 5, pos1 / 5),</b>
+<b class="fc"><i>146</i>&nbsp;                    board.getSpace(pos2 % 5, pos2 / 5));</b>
+<i>147</i>&nbsp;
+<b class="fc"><i>148</i>&nbsp;            broadcastBoard();</b>
+<i>149</i>&nbsp;        }
+<b class="fc"><i>150</i>&nbsp;    }</b>
+<i>151</i>&nbsp;
+<i>152</i>&nbsp;    /**
+<i>153</i>&nbsp;     * Manages the succession of turns
+<i>154</i>&nbsp;     *
+<i>155</i>&nbsp;     * @return true if one of the players won the game.
+<i>156</i>&nbsp;     * @throws DisconnectionException
+<i>157</i>&nbsp;     */
+<i>158</i>&nbsp;    private boolean gameLoop() throws DisconnectionException {
+<b class="fc"><i>159</i>&nbsp;        boolean endGame = false;</b>
+<b class="fc"><i>160</i>&nbsp;        TurnResult turnResult = nowPlaying.getGodPower().turnSequence(nowPlaying, activeEffects);</b>
+<b class="fc"><i>161</i>&nbsp;        Player otherPlayer = playerList.get((playerList.indexOf(nowPlaying) + 1) % playerList.size());</b>
+<i>162</i>&nbsp;
+<b class="fc"><i>163</i>&nbsp;        if (turnResult.equals(TurnResult.WIN)) {</b>
+<b class="fc"><i>164</i>&nbsp;            endGame = true;</b>
+<b class="fc"><i>165</i>&nbsp;            manageVictory(nowPlaying);</b>
+<b class="fc"><i>166</i>&nbsp;        } else if (turnResult.equals(TurnResult.LOSE)) {</b>
+<b class="fc"><i>167</i>&nbsp;            if (playerList.size() == 2) {</b>
+<b class="fc"><i>168</i>&nbsp;                manageVictory(otherPlayer);</b>
+<b class="fc"><i>169</i>&nbsp;                endGame = true;</b>
+<i>170</i>&nbsp;            } else {
+<b class="fc"><i>171</i>&nbsp;                manageLose(nowPlaying);</b>
+<i>172</i>&nbsp;            }
+<i>173</i>&nbsp;        }
+<i>174</i>&nbsp;
+<b class="fc"><i>175</i>&nbsp;        nowPlaying = otherPlayer;</b>
+<b class="fc"><i>176</i>&nbsp;        return endGame;</b>
+<i>177</i>&nbsp;    }
+<i>178</i>&nbsp;
+<i>179</i>&nbsp;    /**
+<i>180</i>&nbsp;     * Begins the game.
+<i>181</i>&nbsp;     *
+<i>182</i>&nbsp;     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
+<i>183</i>&nbsp;     */
+<i>184</i>&nbsp;    public void startGame() throws DisconnectionException {
+<b class="fc"><i>185</i>&nbsp;        playerInitialization();</b>
+<b class="fc"><i>186</i>&nbsp;        int firstPlayerIndex = askFirstPlayer();</b>
+<b class="fc"><i>187</i>&nbsp;        broadcastGodPowers();</b>
+<b class="fc"><i>188</i>&nbsp;        boardSetup(firstPlayerIndex);</b>
+<b class="fc"><i>189</i>&nbsp;        boolean endGame = false;</b>
+<b class="fc"><i>190</i>&nbsp;        while (!endGame) {</b>
+<b class="fc"><i>191</i>&nbsp;            endGame = gameLoop();</b>
+<i>192</i>&nbsp;        }
+<b class="fc"><i>193</i>&nbsp;    }</b>
+<i>194</i>&nbsp;
+<i>195</i>&nbsp;    /**
+<i>196</i>&nbsp;     * Manages the victory of the game by a player
+<i>197</i>&nbsp;     *
+<i>198</i>&nbsp;     * @param player who won the game.
+<i>199</i>&nbsp;     */
+<i>200</i>&nbsp;    private void manageVictory(Player player) throws DisconnectionException {
+<b class="fc"><i>201</i>&nbsp;        String playerName = player.getName() + &quot;(&quot; + player.getID() + &quot;)&quot;;</b>
+<b class="fc"><i>202</i>&nbsp;        for (Player p : playerList) {</b>
+<b class="fc"><i>203</i>&nbsp;            p.getClientHandler().manageVictory(playerName);</b>
+<b class="fc"><i>204</i>&nbsp;            p.getClientHandler().stopGame();</b>
+<b class="fc"><i>205</i>&nbsp;        }</b>
+<i>206</i>&nbsp;
+<i>207</i>&nbsp;
+<b class="fc"><i>208</i>&nbsp;    }</b>
+<i>209</i>&nbsp;
+<i>210</i>&nbsp;    /**
+<i>211</i>&nbsp;     * Manages the lose of a player
+<i>212</i>&nbsp;     *
+<i>213</i>&nbsp;     * @param player who has lost.
+<i>214</i>&nbsp;     */
+<i>215</i>&nbsp;    private void manageLose(Player player) throws DisconnectionException {
+<b class="fc"><i>216</i>&nbsp;        String playerName = player.getName() + &quot;(&quot; + player.getID() + &quot;)&quot;;</b>
+<i>217</i>&nbsp;
+<b class="fc"><i>218</i>&nbsp;        for (Player p : playerList) {</b>
+<b class="fc"><i>219</i>&nbsp;            p.getClientHandler().manageLose(playerName);</b>
+<b class="fc"><i>220</i>&nbsp;        }</b>
+<b class="fc"><i>221</i>&nbsp;        nowPlaying.getWorker1().getSpace().removeWorker();</b>
+<b class="fc"><i>222</i>&nbsp;        nowPlaying.getWorker2().getSpace().removeWorker();</b>
+<i>223</i>&nbsp;
+<b class="fc"><i>224</i>&nbsp;        nowPlaying.getClientHandler().stopGame();</b>
+<b class="fc"><i>225</i>&nbsp;        activeEffects.adaptEffectsAfterPlayerLose();</b>
+<i>226</i>&nbsp;
+<b class="fc"><i>227</i>&nbsp;        playerList.remove(nowPlaying);</b>
+<b class="fc"><i>228</i>&nbsp;        broadcastBoard();</b>
+<b class="fc"><i>229</i>&nbsp;    }</b>
+<i>230</i>&nbsp;
+<i>231</i>&nbsp;    /**
+<i>232</i>&nbsp;     * Sends the board to all the players
+<i>233</i>&nbsp;     */
+<i>234</i>&nbsp;    @Override
+<i>235</i>&nbsp;    public void broadcastBoard() throws DisconnectionException {
+<b class="fc"><i>236</i>&nbsp;        for (Player p : playerList) {</b>
+<b class="fc"><i>237</i>&nbsp;            p.getClientHandler().sendBoard(deepCopyBoard(board));</b>
+<b class="fc"><i>238</i>&nbsp;        }</b>
+<b class="fc"><i>239</i>&nbsp;    }</b>
+<i>240</i>&nbsp;
+<i>241</i>&nbsp;    /**
+<i>242</i>&nbsp;     * Broadcast the GodPower controlled by each player to inform other players of opponents&#39; GodPower
+<i>243</i>&nbsp;     *
+<i>244</i>&nbsp;     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
+<i>245</i>&nbsp;     */
+<i>246</i>&nbsp;    public void broadcastGodPowers() throws DisconnectionException {
+<b class="fc"><i>247</i>&nbsp;        List&lt;String&gt; playerNames = playerList.stream().map(p -&gt; p.getName() + &quot;(&quot; + p.getID() + &quot;)&quot;).collect(Collectors.toList());</b>
+<b class="fc"><i>248</i>&nbsp;        List&lt;String&gt; godPowerNames = playerList.stream().map(p -&gt; p.getGodPower().toString()).collect(Collectors.toList());</b>
+<i>249</i>&nbsp;
+<b class="fc"><i>250</i>&nbsp;        for (Player p : playerList) {</b>
+<b class="fc"><i>251</i>&nbsp;            p.getClientHandler().sendPlayersGodPowers(playerNames, godPowerNames);</b>
+<b class="fc"><i>252</i>&nbsp;        }</b>
+<b class="fc"><i>253</i>&nbsp;    }</b>
+<i>254</i>&nbsp;
+<i>255</i>&nbsp;    /**
+<i>256</i>&nbsp;     * Sends StopMassege to inform players of the end of a game due to disconnection of a client
+<i>257</i>&nbsp;     *
+<i>258</i>&nbsp;     * @param timeOutClient       Disconnected Client
+<i>259</i>&nbsp;     * @param disconnectedAddress Disconnected Client address
+<i>260</i>&nbsp;     * @param stopGameCaller      client who disconnected
+<i>261</i>&nbsp;     * @throws DisconnectionException exception thrown in case of disconnection of a client or disconnection of the server
+<i>262</i>&nbsp;     */
+<i>263</i>&nbsp;    public void stopGame(VirtualView timeOutClient, String disconnectedAddress, ClientHandler stopGameCaller) throws DisconnectionException {
+<b class="fc"><i>264</i>&nbsp;        int disconnectedClientIndex = timeOutClient.getClientNumber();</b>
+<i>265</i>&nbsp;
+<b class="fc"><i>266</i>&nbsp;        System.out.println(&quot;Client &quot; + disconnectedClientIndex + &quot; with address &quot; + disconnectedAddress + &quot; disconnected.&quot;);</b>
+<b class="fc"><i>267</i>&nbsp;        for (int i = 0; i &lt; clientHandlerList.size(); i++) {</b>
+<b class="fc"><i>268</i>&nbsp;            if (clientHandlerList.get(i) != timeOutClient) {</b>
+<b class="fc"><i>269</i>&nbsp;                clientHandlerList.get(i).sendStop(disconnectedAddress);</b>
+<i>270</i>&nbsp;            }
+<b class="fc"><i>271</i>&nbsp;            clientHandlerList.get(i).stopGame();</b>
+<i>272</i>&nbsp;        }
+<b class="fc"><i>273</i>&nbsp;        clientHandlerList.remove(stopGameCaller);</b>
+<b class="fc"><i>274</i>&nbsp;    }</b>
+<i>275</i>&nbsp;}
+<i>276</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-19 22:57</div>
+</div>
+</body>
+</html>

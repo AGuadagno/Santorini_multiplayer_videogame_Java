@@ -1,0 +1,99 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: VirtualView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP25.Server</a> ]
+</div>
+
+<h1>Coverage Summary for Class: VirtualView (it.polimi.ingsw.PSP25.Server)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">VirtualView</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Server;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Utility.SpaceCopy;
+<i>4</i>&nbsp;import java.util.List;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;public interface VirtualView {
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;    String askName(int i) throws DisconnectionException;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    List&lt;Integer&gt; askAllGodPowers(String playerName, int numOfPlayers, List&lt;String&gt; deepCopyGodPowerNames) throws DisconnectionException;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    int askGodPower(String playerName, List&lt;String&gt; deepCopyGodPowerNames) throws DisconnectionException;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    void tellAssignedGodPower(String playerName, List&lt;String&gt; deepCopyGodPowerNames) throws DisconnectionException;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    int askWorkerPosition(String playerName, int i, int i1, SpaceCopy[][] deepCopyBoard) throws DisconnectionException;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    void manageVictory(String playerName) throws DisconnectionException;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    void stopGame();
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    void manageLose(String playerName) throws DisconnectionException;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    void sendBoard(SpaceCopy[][] deepCopyBoard) throws DisconnectionException;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    void sendPlayersGodPowers(List&lt;String&gt; playerNames, List&lt;String&gt; godPowerNames) throws DisconnectionException;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    int getClientNumber();
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    void sendStop(String disconnectedAddress) throws DisconnectionException;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    int[] askWorkerMovement(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList, List&lt;SpaceCopy&gt; deepCopySpaceList1) throws DisconnectionException;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    int askBuildingSpace(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws DisconnectionException;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    int[] askBuildBeforeMovePrometheus(String playerName, boolean b, boolean b1, boolean b2, boolean b3) throws DisconnectionException;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    int askWorkerMovementPrometheus(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws DisconnectionException;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    int[] askHephaestusBuild(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws DisconnectionException;
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    int askArtemisSecondMove(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws DisconnectionException;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    int[] askAtlasBuild(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws DisconnectionException;
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    int askDemeterSecondBuilding(String playerName, List&lt;SpaceCopy&gt; deepCopySpaceList) throws DisconnectionException;
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    int askToRemoveBlockAres(String player, List&lt;SpaceCopy&gt; validRemoveSpaces, int nonSelectedWorkerNumber) throws DisconnectionException;
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    int askFirstPlayer(List&lt;String&gt; playerNames) throws DisconnectionException;
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-19 22:57</div>
+</div>
+</body>
+</html>

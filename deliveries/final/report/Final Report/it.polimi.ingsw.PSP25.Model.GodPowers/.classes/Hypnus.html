@@ -1,0 +1,127 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Hypnus</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP25.Model.GodPowers</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Hypnus (it.polimi.ingsw.PSP25.Model.GodPowers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Hypnus</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP25.Model.GodPowers;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP25.Model.ActiveEffects;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP25.Model.BroadcastInterface;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP25.Model.Space;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP25.Model.Worker;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * Hypnus class.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public class Hypnus extends GodPower {
+<i>12</i>&nbsp;    /**
+<i>13</i>&nbsp;     * Hypnus constructor
+<i>14</i>&nbsp;     *
+<i>15</i>&nbsp;     * @param activeEffects      array containing opponents god power effects that may influence this turn
+<i>16</i>&nbsp;     * @param broadcastInterface Interface used to share information with all the other players
+<i>17</i>&nbsp;     */
+<i>18</i>&nbsp;    public Hypnus(ActiveEffects activeEffects, BroadcastInterface broadcastInterface) {
+<b class="fc"><i>19</i>&nbsp;        super(activeEffects, broadcastInterface);</b>
+<b class="fc"><i>20</i>&nbsp;    }</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * Override of &quot;canMove&quot; according tu Hyonus&#39; effect:
+<i>24</i>&nbsp;     * &quot;If one of your opponent’s Workers is higher than all of their others, it cannot move&quot;
+<i>25</i>&nbsp;     *
+<i>26</i>&nbsp;     * @param worker the opponent&#39;s Worker that we want to know if he can move to Space
+<i>27</i>&nbsp;     * @param space  Space where we want to know if the worker can move
+<i>28</i>&nbsp;     * @return true if the worker can move in the selected space, false otherwise
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    @Override
+<i>31</i>&nbsp;    public boolean canMove(Worker worker, Space space) {
+<b class="fc"><i>32</i>&nbsp;        Worker otherWorker = null;</b>
+<b class="fc"><i>33</i>&nbsp;        if (worker.getPlayer().getWorker1() == worker) {</b>
+<b class="fc"><i>34</i>&nbsp;            otherWorker = worker.getPlayer().getWorker2();</b>
+<b class="fc"><i>35</i>&nbsp;        } else if (worker.getPlayer().getWorker2() == worker) {</b>
+<b class="fc"><i>36</i>&nbsp;            otherWorker = worker.getPlayer().getWorker1();</b>
+<i>37</i>&nbsp;        }
+<b class="fc"><i>38</i>&nbsp;        if (otherWorker != null &amp;&amp; worker.getSpace().getTowerHeight() &gt; otherWorker.getSpace().getTowerHeight()) {</b>
+<b class="fc"><i>39</i>&nbsp;            return false;</b>
+<i>40</i>&nbsp;        } else {
+<b class="fc"><i>41</i>&nbsp;            return true;</b>
+<i>42</i>&nbsp;        }
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-19 22:57</div>
+</div>
+</body>
+</html>
